@@ -27,14 +27,14 @@
   .status.playing { color: #d8c9a3; }
   .photo-wrap { position: relative; margin-top: 4px; border-radius: 14px; overflow: hidden; border: 1px solid #45484f; line-height: 0; container-type: inline-size; }
   .photo-wrap img { display: block; width: 100%; height: auto; }
-  .screen-text { position: absolute; left: 21.4%; top: 26.9%; width: 55.8%; height: 14.3%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; overflow: hidden; padding: 0 2%; line-height: 1.1; }
-  .screen-title-scroll { width: 100%; overflow: hidden; white-space: nowrap; line-height: 1.1; }
-  .screen-title-scroll span { display: inline-block; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: clamp(13px, 3.4vw, 19px); font-size: 3.4cqi; line-height: 1.1; white-space: nowrap; will-change: transform; text-shadow: 0 0 6px rgba(255,255,255,.85), 0 0 16px rgba(216,201,163,.65), 0 1px 2px rgba(0,0,0,.6); }
+  .screen-text { position: absolute; left: 22.5%; top: 27.5%; width: 53.5%; height: 13%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; overflow: hidden; padding: 0 2%; line-height: 1.05; }
+  .screen-title-scroll { width: 100%; overflow: hidden; white-space: nowrap; line-height: 1.05; text-align: center; }
+  .screen-title-scroll span { display: inline-block; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: clamp(11px, 3vw, 17px); font-size: 2.8cqi; line-height: 1.05; white-space: nowrap; will-change: transform; text-shadow: 0 0 6px rgba(255,255,255,.85), 0 0 16px rgba(216,201,163,.65), 0 1px 2px rgba(0,0,0,.6); }
   .screen-title-scroll.scrolling span { animation: scrollTitle 9s linear infinite; }
   .screen-title-scroll.paused span { animation-play-state: paused; }
   @keyframes scrollTitle { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-  .screen-artist-scroll { width: 100%; overflow: hidden; white-space: nowrap; margin-top: 1px; line-height: 1.1; }
-  .screen-artist-scroll span { display: inline-block; font-size: clamp(11px, 2.8vw, 14px); font-size: 2.8cqi; line-height: 1.1; color: #e8e2d6; white-space: nowrap; will-change: transform; text-shadow: 0 0 5px rgba(255,255,255,.7), 0 0 12px rgba(216,201,163,.5); }
+  .screen-artist-scroll { width: 100%; overflow: hidden; white-space: nowrap; margin-top: 1px; line-height: 1.05; text-align: center; }
+  .screen-artist-scroll span { display: inline-block; font-size: clamp(9px, 2.4vw, 13px); font-size: 2.2cqi; line-height: 1.05; color: #e8e2d6; white-space: nowrap; will-change: transform; text-shadow: 0 0 5px rgba(255,255,255,.7), 0 0 12px rgba(216,201,163,.5); }
   .screen-artist-scroll.scrolling span { animation: scrollTitle 11s linear infinite; }
   .screen-artist-scroll.paused span { animation-play-state: paused; }
   .notes { position: absolute; inset: 0; pointer-events: none; }
@@ -270,24 +270,29 @@ function setStatus(text, playing) {
   statusEl.classList.toggle("playing", !!playing);
   notesEl.classList.toggle("playing", !!playing);
   if (playing) {
-    screenTitleWrap.classList.add("scrolling");
+    updateScroll();
     screenTitleWrap.classList.remove("paused");
-    screenArtistWrap.classList.add("scrolling");
     screenArtistWrap.classList.remove("paused");
   } else {
     screenTitleWrap.classList.add("paused");
     screenArtistWrap.classList.add("paused");
   }
 }
+function updateScroll() {
+  // Scroll only when the text is actually wider than the screen.
+  // Short names like "Usher" stay centered and fully visible instead
+  // of flying across the screen and getting cut off at the edges.
+  var titleTooLong = screenTitle.offsetWidth > screenTitleWrap.clientWidth + 2;
+  var artistTooLong = screenArtist.offsetWidth > screenArtistWrap.clientWidth + 2;
+  screenTitleWrap.classList.toggle("scrolling", titleTooLong);
+  screenArtistWrap.classList.toggle("scrolling", artistTooLong);
+}
 function restartScroll() {
   screenTitleWrap.classList.remove("scrolling");
   screenArtistWrap.classList.remove("scrolling");
   void screenTitleWrap.offsetWidth;
   void screenArtistWrap.offsetWidth;
-  if (isPlaying && currentIndex >= 0) {
-    screenTitleWrap.classList.add("scrolling");
-    screenArtistWrap.classList.add("scrolling");
-  }
+  if (isPlaying && currentIndex >= 0) { updateScroll(); }
 }
 function setPlaying(playing) {
   isPlaying = playing;
@@ -378,6 +383,7 @@ function playPrev() {
   var prevPos = pos >= 0 ? (pos - 1 + filtered.length) % filtered.length : filtered.length - 1;
   playSong(filtered[prevPos]);
 }
+window.addEventListener("resize", function() { if (currentIndex >= 0) { updateScroll(); } });
 pick.onchange = function() {
   if (pick.value === "") return;
   playSong(parseInt(pick.value, 10));
