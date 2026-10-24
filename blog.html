@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog — Ashley Ayala</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700;900&family=Indie+Flower&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fdfdfc; color: #161616; font-family: Georgia, 'Times New Roman', serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .wrap { width: calc(100% - 24px); max-width: 880px; margin: 0 auto; padding: 20px 22px 48px; }
+  header { text-align: center; }
+  h1.masthead { margin: 18px 0 0; font-family: 'Indie Flower', cursive; font-weight: 400; font-size: 84px; line-height: 1.05; color: #111; }
+  h1.masthead a { color: #111; text-decoration: none; }
+  .rule-top { border-top: 3px solid #111; border-bottom: 1px solid #111; height: 4px; margin-top: 10px; }
+  .tagline { margin-top: 14px; font-family: Arial, Helvetica, sans-serif; font-size: 11px; letter-spacing: 2.2px; text-transform: uppercase; color: #444; text-align: center; }
+  section { margin-top: 38px; }
+  section h2 { margin: 0 0 14px; font-family: 'Bitter', Georgia, serif; font-weight: 900; font-size: 27px; letter-spacing: .2px; color: #111; border-bottom: 2px solid #111; padding-bottom: 10px; }
+  footer { border-top: 3px double #111; margin-top: 46px; padding-top: 16px; font-family: Arial, Helvetica, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; text-align: center; color: #999; }
+  .menu-row { text-align: center; margin: 14px 0 0; }
+  .menu-row button { font-family: Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; background: none; color: #111; border: 1.5px solid #111; border-radius: 999px; padding: 7px 18px; cursor: pointer; }
+  .menu-panel { display: none; text-align: center; margin-top: 6px; }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-family: 'Bitter', Georgia, serif; font-weight: 700; font-size: 20px; line-height: 1.3; color: #111; text-decoration: none; padding: 8px 0; }
+  @media (hover: hover) { .menu-panel a:hover { text-decoration: underline; text-underline-offset: 3px; } }
+  .foot-name { font-size: 12px; letter-spacing: 3px; color: #555; margin-bottom: 8px; }
+  .blog-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 34px; }
+  .blog-form input[type="text"], .blog-form textarea { font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.5; color: #161616; border: 1.5px solid #d9b8c8; border-radius: 12px; padding: 10px 12px; background: #fff; width: 100%; min-width: 0; }
+  .blog-form textarea { min-height: 140px; resize: vertical; }
+  .btn { align-self: flex-start; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 700; background: #6d2f4d; color: #fff; border: none; border-radius: 999px; padding: 10px 22px; cursor: pointer; }
+  .privacy-note { font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #999; margin: 0; }
+  .post { border-top: 1px solid #e9e2e6; padding: 20px 0 24px; }
+  .post:first-of-type { border-top: none; padding-top: 4px; }
+  .post-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .post-title { margin: 0; font-family: 'Bitter', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.3; color: #111; }
+  .post-date { margin: 4px 0 10px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #999; }
+  .post-body { margin: 0; font-size: 16px; line-height: 1.65; color: #2b2b2b; white-space: pre-wrap; }
+  .del { flex: 0 0 auto; background: none; border: none; color: #bbb; font-size: 22px; line-height: 1; cursor: pointer; padding: 0 2px; }
+  .del:hover { color: #6d2f4d; }
+  .empty { font-style: italic; color: #888; font-size: 16px; line-height: 1.6; margin: 0; }
+  @media (max-width: 640px) { h1.masthead { font-size: 42px; } .wrap { padding: 20px 14px 40px; } section h2 { font-size: 23px; } .post-title { font-size: 20px; } }
+  @media (min-width: 641px) { .post-body { text-align: justify; hyphens: auto; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="rule-top"></div>
+    <h1 class="masthead"><a href="index.html">Ashley Ayala</a></h1>
+    <div class="tagline">Blog</div>
+    <div class="rule-top"></div>
+    <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
+    <nav id="menuPanel" class="menu-panel">
+      <a href="index.html">Home</a>
+      <a href="period-calendar.html">Period Calendar</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+  </header>
+
+  <section>
+    <h2>Write something</h2>
+    <div class="blog-form">
+      <input id="postTitle" type="text" placeholder="Title (optional)">
+      <textarea id="postBody" placeholder="Write it here..."></textarea>
+      <button class="btn" type="button" id="postBtn">Post</button>
+      <p class="privacy-note">Your posts save in this browser only, so they stay yours.</p>
+    </div>
+    <h2>Posts</h2>
+    <div id="posts"></div>
+  </section>
+
+  <footer><div class="foot-name">Ashley Ayala</div>&copy; 2026 Ashley Ayala</footer>
+</main>
+<script>
+  document.getElementById('menuBtn').addEventListener('click', function () {
+    var panel = document.getElementById('menuPanel');
+    var open = panel.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  var KEY = 'ashley-blog';
+  function loadPosts() {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; }
+  }
+  function savePosts(posts) {
+    localStorage.setItem(KEY, JSON.stringify(posts));
+  }
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function render() {
+    var posts = loadPosts();
+    var box = document.getElementById('posts');
+    if (!posts.length) {
+      box.innerHTML = '<p class="empty">Nothing here yet — your first post is waiting above.</p>';
+      return;
+    }
+    box.innerHTML = posts.map(function (p, i) {
+      var date = new Date(p.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+      return '<article class="post"><div class="post-head"><h3 class="post-title">' + esc(p.title || 'Untitled') + '</h3>' +
+        '<button class="del" type="button" aria-label="Delete post" data-i="' + i + '">&times;</button></div>' +
+        '<p class="post-date">' + esc(date) + '</p>' +
+        '<p class="post-body">' + esc(p.body) + '</p></article>';
+    }).join('');
+    box.querySelectorAll('.del').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var posts = loadPosts();
+        posts.splice(parseInt(btn.getAttribute('data-i'), 10), 1);
+        savePosts(posts);
+        render();
+      });
+    });
+  }
+  document.getElementById('postBtn').addEventListener('click', function () {
+    var title = document.getElementById('postTitle').value.trim();
+    var body = document.getElementById('postBody').value.trim();
+    if (!body) return;
+    var posts = loadPosts();
+    posts.unshift({ title: title, body: body, date: new Date().toISOString() });
+    savePosts(posts);
+    document.getElementById('postTitle').value = '';
+    document.getElementById('postBody').value = '';
+    render();
+  });
+  render();
+</script>
+</body>
+</html>
