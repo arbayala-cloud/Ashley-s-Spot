@@ -7,18 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; text-align: center; padding: 28px 16px 48px; }
+  body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; text-align: center; padding: 32px 16px 48px; line-height: 1.5; }
   .wrap { max-width: 600px; margin: 0 auto; }
   .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a7443; font-weight: 600; margin: 0 0 10px; }
-  h1 { font-family: Fraunces, Georgia, serif; font-size: 42px; line-height: 1.05; font-weight: 600; margin: 0 0 8px; }
-  .sub { color: #6f6a62; font-size: 15px; margin: 0 0 20px; }
+  h1 { font-family: Fraunces, Georgia, serif; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.5px; margin: 0 0 8px; }
+  .sub { color: #6f6a62; font-size: 15px; margin: 0 0 14px; }
+  .divider { width: 48px; height: 2px; background: #b9975b; margin: 0 auto 20px; border: none; }
   .menu-row { margin: 0 0 18px; }
   .menu-row button { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; background: transparent; color: #22211e; border: 1.5px solid #22211e; border-radius: 999px; padding: 8px 20px; cursor: pointer; font-weight: 600; }
   .menu-panel { display: none; margin: 10px auto 0; max-width: 420px; background: #fff; border: 1px solid #ddd7cc; border-radius: 12px; padding: 6px 0; }
   .menu-panel.open { display: block; }
-  .menu-panel a { display: block; font-family: Fraunces, Georgia, serif; font-size: 20px; font-weight: 600; color: #22211e; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel a { display: block; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 600; color: #22211e; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel a:hover { background: #f7f4ee; }
   .menu-panel a:last-child { border-bottom: none; }
-  .radio { background: linear-gradient(180deg, #2b2d33, #1e2024); border: 1px solid #3d4048; border-radius: 22px; padding: 18px; color: #f5f2ec; box-shadow: 0 18px 40px rgba(0,0,0,.22); text-align: left; }
+  .radio { background: linear-gradient(180deg, #2b2d33, #1e2024); border: 1px solid #3d4048; border-radius: 18px; padding: 20px; color: #f5f2ec; box-shadow: 0 14px 32px rgba(0,0,0,.18); text-align: left; }
   .radio-top { display: flex; justify-content: space-between; align-items: center; padding: 2px 4px 14px; }
   .brand { font-size: 11px; letter-spacing: 3px; font-weight: 600; color: #d8c9a3; }
   .status { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #b9b2a6; }
@@ -27,18 +29,23 @@
   .photo-wrap img { display: block; width: 100%; height: auto; }
   .screen-text { position: absolute; left: 21.4%; top: 26.9%; width: 55.8%; height: 14.3%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; overflow: hidden; padding: 0 2%; line-height: 1.2; }
   .screen-title-scroll { width: 100%; overflow: hidden; white-space: nowrap; }
-  .screen-title-scroll span { display: inline-block; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: clamp(13px, 3.4vw, 19px); white-space: nowrap; will-change: transform; }
+  .screen-title-scroll span { display: inline-block; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: clamp(13px, 3.4vw, 19px); white-space: nowrap; will-change: transform; text-shadow: 0 0 6px rgba(255,255,255,.85), 0 0 16px rgba(216,201,163,.65), 0 1px 2px rgba(0,0,0,.6); }
   .screen-title-scroll.scrolling span { animation: scrollTitle 9s linear infinite; }
   .screen-title-scroll.paused span { animation-play-state: paused; }
   @keyframes scrollTitle { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-  .screen-artist { font-size: clamp(11px, 2.8vw, 14px); color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; text-align: center; margin-top: 2px; }
+  .screen-artist-scroll { width: 100%; overflow: hidden; white-space: nowrap; margin-top: 2px; }
+  .screen-artist-scroll span { display: inline-block; font-size: clamp(11px, 2.8vw, 14px); color: #e8e2d6; white-space: nowrap; will-change: transform; text-shadow: 0 0 5px rgba(255,255,255,.7), 0 0 12px rgba(216,201,163,.5); }
+  .screen-artist-scroll.scrolling span { animation: scrollTitle 11s linear infinite; }
+  .screen-artist-scroll.paused span { animation-play-state: paused; }
   .notes { position: absolute; inset: 0; pointer-events: none; }
   .note { position: absolute; font-size: 28px; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.9), 0 0 2px #000; opacity: 0; }
   .notes.playing .note { animation: floatNote 3s ease-in infinite; }
   @keyframes floatNote { 0% { transform: translateY(8px) rotate(-8deg); opacity: 0; } 18% { opacity: 1; } 100% { transform: translateY(-72px) rotate(14deg); opacity: 0; } }
   .deck-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #a9a29a; margin: 18px 4px 10px; }
   .controls-row { display: flex; gap: 10px; margin-top: 10px; }
-  .controls-row button { flex: 0 0 auto; background: #f4f1ea; color: #22211e; border: 1px solid #c9c2b6; border-radius: 12px; padding: 12px 16px; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .controls-row button { flex: 0 0 auto; background: #f4f1ea; color: #22211e; border: 1px solid #c9c2b6; border-radius: 10px; padding: 12px 16px; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .controls-row button:hover:not(:disabled) { background: #e9e4da; }
+  .controls-row button:focus-visible, .controls-row select:focus-visible, .field select:focus-visible { outline: 2px solid #b9975b; outline-offset: 2px; }
   .controls-row button:disabled { opacity: .45; cursor: default; }
   .controls-row button.primary { background: #d8c9a3; border-color: #d8c9a3; }
   .controls-row select { flex: 1; min-width: 0; padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; }
@@ -52,6 +59,7 @@
   .volume-row input { flex: 1; accent-color: #d8c9a3; }
   .hidden-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: none; overflow: hidden; }
   .note { margin-top: 18px; color: #6f6a62; font-size: 13px; }
+  .footer { margin-top: 24px; color: #8a857e; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
   @media (max-width: 480px) {
     h1 { font-size: 34px; }
     .controls-row { flex-wrap: wrap; }
@@ -64,6 +72,7 @@
   <p class="eyebrow">Ashley&rsquo;s Spot</p>
   <h1>Ashley&rsquo;s Jukebox</h1>
   <p class="sub">Songs from 2001 &middot; 54 tracks, played through YouTube</p>
+  <hr class="divider">
   <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
   <nav id="menuPanel" class="menu-panel">
     <a href="index.html">Home</a>
@@ -82,7 +91,7 @@
       <img src="boombox.jpg" alt="A realistic 1990s boombox radio">
       <div class="screen-text">
         <div class="screen-title-scroll" id="screenTitleWrap"><span id="screenTitle">Pick a song below</span></div>
-        <div class="screen-artist" id="screenArtist"></div>
+        <div class="screen-artist-scroll" id="screenArtistWrap"><span id="screenArtist"></span></div>
       </div>
       <div class="notes" id="notes">
         <span class="note" style="left:18%;top:62%;animation-delay:0s;animation-duration:2.6s;">&#9835;</span>
@@ -138,7 +147,8 @@
     <div class="hidden-player"><div id="ytplayer"></div></div>
   </div>
 
-  <p class="note">Pick a track and it will play from the stereo — the song scrolls across the boombox screen and music notes float out of the speakers. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a track and it will play from the stereo — the song and artist scroll across the boombox screen and music notes float out of the speakers. When a song ends, the next one plays automatically.</p>
+  <p class="footer">Ashley&rsquo;s Spot &middot; Curated 2001 Playlist</p>
 </div>
 <script>
 document.getElementById('menuBtn').addEventListener('click', function () {
@@ -249,6 +259,7 @@ var fontpick = document.getElementById("fontpick");
 var statusEl = document.getElementById("status");
 var notesEl = document.getElementById("notes");
 var screenTitleWrap = document.getElementById("screenTitleWrap");
+var screenArtistWrap = document.getElementById("screenArtistWrap");
 var watchLink = document.getElementById("watchLink");
 var currentIndex = -1;
 var isPlaying = false;
@@ -261,14 +272,22 @@ function setStatus(text, playing) {
   if (playing) {
     screenTitleWrap.classList.add("scrolling");
     screenTitleWrap.classList.remove("paused");
+    screenArtistWrap.classList.add("scrolling");
+    screenArtistWrap.classList.remove("paused");
   } else {
     screenTitleWrap.classList.add("paused");
+    screenArtistWrap.classList.add("paused");
   }
 }
 function restartScroll() {
   screenTitleWrap.classList.remove("scrolling");
+  screenArtistWrap.classList.remove("scrolling");
   void screenTitleWrap.offsetWidth;
-  if (isPlaying && currentIndex >= 0) { screenTitleWrap.classList.add("scrolling"); }
+  void screenArtistWrap.offsetWidth;
+  if (isPlaying && currentIndex >= 0) {
+    screenTitleWrap.classList.add("scrolling");
+    screenArtistWrap.classList.add("scrolling");
+  }
 }
 function setPlaying(playing) {
   isPlaying = playing;
