@@ -142,7 +142,7 @@
         <option value="Verdana, Geneva, sans-serif">Verdana</option>
       </select>
     </div>
-    <iframe id="ytplayer" class="hidden-player" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="hidden-player"><div id="ytplayer"></div></div>
   </div>
 </div>
 <script>
@@ -210,7 +210,29 @@ var SONGS = [
 ];
 
 var pick = document.getElementById("songpick");
-var ytEl = document.getElementById("ytplayer");
+var player = null;
+var playerReady = false;
+var pendingId = null;
+var pendingPaused = false;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("ytplayer", {
+    width: "1",
+    height: "1",
+    playerVars: { rel: 0 },
+    events: { onReady: function() {
+      playerReady = true;
+      if (pendingId) {
+        if (pendingPaused) { player.cueVideoById(pendingId); } else { player.loadVideoById(pendingId); }
+        pendingId = null;
+      }
+    } }
+  });
+}
+(function() {
+  var tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(tag);
+})();
 var screenTitle = document.getElementById("screenTitle");
 var screenArtist = document.getElementById("screenArtist");
 var prevBtn = document.getElementById("prevBtn");
@@ -220,20 +242,15 @@ var fontpick = document.getElementById("fontpick");
 var currentIndex = -1;
 var isPlaying = false;
 
-function ytCommand(func) {
-  try {
-    ytEl.contentWindow.postMessage(JSON.stringify({ event: "command", func: func, args: "" }), "*");
-  } catch (e) {}
-}
 pauseBtn.onclick = function() {
   if (currentIndex < 0) return;
   if (isPlaying) {
-    ytCommand("pause");
+    if (playerReady) { player.pauseVideo(); } else { pendingPaused = true; }
     pauseBtn.textContent = "Play";
     isPlaying = false;
     document.getElementById("notes").classList.remove("playing");
   } else {
-    ytCommand("play");
+    if (playerReady) { player.playVideo(); } else { pendingPaused = false; }
     pauseBtn.textContent = "Pause";
     isPlaying = true;
     document.getElementById("notes").classList.add("playing");
@@ -254,7 +271,7 @@ function playSong(i) {
   if (i < 0 || i >= SONGS.length) return;
   currentIndex = i;
   var s = SONGS[i];
-  ytEl.src = "https://www.youtube.com/embed/" + s[3] + "?autoplay=1&rel=0&enablejsapi=1";
+  if (playerReady) { player.loadVideoById(s[3]); } else { pendingId = s[3]; pendingPaused = false; }
   screenTitle.textContent = s[0];
   screenArtist.textContent = s[1];
   pick.selectedIndex = i + 1;
