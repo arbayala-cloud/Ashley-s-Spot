@@ -17,16 +17,23 @@
   .menu-panel a { display: block; font-size: 20px; font-weight: 700; color: #111; text-decoration: none; padding: 8px 0; }
   .photo-wrap { position: relative; max-width: 560px; margin: 0 auto; }
   .photo-wrap img { display: block; width: 100%; height: auto; }
-  .screen-video {
+  .screen-text {
     position: absolute; left: 21.4%; top: 26.9%; width: 55.8%; height: 14.3%;
-    background: #000; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #fff; overflow: hidden; padding: 0 2%;
   }
-  .screen-video iframe { display: block; border: none; width: 100%; height: 100%; background: #000; }
+  .screen-title { font-weight: 700; font-size: clamp(13px, 3.4vw, 19px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .screen-artist { font-size: clamp(11px, 2.8vw, 14px); color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .notes { position: absolute; inset: 0; pointer-events: none; }
+  .note { position: absolute; font-size: 26px; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.9), 0 0 2px #000; opacity: 0; }
+  .notes.playing .note { animation: floatNote 3s ease-in infinite; }
+  @keyframes floatNote {
+    0% { transform: translateY(8px) rotate(-8deg); opacity: 0; }
+    18% { opacity: 1; }
+    100% { transform: translateY(-72px) rotate(14deg); opacity: 0; }
+  }
   .deck { max-width: 560px; margin: 12px auto 0; background: #333; border-radius: 16px; padding: 14px; color: #fff; }
-  .nowtitle { font-weight: 700; font-size: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .nowartist { font-size: 14px; color: #bbb; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 12px; }
-  .fullbtn { margin-top: 12px; background: #eee; color: #222; border: 1px solid #999; border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700; cursor: pointer; }
-  .fullbtn:disabled { opacity: .45; }
+  .hidden-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: none; }
   .controls-row { display: flex; gap: 10px; margin-top: 12px; }
   .controls-row button { flex: 0 0 auto; background: #eee; color: #222; border: 1px solid #999; border-radius: 10px; padding: 12px 16px; font-size: 15px; font-weight: 700; cursor: pointer; }
   .controls-row button:disabled { opacity: .45; }
@@ -46,13 +53,20 @@
   </nav>
   <div class="photo-wrap">
     <img src="boombox.jpg" alt="A realistic 1990s boombox radio">
-    <div class="screen-video">
-      <iframe id="ytplayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="screen-text">
+      <div class="screen-title" id="screenTitle">Pick a song below</div>
+      <div class="screen-artist" id="screenArtist"></div>
+    </div>
+    <div class="notes" id="notes">
+      <span class="note" style="left:25%;top:62%;animation-delay:0s;animation-duration:2.6s;">&#9835;</span>
+      <span class="note" style="left:28%;top:66%;animation-delay:0.9s;animation-duration:3.1s;">&#9834;</span>
+      <span class="note" style="left:31%;top:60%;animation-delay:1.7s;animation-duration:2.8s;">&#9835;</span>
+      <span class="note" style="left:69%;top:62%;animation-delay:0.5s;animation-duration:3.0s;">&#9834;</span>
+      <span class="note" style="left:72%;top:66%;animation-delay:1.3s;animation-duration:2.6s;">&#9835;</span>
+      <span class="note" style="left:75%;top:60%;animation-delay:2.0s;animation-duration:3.2s;">&#9834;</span>
     </div>
   </div>
   <div class="deck">
-    <div class="nowtitle" id="nowTitle">Pick a song below</div>
-    <div class="nowartist" id="nowArtist"></div>
     <div class="controls-row">
       <button id="prevBtn" disabled>&laquo; Prev</button>
       <select id="songpick" aria-label="Pick a song">
@@ -114,7 +128,7 @@
       </select>
       <button id="nextBtn" disabled>Next &raquo;</button>
     </div>
-    <button class="fullbtn" id="fullBtn" disabled>Full screen video</button>
+    <iframe id="ytplayer" class="hidden-player" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
 </div>
 <script>
@@ -183,8 +197,8 @@ var SONGS = [
 
 var pick = document.getElementById("songpick");
 var ytEl = document.getElementById("ytplayer");
-var nowTitle = document.getElementById("nowTitle");
-var nowArtist = document.getElementById("nowArtist");
+var screenTitle = document.getElementById("screenTitle");
+var screenArtist = document.getElementById("screenArtist");
 var prevBtn = document.getElementById("prevBtn");
 var nextBtn = document.getElementById("nextBtn");
 var currentIndex = -1;
@@ -194,22 +208,15 @@ function playSong(i) {
   currentIndex = i;
   var s = SONGS[i];
   ytEl.src = "https://www.youtube.com/embed/" + s[3] + "?autoplay=1&rel=0";
-  nowTitle.textContent = s[0];
-  nowArtist.textContent = s[1];
+  screenTitle.textContent = s[0];
+  screenArtist.textContent = s[1];
   pick.selectedIndex = i + 1;
   prevBtn.disabled = false;
   nextBtn.disabled = false;
-  fullBtn.disabled = false;
+  document.getElementById("notes").classList.add("playing");
 }
 pick.onchange = function() {
   playSong(pick.selectedIndex - 1);
-};
-var fullBtn = document.getElementById("fullBtn");
-fullBtn.onclick = function() {
-  var el = ytEl;
-  if (el.requestFullscreen) el.requestFullscreen();
-  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-  else if (el.msRequestFullscreen) el.msRequestFullscreen();
 };
 prevBtn.onclick = function() {
   if (currentIndex < 0) return;
