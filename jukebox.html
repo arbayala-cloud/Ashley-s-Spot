@@ -23,19 +23,19 @@
   .brand { font-size: 11px; letter-spacing: 3px; font-weight: 600; color: #d8c9a3; }
   .status { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #b9b2a6; }
   .status.playing { color: #d8c9a3; }
-  .display { background: #121316; border: 1px solid rgba(216,201,163,.45); border-radius: 14px; padding: 20px 16px 16px; text-align: center; }
-  .now-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #a99f8f; margin-bottom: 8px; }
-  .screen-title { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 27px; line-height: 1.15; }
-  .screen-artist { font-size: 15px; color: #c9c2b6; margin-top: 6px; }
-  .eq { display: flex; gap: 4px; justify-content: center; align-items: flex-end; height: 18px; margin-top: 14px; }
-  .eq span { width: 4px; background: #d8c9a3; border-radius: 2px; height: 5px; }
-  .eq.playing span { animation: eq 0.9s ease-in-out infinite alternate; }
-  .eq.playing span:nth-child(2) { animation-delay: .15s; }
-  .eq.playing span:nth-child(3) { animation-delay: .3s; }
-  .eq.playing span:nth-child(4) { animation-delay: .45s; }
-  @keyframes eq { from { height: 5px; } to { height: 17px; } }
-  .photo { margin-top: 16px; border-radius: 14px; overflow: hidden; border: 1px solid #45484f; line-height: 0; }
-  .photo img { display: block; width: 100%; height: auto; }
+  .photo-wrap { position: relative; margin-top: 4px; border-radius: 14px; overflow: hidden; border: 1px solid #45484f; line-height: 0; }
+  .photo-wrap img { display: block; width: 100%; height: auto; }
+  .screen-text { position: absolute; left: 21.4%; top: 26.9%; width: 55.8%; height: 14.3%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; overflow: hidden; padding: 0 2%; line-height: 1.2; }
+  .screen-title-scroll { width: 100%; overflow: hidden; white-space: nowrap; }
+  .screen-title-scroll span { display: inline-block; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: clamp(13px, 3.4vw, 19px); white-space: nowrap; will-change: transform; }
+  .screen-title-scroll.scrolling span { animation: scrollTitle 9s linear infinite; }
+  .screen-title-scroll.paused span { animation-play-state: paused; }
+  @keyframes scrollTitle { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+  .screen-artist { font-size: clamp(11px, 2.8vw, 14px); color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; text-align: center; margin-top: 2px; }
+  .notes { position: absolute; inset: 0; pointer-events: none; }
+  .note { position: absolute; font-size: 28px; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.9), 0 0 2px #000; opacity: 0; }
+  .notes.playing .note { animation: floatNote 3s ease-in infinite; }
+  @keyframes floatNote { 0% { transform: translateY(8px) rotate(-8deg); opacity: 0; } 18% { opacity: 1; } 100% { transform: translateY(-72px) rotate(14deg); opacity: 0; } }
   .deck-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #a9a29a; margin: 18px 4px 10px; }
   .controls-row { display: flex; gap: 10px; margin-top: 10px; }
   .controls-row button { flex: 0 0 auto; background: #f4f1ea; color: #22211e; border: 1px solid #c9c2b6; border-radius: 12px; padding: 12px 16px; font-size: 15px; font-weight: 600; cursor: pointer; }
@@ -78,15 +78,20 @@
       <span class="status" id="status">Ready</span>
     </div>
 
-    <div class="display">
-      <div class="now-label">Now Playing</div>
-      <div class="screen-title" id="screenTitle">Pick a song below</div>
-      <div class="screen-artist" id="screenArtist"></div>
-      <div class="eq" id="eq"><span></span><span></span><span></span><span></span></div>
-    </div>
-
-    <div class="photo">
+    <div class="photo-wrap">
       <img src="boombox.jpg" alt="A realistic 1990s boombox radio">
+      <div class="screen-text">
+        <div class="screen-title-scroll" id="screenTitleWrap"><span id="screenTitle">Pick a song below</span></div>
+        <div class="screen-artist" id="screenArtist"></div>
+      </div>
+      <div class="notes" id="notes">
+        <span class="note" style="left:18%;top:62%;animation-delay:0s;animation-duration:2.6s;">&#9835;</span>
+        <span class="note" style="left:22%;top:66%;animation-delay:0.9s;animation-duration:3.1s;">&#9834;</span>
+        <span class="note" style="left:26%;top:60%;animation-delay:1.7s;animation-duration:2.8s;">&#9835;</span>
+        <span class="note" style="left:72%;top:62%;animation-delay:0.5s;animation-duration:3.0s;">&#9834;</span>
+        <span class="note" style="left:76%;top:66%;animation-delay:1.3s;animation-duration:2.6s;">&#9835;</span>
+        <span class="note" style="left:80%;top:60%;animation-delay:2.0s;animation-duration:3.2s;">&#9834;</span>
+      </div>
     </div>
 
     <div class="deck-label">Select a track</div>
@@ -133,7 +138,7 @@
     <div class="hidden-player"><div id="ytplayer"></div></div>
   </div>
 
-  <p class="note">Pick a track and it will play here through the YouTube player. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a track and it will play from the stereo — the song scrolls across the boombox screen and music notes float out of the speakers. When a song ends, the next one plays automatically.</p>
 </div>
 <script>
 document.getElementById('menuBtn').addEventListener('click', function () {
@@ -242,7 +247,8 @@ var nextBtn = document.getElementById("nextBtn");
 var pauseBtn = document.getElementById("pauseBtn");
 var fontpick = document.getElementById("fontpick");
 var statusEl = document.getElementById("status");
-var eqEl = document.getElementById("eq");
+var notesEl = document.getElementById("notes");
+var screenTitleWrap = document.getElementById("screenTitleWrap");
 var watchLink = document.getElementById("watchLink");
 var currentIndex = -1;
 var isPlaying = false;
@@ -251,7 +257,18 @@ var filtered = SONGS.map(function(_, i) { return i; });
 function setStatus(text, playing) {
   statusEl.textContent = text;
   statusEl.classList.toggle("playing", !!playing);
-  eqEl.classList.toggle("playing", !!playing);
+  notesEl.classList.toggle("playing", !!playing);
+  if (playing) {
+    screenTitleWrap.classList.add("scrolling");
+    screenTitleWrap.classList.remove("paused");
+  } else {
+    screenTitleWrap.classList.add("paused");
+  }
+}
+function restartScroll() {
+  screenTitleWrap.classList.remove("scrolling");
+  void screenTitleWrap.offsetWidth;
+  if (isPlaying && currentIndex >= 0) { screenTitleWrap.classList.add("scrolling"); }
 }
 function setPlaying(playing) {
   isPlaying = playing;
@@ -325,6 +342,7 @@ function playSong(i) {
   nextBtn.disabled = false;
   pauseBtn.disabled = false;
   setPlaying(true);
+  restartScroll();
 }
 function filteredPosition() {
   return filtered.indexOf(currentIndex);
