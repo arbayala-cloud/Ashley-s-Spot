@@ -27,6 +27,10 @@
   .status.playing { color: #d8c9a3; }
   .tv-wrap { position: relative; margin: 4px auto 0; line-height: 0; width: 100%; max-width: 640px; }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
+  .playlist-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 20px 0 8px; text-align: center; }
+  .playlist-row { display: flex; justify-content: center; gap: 10px; flex-wrap: nowrap; }
+  .playlist-btn { background: #2f3238; color: #f5f2ec; border: 1px solid #55585f; border-radius: 12px; padding: 12px 20px; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .playlist-btn.active { background: #d8c9a3; color: #22211e; border-color: #d8c9a3; }
   .tv-controls-under .tv-btn { width: 120px; height: 56px; flex: 0 0 auto; }
   .tv-image { display: block; width: 100%; height: auto; border-radius: 8px; }
   .tv-video { position: absolute; left: 12.9%; top: 32.6%; width: 73.5%; height: 46.4%; background: #000; border-radius: 14px; overflow: hidden; line-height: 1.4; }
@@ -90,7 +94,7 @@
 <div class="wrap">
   <p class="eyebrow">Ashley&rsquo;s Spot</p>
   <h1>Ashley&rsquo;s Jukebox</h1>
-  <p class="sub">Songs from 2001 &middot; 54 tracks, played through YouTube</p>
+  <p class="sub">1995 &amp; 2001 playlists, played through YouTube</p>
   <hr class="divider">
   <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
   <nav id="menuPanel" class="menu-panel">
@@ -124,7 +128,13 @@
 
   </div>
 
-  <p class="note">Use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
+  <div class="playlist-label">Playlists</div>
+  <div class="playlist-row">
+    <button class="playlist-btn active" data-playlist="0" type="button">1995</button>
+    <button class="playlist-btn" data-playlist="1" type="button">2001</button>
+  </div>
+
+  <p class="note">Pick a playlist below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
   <p class="footer">Ashley&rsquo;s Spot &middot; Curated 2001 Playlist</p>
 </div>
 <script>
@@ -134,62 +144,84 @@ document.getElementById('menuBtn').addEventListener('click', function () {
   this.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
 
-var SONGS = [
-  ["Fallin'", "Alicia Keys", "Pop", "Urdlvw0SSEc"],
-  ["Lady Marmalade", "Christina Aguilera, Lil' Kim, Mya, Pink", "Pop", "RQa7SvVCdZk"],
-  ["Survivor", "Destiny's Child", "Pop", "Wmc8bQoL-J0"],
-  ["Bootylicious", "Destiny's Child", "Pop", "IyYnnUcgeMc"],
-  ["Can't Get You Out of My Head", "Kylie Minogue", "Pop", "c18441Eh_WE"],
-  ["All for You", "Janet Jackson", "Pop", "J551f-TyqjY"],
-  ["Hero", "Enrique Iglesias", "Pop", "koJlIGDImiU"],
-  ["Family Affair", "Mary J. Blige", "Pop", "znlFu_lemsU"],
-  ["U Remind Me", "Usher", "Pop", "Bxau9B3jOHM"],
-  ["Let Me Blow Ya Mind", "Eve feat. Gwen Stefani", "Pop", "Wt88GMJmVk0"],
-  ["Drops of Jupiter", "Train", "Pop", "7Xf-Lesrkuc"],
-  ["I'm Real", "Jennifer Lopez", "Pop", "zD2D6phvRRk"],
-  ["I'm a Slave 4 U", "Britney Spears", "Pop", "Mzybwwf2HoQ"],
-  ["Pop", "NSYNC", "Pop", "TWZKw_MgUPI"],
-  ["The Call", "Backstreet Boys", "Pop", "wMOkm57vu0k"],
-  ["How You Remind Me", "Nickelback", "Rock", "1cQh1ccqu8M"],
-  ["My Sacrifice", "Creed", "Rock", "O-fyNgHdmLI"],
-  ["Blurry", "Puddle of Mudd", "Rock", "xJJsoquu70o"],
-  ["It's Been Awhile", "Staind", "Rock", "K2NGe9mLAEc"],
-  ["Wish You Were Here", "Incubus", "Rock", "8295rOMvtQI"],
-  ["Hash Pipe", "Weezer", "Rock", "_9BGLtqqkVI"],
-  ["Chop Suey!", "System of a Down", "Rock", "CSvFpBOe8eY"],
-  ["In the End", "Linkin Park", "Rock", "eVTXPUF4Oz4"],
-  ["The Rock Show", "Blink-182", "Rock", "z7hhDINyBP0"],
-  ["My Way", "Limp Bizkit", "Rock", "Dn8vzTsnPps"],
-  ["Loser", "3 Doors Down", "Rock", "2Ui_Q4qBDJY"],
-  ["Fat Lip", "Sum 41", "Rock", "CMX2lPum_pg"],
-  ["Elevation", "U2", "Rock", "19KstSgU-c0"],
-  ["Clint Eastwood", "Gorillaz", "Alternative", "1fOc3rATNfI"],
-  ["Last Nite", "The Strokes", "Alternative", "TOypSnKFHrE"],
-  ["Fell in Love with a Girl", "The White Stripes", "Alternative", "fTH71AAxXmM"],
-  ["Crystal", "New Order", "Alternative", "KVMyXDsadLQ"],
-  ["Don't Panic", "Coldplay", "Alternative", "yWeuUwpEQfs"],
-  ["Pyramid Song", "Radiohead", "Alternative", "3M_Gg1xAHE4"],
-  ["Imitation of Life", "R.E.M.", "Alternative", "0vqgdSsfqPs"],
-  ["Plug In Baby", "Muse", "Alternative", "dbB-mICjkQM"],
-  ["New Slang", "The Shins", "Alternative", "zYwCmcB0XMw"],
-  ["Ain't Nothing 'bout You", "Brooks & Dunn", "Country", "SpJdhC5E8Vg"],
-  ["Only in America", "Brooks & Dunn", "Country", "GN1iI-DaJNw"],
-  ["Where Were You (When the World Stopped Turning)", "Alan Jackson", "Country", "mwcWVs4Eejg"],
-  ["Where I Come From", "Alan Jackson", "Country", "0G15BcMWQYY"],
-  ["I'm Movin' On", "Rascal Flatts", "Country", "eKIGOHhiDuY"],
-  ["One More Day", "Diamond Rio", "Country", "Xi8O7JdA4Sg"],
-  ["I'm a Survivor", "Reba McEntire", "Country", "_HbTASYNVps"],
-  ["Where the Stars and Stripes and the Eagle Fly", "Aaron Tippin", "Country", "TTKmjhJ1__o"],
-  ["Grown Men Don't Cry", "Tim McGraw", "Country", "TQjp5s6DJlw"],
-  ["There You'll Be", "Faith Hill", "Country", "pJSjXZdKj8s"],
-  ["I Wanna Talk About Me", "Toby Keith", "Country", "HxUuDPNbkJk"],
-  ["The Middle", "Jimmy Eat World", "Emo", "oKsxPW6i3pM"],
-  ["Bleed American", "Jimmy Eat World", "Emo", "Yud6TmNJWhY"],
-  ["Jude Law and a Semester Abroad", "Brand New", "Emo", "ZvzHyHgc4lA"],
-  ["Seventy Times 7", "Brand New", "Emo", "siCdIojMhok"],
-  ["At Your Funeral", "Saves the Day", "Emo", "NwW0q65VIas"],
-  ["Understanding in a Car Crash", "Thursday", "Emo", "Lrxk7wBSG_g"]
+var PLAYLISTS = [
+  { name: "1995", songs: [
+  ["Wonderwall", "Oasis", "bx1Bh8ZvH84"],
+  ["Fake Plastic Trees", "Radiohead", "n5h0qHwNrHk"],
+  ["This Is a Call", "Foo Fighters", "86Juolmcqdw"],
+  ["Bullet with Butterfly Wings", "Smashing Pumpkins", "8-r-V0uK4u0"],
+  ["Geek Stink Breath", "Green Day", "fr2T-Rcgq1c"],
+  ["This Ain't a Love Song", "Bon Jovi", "-nlDy6h-v9c"],
+  ["Hold Me, Thrill Me, Kiss Me, Kill Me", "U2", "eIdTNyJp38A"],
+  ["Name", "Goo Goo Dolls", "yQOBUrRaPU0"],
+  ["Glycerine", "Bush", "hOllF3TgAsM"],
+  ["December", "Collective Soul", "6exsatE-DUk"],
+  ["Only Wanna Be with You", "Hootie & the Blowfish", "Ln6WQqRDrCo"],
+  ["Country House", "Blur", "gpuh1WE-RVw"],
+  ["Common People", "Pulp", "yuTMWgOduFM"],
+  ["Just a Girl", "No Doubt", "PHzOOQfhPFg"],
+  ["Strange Currencies", "R.E.M.", "j4iuG7StmPc"],
+  ["Say It Ain't So", "Weezer", "ENXvZ9YRjbo"]
+  ] },
+  { name: "2001", songs: [
+  ["Fallin'", "Alicia Keys", "Urdlvw0SSEc"],
+  ["Lady Marmalade", "Christina Aguilera, Lil' Kim, Mya, Pink", "RQa7SvVCdZk"],
+  ["Survivor", "Destiny's Child", "Wmc8bQoL-J0"],
+  ["Bootylicious", "Destiny's Child", "IyYnnUcgeMc"],
+  ["Can't Get You Out of My Head", "Kylie Minogue", "c18441Eh_WE"],
+  ["All for You", "Janet Jackson", "J551f-TyqjY"],
+  ["Hero", "Enrique Iglesias", "koJlIGDImiU"],
+  ["Family Affair", "Mary J. Blige", "znlFu_lemsU"],
+  ["U Remind Me", "Usher", "Bxau9B3jOHM"],
+  ["Let Me Blow Ya Mind", "Eve feat. Gwen Stefani", "Wt88GMJmVk0"],
+  ["Drops of Jupiter", "Train", "7Xf-Lesrkuc"],
+  ["I'm Real", "Jennifer Lopez", "zD2D6phvRRk"],
+  ["I'm a Slave 4 U", "Britney Spears", "Mzybwwf2HoQ"],
+  ["Pop", "NSYNC", "TWZKw_MgUPI"],
+  ["The Call", "Backstreet Boys", "wMOkm57vu0k"],
+  ["How You Remind Me", "Nickelback", "1cQh1ccqu8M"],
+  ["My Sacrifice", "Creed", "O-fyNgHdmLI"],
+  ["Blurry", "Puddle of Mudd", "xJJsoquu70o"],
+  ["It's Been Awhile", "Staind", "K2NGe9mLAEc"],
+  ["Wish You Were Here", "Incubus", "8295rOMvtQI"],
+  ["Hash Pipe", "Weezer", "_9BGLtqqkVI"],
+  ["Chop Suey!", "System of a Down", "CSvFpBOe8eY"],
+  ["In the End", "Linkin Park", "eVTXPUF4Oz4"],
+  ["The Rock Show", "Blink-182", "z7hhDINyBP0"],
+  ["My Way", "Limp Bizkit", "Dn8vzTsnPps"],
+  ["Loser", "3 Doors Down", "2Ui_Q4qBDJY"],
+  ["Fat Lip", "Sum 41", "CMX2lPum_pg"],
+  ["Elevation", "U2", "19KstSgU-c0"],
+  ["Clint Eastwood", "Gorillaz", "1fOc3rATNfI"],
+  ["Last Nite", "The Strokes", "TOypSnKFHrE"],
+  ["Fell in Love with a Girl", "The White Stripes", "fTH71AAxXmM"],
+  ["Crystal", "New Order", "KVMyXDsadLQ"],
+  ["Don't Panic", "Coldplay", "yWeuUwpEQfs"],
+  ["Pyramid Song", "Radiohead", "3M_Gg1xAHE4"],
+  ["Imitation of Life", "R.E.M.", "0vqgdSsfqPs"],
+  ["Plug In Baby", "Muse", "dbB-mICjkQM"],
+  ["New Slang", "The Shins", "zYwCmcB0XMw"],
+  ["Ain't Nothing 'bout You", "Brooks & Dunn", "SpJdhC5E8Vg"],
+  ["Only in America", "Brooks & Dunn", "GN1iI-DaJNw"],
+  ["Where Were You (When the World Stopped Turning)", "Alan Jackson", "mwcWVs4Eejg"],
+  ["Where I Come From", "Alan Jackson", "0G15BcMWQYY"],
+  ["I'm Movin' On", "Rascal Flatts", "eKIGOHhiDuY"],
+  ["One More Day", "Diamond Rio", "Xi8O7JdA4Sg"],
+  ["I'm a Survivor", "Reba McEntire", "_HbTASYNVps"],
+  ["Where the Stars and Stripes and the Eagle Fly", "Aaron Tippin", "TTKmjhJ1__o"],
+  ["Grown Men Don't Cry", "Tim McGraw", "TQjp5s6DJlw"],
+  ["There You'll Be", "Faith Hill", "pJSjXZdKj8s"],
+  ["I Wanna Talk About Me", "Toby Keith", "HxUuDPNbkJk"],
+  ["The Middle", "Jimmy Eat World", "oKsxPW6i3pM"],
+  ["Bleed American", "Jimmy Eat World", "Yud6TmNJWhY"],
+  ["Jude Law and a Semester Abroad", "Brand New", "ZvzHyHgc4lA"],
+  ["Seventy Times 7", "Brand New", "siCdIojMhok"],
+  ["At Your Funeral", "Saves the Day", "NwW0q65VIas"],
+  ["Understanding in a Car Crash", "Thursday", "Lrxk7wBSG_g"]
+  ] }
 ];
+var SONGS = PLAYLISTS[0].songs;
+var currentPlaylistIndex = 0;
 
 var player = null;
 var playerReady = false;
@@ -251,7 +283,7 @@ function showChannelBanner() {
   var s = SONGS[currentIndex];
   var channelNum = filtered.indexOf(currentIndex) + 1;
   if (channelNum < 1) { channelNum = currentIndex + 1; }
-  channelBanner.textContent = "CH " + channelNum + "  •  " + s[0] + " — " + s[1];
+  channelBanner.textContent = PLAYLISTS[currentPlaylistIndex].name + "  •  CH " + channelNum + "  •  " + s[0] + " — " + s[1];
   channelBanner.classList.add("show");
   if (bannerTimer) { clearTimeout(bannerTimer); }
   bannerTimer = setTimeout(function() { channelBanner.classList.remove("show"); }, 3500);
@@ -277,6 +309,21 @@ function setPlaying(playing) {
   isPlaying = playing;
   setStatus(playing ? "Playing" : "Paused", playing);
 }
+function setPlaylist(idx) {
+  if (idx < 0 || idx >= PLAYLISTS.length || idx === currentPlaylistIndex) return;
+  currentPlaylistIndex = idx;
+  SONGS = PLAYLISTS[idx].songs;
+  filtered = SONGS.map(function(_, i) { return i; });
+  currentIndex = -1;
+  isPlaying = false;
+  if (playerReady) { player.stopVideo(); }
+  channelBanner.classList.remove("show");
+  setStatus("Ready", false);
+  var btns = document.querySelectorAll(".playlist-btn");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.toggle("active", parseInt(btns[i].getAttribute("data-playlist"), 10) === idx);
+  }
+}
 
 powerBtn.onclick = function() { setPower(!isPowered); };
 
@@ -286,7 +333,7 @@ function playSong(i) {
   if (!isPowered) { setPower(true); }
   currentIndex = i;
   var s = SONGS[i];
-  if (playerReady) { player.loadVideoById(s[3]); } else { pendingId = s[3]; pendingPaused = false; }
+  if (playerReady) { player.loadVideoById(s[2]); } else { pendingId = s[2]; pendingPaused = false; }
   chUpBtn.disabled = false;
   chDownBtn.disabled = false;
   setPlaying(true);
@@ -309,6 +356,12 @@ function playPrev() {
 }
 chUpBtn.onclick = playNext;
 chDownBtn.onclick = playPrev;
+var playlistBtns = document.querySelectorAll(".playlist-btn");
+for (var i = 0; i < playlistBtns.length; i++) {
+  (function(btn) {
+    btn.onclick = function() { setPlaylist(parseInt(btn.getAttribute("data-playlist"), 10)); };
+  })(playlistBtns[i]);
+}
 </script>
 </body>
 </html>
