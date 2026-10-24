@@ -25,20 +25,35 @@
   .brand { font-size: 11px; letter-spacing: 3px; font-weight: 600; color: #d8c9a3; }
   .status { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #b9b2a6; }
   .status.playing { color: #d8c9a3; }
-  .photo-wrap { position: relative; margin-top: 4px; border-radius: 14px; overflow: hidden; border: 1px solid #45484f; line-height: 0; container-type: inline-size; }
-  .photo-wrap img { display: block; width: 100%; height: auto; }
-  .screen-text { position: absolute; left: 22.5%; top: 27.5%; width: 53.5%; height: 13%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; overflow: hidden; padding: 0 2%; line-height: 1.05; }
-  .screen-title-scroll { width: 100%; overflow: hidden; white-space: nowrap; line-height: 1.05; text-align: center; }
-  .screen-title-scroll span { display: inline-block; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: clamp(11px, 3vw, 17px); font-size: 2.8cqi; line-height: 1.05; white-space: nowrap; will-change: transform; text-shadow: 0 0 6px rgba(255,255,255,.85), 0 0 16px rgba(216,201,163,.65), 0 1px 2px rgba(0,0,0,.6); }
-  .screen-title-scroll.scrolling span { animation: scrollTitle 9s linear infinite; }
-  .screen-title-scroll.paused span { animation-play-state: paused; }
-  @keyframes scrollTitle { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-  .screen-artist-scroll { width: 100%; overflow: hidden; white-space: nowrap; margin-top: 1px; line-height: 1.05; text-align: center; }
-  .screen-artist-scroll span { display: inline-block; font-size: clamp(9px, 2.4vw, 13px); font-size: 2.2cqi; line-height: 1.05; color: #e8e2d6; white-space: nowrap; will-change: transform; text-shadow: 0 0 5px rgba(255,255,255,.7), 0 0 12px rgba(216,201,163,.5); }
-  .screen-artist-scroll.scrolling span { animation: scrollTitle 11s linear infinite; }
-  .screen-artist-scroll.paused span { animation-play-state: paused; }
-  .notes { position: absolute; inset: 0; pointer-events: none; }
-  .note { position: absolute; font-size: 28px; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.9), 0 0 2px #000; opacity: 0; }
+  .tv-wrap { position: relative; margin-top: 4px; }
+  .antenna { position: relative; height: 34px; margin: 0 18% 0 18%; }
+  .antenna::before, .antenna::after { content: ""; position: absolute; bottom: 0; width: 3px; height: 34px; background: #9a9da3; border-radius: 2px; transform-origin: bottom center; }
+  .antenna::before { left: 50%; transform: rotate(-28deg); }
+  .antenna::after { left: 50%; transform: rotate(28deg); }
+  .tv { background: linear-gradient(180deg, #3a3d44, #232529 60%, #1a1c1f); border: 1px solid #45484f; border-radius: 22px; padding: 18px 18px 14px; box-shadow: inset 0 2px 0 rgba(255,255,255,.18), inset 0 -6px 12px rgba(0,0,0,.5), 0 14px 28px rgba(0,0,0,.35); }
+  .tv-brand { text-align: center; font-size: 11px; letter-spacing: 3px; color: #c9c2b6; margin-bottom: 12px; font-weight: 600; }
+  .tv-screen { position: relative; width: 100%; aspect-ratio: 4 / 3; background: #000; border-radius: 28px / 22px; overflow: hidden; border: 10px solid #111214; box-shadow: inset 0 0 30px rgba(0,0,0,.9), 0 0 0 1px #555; }
+  .tv-screen iframe, .tv-screen #ytplayer { width: 100% !important; height: 100% !important; display: block; border: 0; }
+  .tv-screen .channel-banner { position: absolute; left: 12px; bottom: 12px; right: 12px; background: rgba(0,0,0,.72); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 600; text-align: left; opacity: 0; transition: opacity .4s; pointer-events: none; z-index: 2; }
+  .tv-screen .channel-banner.show { opacity: 1; }
+  .tv-screen .off-screen { position: absolute; inset: 0; background: #000; color: #555; display: none; align-items: center; justify-content: center; font-size: 13px; letter-spacing: 4px; z-index: 3; }
+  .tv.off .tv-screen .off-screen { display: flex; }
+  .tv.off .tv-screen iframe { visibility: hidden; }
+  .tv-controls { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+  .tv-controls .spacer { flex: 1; }
+  .tv-btn { background: #2f3238; color: #f5f2ec; border: 1px solid #55585f; border-radius: 10px; padding: 10px 12px; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; line-height: 1.2; }
+  .tv-btn small { display: block; font-size: 10px; letter-spacing: 1px; color: #b9b2a6; font-weight: 500; }
+  .tv-btn.power { background: #7a1f1f; border-color: #a33333; }
+  .tv-btn:disabled { opacity: .45; cursor: default; }
+  .speaker { height: 18px; margin-top: 12px; border-radius: 8px; background-image: radial-gradient(#111 1.2px, transparent 1.3px); background-size: 7px 7px; opacity: .7; }
+  .tv-feet { display: flex; justify-content: space-between; padding: 0 28px; }
+  .tv-feet span { width: 44px; height: 10px; background: #1a1c1f; border-radius: 0 0 8px 8px; }
+  .now-playing { background: #121316; border: 1px solid rgba(216,201,163,.45); border-radius: 14px; padding: 14px 16px; text-align: center; margin-top: 16px; }
+  .now-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #a99f8f; margin-bottom: 4px; }
+  .now-title { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 22px; line-height: 1.2; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.35); }
+  .now-artist { font-size: 14px; color: #c9c2b6; margin-top: 2px; }
+  .notes { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+  .note { position: absolute; font-size: 26px; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.9), 0 0 2px #000; opacity: 0; }
   .notes.playing .note { animation: floatNote 3s ease-in infinite; }
   @keyframes floatNote { 0% { transform: translateY(8px) rotate(-8deg); opacity: 0; } 18% { opacity: 1; } 100% { transform: translateY(-72px) rotate(14deg); opacity: 0; } }
   .deck-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #a9a29a; margin: 18px 4px 10px; }
@@ -83,24 +98,42 @@
 
   <div class="radio">
     <div class="radio-top">
-      <span class="brand">Ashley &middot; Stereo</span>
+      <span class="brand">Ashley &middot; TV</span>
       <span class="status" id="status">Ready</span>
     </div>
 
-    <div class="photo-wrap">
-      <img src="boombox.jpg" alt="A realistic 1990s boombox radio">
-      <div class="screen-text">
-        <div class="screen-title-scroll" id="screenTitleWrap"><span id="screenTitle">Pick a song below</span></div>
-        <div class="screen-artist-scroll" id="screenArtistWrap"><span id="screenArtist"></span></div>
+    <div class="tv-wrap">
+      <div class="antenna" aria-hidden="true"></div>
+      <div class="tv" id="tv">
+        <div class="tv-brand">ASHLEY &middot; COLOR TV &middot; 1990s</div>
+        <div class="tv-screen">
+          <div id="ytplayer"></div>
+          <div class="channel-banner" id="channelBanner"></div>
+          <div class="off-screen">OFF</div>
+        </div>
+        <div class="tv-controls">
+          <button class="tv-btn power" id="powerBtn" type="button">⏻ Power<small>Off / On</small></button>
+          <div class="spacer"></div>
+          <button class="tv-btn" id="chDownBtn" type="button" disabled>CH &#9660;<small>Down</small></button>
+          <button class="tv-btn" id="chUpBtn" type="button" disabled>CH &#9650;<small>Up</small></button>
+        </div>
+        <div class="speaker" aria-hidden="true"></div>
+        <div class="notes" id="notes">
+          <span class="note" style="left:18%;top:62%;animation-delay:0s;animation-duration:2.6s;">&#9835;</span>
+          <span class="note" style="left:22%;top:66%;animation-delay:0.9s;animation-duration:3.1s;">&#9834;</span>
+          <span class="note" style="left:26%;top:60%;animation-delay:1.7s;animation-duration:2.8s;">&#9835;</span>
+          <span class="note" style="left:72%;top:62%;animation-delay:0.5s;animation-duration:3.0s;">&#9834;</span>
+          <span class="note" style="left:76%;top:66%;animation-delay:1.3s;animation-duration:2.6s;">&#9835;</span>
+          <span class="note" style="left:80%;top:60%;animation-delay:2.0s;animation-duration:3.2s;">&#9834;</span>
+        </div>
       </div>
-      <div class="notes" id="notes">
-        <span class="note" style="left:18%;top:62%;animation-delay:0s;animation-duration:2.6s;">&#9835;</span>
-        <span class="note" style="left:22%;top:66%;animation-delay:0.9s;animation-duration:3.1s;">&#9834;</span>
-        <span class="note" style="left:26%;top:60%;animation-delay:1.7s;animation-duration:2.8s;">&#9835;</span>
-        <span class="note" style="left:72%;top:62%;animation-delay:0.5s;animation-duration:3.0s;">&#9834;</span>
-        <span class="note" style="left:76%;top:66%;animation-delay:1.3s;animation-duration:2.6s;">&#9835;</span>
-        <span class="note" style="left:80%;top:60%;animation-delay:2.0s;animation-duration:3.2s;">&#9834;</span>
-      </div>
+      <div class="tv-feet" aria-hidden="true"><span></span><span></span></div>
+    </div>
+
+    <div class="now-playing">
+      <div class="now-label">Now Playing</div>
+      <div class="now-title" id="screenTitle">Pick a song below</div>
+      <div class="now-artist" id="screenArtist"></div>
     </div>
 
     <div class="deck-label">Select a track</div>
@@ -144,10 +177,9 @@
       <a id="watchLink" class="watch disabled" href="#" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
     </div>
 
-    <div class="hidden-player"><div id="ytplayer"></div></div>
   </div>
 
-  <p class="note">Pick a track and it will play from the stereo — the song and artist scroll across the boombox screen and music notes float out of the speakers. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a track and it will play on the TV — use CH up / down to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
   <p class="footer">Ashley&rsquo;s Spot &middot; Curated 2001 Playlist</p>
 </div>
 <script>
@@ -222,8 +254,8 @@ var pendingId = null;
 var pendingPaused = false;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("ytplayer", {
-    width: "1",
-    height: "1",
+    width: "640",
+    height: "360",
     playerVars: { rel: 0, modestbranding: 1 },
     events: {
       onReady: function() {
@@ -235,6 +267,7 @@ function onYouTubeIframeAPIReady() {
         }
       },
       onStateChange: function(e) {
+        if (!isPowered) { return; }
         if (e.data === 0) { playNext(); }
         else if (e.data === 1) { setPlaying(true); }
         else if (e.data === 2) { setPlaying(false); }
@@ -258,41 +291,50 @@ var pauseBtn = document.getElementById("pauseBtn");
 var fontpick = document.getElementById("fontpick");
 var statusEl = document.getElementById("status");
 var notesEl = document.getElementById("notes");
-var screenTitleWrap = document.getElementById("screenTitleWrap");
-var screenArtistWrap = document.getElementById("screenArtistWrap");
+var tvEl = document.getElementById("tv");
+var powerBtn = document.getElementById("powerBtn");
+var chUpBtn = document.getElementById("chUpBtn");
+var chDownBtn = document.getElementById("chDownBtn");
+var channelBanner = document.getElementById("channelBanner");
 var watchLink = document.getElementById("watchLink");
 var currentIndex = -1;
 var isPlaying = false;
+var isPowered = true;
+var bannerTimer = null;
 var filtered = SONGS.map(function(_, i) { return i; });
 
 function setStatus(text, playing) {
   statusEl.textContent = text;
   statusEl.classList.toggle("playing", !!playing);
   notesEl.classList.toggle("playing", !!playing);
-  if (playing) {
-    updateScroll();
-    screenTitleWrap.classList.remove("paused");
-    screenArtistWrap.classList.remove("paused");
+}
+function showChannelBanner() {
+  if (currentIndex < 0) return;
+  var s = SONGS[currentIndex];
+  var channelNum = filtered.indexOf(currentIndex) + 1;
+  if (channelNum < 1) { channelNum = currentIndex + 1; }
+  channelBanner.textContent = "CH " + channelNum + "  •  " + s[0] + " — " + s[1];
+  channelBanner.classList.add("show");
+  if (bannerTimer) { clearTimeout(bannerTimer); }
+  bannerTimer = setTimeout(function() { channelBanner.classList.remove("show"); }, 3500);
+}
+function setPower(on) {
+  isPowered = on;
+  tvEl.classList.toggle("off", !on);
+  if (!on) {
+    if (playerReady) { player.pauseVideo(); }
+    setStatus("Off", false);
+    pauseBtn.textContent = "Play";
+    isPlaying = false;
+    notesEl.classList.remove("playing");
   } else {
-    screenTitleWrap.classList.add("paused");
-    screenArtistWrap.classList.add("paused");
+    if (currentIndex >= 0) {
+      if (playerReady) { player.playVideo(); }
+      setPlaying(true);
+    } else {
+      setStatus("Ready", false);
+    }
   }
-}
-function updateScroll() {
-  // Scroll only when the text is actually wider than the screen.
-  // Short names like "Usher" stay centered and fully visible instead
-  // of flying across the screen and getting cut off at the edges.
-  var titleTooLong = screenTitle.offsetWidth > screenTitleWrap.clientWidth + 2;
-  var artistTooLong = screenArtist.offsetWidth > screenArtistWrap.clientWidth + 2;
-  screenTitleWrap.classList.toggle("scrolling", titleTooLong);
-  screenArtistWrap.classList.toggle("scrolling", artistTooLong);
-}
-function restartScroll() {
-  screenTitleWrap.classList.remove("scrolling");
-  screenArtistWrap.classList.remove("scrolling");
-  void screenTitleWrap.offsetWidth;
-  void screenArtistWrap.offsetWidth;
-  if (isPlaying && currentIndex >= 0) { updateScroll(); }
 }
 function setPlaying(playing) {
   isPlaying = playing;
@@ -319,6 +361,7 @@ buildPick();
 
 pauseBtn.onclick = function() {
   if (currentIndex < 0) return;
+  if (!isPowered) { setPower(true); return; }
   if (isPlaying) {
     if (playerReady) { player.pauseVideo(); } else { pendingPaused = true; }
     setPlaying(false);
@@ -327,6 +370,7 @@ pauseBtn.onclick = function() {
     setPlaying(true);
   }
 };
+powerBtn.onclick = function() { setPower(!isPowered); };
 function applyFont() {
   screenTitle.style.fontFamily = fontpick.value;
   screenArtist.style.fontFamily = fontpick.value;
@@ -354,6 +398,7 @@ genrepick.onchange = function() {
 
 function playSong(i) {
   if (i < 0 || i >= SONGS.length) return;
+  if (!isPowered) { setPower(true); }
   currentIndex = i;
   var s = SONGS[i];
   if (playerReady) { player.loadVideoById(s[3]); } else { pendingId = s[3]; pendingPaused = false; }
@@ -365,8 +410,10 @@ function playSong(i) {
   prevBtn.disabled = false;
   nextBtn.disabled = false;
   pauseBtn.disabled = false;
+  chUpBtn.disabled = false;
+  chDownBtn.disabled = false;
   setPlaying(true);
-  restartScroll();
+  showChannelBanner();
 }
 function filteredPosition() {
   return filtered.indexOf(currentIndex);
@@ -383,13 +430,14 @@ function playPrev() {
   var prevPos = pos >= 0 ? (pos - 1 + filtered.length) % filtered.length : filtered.length - 1;
   playSong(filtered[prevPos]);
 }
-window.addEventListener("resize", function() { if (currentIndex >= 0) { updateScroll(); } });
 pick.onchange = function() {
   if (pick.value === "") return;
   playSong(parseInt(pick.value, 10));
 };
 prevBtn.onclick = playPrev;
 nextBtn.onclick = playNext;
+chUpBtn.onclick = playNext;
+chDownBtn.onclick = playPrev;
 </script>
 </body>
 </html>
