@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My 2026 Period Calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fdfdfc; color: #2b2b2b; font-family: 'Quicksand', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 22px 16px 48px; }
+  h1 { margin: 0; text-align: center; font-family: 'Indie Flower', cursive; font-size: 52px; line-height: 1.1; color: #6d2f4d; }
+  .sub { text-align: center; font-size: 13px; color: #888; margin: 2px 0 20px; }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+  .nav button, .nav select { font-family: 'Quicksand', Arial, sans-serif; font-size: 15px; }
+  .nav button { background: #fff; color: #6d2f4d; border: 1.5px solid #d9b8c8; border-radius: 999px; padding: 8px 14px; cursor: pointer; }
+  .nav button:active { background: #f7e9f0; }
+  .month-label { font-family: 'Indie Flower', cursive; font-size: 34px; color: #111; text-align: center; flex: 1; }
+  .nav select { border: 1.5px solid #d9b8c8; border-radius: 10px; padding: 8px; background: #fff; color: #333; }
+  .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .dow { text-align: center; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #999; padding: 6px 0; }
+  .day { min-height: 52px; border: 1px solid #e9e2e6; border-radius: 12px; background: #fff; padding: 6px 4px 4px; text-align: center; cursor: pointer; position: relative; }
+  .day.empty { border: none; background: transparent; cursor: default; }
+  .day .num { font-size: 16px; font-weight: 700; color: #333; }
+  .day.today { border: 2px solid #6d2f4d; }
+  .day.selected { background: #f7e9f0; border-color: #c98aa8; }
+  .day.period { background: #e8b4c8; border-color: #c98aa8; }
+  .day.period .num { color: #6d2f4d; }
+  .day .dot { width: 6px; height: 6px; border-radius: 50%; background: #6d2f4d; margin: 4px auto 0; }
+  .legend { display: flex; gap: 18px; justify-content: center; font-size: 12.5px; color: #666; margin: 14px 0 4px; }
+  .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 4px; vertical-align: -1px; margin-right: 5px; }
+  .count { text-align: center; font-size: 13px; color: #888; margin: 6px 0 22px; }
+  .panel { border-top: 3px double #d9b8c8; padding-top: 18px; }
+  .panel h2 { font-family: 'Indie Flower', cursive; font-size: 30px; margin: 0 0 10px; color: #111; }
+  .entries { margin: 0 0 14px; padding: 0; list-style: none; }
+  .entries li { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: #fff; border: 1px solid #e9e2e6; border-radius: 10px; padding: 9px 12px; margin-bottom: 8px; font-size: 14.5px; }
+  .tag { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #fff; background: #a85d83; border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
+  .tag.period { background: #6d2f4d; }
+  .del { background: none; border: none; color: #bbb; font-size: 20px; cursor: pointer; line-height: 1; }
+  .form-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .form-row select, .form-row input[type="text"] { font-family: 'Quicksand', Arial, sans-serif; font-size: 15px; border: 1.5px solid #d9b8c8; border-radius: 10px; padding: 10px; background: #fff; }
+  .form-row select { flex: 0 0 150px; }
+  .form-row input[type="text"] { flex: 1; min-width: 180px; }
+  .btn { font-family: 'Quicksand', Arial, sans-serif; font-size: 15px; font-weight: 700; background: #6d2f4d; color: #fff; border: none; border-radius: 999px; padding: 11px 20px; cursor: pointer; }
+  .btn.secondary { background: #fff; color: #6d2f4d; border: 1.5px solid #d9b8c8; }
+  .hint { font-size: 12.5px; color: #999; margin-top: 14px; text-align: center; }
+  @media (max-width: 520px) { h1 { font-size: 40px; } .month-label { font-size: 28px; } .day { min-height: 46px; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>My 2026 Period Calendar</h1>
+  <p class="sub">Tap a day, then add whatever you want to it. Nothing here is filled in for you.</p>
+
+  <div class="nav">
+    <button id="prevBtn" type="button" aria-label="Previous month">&larr;</button>
+    <div class="month-label" id="monthLabel"></div>
+    <button id="nextBtn" type="button" aria-label="Next month">&rarr;</button>
+  </div>
+  <div class="nav">
+    <select id="monthSelect" aria-label="Jump to month"></select>
+    <button id="todayBtn" type="button">Today</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="legend">
+    <span><span class="swatch" style="background:#e8b4c8;"></span>Period day</span>
+    <span><span class="swatch" style="background:#6d2f4d;border-radius:50%;width:8px;height:8px;"></span>Has entries</span>
+  </div>
+  <p class="count" id="countLine"></p>
+
+  <section class="panel">
+    <h2 id="panelTitle">Pick a day</h2>
+    <ul class="entries" id="entryList"></ul>
+    <div class="form-row">
+      <select id="entryType" aria-label="Entry type">
+        <option value="period">Period</option>
+        <option value="symptom">Symptom</option>
+        <option value="mood">Mood</option>
+        <option value="note">Note</option>
+      </select>
+      <input id="entryNote" type="text" placeholder="Add a note (optional)" maxlength="120">
+    </div>
+    <div class="form-row">
+      <button class="btn" id="saveBtn" type="button">Add to this day</button>
+      <button class="btn secondary" id="togglePeriodBtn" type="button">Mark period day</button>
+    </div>
+  </section>
+
+  <p class="hint">Your entries save in this browser on this device only.</p>
+</main>
+
+<script>
+  var YEAR = 2026;
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var DOWS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var STORE_KEY = 'ashley-period-2026';
+  var entries = {};
+  try { entries = JSON.parse(localStorage.getItem(STORE_KEY) || '{}') || {}; } catch (e) { entries = {}; }
+
+  var today = new Date();
+  var viewYear = YEAR;
+  var viewMonth = (today.getFullYear() === YEAR) ? today.getMonth() : 9;
+  var selectedKey = null;
+
+  function keyFor(m, d) {
+    return YEAR + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+  }
+  function save() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(entries)); } catch (e) {}
+  }
+  function dayEntries(k) { return entries[k] || []; }
+  function hasPeriod(k) { return dayEntries(k).some(function (e) { return e.t === 'period'; }); }
+
+  function renderMonthSelect() {
+    var sel = document.getElementById('monthSelect');
+    sel.innerHTML = '';
+    MONTHS.forEach(function (name, i) {
+      var opt = document.createElement('option');
+      opt.value = i; opt.textContent = name + ' 2026';
+      if (i === viewMonth) opt.selected = true;
+      sel.appendChild(opt);
+    });
+  }
+
+  function render() {
+    document.getElementById('monthLabel').textContent = MONTHS[viewMonth] + ' 2026';
+    renderMonthSelect();
+    var grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    DOWS.forEach(function (d) {
+      var el = document.createElement('div');
+      el.className = 'dow'; el.textContent = d;
+      grid.appendChild(el);
+    });
+    var firstDow = new Date(YEAR, viewMonth, 1).getDay();
+    var daysInMonth = new Date(YEAR, viewMonth + 1, 0).getDate();
+    for (var i = 0; i < firstDow; i++) {
+      var blank = document.createElement('div');
+      blank.className = 'day empty';
+      grid.appendChild(blank);
+    }
+    var periodCount = 0;
+    for (var d = 1; d <= daysInMonth; d++) {
+      (function (day) {
+        var k = keyFor(viewMonth, day);
+        var list = dayEntries(k);
+        if (hasPeriod(k)) periodCount++;
+        var cell = document.createElement('div');
+        cell.className = 'day';
+        if (hasPeriod(k)) cell.className += ' period';
+        if (k === selectedKey) cell.className += ' selected';
+        if (today.getFullYear() === YEAR && today.getMonth() === viewMonth && today.getDate() === day) cell.className += ' today';
+        var num = document.createElement('div');
+        num.className = 'num'; num.textContent = day;
+        cell.appendChild(num);
+        if (list.length > 0 && !hasPeriod(k)) {
+          var dot = document.createElement('div');
+          dot.className = 'dot';
+          cell.appendChild(dot);
+        }
+        cell.addEventListener('click', function () { selectedKey = k; render(); renderPanel(); });
+        grid.appendChild(cell);
+      })(d);
+    }
+    document.getElementById('countLine').textContent = periodCount + ' period day' + (periodCount === 1 ? '' : 's') + ' logged this month';
+    document.getElementById('prevBtn').disabled = viewMonth === 0;
+    document.getElementById('nextBtn').disabled = viewMonth === 11;
+  }
+
+  function renderPanel() {
+    var title = document.getElementById('panelTitle');
+    var listEl = document.getElementById('entryList');
+    var toggleBtn = document.getElementById('togglePeriodBtn');
+    listEl.innerHTML = '';
+    if (!selectedKey) {
+      title.textContent = 'Pick a day';
+      toggleBtn.style.display = 'none';
+      return;
+    }
+    var parts = selectedKey.split('-');
+    var nice = MONTHS[parseInt(parts[1], 10) - 1] + ' ' + parseInt(parts[2], 10) + ', 2026';
+    title.textContent = nice;
+    toggleBtn.style.display = 'inline-block';
+    toggleBtn.textContent = hasPeriod(selectedKey) ? 'Unmark period day' : 'Mark period day';
+    var list = dayEntries(selectedKey);
+    if (list.length === 0) {
+      var li = document.createElement('li');
+      li.textContent = 'Nothing logged yet — add something below.';
+      listEl.appendChild(li);
+    }
+    list.forEach(function (entry, idx) {
+      var li = document.createElement('li');
+      var left = document.createElement('span');
+      var tag = document.createElement('span');
+      tag.className = 'tag' + (entry.t === 'period' ? ' period' : '');
+      tag.textContent = entry.t;
+      left.appendChild(tag);
+      var txt = document.createElement('span');
+      txt.textContent = (entry.n ? '  ' + entry.n : (entry.t === 'period' ? '  Period day' : ''));
+      left.appendChild(txt);
+      var del = document.createElement('button');
+      del.className = 'del'; del.type = 'button'; del.textContent = '×';
+      del.setAttribute('aria-label', 'Delete entry');
+      del.addEventListener('click', function () {
+        entries[selectedKey].splice(idx, 1);
+        if (entries[selectedKey].length === 0) delete entries[selectedKey];
+        save(); render(); renderPanel();
+      });
+      li.appendChild(left);
+      li.appendChild(del);
+      listEl.appendChild(li);
+    });
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', function () {
+    if (viewMonth > 0) { viewMonth--; render(); }
+  });
+  document.getElementById('nextBtn').addEventListener('click', function () {
+    if (viewMonth < 11) { viewMonth++; render(); }
+  });
+  document.getElementById('monthSelect').addEventListener('change', function (e) {
+    viewMonth = parseInt(e.target.value, 10); render();
+  });
+  document.getElementById('todayBtn').addEventListener('click', function () {
+    viewYear = YEAR;
+    viewMonth = (today.getFullYear() === YEAR) ? today.getMonth() : 9;
+    selectedKey = keyFor(viewMonth, today.getDate());
+    render(); renderPanel();
+  });
+  document.getElementById('saveBtn').addEventListener('click', function () {
+    if (!selectedKey) { alert('Pick a day first.'); return; }
+    var type = document.getElementById('entryType').value;
+    var note = document.getElementById('entryNote').value.trim();
+    if (!entries[selectedKey]) entries[selectedKey] = [];
+    entries[selectedKey].push({ t: type, n: note });
+    document.getElementById('entryNote').value = '';
+    save(); render(); renderPanel();
+  });
+  document.getElementById('togglePeriodBtn').addEventListener('click', function () {
+    if (!selectedKey) return;
+    if (!entries[selectedKey]) entries[selectedKey] = [];
+    if (hasPeriod(selectedKey)) {
+      entries[selectedKey] = entries[selectedKey].filter(function (e) { return e.t !== 'period'; });
+      if (entries[selectedKey].length === 0) delete entries[selectedKey];
+    } else {
+      entries[selectedKey].push({ t: 'period', n: '' });
+    }
+    save(); render(); renderPanel();
+  });
+
+  render();
+  renderPanel();
+</script>
+</body>
+</html>
