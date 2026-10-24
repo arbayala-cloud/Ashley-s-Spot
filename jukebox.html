@@ -25,16 +25,16 @@
   .brand { font-size: 11px; letter-spacing: 3px; font-weight: 600; color: #d8c9a3; }
   .status { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #b9b2a6; }
   .status.playing { color: #d8c9a3; }
-  .photo-wrap { position: relative; margin-top: 4px; border-radius: 14px; overflow: hidden; border: 1px solid #45484f; line-height: 0; }
+  .photo-wrap { position: relative; margin-top: 4px; border-radius: 14px; overflow: hidden; border: 1px solid #45484f; line-height: 0; container-type: inline-size; }
   .photo-wrap img { display: block; width: 100%; height: auto; }
-  .screen-text { position: absolute; left: 21.4%; top: 26.9%; width: 55.8%; height: 14.3%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; overflow: hidden; padding: 0 2%; line-height: 1.2; }
-  .screen-title-scroll { width: 100%; overflow: hidden; white-space: nowrap; }
-  .screen-title-scroll span { display: inline-block; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: clamp(13px, 3.4vw, 19px); white-space: nowrap; will-change: transform; text-shadow: 0 0 6px rgba(255,255,255,.85), 0 0 16px rgba(216,201,163,.65), 0 1px 2px rgba(0,0,0,.6); }
+  .screen-text { position: absolute; left: 21.4%; top: 26.9%; width: 55.8%; height: 14.3%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; overflow: hidden; padding: 0 2%; line-height: 1.1; }
+  .screen-title-scroll { width: 100%; overflow: hidden; white-space: nowrap; line-height: 1.1; }
+  .screen-title-scroll span { display: inline-block; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: clamp(13px, 3.4vw, 19px); font-size: 3.4cqi; line-height: 1.1; white-space: nowrap; will-change: transform; text-shadow: 0 0 6px rgba(255,255,255,.85), 0 0 16px rgba(216,201,163,.65), 0 1px 2px rgba(0,0,0,.6); }
   .screen-title-scroll.scrolling span { animation: scrollTitle 9s linear infinite; }
   .screen-title-scroll.paused span { animation-play-state: paused; }
   @keyframes scrollTitle { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-  .screen-artist-scroll { width: 100%; overflow: hidden; white-space: nowrap; margin-top: 2px; }
-  .screen-artist-scroll span { display: inline-block; font-size: clamp(11px, 2.8vw, 14px); color: #e8e2d6; white-space: nowrap; will-change: transform; text-shadow: 0 0 5px rgba(255,255,255,.7), 0 0 12px rgba(216,201,163,.5); }
+  .screen-artist-scroll { width: 100%; overflow: hidden; white-space: nowrap; margin-top: 1px; line-height: 1.1; }
+  .screen-artist-scroll span { display: inline-block; font-size: clamp(11px, 2.8vw, 14px); font-size: 2.8cqi; line-height: 1.1; color: #e8e2d6; white-space: nowrap; will-change: transform; text-shadow: 0 0 5px rgba(255,255,255,.7), 0 0 12px rgba(216,201,163,.5); }
   .screen-artist-scroll.scrolling span { animation: scrollTitle 11s linear infinite; }
   .screen-artist-scroll.paused span { animation-play-state: paused; }
   .notes { position: absolute; inset: 0; pointer-events: none; }
