@@ -7,7 +7,7 @@
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; background: #fff; color: #222; font-family: Arial, Helvetica, sans-serif; text-align: center; padding: 20px 16px 40px; }
-  .wrap { max-width: 520px; margin: 0 auto; }
+  .wrap { max-width: 560px; margin: 0 auto; }
   h1 { font-size: 28px; margin: 0 0 4px; }
   .sub { color: #777; font-size: 14px; margin: 0 0 16px; }
   .menu-row { margin: 0 0 16px; }
@@ -15,27 +15,21 @@
   .menu-panel { display: none; margin-top: 6px; }
   .menu-panel.open { display: block; }
   .menu-panel a { display: block; font-size: 20px; font-weight: 700; color: #111; text-decoration: none; padding: 8px 0; }
-  .boombox { position: relative; margin: 60px auto 0; }
-  .handle { width: 55%; height: 24px; margin: 0 auto; border: 9px solid #333; border-bottom: none; border-radius: 14px 14px 0 0; }
-  .antenna { position: absolute; top: -52px; right: 34px; width: 5px; height: 56px; background: linear-gradient(#bbb, #888); border-radius: 3px; transform: rotate(24deg); transform-origin: bottom center; }
-  .antenna::after { content: ""; position: absolute; top: -4px; left: 50%; width: 9px; height: 9px; transform: translateX(-50%); background: #888; border-radius: 50%; }
-  .body { background: #333; border-radius: 16px; padding: 16px; color: #fff; }
-  .radio-screen { background: #111; border-radius: 10px; padding: 12px; }
-  .radio-screen iframe { display: block; border: none; width: 100%; aspect-ratio: 16 / 9; height: auto; background: #000; }
-  .nowtitle { font-weight: 700; font-size: 17px; margin-top: 10px; }
-  .nowartist { font-size: 14px; color: #bbb; }
-  .controls-row { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
-  .speaker { flex: 0 0 84px; width: 84px; height: 84px; border-radius: 50%; background: repeating-radial-gradient(circle at center, #1c1c1c 0 5px, #3f3f3f 5px 7px); position: relative; box-shadow: inset 0 2px 6px rgba(0,0,0,.8); }
-  .speaker::after { content: ""; position: absolute; left: 50%; top: 50%; width: 26px; height: 26px; transform: translate(-50%, -50%); background: #111; border-radius: 50%; border: 2px solid #555; }
-  .center-col { flex: 1; min-width: 0; }
-  select { width: 100%; padding: 12px; font-size: 16px; border-radius: 10px; border: 1px solid #999; background: #fff; color: #222; }
-  .btns { display: flex; gap: 10px; justify-content: center; margin-top: 12px; }
-  .btns button { background: #eee; color: #222; border: 1px solid #999; border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700; cursor: pointer; }
-  .btns button:disabled { opacity: .45; }
-  @media (max-width: 480px) {
-    .speaker { flex-basis: 64px; width: 64px; height: 64px; }
-    .speaker::after { width: 20px; height: 20px; }
+  .photo-wrap { position: relative; max-width: 560px; margin: 0 auto; }
+  .photo-wrap img { display: block; width: 100%; height: auto; }
+  .screen-text {
+    position: absolute; left: 21.4%; top: 26.9%; width: 55.8%; height: 14.3%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #fff; overflow: hidden; padding: 0 2%;
   }
+  .screen-title { font-weight: 700; font-size: clamp(13px, 3.4vw, 19px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .screen-artist { font-size: clamp(11px, 2.8vw, 14px); color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .deck { max-width: 560px; margin: 12px auto 0; background: #333; border-radius: 16px; padding: 14px; }
+  .deck iframe { display: block; border: none; width: 100%; aspect-ratio: 16 / 9; height: auto; background: #000; border-radius: 8px; }
+  .controls-row { display: flex; gap: 10px; margin-top: 12px; }
+  .controls-row button { flex: 0 0 auto; background: #eee; color: #222; border: 1px solid #999; border-radius: 10px; padding: 12px 16px; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .controls-row button:disabled { opacity: .45; }
+  .controls-row select { flex: 1; min-width: 0; padding: 12px; font-size: 16px; border-radius: 10px; border: 1px solid #999; background: #fff; color: #222; }
 </style>
 </head>
 <body>
@@ -49,19 +43,18 @@
     <a href="blog.html">Blog</a>
     <a href="jukebox.html">Jukebox</a>
   </nav>
-  <div class="boombox">
-    <div class="antenna"></div>
-    <div class="handle"></div>
-    <div class="body">
-      <div class="radio-screen">
-        <iframe id="ytplayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <div class="nowtitle" id="nowtitle">Pick a song below</div>
-        <div class="nowartist" id="nowartist"></div>
-      </div>
-      <div class="controls-row">
-        <div class="speaker"></div>
-        <div class="center-col">
-          <select id="songpick" aria-label="Pick a song">
+  <div class="photo-wrap">
+    <img src="boombox.jpg" alt="A realistic 1990s boombox radio">
+    <div class="screen-text">
+      <div class="screen-title" id="screenTitle">Pick a song below</div>
+      <div class="screen-artist" id="screenArtist"></div>
+    </div>
+  </div>
+  <div class="deck">
+    <iframe id="ytplayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="controls-row">
+      <button id="prevBtn" disabled>&laquo; Prev</button>
+      <select id="songpick" aria-label="Pick a song">
       <option value="">Pick a song...</option>
       <option>Fallin' — Alicia Keys</option>
       <option>Lady Marmalade — Christina Aguilera, Lil' Kim, Mya, Pink</option>
@@ -117,14 +110,8 @@
       <option>Seventy Times 7 — Brand New</option>
       <option>At Your Funeral — Saves the Day</option>
       <option>Understanding in a Car Crash — Thursday</option>
-          </select>
-          <div class="btns">
-            <button id="prevBtn" disabled>&laquo; Prev</button>
-            <button id="nextBtn" disabled>Next &raquo;</button>
-          </div>
-        </div>
-        <div class="speaker"></div>
-      </div>
+      </select>
+      <button id="nextBtn" disabled>Next &raquo;</button>
     </div>
   </div>
 </div>
@@ -194,8 +181,8 @@ var SONGS = [
 
 var pick = document.getElementById("songpick");
 var ytEl = document.getElementById("ytplayer");
-var nowTitle = document.getElementById("nowtitle");
-var nowArtist = document.getElementById("nowartist");
+var screenTitle = document.getElementById("screenTitle");
+var screenArtist = document.getElementById("screenArtist");
 var prevBtn = document.getElementById("prevBtn");
 var nextBtn = document.getElementById("nextBtn");
 var currentIndex = -1;
@@ -205,8 +192,8 @@ function playSong(i) {
   currentIndex = i;
   var s = SONGS[i];
   ytEl.src = "https://www.youtube.com/embed/" + s[3] + "?autoplay=1&rel=0";
-  nowTitle.textContent = s[0];
-  nowArtist.textContent = s[1];
+  screenTitle.textContent = s[0];
+  screenArtist.textContent = s[1];
   pick.selectedIndex = i + 1;
   prevBtn.disabled = false;
   nextBtn.disabled = false;
