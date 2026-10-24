@@ -112,11 +112,6 @@
       </div>
     </div>
   <div class="radio">
-    <div class="radio-top">
-      <span class="brand">Ashley &middot; TV</span>
-      <span class="status" id="status">Ready</span>
-    </div>
-
     <div class="tv-controls">
       <button class="tv-btn power" id="powerBtn" type="button">Power<small>Off / On</small></button>
       <button class="tv-btn" id="chDownBtn" type="button" disabled>CH &#9660;<small>Down</small></button>
@@ -154,10 +149,6 @@
     <div class="volume-row">
       <label for="volumepick">Volume</label>
       <input id="volumepick" type="range" min="0" max="100" value="80" aria-label="Volume">
-    </div>
-
-    <div style="text-align:center;">
-      <a id="watchLink" class="watch disabled" href="#" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
     </div>
 
   </div>
@@ -256,7 +247,7 @@ function onYouTubeIframeAPIReady() {
         else if (e.data === 2) { setPlaying(false); }
       },
       onError: function() {
-        setStatus("This video could not play here — try Watch on YouTube");
+        setStatus("This video could not play here");
       }
     }
   });
@@ -278,7 +269,6 @@ var powerBtn = document.getElementById("powerBtn");
 var chUpBtn = document.getElementById("chUpBtn");
 var chDownBtn = document.getElementById("chDownBtn");
 var channelBanner = document.getElementById("channelBanner");
-var watchLink = document.getElementById("watchLink");
 var currentIndex = -1;
 var isPlaying = false;
 var isPowered = true;
@@ -286,8 +276,10 @@ var bannerTimer = null;
 var filtered = SONGS.map(function(_, i) { return i; });
 
 function setStatus(text, playing) {
-  statusEl.textContent = text;
-  statusEl.classList.toggle("playing", !!playing);
+  if (statusEl) {
+    statusEl.textContent = text;
+    statusEl.classList.toggle("playing", !!playing);
+  }
   notesEl.classList.toggle("playing", !!playing);
 }
 function showChannelBanner() {
@@ -375,8 +367,6 @@ function playSong(i) {
   screenTitle.textContent = s[0];
   screenArtist.textContent = s[1];
   if (filtered.indexOf(i) >= 0) { pick.value = String(i); }
-  watchLink.href = "https://www.youtube.com/watch?v=" + s[3];
-  watchLink.classList.remove("disabled");
   prevBtn.disabled = false;
   nextBtn.disabled = false;
   pauseBtn.disabled = false;
