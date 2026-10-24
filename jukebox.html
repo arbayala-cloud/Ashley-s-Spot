@@ -4,48 +4,66 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jukebox — Ashley Ayala</title>
-<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Indie+Flower&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; background: #fff; color: #222; font-family: Arial, Helvetica, sans-serif; text-align: center; padding: 20px 16px 40px; }
-  .wrap { max-width: 560px; margin: 0 auto; }
-  h1 { font-size: 28px; margin: 0 0 4px; }
-  .sub { color: #777; font-size: 14px; margin: 0 0 16px; }
-  .menu-row { margin: 0 0 16px; }
-  .menu-row button { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; background: none; color: #111; border: 1.5px solid #111; border-radius: 999px; padding: 7px 18px; cursor: pointer; }
-  .menu-panel { display: none; margin-top: 6px; }
+  body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; text-align: center; padding: 28px 16px 48px; }
+  .wrap { max-width: 600px; margin: 0 auto; }
+  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a7443; font-weight: 600; margin: 0 0 10px; }
+  h1 { font-family: Fraunces, Georgia, serif; font-size: 42px; line-height: 1.05; font-weight: 600; margin: 0 0 8px; }
+  .sub { color: #6f6a62; font-size: 15px; margin: 0 0 20px; }
+  .menu-row { margin: 0 0 18px; }
+  .menu-row button { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; background: transparent; color: #22211e; border: 1.5px solid #22211e; border-radius: 999px; padding: 8px 20px; cursor: pointer; font-weight: 600; }
+  .menu-panel { display: none; margin: 10px auto 0; max-width: 420px; background: #fff; border: 1px solid #ddd7cc; border-radius: 12px; padding: 6px 0; }
   .menu-panel.open { display: block; }
-  .menu-panel a { display: block; font-size: 20px; font-weight: 700; color: #111; text-decoration: none; padding: 8px 0; }
-  .photo-wrap { position: relative; max-width: 560px; margin: 0 auto; }
-  .photo-wrap img { display: block; width: 100%; height: auto; }
-  .screen-text {
-    position: absolute; left: 21.4%; top: 26.9%; width: 55.8%; height: 14.3%;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    color: #fff; overflow: hidden; padding: 0 2%;
+  .menu-panel a { display: block; font-family: Fraunces, Georgia, serif; font-size: 20px; font-weight: 600; color: #22211e; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel a:last-child { border-bottom: none; }
+  .radio { background: linear-gradient(180deg, #2b2d33, #1e2024); border: 1px solid #3d4048; border-radius: 22px; padding: 18px; color: #f5f2ec; box-shadow: 0 18px 40px rgba(0,0,0,.22); text-align: left; }
+  .radio-top { display: flex; justify-content: space-between; align-items: center; padding: 2px 4px 14px; }
+  .brand { font-size: 11px; letter-spacing: 3px; font-weight: 600; color: #d8c9a3; }
+  .status { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #b9b2a6; }
+  .status.playing { color: #d8c9a3; }
+  .display { background: #121316; border: 1px solid rgba(216,201,163,.45); border-radius: 14px; padding: 20px 16px 16px; text-align: center; }
+  .now-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #a99f8f; margin-bottom: 8px; }
+  .screen-title { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 27px; line-height: 1.15; }
+  .screen-artist { font-size: 15px; color: #c9c2b6; margin-top: 6px; }
+  .eq { display: flex; gap: 4px; justify-content: center; align-items: flex-end; height: 18px; margin-top: 14px; }
+  .eq span { width: 4px; background: #d8c9a3; border-radius: 2px; height: 5px; }
+  .eq.playing span { animation: eq 0.9s ease-in-out infinite alternate; }
+  .eq.playing span:nth-child(2) { animation-delay: .15s; }
+  .eq.playing span:nth-child(3) { animation-delay: .3s; }
+  .eq.playing span:nth-child(4) { animation-delay: .45s; }
+  @keyframes eq { from { height: 5px; } to { height: 17px; } }
+  .photo { margin-top: 16px; border-radius: 14px; overflow: hidden; border: 1px solid #45484f; line-height: 0; }
+  .photo img { display: block; width: 100%; height: auto; }
+  .deck-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #a9a29a; margin: 18px 4px 10px; }
+  .controls-row { display: flex; gap: 10px; margin-top: 10px; }
+  .controls-row button { flex: 0 0 auto; background: #f4f1ea; color: #22211e; border: 1px solid #c9c2b6; border-radius: 12px; padding: 12px 16px; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .controls-row button:disabled { opacity: .45; cursor: default; }
+  .controls-row button.primary { background: #d8c9a3; border-color: #d8c9a3; }
+  .controls-row select { flex: 1; min-width: 0; padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; }
+  .field { flex: 1; min-width: 0; text-align: left; }
+  .field label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #a9a29a; margin: 0 0 6px 4px; }
+  .field select { width: 100%; padding: 12px; font-size: 15px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; }
+  .watch { display: inline-block; margin-top: 14px; color: #d8c9a3; font-size: 14px; font-weight: 600; text-decoration: none; }
+  .watch.disabled { color: #8a857e; pointer-events: none; text-decoration: none; }
+  .volume-row { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding: 0 4px; }
+  .volume-row label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #a9a29a; white-space: nowrap; }
+  .volume-row input { flex: 1; accent-color: #d8c9a3; }
+  .hidden-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: none; overflow: hidden; }
+  .note { margin-top: 18px; color: #6f6a62; font-size: 13px; }
+  @media (max-width: 480px) {
+    h1 { font-size: 34px; }
+    .controls-row { flex-wrap: wrap; }
+    .controls-row select { flex-basis: 100%; order: -1; }
   }
-  .screen-title { font-weight: 700; font-size: clamp(13px, 3.4vw, 19px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; text-align: center; }
-  .screen-artist { font-size: clamp(11px, 2.8vw, 14px); color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; text-align: center; }
-  .notes { position: absolute; inset: 0; pointer-events: none; }
-  .note { position: absolute; font-size: 26px; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.9), 0 0 2px #000; opacity: 0; }
-  .notes.playing .note { animation: floatNote 3s ease-in infinite; }
-  @keyframes floatNote {
-    0% { transform: translateY(8px) rotate(-8deg); opacity: 0; }
-    18% { opacity: 1; }
-    100% { transform: translateY(-72px) rotate(14deg); opacity: 0; }
-  }
-  .deck { max-width: 560px; margin: 12px auto 0; background: #333; border-radius: 16px; padding: 14px; color: #fff; }
-  .fontlabel { color: #ccc; font-size: 14px; align-self: center; }
-  .hidden-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: none; }
-  .controls-row { display: flex; gap: 10px; margin-top: 12px; }
-  .controls-row button { flex: 0 0 auto; background: #eee; color: #222; border: 1px solid #999; border-radius: 10px; padding: 12px 16px; font-size: 15px; font-weight: 700; cursor: pointer; }
-  .controls-row button:disabled { opacity: .45; }
-  .controls-row select { flex: 1; min-width: 0; padding: 12px; font-size: 16px; border-radius: 10px; border: 1px solid #999; background: #fff; color: #222; }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <p class="eyebrow">Ashley&rsquo;s Spot</p>
   <h1>Ashley&rsquo;s Jukebox</h1>
-  <p class="sub">2001 songs</p>
+  <p class="sub">Songs from 2001 &middot; 54 tracks, played through YouTube</p>
   <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
   <nav id="menuPanel" class="menu-panel">
     <a href="index.html">Home</a>
@@ -53,97 +71,69 @@
     <a href="blog.html">Blog</a>
     <a href="jukebox.html">Jukebox</a>
   </nav>
-  <div class="photo-wrap">
-    <img src="boombox.jpg" alt="A realistic 1990s boombox radio">
-    <div class="screen-text">
+
+  <div class="radio">
+    <div class="radio-top">
+      <span class="brand">Ashley &middot; Stereo</span>
+      <span class="status" id="status">Ready</span>
+    </div>
+
+    <div class="display">
+      <div class="now-label">Now Playing</div>
       <div class="screen-title" id="screenTitle">Pick a song below</div>
       <div class="screen-artist" id="screenArtist"></div>
+      <div class="eq" id="eq"><span></span><span></span><span></span><span></span></div>
     </div>
-    <div class="notes" id="notes">
-      <span class="note" style="left:25%;top:62%;animation-delay:0s;animation-duration:2.6s;">&#9835;</span>
-      <span class="note" style="left:28%;top:66%;animation-delay:0.9s;animation-duration:3.1s;">&#9834;</span>
-      <span class="note" style="left:31%;top:60%;animation-delay:1.7s;animation-duration:2.8s;">&#9835;</span>
-      <span class="note" style="left:69%;top:62%;animation-delay:0.5s;animation-duration:3.0s;">&#9834;</span>
-      <span class="note" style="left:72%;top:66%;animation-delay:1.3s;animation-duration:2.6s;">&#9835;</span>
-      <span class="note" style="left:75%;top:60%;animation-delay:2.0s;animation-duration:3.2s;">&#9834;</span>
+
+    <div class="photo">
+      <img src="boombox.jpg" alt="A realistic 1990s boombox radio">
     </div>
-  </div>
-  <div class="deck">
+
+    <div class="deck-label">Select a track</div>
     <div class="controls-row">
       <button id="prevBtn" disabled>&laquo; Prev</button>
-      <select id="songpick" aria-label="Pick a song">
-      <option value="">Pick a song...</option>
-      <option>Fallin' — Alicia Keys</option>
-      <option>Lady Marmalade — Christina Aguilera, Lil' Kim, Mya, Pink</option>
-      <option>Survivor — Destiny's Child</option>
-      <option>Bootylicious — Destiny's Child</option>
-      <option>Can't Get You Out of My Head — Kylie Minogue</option>
-      <option>All for You — Janet Jackson</option>
-      <option>Hero — Enrique Iglesias</option>
-      <option>Family Affair — Mary J. Blige</option>
-      <option>U Remind Me — Usher</option>
-      <option>Let Me Blow Ya Mind — Eve feat. Gwen Stefani</option>
-      <option>Drops of Jupiter — Train</option>
-      <option>I'm Real — Jennifer Lopez</option>
-      <option>I'm a Slave 4 U — Britney Spears</option>
-      <option>Pop — NSYNC</option>
-      <option>The Call — Backstreet Boys</option>
-      <option>How You Remind Me — Nickelback</option>
-      <option>My Sacrifice — Creed</option>
-      <option>Blurry — Puddle of Mudd</option>
-      <option>It's Been Awhile — Staind</option>
-      <option>Wish You Were Here — Incubus</option>
-      <option>Hash Pipe — Weezer</option>
-      <option>Chop Suey! — System of a Down</option>
-      <option>In the End — Linkin Park</option>
-      <option>The Rock Show — Blink-182</option>
-      <option>My Way — Limp Bizkit</option>
-      <option>Loser — 3 Doors Down</option>
-      <option>Fat Lip — Sum 41</option>
-      <option>Elevation — U2</option>
-      <option>Clint Eastwood — Gorillaz</option>
-      <option>Last Nite — The Strokes</option>
-      <option>Fell in Love with a Girl — The White Stripes</option>
-      <option>Crystal — New Order</option>
-      <option>Don't Panic — Coldplay</option>
-      <option>Pyramid Song — Radiohead</option>
-      <option>Imitation of Life — R.E.M.</option>
-      <option>Plug In Baby — Muse</option>
-      <option>New Slang — The Shins</option>
-      <option>Ain't Nothing 'bout You — Brooks & Dunn</option>
-      <option>Only in America — Brooks & Dunn</option>
-      <option>Where Were You (When the World Stopped Turning) — Alan Jackson</option>
-      <option>Where I Come From — Alan Jackson</option>
-      <option>I'm Movin' On — Rascal Flatts</option>
-      <option>One More Day — Diamond Rio</option>
-      <option>I'm a Survivor — Reba McEntire</option>
-      <option>Where the Stars and Stripes and the Eagle Fly — Aaron Tippin</option>
-      <option>Grown Men Don't Cry — Tim McGraw</option>
-      <option>There You'll Be — Faith Hill</option>
-      <option>I Wanna Talk About Me — Toby Keith</option>
-      <option>The Middle — Jimmy Eat World</option>
-      <option>Bleed American — Jimmy Eat World</option>
-      <option>Jude Law and a Semester Abroad — Brand New</option>
-      <option>Seventy Times 7 — Brand New</option>
-      <option>At Your Funeral — Saves the Day</option>
-      <option>Understanding in a Car Crash — Thursday</option>
-      </select>
+      <select id="songpick" aria-label="Pick a song"></select>
       <button id="nextBtn" disabled>Next &raquo;</button>
     </div>
+
     <div class="controls-row">
-      <button id="pauseBtn" disabled>Pause</button>
-      <span class="fontlabel">Font:</span>
-      <select id="fontpick" aria-label="Song font">
-        <option value="Arial, Helvetica, sans-serif">Arial</option>
-        <option value="Georgia, serif">Georgia</option>
-        <option value="'Courier New', monospace">Courier New</option>
-        <option value="'Indie Flower', cursive">Indie Flower</option>
-        <option value="'Bitter', Georgia, serif">Bitter</option>
-        <option value="Verdana, Geneva, sans-serif">Verdana</option>
-      </select>
+      <button id="pauseBtn" class="primary" disabled>Play</button>
+      <div class="field">
+        <label for="genrepick">Genre</label>
+        <select id="genrepick" aria-label="Filter by genre">
+          <option value="All">All genres</option>
+          <option value="Pop">Pop</option>
+          <option value="Rock">Rock</option>
+          <option value="Alternative">Alternative</option>
+          <option value="Country">Country</option>
+          <option value="Emo">Emo</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fontpick">Display font</label>
+        <select id="fontpick" aria-label="Song font">
+          <option value="Fraunces, Georgia, serif">Fraunces</option>
+          <option value="Cormorant Garamond, Georgia, serif">Cormorant</option>
+          <option value="Libre Baskerville, Georgia, serif">Libre Baskerville</option>
+          <option value="Inter, Arial, sans-serif">Inter</option>
+          <option value="Georgia, serif">Georgia</option>
+        </select>
+      </div>
     </div>
+
+    <div class="volume-row">
+      <label for="volumepick">Volume</label>
+      <input id="volumepick" type="range" min="0" max="100" value="80" aria-label="Volume">
+    </div>
+
+    <div style="text-align:center;">
+      <a id="watchLink" class="watch disabled" href="#" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+    </div>
+
     <div class="hidden-player"><div id="ytplayer"></div></div>
   </div>
+
+  <p class="note">Pick a track and it will play here through the YouTube player. When a song ends, the next one plays automatically.</p>
 </div>
 <script>
 document.getElementById('menuBtn').addEventListener('click', function () {
@@ -210,6 +200,7 @@ var SONGS = [
 ];
 
 var pick = document.getElementById("songpick");
+var genrepick = document.getElementById("genrepick");
 var player = null;
 var playerReady = false;
 var pendingId = null;
@@ -218,14 +209,25 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player("ytplayer", {
     width: "1",
     height: "1",
-    playerVars: { rel: 0 },
-    events: { onReady: function() {
-      playerReady = true;
-      if (pendingId) {
-        if (pendingPaused) { player.cueVideoById(pendingId); } else { player.loadVideoById(pendingId); }
-        pendingId = null;
+    playerVars: { rel: 0, modestbranding: 1 },
+    events: {
+      onReady: function() {
+        playerReady = true;
+        player.setVolume(parseInt(document.getElementById("volumepick").value, 10) || 80);
+        if (pendingId) {
+          if (pendingPaused) { player.cueVideoById(pendingId); } else { player.loadVideoById(pendingId); }
+          pendingId = null;
+        }
+      },
+      onStateChange: function(e) {
+        if (e.data === 0) { playNext(); }
+        else if (e.data === 1) { setPlaying(true); }
+        else if (e.data === 2) { setPlaying(false); }
+      },
+      onError: function() {
+        setStatus("This video could not play here — try Watch on YouTube");
       }
-    } }
+    }
   });
 }
 (function() {
@@ -239,21 +241,49 @@ var prevBtn = document.getElementById("prevBtn");
 var nextBtn = document.getElementById("nextBtn");
 var pauseBtn = document.getElementById("pauseBtn");
 var fontpick = document.getElementById("fontpick");
+var statusEl = document.getElementById("status");
+var eqEl = document.getElementById("eq");
+var watchLink = document.getElementById("watchLink");
 var currentIndex = -1;
 var isPlaying = false;
+var filtered = SONGS.map(function(_, i) { return i; });
+
+function setStatus(text, playing) {
+  statusEl.textContent = text;
+  statusEl.classList.toggle("playing", !!playing);
+  eqEl.classList.toggle("playing", !!playing);
+}
+function setPlaying(playing) {
+  isPlaying = playing;
+  pauseBtn.textContent = playing ? "Pause" : "Play";
+  setStatus(playing ? "Playing" : "Paused", playing);
+}
+function buildPick() {
+  pick.innerHTML = "";
+  var placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Pick a song...";
+  pick.appendChild(placeholder);
+  filtered.forEach(function(songIndex) {
+    var opt = document.createElement("option");
+    opt.value = String(songIndex);
+    opt.textContent = SONGS[songIndex][0] + " — " + SONGS[songIndex][1];
+    pick.appendChild(opt);
+  });
+  if (currentIndex >= 0 && filtered.indexOf(currentIndex) >= 0) {
+    pick.value = String(currentIndex);
+  }
+}
+buildPick();
 
 pauseBtn.onclick = function() {
   if (currentIndex < 0) return;
   if (isPlaying) {
     if (playerReady) { player.pauseVideo(); } else { pendingPaused = true; }
-    pauseBtn.textContent = "Play";
-    isPlaying = false;
-    document.getElementById("notes").classList.remove("playing");
+    setPlaying(false);
   } else {
     if (playerReady) { player.playVideo(); } else { pendingPaused = false; }
-    pauseBtn.textContent = "Pause";
-    isPlaying = true;
-    document.getElementById("notes").classList.add("playing");
+    setPlaying(true);
   }
 };
 function applyFont() {
@@ -264,8 +294,22 @@ function applyFont() {
 fontpick.onchange = applyFont;
 try {
   var savedFont = localStorage.getItem("ashley-jukebox-font");
-  if (savedFont) { fontpick.value = savedFont; applyFont(); }
+  var valid = false;
+  for (var i = 0; i < fontpick.options.length; i++) { if (fontpick.options[i].value === savedFont) { valid = true; } }
+  if (savedFont && valid) { fontpick.value = savedFont; applyFont(); }
 } catch (e) {}
+
+document.getElementById("volumepick").addEventListener("input", function(e) {
+  if (playerReady) { player.setVolume(parseInt(e.target.value, 10)); }
+});
+
+genrepick.onchange = function() {
+  var genre = genrepick.value;
+  filtered = SONGS.map(function(_, i) { return i; }).filter(function(i) {
+    return genre === "All" || SONGS[i][2] === genre;
+  });
+  buildPick();
+};
 
 function playSong(i) {
   if (i < 0 || i >= SONGS.length) return;
@@ -274,25 +318,35 @@ function playSong(i) {
   if (playerReady) { player.loadVideoById(s[3]); } else { pendingId = s[3]; pendingPaused = false; }
   screenTitle.textContent = s[0];
   screenArtist.textContent = s[1];
-  pick.selectedIndex = i + 1;
+  if (filtered.indexOf(i) >= 0) { pick.value = String(i); }
+  watchLink.href = "https://www.youtube.com/watch?v=" + s[3];
+  watchLink.classList.remove("disabled");
   prevBtn.disabled = false;
   nextBtn.disabled = false;
   pauseBtn.disabled = false;
-  pauseBtn.textContent = "Pause";
-  isPlaying = true;
-  document.getElementById("notes").classList.add("playing");
+  setPlaying(true);
+}
+function filteredPosition() {
+  return filtered.indexOf(currentIndex);
+}
+function playNext() {
+  if (currentIndex < 0) return;
+  var pos = filteredPosition();
+  var nextPos = pos >= 0 ? (pos + 1) % filtered.length : 0;
+  playSong(filtered[nextPos]);
+}
+function playPrev() {
+  if (currentIndex < 0) return;
+  var pos = filteredPosition();
+  var prevPos = pos >= 0 ? (pos - 1 + filtered.length) % filtered.length : filtered.length - 1;
+  playSong(filtered[prevPos]);
 }
 pick.onchange = function() {
-  playSong(pick.selectedIndex - 1);
+  if (pick.value === "") return;
+  playSong(parseInt(pick.value, 10));
 };
-prevBtn.onclick = function() {
-  if (currentIndex < 0) return;
-  playSong((currentIndex - 1 + SONGS.length) % SONGS.length);
-};
-nextBtn.onclick = function() {
-  if (currentIndex < 0) return;
-  playSong((currentIndex + 1) % SONGS.length);
-};
+prevBtn.onclick = playPrev;
+nextBtn.onclick = playNext;
 </script>
 </body>
 </html>
