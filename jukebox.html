@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jukebox — Ashley Ayala</title>
+<meta name="theme-color" content="#6d2f4d">
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Nunito:wght@400;700;800&family=Bitter:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #fdfdfc; color: #333;
+    font-family: 'Nunito', system-ui, sans-serif;
+    padding-bottom: 210px;
+  }
+  header { text-align: center; padding: 28px 16px 8px; }
+  h1 {
+    font-family: 'Indie Flower', cursive; color: #6d2f4d;
+    font-size: 56px; margin: 0; line-height: 1.1;
+  }
+  .tagline { color: #888; font-size: 15px; margin: 4px 0 0; }
+  .menu-row { text-align: center; margin: 14px 0 0; }
+  .menu-row button { font-family: Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; background: none; color: #111; border: 1.5px solid #111; border-radius: 999px; padding: 7px 18px; cursor: pointer; }
+  .menu-panel { display: none; text-align: center; margin-top: 6px; }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-family: 'Bitter', Georgia, serif; font-weight: 700; font-size: 20px; line-height: 1.3; color: #111; text-decoration: none; padding: 8px 0; }
+  @media (hover: hover) { .menu-panel a:hover { text-decoration: underline; text-underline-offset: 3px; } }
+  .howto {
+    max-width: 560px; margin: 16px auto 0; background: #f7f0f4;
+    border: 1px solid #e5cdd9; border-radius: 14px; padding: 12px 16px;
+    font-size: 14px; line-height: 1.5; color: #555;
+  }
+  .howto b { color: #6d2f4d; }
+  .controls {
+    max-width: 640px; margin: 20px auto 0; padding: 0 16px;
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  }
+  .controls input {
+    flex: 1 1 220px; padding: 10px 14px; border-radius: 999px;
+    border: 2px solid #e5cdd9; font-size: 15px; font-family: inherit; outline: none;
+  }
+  .controls input:focus { border-color: #6d2f4d; }
+  .shuffle {
+    background: #6d2f4d; color: #fff; border: none; border-radius: 999px;
+    padding: 10px 20px; font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit;
+  }
+  .chips {
+    max-width: 640px; margin: 14px auto 0; padding: 0 16px;
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  }
+  .chip {
+    background: #fff; border: 2px solid #e5cdd9; color: #6d2f4d;
+    border-radius: 999px; padding: 6px 16px; font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+  }
+  .chip.active { background: #6d2f4d; color: #fff; border-color: #6d2f4d; }
+  .count { text-align: center; color: #999; font-size: 13px; margin: 16px 0 4px; }
+  #songlist { max-width: 640px; margin: 0 auto; padding: 0 16px 20px; }
+  .song {
+    display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 1px solid #eee; border-radius: 14px;
+    padding: 10px 12px; margin: 8px 0;
+  }
+  .song.playing { border-color: #6d2f4d; background: #faf3f7; }
+  .playbtn {
+    flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%;
+    background: #6d2f4d; color: #fff; border: none; font-size: 18px;
+    cursor: pointer; line-height: 1;
+  }
+  .songinfo { flex: 1; min-width: 0; }
+  .songtitle { font-weight: 800; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .songartist { font-size: 13px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .genre {
+    flex: 0 0 auto; font-size: 11px; font-weight: 800; color: #6d2f4d;
+    background: #f7f0f4; border-radius: 999px; padding: 3px 10px;
+  }
+  .spotify {
+    flex: 0 0 auto; background: #1db954; color: #fff; border: none;
+    border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 800;
+    cursor: pointer; font-family: inherit; text-decoration: none;
+  }
+  .player {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+    background: #fff; border-top: 3px solid #6d2f4d;
+    box-shadow: 0 -2px 16px rgba(0,0,0,.12);
+    padding: 12px 16px; display: flex; gap: 14px; align-items: center; justify-content: center;
+  }
+  .player .vidwrap { flex: 0 0 auto; }
+  .player iframe { display: block; border: none; border-radius: 10px; width: 200px; height: 113px; }
+  .player.big iframe { width: 320px; height: 180px; }
+  .playerinfo { max-width: 320px; }
+  .nowlabel { font-size: 11px; font-weight: 800; letter-spacing: 1px; color: #b98aa6; text-transform: uppercase; }
+  .nowtitle { font-weight: 800; font-size: 17px; margin-top: 2px; }
+  .nowartist { font-size: 14px; color: #888; }
+  .playerbtns { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .playerbtns button {
+    background: #f7f0f4; color: #6d2f4d; border: 1px solid #e5cdd9;
+    border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 800;
+    cursor: pointer; font-family: inherit;
+  }
+  .playerbtns button:disabled { opacity: .4; }
+  .emptynote { text-align: center; color: #999; font-size: 14px; padding: 20px; }
+  footer { text-align: center; color: #bbb; font-size: 12px; padding: 10px 16px 130px; }
+  @media (max-width: 560px) {
+    h1 { font-size: 44px; }
+    .player { flex-wrap: wrap; }
+    .playerinfo { max-width: none; flex: 1; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Ashley's Jukebox</h1>
+  <p class="tagline">Your own little Spotify &mdash; the 2001 playlist</p>
+  <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
+  <nav id="menuPanel" class="menu-panel">
+    <a href="index.html">Home</a>
+    <a href="period-calendar.html">Period Calendar</a>
+    <a href="blog.html">Blog</a>
+    <a href="jukebox.html">Jukebox</a>
+  </nav>
+  <div class="howto">
+    <b>How it works:</b> tap &#9654; on any song and it plays right here from YouTube.
+    Tap <b>Spotify</b> and the song opens in Spotify instead. Pick a genre below, search, or hit Shuffle.
+  </div>
+</header>
+
+<div class="controls">
+  <input id="search" type="text" placeholder="Search songs or artists...">
+  <button class="shuffle" id="shuffleBtn">&#128256; Shuffle</button>
+</div>
+
+<div class="chips" id="chips"></div>
+<div class="count" id="count"></div>
+<div id="songlist"></div>
+
+<div class="player" id="player">
+  <div class="vidwrap">
+    <iframe id="ytplayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <div class="playerinfo">
+    <div class="nowlabel">Now Playing</div>
+    <div class="nowtitle" id="nowtitle">Pick a song to start</div>
+    <div class="nowartist" id="nowartist">Your 2001 playlist is ready</div>
+    <div class="playerbtns">
+      <button id="prevBtn" disabled>&#9198; Prev</button>
+      <button id="nextBtn" disabled>Next &#9197;</button>
+      <button id="expandBtn">Bigger video</button>
+    </div>
+  </div>
+</div>
+
+<footer>Built for Ashley &bull; Songs play from YouTube and Spotify</footer>
+
+<script>
+document.getElementById('menuBtn').addEventListener('click', function () {
+  var panel = document.getElementById('menuPanel');
+  var open = panel.classList.toggle('open');
+  this.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+
+var SONGS = [
+  ["Fallin'", "Alicia Keys", "Pop", "Urdlvw0SSEc"],
+  ["Lady Marmalade", "Christina Aguilera, Lil' Kim, Mya, Pink", "Pop", "RQa7SvVCdZk"],
+  ["Survivor", "Destiny's Child", "Pop", "Wmc8bQoL-J0"],
+  ["Bootylicious", "Destiny's Child", "Pop", "IyYnnUcgeMc"],
+  ["Can't Get You Out of My Head", "Kylie Minogue", "Pop", "c18441Eh_WE"],
+  ["All for You", "Janet Jackson", "Pop", "J551f-TyqjY"],
+  ["Hero", "Enrique Iglesias", "Pop", "koJlIGDImiU"],
+  ["Family Affair", "Mary J. Blige", "Pop", "znlFu_lemsU"],
+  ["U Remind Me", "Usher", "Pop", "Bxau9B3jOHM"],
+  ["Let Me Blow Ya Mind", "Eve feat. Gwen Stefani", "Pop", "Wt88GMJmVk0"],
+  ["Drops of Jupiter", "Train", "Pop", "7Xf-Lesrkuc"],
+  ["I'm Real", "Jennifer Lopez", "Pop", "zD2D6phvRRk"],
+  ["I'm a Slave 4 U", "Britney Spears", "Pop", "Mzybwwf2HoQ"],
+  ["Pop", "NSYNC", "Pop", "TWZKw_MgUPI"],
+  ["The Call", "Backstreet Boys", "Pop", "wMOkm57vu0k"],
+  ["How You Remind Me", "Nickelback", "Rock", "1cQh1ccqu8M"],
+  ["My Sacrifice", "Creed", "Rock", "O-fyNgHdmLI"],
+  ["Blurry", "Puddle of Mudd", "Rock", "xJJsoquu70o"],
+  ["It's Been Awhile", "Staind", "Rock", "K2NGe9mLAEc"],
+  ["Wish You Were Here", "Incubus", "Rock", "8295rOMvtQI"],
+  ["Hash Pipe", "Weezer", "Rock", "_9BGLtqqkVI"],
+  ["Chop Suey!", "System of a Down", "Rock", "CSvFpBOe8eY"],
+  ["In the End", "Linkin Park", "Rock", "eVTXPUF4Oz4"],
+  ["The Rock Show", "Blink-182", "Rock", "z7hhDINyBP0"],
+  ["My Way", "Limp Bizkit", "Rock", "Dn8vzTsnPps"],
+  ["Loser", "3 Doors Down", "Rock", "2Ui_Q4qBDJY"],
+  ["Fat Lip", "Sum 41", "Rock", "CMX2lPum_pg"],
+  ["Elevation", "U2", "Rock", "19KstSgU-c0"],
+  ["Clint Eastwood", "Gorillaz", "Alternative", "1fOc3rATNfI"],
+  ["Last Nite", "The Strokes", "Alternative", "TOypSnKFHrE"],
+  ["Fell in Love with a Girl", "The White Stripes", "Alternative", "fTH71AAxXmM"],
+  ["Crystal", "New Order", "Alternative", "KVMyXDsadLQ"],
+  ["Don't Panic", "Coldplay", "Alternative", "yWeuUwpEQfs"],
+  ["Pyramid Song", "Radiohead", "Alternative", "3M_Gg1xAHE4"],
+  ["Imitation of Life", "R.E.M.", "Alternative", "0vqgdSsfqPs"],
+  ["Plug In Baby", "Muse", "Alternative", "dbB-mICjkQM"],
+  ["New Slang", "The Shins", "Alternative", "zYwCmcB0XMw"],
+  ["Ain't Nothing 'bout You", "Brooks & Dunn", "Country", "SpJdhC5E8Vg"],
+  ["Only in America", "Brooks & Dunn", "Country", "GN1iI-DaJNw"],
+  ["Where Were You (When the World Stopped Turning)", "Alan Jackson", "Country", "mwcWVs4Eejg"],
+  ["Where I Come From", "Alan Jackson", "Country", "0G15BcMWQYY"],
+  ["I'm Movin' On", "Rascal Flatts", "Country", "eKIGOHhiDuY"],
+  ["One More Day", "Diamond Rio", "Country", "Xi8O7JdA4Sg"],
+  ["I'm a Survivor", "Reba McEntire", "Country", "_HbTASYNVps"],
+  ["Where the Stars and Stripes and the Eagle Fly", "Aaron Tippin", "Country", "TTKmjhJ1__o"],
+  ["Grown Men Don't Cry", "Tim McGraw", "Country", "TQjp5s6DJlw"],
+  ["There You'll Be", "Faith Hill", "Country", "pJSjXZdKj8s"],
+  ["I Wanna Talk About Me", "Toby Keith", "Country", "HxUuDPNbkJk"],
+  ["The Middle", "Jimmy Eat World", "Emo", "oKsxPW6i3pM"],
+  ["Bleed American", "Jimmy Eat World", "Emo", "Yud6TmNJWhY"],
+  ["Jude Law and a Semester Abroad", "Brand New", "Emo", "ZvzHyHgc4lA"],
+  ["Seventy Times 7", "Brand New", "Emo", "siCdIojMhok"],
+  ["At Your Funeral", "Saves the Day", "Emo", "NwW0q65VIas"],
+  ["Understanding in a Car Crash", "Thursday", "Emo", "Lrxk7wBSG_g"]
+];
+
+var GENRES = ["All", "Pop", "Rock", "Alternative", "Country", "Emo"];
+var activeGenre = "All";
+var searchText = "";
+var filtered = SONGS.slice();
+var currentIndex = -1;
+
+var listEl = document.getElementById("songlist");
+var countEl = document.getElementById("count");
+var chipsEl = document.getElementById("chips");
+var ytEl = document.getElementById("ytplayer");
+var nowTitle = document.getElementById("nowtitle");
+var nowArtist = document.getElementById("nowartist");
+var prevBtn = document.getElementById("prevBtn");
+var nextBtn = document.getElementById("nextBtn");
+
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+}
+
+function ytUrl(song) {
+  if (!song[3]) return "";
+  return "https://www.youtube.com/embed/" + song[3] + "?autoplay=1&rel=0";
+}
+function spotifyUrl(song) {
+  return "https://open.spotify.com/search/" + encodeURIComponent(song[1] + " " + song[0]);
+}
+
+function renderChips() {
+  chipsEl.innerHTML = "";
+  GENRES.forEach(function(g) {
+    var b = document.createElement("button");
+    b.className = "chip" + (g === activeGenre ? " active" : "");
+    b.textContent = g;
+    b.onclick = function() { activeGenre = g; applyFilter(); };
+    chipsEl.appendChild(b);
+  });
+}
+
+function applyFilter() {
+  var q = searchText.toLowerCase();
+  filtered = SONGS.filter(function(s) {
+    var genreOk = activeGenre === "All" || s[2] === activeGenre;
+    var textOk = !q || (s[0] + " " + s[1]).toLowerCase().indexOf(q) !== -1;
+    return genreOk && textOk;
+  });
+  renderChips();
+  renderList();
+}
+
+function renderList() {
+  countEl.textContent = filtered.length + " song" + (filtered.length === 1 ? "" : "s");
+  if (!filtered.length) {
+    listEl.innerHTML = '<div class="emptynote">No songs match that. Try another search or genre.</div>';
+    return;
+  }
+  var html = "";
+  filtered.forEach(function(s, i) {
+    var playing = currentIndex === i ? " playing" : "";
+    html += '<div class="song' + playing + '">' +
+      '<button class="playbtn" data-i="' + i + '">&#9654;</button>' +
+      '<div class="songinfo"><div class="songtitle">' + esc(s[0]) + '</div>' +
+      '<div class="songartist">' + esc(s[1]) + '</div></div>' +
+      '<span class="genre">' + esc(s[2]) + '</span>' +
+      '<a class="spotify" href="' + spotifyUrl(s) + '" target="_blank" rel="noopener">Spotify</a>' +
+      '</div>';
+  });
+  listEl.innerHTML = html;
+  var btns = listEl.querySelectorAll(".playbtn");
+  btns.forEach(function(b) {
+    b.onclick = function() { playSong(parseInt(b.getAttribute("data-i"), 10)); };
+  });
+}
+
+function playSong(i) {
+  if (i < 0 || i >= filtered.length) return;
+  currentIndex = i;
+  var s = filtered[i];
+  ytEl.src = ytUrl(s);
+  nowTitle.textContent = s[0];
+  nowArtist.textContent = s[1] + "  •  " + s[2];
+  prevBtn.disabled = filtered.length < 2;
+  nextBtn.disabled = filtered.length < 2;
+  renderList();
+  document.getElementById("player").scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+prevBtn.onclick = function() {
+  if (currentIndex < 0) return;
+  playSong((currentIndex - 1 + filtered.length) % filtered.length);
+};
+nextBtn.onclick = function() {
+  if (currentIndex < 0) return;
+  playSong((currentIndex + 1) % filtered.length);
+};
+document.getElementById("shuffleBtn").onclick = function() {
+  if (!filtered.length) return;
+  var i = Math.floor(Math.random() * filtered.length);
+  playSong(i);
+};
+document.getElementById("search").addEventListener("input", function(e) {
+  searchText = e.target.value;
+  applyFilter();
+});
+document.getElementById("expandBtn").onclick = function(e) {
+  var p = document.getElementById("player");
+  p.classList.toggle("big");
+  e.target.textContent = p.classList.contains("big") ? "Smaller video" : "Bigger video";
+};
+
+applyFilter();
+</script>
+</body>
+</html>
