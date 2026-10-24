@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jukebox — Ashley Ayala</title>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Indie+Flower&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; background: #fff; color: #222; font-family: Arial, Helvetica, sans-serif; text-align: center; padding: 20px 16px 40px; }
@@ -22,8 +23,8 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     color: #fff; overflow: hidden; padding: 0 2%;
   }
-  .screen-title { font-weight: 700; font-size: clamp(13px, 3.4vw, 19px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-  .screen-artist { font-size: clamp(11px, 2.8vw, 14px); color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .screen-title { font-weight: 700; font-size: clamp(13px, 3.4vw, 19px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; text-align: center; }
+  .screen-artist { font-size: clamp(11px, 2.8vw, 14px); color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; text-align: center; }
   .notes { position: absolute; inset: 0; pointer-events: none; }
   .note { position: absolute; font-size: 26px; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.9), 0 0 2px #000; opacity: 0; }
   .notes.playing .note { animation: floatNote 3s ease-in infinite; }
@@ -33,6 +34,7 @@
     100% { transform: translateY(-72px) rotate(14deg); opacity: 0; }
   }
   .deck { max-width: 560px; margin: 12px auto 0; background: #333; border-radius: 16px; padding: 14px; color: #fff; }
+  .fontlabel { color: #ccc; font-size: 14px; align-self: center; }
   .hidden-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: none; }
   .controls-row { display: flex; gap: 10px; margin-top: 12px; }
   .controls-row button { flex: 0 0 auto; background: #eee; color: #222; border: 1px solid #999; border-radius: 10px; padding: 12px 16px; font-size: 15px; font-weight: 700; cursor: pointer; }
@@ -128,6 +130,18 @@
       </select>
       <button id="nextBtn" disabled>Next &raquo;</button>
     </div>
+    <div class="controls-row">
+      <button id="pauseBtn" disabled>Pause</button>
+      <span class="fontlabel">Font:</span>
+      <select id="fontpick" aria-label="Song font">
+        <option value="Arial, Helvetica, sans-serif">Arial</option>
+        <option value="Georgia, serif">Georgia</option>
+        <option value="'Courier New', monospace">Courier New</option>
+        <option value="'Indie Flower', cursive">Indie Flower</option>
+        <option value="'Bitter', Georgia, serif">Bitter</option>
+        <option value="Verdana, Geneva, sans-serif">Verdana</option>
+      </select>
+    </div>
     <iframe id="ytplayer" class="hidden-player" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
 </div>
@@ -201,18 +215,54 @@ var screenTitle = document.getElementById("screenTitle");
 var screenArtist = document.getElementById("screenArtist");
 var prevBtn = document.getElementById("prevBtn");
 var nextBtn = document.getElementById("nextBtn");
+var pauseBtn = document.getElementById("pauseBtn");
+var fontpick = document.getElementById("fontpick");
 var currentIndex = -1;
+var isPlaying = false;
+
+function ytCommand(func) {
+  try {
+    ytEl.contentWindow.postMessage(JSON.stringify({ event: "command", func: func, args: "" }), "*");
+  } catch (e) {}
+}
+pauseBtn.onclick = function() {
+  if (currentIndex < 0) return;
+  if (isPlaying) {
+    ytCommand("pause");
+    pauseBtn.textContent = "Play";
+    isPlaying = false;
+    document.getElementById("notes").classList.remove("playing");
+  } else {
+    ytCommand("play");
+    pauseBtn.textContent = "Pause";
+    isPlaying = true;
+    document.getElementById("notes").classList.add("playing");
+  }
+};
+function applyFont() {
+  screenTitle.style.fontFamily = fontpick.value;
+  screenArtist.style.fontFamily = fontpick.value;
+  try { localStorage.setItem("ashley-jukebox-font", fontpick.value); } catch (e) {}
+}
+fontpick.onchange = applyFont;
+try {
+  var savedFont = localStorage.getItem("ashley-jukebox-font");
+  if (savedFont) { fontpick.value = savedFont; applyFont(); }
+} catch (e) {}
 
 function playSong(i) {
   if (i < 0 || i >= SONGS.length) return;
   currentIndex = i;
   var s = SONGS[i];
-  ytEl.src = "https://www.youtube.com/embed/" + s[3] + "?autoplay=1&rel=0";
+  ytEl.src = "https://www.youtube.com/embed/" + s[3] + "?autoplay=1&rel=0&enablejsapi=1";
   screenTitle.textContent = s[0];
   screenArtist.textContent = s[1];
   pick.selectedIndex = i + 1;
   prevBtn.disabled = false;
   nextBtn.disabled = false;
+  pauseBtn.disabled = false;
+  pauseBtn.textContent = "Pause";
+  isPlaying = true;
   document.getElementById("notes").classList.add("playing");
 }
 pick.onchange = function() {
