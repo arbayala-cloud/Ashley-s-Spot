@@ -28,9 +28,13 @@
   .tv-wrap { position: relative; margin: 4px auto 0; line-height: 0; width: 100%; max-width: 640px; }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
   .playlist-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 20px 0 8px; text-align: center; }
-  .playlist-row { display: flex; justify-content: center; gap: 10px; flex-wrap: nowrap; }
-  .playlist-btn { background: #2f3238; color: #f5f2ec; border: 1px solid #55585f; border-radius: 12px; padding: 12px 20px; font-size: 15px; font-weight: 700; cursor: pointer; }
-  .playlist-btn.active { background: #d8c9a3; color: #22211e; border-color: #d8c9a3; }
+  .playlist-menus { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 640px; margin: 0 auto; }
+  .playlist-menu { text-align: left; min-width: 0; }
+  .playlist-menu label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; font-weight: 600; margin: 0 0 6px 4px; }
+  .song-select { width: 100%; height: 50px; padding: 0 12px; font-size: 15px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; }
+  .song-select:focus-visible { outline: 2px solid #b9975b; outline-offset: 2px; }
+  .playlist-menu.active label { color: #8a7443; }
+  .playlist-menu.active .song-select { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background: #fdf8ee; }
   .tv-controls-under .tv-btn { width: 120px; height: 56px; flex: 0 0 auto; }
   .tv-image { display: block; width: 100%; height: auto; border-radius: 8px; }
   .tv-video { position: absolute; left: 12.9%; top: 32.6%; width: 73.5%; height: 46.4%; background: #000; border-radius: 14px; overflow: hidden; line-height: 1.4; }
@@ -86,6 +90,7 @@
     .play-genre-row button.primary { min-width: 80px; padding: 0 12px; }
     body { padding: 24px 10px 40px; }
     .tv-controls-under { gap: 8px; }
+    .playlist-menus { grid-template-columns: 1fr; }
     .tv-controls-under .tv-btn { flex: 1 1 0; width: auto; min-width: 0; font-size: 12px; }
   }
 </style>
@@ -128,14 +133,23 @@
 
   </div>
 
-  <div class="playlist-label">Playlists</div>
-  <div class="playlist-row">
-    <button class="playlist-btn active" data-playlist="0" type="button">1995</button>
-    <button class="playlist-btn" data-playlist="1" type="button">2001</button>
-    <button class="playlist-btn" data-playlist="2" type="button">2003</button>
+  <div class="playlist-label">Pick a song</div>
+  <div class="playlist-menus">
+    <div class="playlist-menu active" data-playlist="0">
+      <label for="songs1995">1995</label>
+      <select id="songs1995" class="song-select" data-playlist="0"><option value="">Choose a 1995 song&hellip;</option></select>
+    </div>
+    <div class="playlist-menu" data-playlist="1">
+      <label for="songs2001">2001</label>
+      <select id="songs2001" class="song-select" data-playlist="1"><option value="">Choose a 2001 song&hellip;</option></select>
+    </div>
+    <div class="playlist-menu" data-playlist="2">
+      <label for="songs2003">2003</label>
+      <select id="songs2003" class="song-select" data-playlist="2"><option value="">Choose a 2003 song&hellip;</option></select>
+    </div>
   </div>
 
-  <p class="note">Pick a playlist below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a song from 1995, 2001 or 2003 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
   <p class="footer">Ashley&rsquo;s Spot &middot; Playlists</p>
 </div>
 <script>
@@ -338,9 +352,9 @@ function setPlaylist(idx) {
   if (playerReady) { player.stopVideo(); }
   channelBanner.classList.remove("show");
   setStatus("Ready", false);
-  var btns = document.querySelectorAll(".playlist-btn");
-  for (var i = 0; i < btns.length; i++) {
-    btns[i].classList.toggle("active", parseInt(btns[i].getAttribute("data-playlist"), 10) === idx);
+  var menus = document.querySelectorAll(".playlist-menu");
+  for (var i = 0; i < menus.length; i++) {
+    menus[i].classList.toggle("active", parseInt(menus[i].getAttribute("data-playlist"), 10) === idx);
   }
 }
 
@@ -356,6 +370,7 @@ function playSong(i) {
   chUpBtn.disabled = false;
   chDownBtn.disabled = false;
   setPlaying(true);
+  syncMenus();
   showChannelBanner();
 }
 function filteredPosition() {
@@ -375,11 +390,42 @@ function playPrev() {
 }
 chUpBtn.onclick = playNext;
 chDownBtn.onclick = playPrev;
-var playlistBtns = document.querySelectorAll(".playlist-btn");
-for (var i = 0; i < playlistBtns.length; i++) {
-  (function(btn) {
-    btn.onclick = function() { setPlaylist(parseInt(btn.getAttribute("data-playlist"), 10)); };
-  })(playlistBtns[i]);
+function syncMenus() {
+  var selects = document.querySelectorAll(".song-select");
+  for (var i = 0; i < selects.length; i++) {
+    var sel = selects[i];
+    var selPlaylist = parseInt(sel.getAttribute("data-playlist"), 10);
+    sel.value = (selPlaylist === currentPlaylistIndex && currentIndex >= 0) ? String(currentIndex) : "";
+  }
+}
+function selectSong(playlistIdx, songIdx) {
+  if (playlistIdx !== currentPlaylistIndex) {
+    currentPlaylistIndex = playlistIdx;
+    SONGS = PLAYLISTS[playlistIdx].songs;
+    filtered = SONGS.map(function(_, i) { return i; });
+    var menus = document.querySelectorAll(".playlist-menu");
+    for (var i = 0; i < menus.length; i++) {
+      menus[i].classList.toggle("active", parseInt(menus[i].getAttribute("data-playlist"), 10) === playlistIdx);
+    }
+  }
+  playSong(songIdx);
+}
+var songSelects = document.querySelectorAll(".song-select");
+for (var i = 0; i < songSelects.length; i++) {
+  (function(sel) {
+    var playlistIdx = parseInt(sel.getAttribute("data-playlist"), 10);
+    var songs = PLAYLISTS[playlistIdx].songs;
+    for (var j = 0; j < songs.length; j++) {
+      var opt = document.createElement("option");
+      opt.value = String(j);
+      opt.textContent = songs[j][0] + " \u2014 " + songs[j][1];
+      sel.appendChild(opt);
+    }
+    sel.onchange = function() {
+      if (sel.value === "") return;
+      selectSong(playlistIdx, parseInt(sel.value, 10));
+    };
+  })(songSelects[i]);
 }
 </script>
 </body>
