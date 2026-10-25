@@ -63,9 +63,9 @@
   body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
   body.dark .menu-panel a:hover { background: #33302b; }
   body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
-  body.dark .song-select { background-color: #2a2723; color: #f4f1ea; border-color: #55504a; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23f4f1ea' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+  body.dark .song-select { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
   body.dark .playlist-menu.active label { color: #d4b978; }
-  body.dark .playlist-menu.active .song-select { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background-color: #3a3226; }
+  body.dark .playlist-menu.active .song-select { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background: #3a3226; }
   body.dark .footer { color: #9a948c; }
   @media (max-width: 480px) { .tv-lights .bulb { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
@@ -73,11 +73,10 @@
   .playlist-menus { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-width: 780px; margin: 0 auto; }
   .playlist-menu { text-align: center; min-width: 0; }
   .playlist-menu label { display: block; font-family: 'Indie Flower', cursive; font-size: 17px; letter-spacing: 1px; text-transform: uppercase; color: #6f6a62; font-weight: 600; margin: 0 0 6px 0; }
-  .song-select { width: 100%; height: 50px; padding: 0 36px; font-family: 'Indie Flower', cursive; font-size: 20px; text-align: center; text-align-last: center; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2322211e' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
-  .song-select option { text-align: center; }
+  .song-select { width: 100%; height: 50px; padding: 0 12px; font-family: 'Indie Flower', cursive; font-size: 20px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; }
   .song-select:focus-visible { outline: 2px solid #b9975b; outline-offset: 2px; }
   .playlist-menu.active label { color: #8a7443; }
-  .playlist-menu.active .song-select { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background-color: #fdf8ee; }
+  .playlist-menu.active .song-select { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background: #fdf8ee; }
   .tv-controls-under .tv-btn { width: 120px; height: 56px; flex: 0 0 auto; }
   .tv-image { display: block; width: 100%; height: auto; border-radius: 8px; }
   .tv-video { position: absolute; left: 12.9%; top: 32.6%; width: 73.5%; height: 46.4%; background: #000; border-radius: 14px; overflow: hidden; line-height: 1.4; }
@@ -134,6 +133,7 @@
     body { padding: 24px 10px 40px; }
     .tv-controls-under { gap: 8px; }
     .playlist-menus { grid-template-columns: 1fr; }
+    .song-select { width: auto; max-width: 100%; }
     .tv-controls-under .tv-btn { flex: 1 1 0; width: auto; min-width: 0; font-size: 12px; }
   }
 </style>
