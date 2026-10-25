@@ -177,7 +177,7 @@
     </div>
   </section>
 
-  <div class="version-note">Collage board v6</div>
+  <div class="version-note">Collage board v7 — faster automatic cutouts</div>
 
   <div id="traceOverlay">
     <p class="trace-title">Trace around what you want</p>
@@ -447,22 +447,51 @@
     });
   }
 
+  var cutting = false;
   document.getElementById('cutBtn').addEventListener('click', async function () {
     var it = selected();
-    if (!it) return;
-    setStatus('Cutting out… the first time, your phone downloads a little helper, so give it a moment.');
+    if (!it || cutting) return;
+    cutting = true;
+    var btn = document.getElementById('cutBtn');
+    btn.disabled = true;
+    setStatus('Cutting out for you… first time, your phone downloads a smaller helper, so give it a moment.');
     try {
       var mod = await import('https://esm.sh/@imgly/background-removal');
-      var blob = await fetch(it.src).then(function (r) { return r.blob(); });
-      var out = await mod.removeBackground(blob);
+      var srcBlob = await fetch(it.src).then(function (r) { return r.blob(); });
+      // Shrink the photo first so your phone has far less work to do.
+      var smallBlob = await new Promise(function (resolve) {
+        var im = new Image();
+        im.onload = function () {
+          var max = 640;
+          var sc = Math.min(1, max / im.width);
+          var c = document.createElement('canvas');
+          c.width = Math.round(im.width * sc);
+          c.height = Math.round(im.height * sc);
+          c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+          URL.revokeObjectURL(im.src);
+          c.toBlob(function (b) { resolve(b || srcBlob); }, 'image/png');
+        };
+        im.onerror = function () { resolve(srcBlob); };
+        im.src = URL.createObjectURL(srcBlob);
+      });
+      var out = await mod.removeBackground(smallBlob, {
+        model: 'isnet_quint8',
+        device: 'gpu',
+        output: { format: 'image/png' },
+        progress: function (key, current, total) {
+          if (total) setStatus('Cutting out for you… ' + Math.round((current / total) * 100) + '%');
+        }
+      });
       it.src = await blobToDataURL(out);
       it.external = false;
       render();
       saveCurrent();
       setStatus('Cut out! Drag it wherever you like.');
     } catch (e) {
-      setStatus("Couldn't cut that one out automatically — it stays as-is, and you can still use it. Photos uploaded from your phone cut out best.");
+      setStatus("The automatic cut didn't finish — your phone may have run out of steam on that photo. Try it once more, or use Trace cut by hand for that one.");
     }
+    cutting = false;
+    btn.disabled = false;
   });
 
   var traceOverlay = document.getElementById('traceOverlay');
