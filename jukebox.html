@@ -137,7 +137,7 @@
     .tv-controls-under .tv-btn { flex: 1 1 0; width: auto; min-width: 0; font-size: 12px; }
   }
 
-  /* Fun mode: colourful themes that keep the same layout and fonts, only colours change. */
+  /* Fun mode: colorful themes that keep the same layout and fonts, only colors change. */
   body.fun[data-fun="0"] { --fun-bg: #ffe3d3; --fun-card: #fff7f0; --fun-text: #4a2438; --fun-muted: #8a5a6b; --fun-accent: #ff5d8f; --fun-border: #f2c4b3; }
   body.fun[data-fun="1"] { --fun-bg: #d6f2ff; --fun-card: #f0fbff; --fun-text: #123a4d; --fun-muted: #4a7a92; --fun-accent: #0096c7; --fun-border: #a8d8ea; }
   body.fun[data-fun="2"] { --fun-bg: #e9dcff; --fun-card: #faf5ff; --fun-text: #3b215e; --fun-muted: #7a5aa0; --fun-accent: #7b2ff7; --fun-border: #c9b3f0; }
@@ -173,19 +173,13 @@
   body.fun footer { border-top-color: var(--fun-border); color: var(--fun-muted); }
   body.fun .home-link a { color: var(--fun-text); border-color: var(--fun-text); }
 
-  .fun-picker { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 10px 0; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
-  .fun-picker input[type="color"] { width: 34px; height: 34px; padding: 0; border: 2px solid #c9c2b6; border-radius: 50%; background: none; cursor: pointer; }
-  .fun-swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px #c9c2b6; padding: 0; cursor: pointer; }
-  body.fun .fun-picker { color: var(--fun-muted); border-top-color: var(--fun-border); }
   body.fun h1, body.fun h2, body.fun h3, body.fun .post-title, body.fun .modal-title { color: var(--fun-text); }
   body.fun .caption { color: var(--fun-muted); }
   body.fun .halloween-banner, body.fun .mila-photo, body.fun .dancing-pair { border: 3px solid var(--fun-accent); border-radius: 12px; box-shadow: 0 4px 18px rgba(0,0,0,.15); }
   body.fun .tv-wrap { filter: drop-shadow(0 0 14px var(--fun-accent)); }
   body.fun .case { border-color: var(--fun-accent); }
 
-  /* Colour picker lives under Fun mode: hidden until Fun mode is on. */
-  .fun-picker { display: none; }
-  body.fun .fun-picker { display: flex; }
+  /* Color picker lives under Fun mode: hidden until Fun mode is on. */
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#111111">
@@ -203,7 +197,6 @@
     <a href="jukebox.html">Jukebox</a>
       <button class="install-btn" id="installBtn" type="button">Install App</button>
       <button class="install-btn" id="funBtn" type="button">Fun mode</button>
-      <div class="fun-picker"><span>Pick any colour:</span><input type="color" id="funColor" value="#ff5d8f" aria-label="Pick any colour"><button type="button" class="fun-swatch" data-color="#e11d48" style="background:#e11d48" aria-label="Colour #e11d48"></button><button type="button" class="fun-swatch" data-color="#f97316" style="background:#f97316" aria-label="Colour #f97316"></button><button type="button" class="fun-swatch" data-color="#eab308" style="background:#eab308" aria-label="Colour #eab308"></button><button type="button" class="fun-swatch" data-color="#22c55e" style="background:#22c55e" aria-label="Colour #22c55e"></button><button type="button" class="fun-swatch" data-color="#14b8a6" style="background:#14b8a6" aria-label="Colour #14b8a6"></button><button type="button" class="fun-swatch" data-color="#2563eb" style="background:#2563eb" aria-label="Colour #2563eb"></button><button type="button" class="fun-swatch" data-color="#7c3aed" style="background:#7c3aed" aria-label="Colour #7c3aed"></button><button type="button" class="fun-swatch" data-color="#ec4899" style="background:#ec4899" aria-label="Colour #ec4899"></button></div>
     <div class="theme-toggle">
       <span>Light</span>
       <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
@@ -654,63 +647,26 @@ for (var i = 0; i < songSelects.length; i++) {
 </script>
 
 <script>
-  // Fun mode: any colour. Tap Fun mode to shuffle palettes, or pick any colour
-  // from the colour picker / swatches — fonts and photos follow the chosen colour.
+  // Fun mode: tap to turn on, tap again to shuffle to the next color.
+  // Flipping the Light/Dark switch turns Fun mode back off.
   (function () {
     var btn = document.getElementById('funBtn');
     var toggle = document.getElementById('themeToggle');
-    var picker = document.getElementById('funColor');
     var PALS = ['Sunset', 'Ocean', 'Grape', 'Lime', 'Candy'];
-    var VARS = ['--fun-bg', '--fun-card', '--fun-text', '--fun-muted', '--fun-accent', '--fun-border'];
     function getPal() { try { var p = parseInt(localStorage.getItem('ashleys-fun-palette') || '0', 10); return isNaN(p) ? 0 : p % PALS.length; } catch (e) { return 0; } }
-    function clearCustom() { VARS.forEach(function (v) { document.body.style.removeProperty(v); }); try { localStorage.setItem('ashleys-fun-custom', '0'); } catch (e) {} }
     function applyFun(on, pal) {
-      clearCustom();
       document.body.classList.toggle('fun', on);
       document.body.setAttribute('data-fun', String(pal));
       if (btn) btn.textContent = on ? ('Fun mode: ' + PALS[pal] + ' — tap to shuffle') : 'Fun mode';
-      try { localStorage.setItem('ashleys-fun', on ? '1' : '0'); localStorage.setItem('ashleys-fun-palette', String(pal)); } catch (e) {}
+      try { localStorage.setItem('ashleys-fun', on ? '1' : '0'); localStorage.setItem('ashleys-fun-palette', String(pal)); localStorage.setItem('ashleys-fun-custom', '0'); } catch (e) {}
     }
-    function hexToHsl(hex) {
-      var r = parseInt(hex.slice(1, 3), 16) / 255, g = parseInt(hex.slice(3, 5), 16) / 255, b = parseInt(hex.slice(5, 7), 16) / 255;
-      var max = Math.max(r, g, b), min = Math.min(r, g, b), h = 0, s = 0, l = (max + min) / 2;
-      if (max !== min) {
-        var d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
-        else if (max === g) h = (b - r) / d + 2;
-        else h = (r - g) / d + 4;
-        h *= 60;
-      }
-      return [Math.round(h), Math.round(s * 100), Math.round(l * 100)];
-    }
-    function applyCustom(hex) {
-      var hsl = hexToHsl(hex), h = hsl[0], s = hsl[1], l = hsl[2];
-      var accent = l > 75 ? ('hsl(' + h + ',' + s + '%,45%)') : hex;
-      document.body.style.setProperty('--fun-bg', 'hsl(' + h + ',' + Math.max(s - 10, 0) + '%,88%)');
-      document.body.style.setProperty('--fun-card', 'hsl(' + h + ',70%,96%)');
-      document.body.style.setProperty('--fun-text', 'hsl(' + h + ',40%,18%)');
-      document.body.style.setProperty('--fun-muted', 'hsl(' + h + ',25%,42%)');
-      document.body.style.setProperty('--fun-accent', accent);
-      document.body.style.setProperty('--fun-border', 'hsl(' + h + ',60%,78%)');
-      document.body.classList.add('fun');
-      document.body.setAttribute('data-fun', 'custom');
-      if (btn) btn.textContent = 'Fun mode: Your colour — tap to shuffle';
-      if (picker) picker.value = hex;
-      try { localStorage.setItem('ashleys-fun', '1'); localStorage.setItem('ashleys-fun-custom', '1'); localStorage.setItem('ashleys-fun-color', hex); } catch (e) {}
-    }
-    var on = false, pal = 0, custom = null;
-    try { on = localStorage.getItem('ashleys-fun') === '1'; pal = getPal(); if (localStorage.getItem('ashleys-fun-custom') === '1') custom = localStorage.getItem('ashleys-fun-color'); } catch (e) {}
-    if (on && custom) applyCustom(custom);
-    else if (on) applyFun(true, pal);
+    var on = false, pal = 0;
+    try { on = localStorage.getItem('ashleys-fun') === '1'; pal = getPal(); } catch (e) {}
+    if (on) applyFun(true, pal);
     else if (btn) btn.textContent = 'Fun mode';
     if (btn) btn.addEventListener('click', function () {
       if (document.body.classList.contains('fun')) applyFun(true, (getPal() + 1) % PALS.length);
       else applyFun(true, getPal());
-    });
-    if (picker) picker.addEventListener('input', function () { applyCustom(this.value); });
-    document.querySelectorAll('.fun-swatch').forEach(function (sw) {
-      sw.addEventListener('click', function () { applyCustom(sw.getAttribute('data-color')); });
     });
     if (toggle) toggle.addEventListener('change', function () {
       if (document.body.classList.contains('fun')) applyFun(false, getPal());
