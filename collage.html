@@ -35,7 +35,7 @@
   .swatches { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-family: Arial, Helvetica, sans-serif; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #666; }
   .swatch { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #111; cursor: pointer; padding: 0; }
   .swatch.on { outline: 3px solid #b9975b; outline-offset: 2px; }
-  #board { position: relative; width: 100%; max-width: 640px; margin: 18px auto 0; aspect-ratio: 3 / 4; border: 2px solid #111; overflow: hidden; background: #fdfdfc; touch-action: pan-y; }
+  #board { position: relative; width: 100%; max-width: 640px; margin: 18px auto 0; aspect-ratio: 9 / 16; border: 2px solid #111; overflow: hidden; background: #fdfdfc; touch-action: pan-y; }
   .piece { position: absolute; cursor: grab; touch-action: none; }
   .piece img { display: block; width: 100%; height: auto; pointer-events: none; -webkit-user-drag: none; }
   .piece.sel { outline: 3px dashed #b9975b; outline-offset: 2px; }
@@ -44,8 +44,17 @@
   #editbar.show { display: flex; }
   #status { min-height: 20px; margin-top: 12px; font-size: 14px; font-style: italic; color: #666; text-align: center; }
   .version-note { text-align: center; font-size: 12px; font-style: italic; color: #999; margin-top: 22px; }
-  .saved-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 16px; }
-  .saved-row select { font-family: Georgia, serif; font-size: 15px; padding: 8px 10px; border: 1.5px solid #bbb; border-radius: 8px; background: #fff; color: #111; max-width: 100%; }
+  .group { border: 1.5px solid #ddd6c9; border-radius: 12px; padding: 12px 14px 14px; margin-top: 14px; background: #f7f5ef; }
+  .group-label { font-family: Arial, Helvetica, sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 0 0 10px; }
+  .swatch-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .swatch-row .swatch { width: 30px; height: 30px; }
+  .color-pick { display: flex; gap: 8px; align-items: center; margin-top: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #6f6a62; }
+  .color-pick input[type="color"] { width: 44px; height: 32px; border: 1.5px solid #111; border-radius: 8px; background: #fff; padding: 2px; cursor: pointer; }
+  .gallery { display: flex; flex-direction: column; gap: 8px; }
+  .saved-card { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; border: 1.5px solid #ddd6c9; border-radius: 10px; padding: 10px 12px; background: #fff; }
+  .saved-card .saved-name { flex: 1; min-width: 120px; font-family: 'Bitter', Georgia, serif; font-weight: 700; font-size: 17px; color: #111; }
+  .saved-card .saved-meta { font-size: 13px; font-style: italic; color: #666; }
+  .gallery-empty { font-size: 15px; font-style: italic; color: #666; margin: 0; }
   footer { border-top: 3px double #111; margin-top: 46px; padding-top: 16px; font-family: Arial, Helvetica, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; text-align: center; color: #999; }
   .foot-name { font-size: 12px; letter-spacing: 3px; color: #555; margin-bottom: 8px; }
   .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
@@ -64,7 +73,11 @@
   body.dark .howto small { color: #b8b0a3; }
   body.dark .pill { color: #f4f1ea; border-color: #f4f1ea; }
   body.dark .pill:active { background: #f4f1ea; color: #1c1a17; }
-  body.dark .link-row input[type="text"], body.dark .saved-row select { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .link-row input[type="text"] { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .group { background: #24211d; border-color: #3a3631; }
+  body.dark .group-label, body.dark .color-pick { color: #b8b0a3; }
+  body.dark .saved-card { background: #2a2723; border-color: #3a3631; }
+  body.dark .saved-card .saved-name { color: #f4f1ea; }
   body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
   body.dark .menu-panel a, body.dark .menu-panel button.install-btn { color: #f4f1ea; }
   body.dark footer { border-top-color: #55504a; color: #9a948c; }
@@ -101,21 +114,27 @@
 
   <section>
     <h2>My Collage Board</h2>
-    <p class="howto">Find a photo on Google or Pinterest and save it to your phone, or upload straight from your phone. Add it here, tap it, then Cut out to remove the background. Drag each piece wherever you want it, and your board doubles as a moodboard.
-    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. Your boards save in this browser only, so they stay yours — the same as your blog and calendar. If you want to keep one forever, tap Export picture and save it to your phone.</small></p>
+    <p class="howto">Tap Search Pinterest or Search Google to go find pictures, save the ones you love to your phone, then come back here and upload them — your board is saved automatically while you're away, so nothing is lost. Tap a piece, then Cut out to remove the background, and arrange everything on a board that's nearly as tall as your phone screen. It doubles as a moodboard.
+    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. There's no limit on how many pieces fit on the board. Your saved boards live below in My collages, and they save in this browser only, like your blog and calendar — for the ones you want forever, tap Export picture and save it to your phone.</small></p>
 
-    <div class="toolbar">
-      <label class="pill" for="fileInput">Upload from my phone</label>
-      <input id="fileInput" type="file" accept="image/*" multiple hidden>
-      <button class="pill" id="exportBtn" type="button">Export picture</button>
-      <button class="pill" id="clearBtn" type="button">Clear board</button>
+    <div class="group">
+      <p class="group-label">Add pictures</p>
+      <div class="toolbar" style="margin-top:0;">
+        <label class="pill" for="fileInput">Upload from my phone</label>
+        <input id="fileInput" type="file" accept="image/*" multiple hidden>
+        <a class="pill" href="https://www.pinterest.com/" target="_blank" rel="noopener" style="text-decoration:none;">Search Pinterest</a>
+        <a class="pill" href="https://images.google.com/" target="_blank" rel="noopener" style="text-decoration:none;">Search Google</a>
+      </div>
+      <div class="link-row">
+        <input id="linkInput" type="text" placeholder="Or paste a picture link from Pinterest or Google…" aria-label="Picture link">
+        <button class="pill" id="linkBtn" type="button">Add by link</button>
+      </div>
     </div>
-    <div class="link-row">
-      <input id="linkInput" type="text" placeholder="Or paste a picture link from Pinterest or Google…" aria-label="Picture link">
-      <button class="pill" id="linkBtn" type="button">Add by link</button>
-    </div>
-    <div class="swatches" id="swatches">
-      <span>Board color</span>
+
+    <div class="group">
+      <p class="group-label">Board color</p>
+      <div class="swatch-row" id="swatches"></div>
+      <label class="color-pick">Any color <input id="customColor" type="color" value="#fdfdfc" aria-label="Pick any board color"></label>
     </div>
 
     <div id="board" aria-label="Collage board"></div>
@@ -133,15 +152,22 @@
     </div>
     <p id="status" aria-live="polite"></p>
 
-    <div class="saved-row">
-      <button class="pill" id="saveBtn" type="button">Save this board</button>
-      <select id="savedSelect" aria-label="Saved boards"></select>
-      <button class="pill" id="loadBtn" type="button">Open</button>
-      <button class="pill" id="deleteSavedBtn" type="button">Delete</button>
+    <div class="group">
+      <p class="group-label">Keep it</p>
+      <div class="toolbar" style="margin-top:0;">
+        <button class="pill" id="saveBtn" type="button">Save this board</button>
+        <button class="pill" id="exportBtn" type="button">Export picture</button>
+        <button class="pill" id="clearBtn" type="button">Clear board</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <p class="group-label">My collages</p>
+      <div class="gallery" id="savedGallery"></div>
     </div>
   </section>
 
-  <div class="version-note">Collage board v2 — pinch to resize</div>
+  <div class="version-note">Collage board v3</div>
 
   <footer><div class="foot-name">Ashley Ayala</div>&copy; 2026 Ashley Ayala</footer>
 </main>
@@ -226,6 +252,8 @@
     document.querySelectorAll('#swatches .swatch').forEach(function (s) {
       s.classList.toggle('on', s.dataset.color === board.bg);
     });
+    var cc = document.getElementById('customColor');
+    if (cc) cc.value = board.bg;
   }
 
   var gesture = null;
@@ -440,68 +468,75 @@
     setStatus('Board cleared. Your saved boards are untouched.');
   });
 
-  function refreshSavedList() {
-    var sel = document.getElementById('savedSelect');
-    var map = {};
-    try { map = JSON.parse(localStorage.getItem('ashley-collages') || '{}'); } catch (e) { map = {}; }
+  function readSavedMap() {
+    try { return JSON.parse(localStorage.getItem('ashley-collages') || '{}'); } catch (e) { return {}; }
+  }
+
+  function renderSavedList() {
+    var gal = document.getElementById('savedGallery');
+    var map = readSavedMap();
     var names = Object.keys(map);
-    sel.innerHTML = '';
+    gal.innerHTML = '';
     if (!names.length) {
-      var opt = document.createElement('option');
-      opt.textContent = 'No saved boards yet';
-      sel.appendChild(opt);
+      var p = document.createElement('p');
+      p.className = 'gallery-empty';
+      p.textContent = 'No saved boards yet — save one and it will live here.';
+      gal.appendChild(p);
       return;
     }
     names.forEach(function (n) {
-      var o = document.createElement('option');
-      o.value = n; o.textContent = n;
-      sel.appendChild(o);
+      var card = document.createElement('div');
+      card.className = 'saved-card';
+      var nm = document.createElement('span');
+      nm.className = 'saved-name';
+      nm.textContent = n;
+      var meta = document.createElement('span');
+      meta.className = 'saved-meta';
+      var count = (map[n] && map[n].items) ? map[n].items.length : 0;
+      meta.textContent = count + (count === 1 ? ' piece' : ' pieces');
+      var openBtn = document.createElement('button');
+      openBtn.className = 'pill'; openBtn.type = 'button'; openBtn.textContent = 'Open';
+      openBtn.addEventListener('click', function () {
+        board = map[n];
+        zTop = board.items.reduce(function (m, it) { return Math.max(m, it.z + 1); }, 1);
+        selectedId = null; render(); saveCurrent();
+        setStatus('Opened "' + n + '".');
+        window.scrollTo({ top: boardEl.offsetTop - 10, behavior: 'smooth' });
+      });
+      var delBtn = document.createElement('button');
+      delBtn.className = 'pill'; delBtn.type = 'button'; delBtn.textContent = 'Delete';
+      delBtn.addEventListener('click', function () {
+        if (!confirm('Delete the saved board "' + n + '"?')) return;
+        var m2 = readSavedMap();
+        delete m2[n];
+        try { localStorage.setItem('ashley-collages', JSON.stringify(m2)); } catch (e) {}
+        renderSavedList();
+        setStatus('Deleted "' + n + '".');
+      });
+      card.appendChild(nm); card.appendChild(meta); card.appendChild(openBtn); card.appendChild(delBtn);
+      gal.appendChild(card);
     });
   }
 
   document.getElementById('saveBtn').addEventListener('click', function () {
     var name = prompt('Name this board:', 'My board');
     if (!name) return;
-    var map = {};
-    try { map = JSON.parse(localStorage.getItem('ashley-collages') || '{}'); } catch (e) { map = {}; }
+    var map = readSavedMap();
     map[name] = board;
     try {
       localStorage.setItem('ashley-collages', JSON.stringify(map));
-      refreshSavedList();
-      setStatus('Saved as "' + name + '". Come back anytime and it will still be here.');
+      renderSavedList();
+      setStatus('Saved as "' + name + '". You will find it below, in My collages.');
     } catch (e) {
       setStatus('That board is too big to save in the browser — try fewer photos, then Export picture to keep it.');
     }
-  });
-
-  document.getElementById('loadBtn').addEventListener('click', function () {
-    var name = document.getElementById('savedSelect').value;
-    var map = {};
-    try { map = JSON.parse(localStorage.getItem('ashley-collages') || '{}'); } catch (e) { map = {}; }
-    if (!map[name]) { setStatus('Pick a saved board first.'); return; }
-    board = map[name];
-    zTop = board.items.reduce(function (m, it) { return Math.max(m, it.z + 1); }, 1);
-    selectedId = null; render(); saveCurrent();
-    setStatus('Opened "' + name + '".');
-  });
-
-  document.getElementById('deleteSavedBtn').addEventListener('click', function () {
-    var name = document.getElementById('savedSelect').value;
-    var map = {};
-    try { map = JSON.parse(localStorage.getItem('ashley-collages') || '{}'); } catch (e) { map = {}; }
-    if (!map[name]) return;
-    if (!confirm('Delete the saved board "' + name + '"?')) return;
-    delete map[name];
-    try { localStorage.setItem('ashley-collages', JSON.stringify(map)); } catch (e) {}
-    refreshSavedList();
-    setStatus('Deleted "' + name + '".');
   });
 
   document.getElementById('exportBtn').addEventListener('click', async function () {
     if (!board.items.length) { setStatus('Add a piece first, then export.'); return; }
     setStatus('Making your picture…');
     try {
-      var W = 1080, H = 1440;
+      var W = 1080, H = 1920;
       var c = document.createElement('canvas');
       c.width = W; c.height = H;
       var ctx = c.getContext('2d');
@@ -553,6 +588,12 @@
     sw.appendChild(b);
   });
 
+  document.getElementById('customColor').addEventListener('input', function () {
+    board.bg = this.value;
+    render();
+    saveCurrent();
+  });
+
   try {
     var cur = JSON.parse(localStorage.getItem('ashley-collage-current') || 'null');
     if (cur && cur.items) {
@@ -560,7 +601,7 @@
       zTop = board.items.reduce(function (m, it) { return Math.max(m, it.z + 1); }, 1);
     }
   } catch (e) {}
-  refreshSavedList();
+  renderSavedList();
   render();
 })();
 </script>
