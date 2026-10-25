@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CD Shelf — Ashley's Spot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 32px 16px 48px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  .backlink { font-size: 13px; margin: 0 0 18px; }
+  .backlink a { color: #8a7443; text-decoration: none; font-weight: 600; }
+  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a7443; font-weight: 600; margin: 0 0 10px; text-align: center; }
+  h1 { font-family: Fraunces, Georgia, serif; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.5px; margin: 0 0 8px; text-align: center; }
+  .sub { color: #6f6a62; font-size: 15px; margin: 0 0 14px; text-align: center; }
+  .divider { width: 48px; height: 2px; background: #b9975b; margin: 0 auto 24px; border: none; }
+  .card { background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 24px 20px; box-shadow: 0 2px 12px rgba(0,0,0,.05); }
+  h2 { font-family: Fraunces, Georgia, serif; font-size: 22px; font-weight: 600; margin: 28px 0 12px; }
+  h2:first-child { margin-top: 0; }
+  .cd-form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cd-form .full { grid-column: 1 / -1; }
+  .cd-form input[type="text"], .cd-form input[type="url"] { font-family: Inter, Arial, Helvetica, sans-serif; font-size: 16px; color: #22211e; border: 1px solid #c9c2b6; border-radius: 12px; padding: 11px 12px; background: #fff; width: 100%; min-width: 0; }
+  .btn { font-size: 14px; font-weight: 600; background: #22211e; color: #fff; border: none; border-radius: 999px; padding: 11px 22px; cursor: pointer; }
+  .btn.secondary { background: #fff; color: #22211e; border: 1.5px solid #c9c2b6; }
+  .btn:focus-visible, .cd-form input:focus-visible { outline: 2px solid #b9975b; outline-offset: 2px; }
+  .privacy-note { font-size: 12.5px; color: #8a857e; margin: 10px 0 0; }
+  .credit-note { font-size: 13px; color: #6f6a62; background: #f4f1ea; border: 1px solid #ddd7cc; border-radius: 12px; padding: 12px 14px; margin: 16px 0 0; }
+  .shelf-count { font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: #8a857e; margin: 28px 0 12px; }
+  .shelf { display: flex; flex-wrap: wrap; gap: 18px 14px; align-items: flex-end; padding: 18px 14px 0; background: linear-gradient(#8a5a2e, #7a4e26); border-radius: 12px; box-shadow: inset 0 -10px 0 #6b421f; }
+  .cd { width: 118px; flex: 0 0 auto; position: relative; }
+  .case { width: 118px; height: 148px; border-radius: 4px; overflow: hidden; background: #22211e; border: 1px solid rgba(0,0,0,.25); box-shadow: 3px 3px 0 rgba(0,0,0,.18); position: relative; }
+  .case img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .case-text { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 10px; color: #fff; }
+  .case-text .ct { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 15px; line-height: 1.25; }
+  .case-text .ca { font-size: 11px; margin-top: 6px; opacity: .9; }
+  .cd-meta { margin-top: 8px; font-size: 13px; line-height: 1.4; color: #f4f1ea; }
+  .cd-meta b { display: block; font-size: 13.5px; }
+  .cd-meta span { opacity: .85; font-size: 12px; }
+  .cd-credit { font-size: 11px; color: #e8ddc8; margin-top: 2px; word-break: break-word; }
+  .cd-del { position: absolute; top: -8px; right: -6px; width: 24px; height: 24px; border-radius: 50%; border: 1px solid #c9c2b6; background: #fff; color: #888; font-size: 16px; line-height: 1; cursor: pointer; z-index: 2; }
+  .cd-del:hover { color: #c62828; }
+  .empty { font-style: italic; color: #8a857e; font-size: 15.5px; line-height: 1.6; margin: 0; }
+  .tools { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
+  .hint { font-size: 12.5px; color: #8a857e; margin-top: 16px; text-align: center; }
+  .menu-row { text-align: center; margin: 0 0 18px; }
+  .menu-row button { font-family: Inter, Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #22211e; border: 1.5px solid #22211e; border-radius: 999px; padding: 8px 18px; cursor: pointer; }
+  .menu-panel { display: none; background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 8px 16px; margin: 0 auto 18px; max-width: 720px; text-align: center; }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-size: 15px; font-weight: 600; color: #22211e; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: inherit; font-size: 15px; font-weight: 600; color: #22211e; background: none; border: none; border-bottom: 1px solid #eee9df; padding: 10px 0; cursor: pointer; }
+  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
+  .theme-switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
+  .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .theme-switch .slider { position: absolute; inset: 0; background: #c9c2b6; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: .25s; }
+  .theme-switch input:checked + .slider { background: #b9975b; }
+  .theme-switch input:checked + .slider::before { transform: translateX(22px); }
+  body.dark { background: #1c1a17; color: #f4f1ea; }
+  body.dark .eyebrow { color: #d4b978; }
+  body.dark .sub, body.dark .privacy-note, body.dark .hint, body.dark .empty { color: #b8b0a3; }
+  body.dark .backlink a { color: #d4b978; }
+  body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
+  body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
+  body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .menu-panel button.install-btn { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
+  body.dark .card { background: #2a2723; border-color: #44403a; }
+  body.dark .cd-form input[type="text"], body.dark .cd-form input[type="url"] { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .btn.secondary { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .credit-note { background: #1c1a17; border-color: #44403a; color: #b8b0a3; }
+  @media (max-width: 520px) {
+    body { padding: 24px 10px 40px; }
+    h1 { font-size: 32px; }
+    .card { padding: 18px 12px; }
+    .cd-form { grid-template-columns: 1fr; }
+    .cd { width: 104px; }
+    .case { width: 104px; height: 132px; }
+  }
+</style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#111111">
+</head>
+<body>
+<main class="wrap">
+  <p class="backlink"><a href="index.html">&larr; Ashley's Spot</a> &nbsp;·&nbsp; <a href="jukebox.html">Jukebox</a> &nbsp;·&nbsp; <a href="blog.html">Blog</a></p>
+  <p class="eyebrow">Ashley's Spot</p>
+  <h1>CD Shelf</h1>
+  <p class="sub">Your CDs, lined up in their cases, right on the shelf.</p>
+  <hr class="divider">
+  <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
+  <nav id="menuPanel" class="menu-panel">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="jukebox.html">Jukebox</a>
+    <a href="shelf.html">CD Shelf</a>
+      <button class="install-btn" id="installBtn" type="button">Install App</button>
+      <div class="theme-toggle">
+        <span>Light</span>
+        <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+        <span>Dark</span>
+      </div>
+  </nav>
+
+  <section class="card">
+    <h2>Add a CD</h2>
+    <div class="cd-form">
+      <input id="cdTitle" type="text" placeholder="Album title *" maxlength="120">
+      <input id="cdArtist" type="text" placeholder="Artist" maxlength="120">
+      <input id="cdYear" type="text" placeholder="Year (optional)" maxlength="10">
+      <input id="cdImg" type="url" placeholder="Cover image link (optional — paste one from Google Images)" class="full">
+      <input id="cdCredit" type="text" placeholder="Cover credit (optional — e.g. Album cover, Wikipedia)" class="full">
+      <div class="full"><button class="btn" type="button" id="addBtn">Add to shelf</button></div>
+    </div>
+    <p class="privacy-note">Your shelf saves in this browser on this device only — it is not sent anywhere.</p>
+    <p class="credit-note"><b>About cover images:</b> if you paste a cover image, add its credit in the Credit box and it will show right under that CD, so the artist / source gets credited. CDs without a cover link get a plain case with the title and artist on it — no image used, nothing to credit.</p>
+
+    <p class="shelf-count" id="shelfCount"></p>
+    <div id="shelfWrap"></div>
+
+    <div class="tools">
+      <button class="btn secondary" id="exportBtn" type="button">Download backup</button>
+      <button class="btn secondary" id="importBtn" type="button">Import backup</button>
+      <input type="file" id="importFile" accept="application/json" hidden>
+    </div>
+    <p class="hint">Download a backup now and then, so your shelf survives a new phone or a cleared browser.</p>
+  </section>
+</main>
+<script>
+  var KEY = 'ashley-cd-shelf';
+  var STARTERS = [
+    {title: 'The Marshall Mathers LP', artist: 'Eminem', year: '2000', img: '', credit: ''},
+    {title: 'Get Rich or Die Tryin\'', artist: '50 Cent', year: '2003', img: '', credit: ''},
+    {title: 'Wonder What\'s Next', artist: 'Chevelle', year: '2002', img: '', credit: ''},
+    {title: 'We Are Not Alone', artist: 'Breaking Benjamin', year: '2004', img: '', credit: ''},
+    {title: 'The Emancipation of Mimi', artist: 'Mariah Carey', year: '2005', img: '', credit: ''},
+    {title: 'Dangerously in Love', artist: 'Beyoncé', year: '2003', img: '', credit: ''},
+    {title: '(What\'s the Story) Morning Glory?', artist: 'Oasis', year: '1995', img: '', credit: ''},
+    {title: 'OK Computer', artist: 'Radiohead', year: '1997', img: '', credit: ''}
+  ];
+  var COLORS = ['#7e2d3a','#22211e','#2b6cb0','#5b3a6e','#3a6b4f','#8a5a2e','#4a5568','#6b2d5b'];
+  function loadCDs() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw === null) { saveCDs(STARTERS.slice()); return STARTERS.slice(); }
+      return JSON.parse(raw || '[]');
+    } catch (e) { return []; }
+  }
+  function saveCDs(cds) { try { localStorage.setItem(KEY, JSON.stringify(cds)); } catch (e) {} }
+  function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function colorFor(title, i) {
+    var h = 0; for (var j = 0; j < title.length; j++) h = (h + title.charCodeAt(j)) % 1000;
+    return COLORS[(h + i) % COLORS.length];
+  }
+  function render() {
+    var cds = loadCDs();
+    document.getElementById('shelfCount').textContent = cds.length + (cds.length === 1 ? ' CD' : ' CDs') + ' on your shelf';
+    var wrap = document.getElementById('shelfWrap');
+    if (!cds.length) { wrap.innerHTML = '<p class="empty">Your shelf is empty — add your first CD above.</p>'; return; }
+    wrap.innerHTML = '<div class="shelf">' + cds.map(function (c, i) {
+      var cover = '';
+      if (c.img) {
+        cover = '<img src="' + esc(c.img) + '" alt="" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+          '<div class="case-text" style="display:none;background:' + colorFor(c.title, i) + '"><span class="ct">' + esc(c.title) + '</span><span class="ca">' + esc(c.artist) + '</span></div>';
+      } else {
+        cover = '<div class="case-text" style="background:' + colorFor(c.title, i) + '"><span class="ct">' + esc(c.title) + '</span><span class="ca">' + esc(c.artist) + '</span></div>';
+      }
+      return '<div class="cd"><button class="cd-del" type="button" aria-label="Remove CD" data-del="' + i + '">&times;</button>' +
+        '<div class="case">' + cover + '</div>' +
+        '<div class="cd-meta"><b>' + esc(c.title) + '</b><span>' + esc(c.artist) + (c.year ? ' · ' + esc(c.year) : '') + '</span></div>' +
+        (c.credit ? '<div class="cd-credit">Cover credit: ' + esc(c.credit) + '</div>' : '') + '</div>';
+    }).join('') + '</div>';
+    wrap.querySelectorAll('[data-del]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (!confirm('Remove this CD from your shelf?')) return;
+        var cds2 = loadCDs(); cds2.splice(parseInt(btn.getAttribute('data-del'), 10), 1); saveCDs(cds2); render();
+      });
+    });
+  }
+  document.getElementById('addBtn').addEventListener('click', function () {
+    var title = document.getElementById('cdTitle').value.trim();
+    if (!title) { document.getElementById('cdTitle').focus(); return; }
+    var cds = loadCDs();
+    cds.push({
+      title: title,
+      artist: document.getElementById('cdArtist').value.trim(),
+      year: document.getElementById('cdYear').value.trim(),
+      img: document.getElementById('cdImg').value.trim(),
+      credit: document.getElementById('cdCredit').value.trim()
+    });
+    saveCDs(cds);
+    ['cdTitle','cdArtist','cdYear','cdImg','cdCredit'].forEach(function (id) { document.getElementById(id).value = ''; });
+    render();
+  });
+  document.getElementById('exportBtn').addEventListener('click', function () {
+    var blob = new Blob([JSON.stringify(loadCDs(), null, 2)], {type: 'application/json'});
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'cd-shelf-backup.json'; a.click(); URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('importBtn').addEventListener('click', function () { document.getElementById('importFile').click(); });
+  document.getElementById('importFile').addEventListener('change', function (e) {
+    var f = e.target.files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function () { try { var data = JSON.parse(r.result); if (Array.isArray(data)) { saveCDs(data); render(); } } catch (err) {} };
+    r.readAsText(f);
+  });
+  document.getElementById('menuBtn').addEventListener('click', function () {
+    var panel = document.getElementById('menuPanel');
+    var open = panel.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  (function () {
+    var toggle = document.getElementById('themeToggle');
+    function applyTheme(dark) {
+      document.body.classList.toggle('dark', dark);
+      if (toggle) toggle.checked = dark;
+      try { localStorage.setItem('ashleys-theme', dark ? 'dark' : 'light'); } catch (e) {}
+    }
+    try { if (localStorage.getItem('ashleys-theme') === 'dark') applyTheme(true); } catch (e) {}
+    if (toggle) toggle.addEventListener('change', function () { applyTheme(this.checked); });
+  })();
+  render();
+</script>
+<script>
+  (function() {
+    var installBtn = document.getElementById('installBtn');
+    var deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); deferredPrompt = e; });
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+    if (installBtn) {
+      installBtn.addEventListener('click', function() {
+        if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(function() { deferredPrompt = null; }); }
+        else { alert("To install Ashley's Spot on your phone: open this page in Chrome, tap the three dots menu, then tap Add to Home Screen."); }
+      });
+    }
+  })();
+</script>
+</body>
+</html>
