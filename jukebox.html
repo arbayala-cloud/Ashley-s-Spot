@@ -63,7 +63,7 @@
   body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
   body.dark .menu-panel a:hover { background: #33302b; }
   body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
-  body.dark .song-select { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .song-select { background: #2a2723; color: #f4f1ea; border-color: #55504a; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23f4f1ea' stroke-width='2'/%3E%3C/svg%3E"); }
   body.dark .playlist-menu.active label { color: #d4b978; }
   body.dark .playlist-menu.active .song-select { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background: #3a3226; }
   body.dark .footer { color: #9a948c; }
@@ -73,7 +73,8 @@
   .playlist-menus { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-width: 780px; margin: 0 auto; }
   .playlist-menu { text-align: center; min-width: 0; }
   .playlist-menu label { display: block; font-family: 'Indie Flower', cursive; font-size: 17px; letter-spacing: 1px; text-transform: uppercase; color: #6f6a62; font-weight: 600; margin: 0 0 6px 0; }
-  .song-select { width: 100%; height: 50px; padding: 0 12px; font-family: 'Indie Flower', cursive; font-size: 20px; text-align: center; text-align-last: center; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; }
+  .song-select { width: 100%; height: 50px; padding: 0 36px; font-family: 'Indie Flower', cursive; font-size: 20px; text-align: center; text-align-last: center; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2322211e' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+  .song-select option { text-align: center; }
   .song-select:focus-visible { outline: 2px solid #b9975b; outline-offset: 2px; }
   .playlist-menu.active label { color: #8a7443; }
   .playlist-menu.active .song-select { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background: #fdf8ee; }
