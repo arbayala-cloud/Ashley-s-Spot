@@ -63,6 +63,7 @@
   .saved-card .saved-name { flex: 1; min-width: 120px; font-family: 'Bitter', Georgia, serif; font-weight: 700; font-size: 17px; color: #111; }
   .saved-card .saved-meta { font-size: 13px; font-style: italic; color: #666; }
   .gallery-empty { font-size: 15px; font-style: italic; color: #666; margin: 0; }
+  .closet-thumb { width: 72px; height: 72px; object-fit: contain; background: #fff; border: 1px solid #ddd6c9; border-radius: 8px; cursor: pointer; }
   footer { border-top: 3px double #111; margin-top: 46px; padding-top: 16px; font-family: Arial, Helvetica, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; text-align: center; color: #999; }
   .foot-name { font-size: 12px; letter-spacing: 3px; color: #555; margin-bottom: 8px; }
   .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
@@ -85,6 +86,7 @@
   body.dark .group { background: #24211d; border-color: #3a3631; }
   body.dark .group-label, body.dark .color-pick { color: #b8b0a3; }
   body.dark .saved-card { background: #2a2723; border-color: #3a3631; }
+  body.dark .closet-thumb { background: #2a2723; border-color: #3a3631; }
   body.dark .saved-card .saved-name { color: #f4f1ea; }
   body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
   body.dark .menu-panel a, body.dark .menu-panel button.install-btn { color: #f4f1ea; }
@@ -123,7 +125,7 @@
   <section>
     <h2>My Collage Board</h2>
     <p class="howto">Tap Search Pinterest or Search Google to go find pictures, save the ones you love to your phone, then come back here and upload them — your board is saved automatically while you're away, so nothing is lost. Tap a piece, then Cut out to remove the background, and arrange everything on a board that's nearly as tall as your phone screen. It doubles as a moodboard.
-    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. No border, no limits — pieces can hang right off the edges, and there's no limit on how many fit. For clothes on a plain background, Magic wand cuts it instantly with no download at all. Want it cut by hand instead? Tap a piece, then Trace cut by hand, and draw a loop around just what you want to keep — or around what you want gone. If one wanders off where you can't grab it, Gather pieces brings them all back. Your saved boards live below in My collages and save in this browser only, like your blog and calendar — for keepers, tap Export picture and save it to your phone. Note: the export still crops to the board rectangle, so hanging-off bits won't show in it.</small></p>
+    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. No border, no limits — pieces can hang right off the edges, and there's no limit on how many fit. For clothes on a plain background, Magic wand cuts it instantly with no download at all. Want it cut by hand instead? Tap a piece, then Trace cut by hand, and draw a loop around just what you want to keep — or around what you want gone. If one wanders off where you can't grab it, Gather pieces brings them all back. Your saved boards live below in My collages and save in this browser only, like your blog and calendar — for keepers, tap Export picture and save it to your phone. Tap a cutout piece, then Save to closet, and it waits in My closet for any board — your own little Polyvore stash. The Browse taps open Pinterest searches for dresses, tops, shoes, bags, and jewelry — save what you love, then upload it here. Note: the export still crops to the board rectangle, so hanging-off bits won't show in it.</small></p>
 
     <div class="group">
       <p class="group-label">Add pictures</p>
@@ -136,6 +138,14 @@
       <div class="link-row">
         <input id="linkInput" type="text" placeholder="Or paste a picture link from Pinterest or Google…" aria-label="Picture link">
         <button class="pill" id="linkBtn" type="button">Add by link</button>
+      </div>
+      <div class="toolbar" style="margin-top:10px;">
+        <span style="font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#6f6a62;">Browse:</span>
+        <a class="pill" href="https://www.pinterest.com/search/pins/?q=dresses" target="_blank" rel="noopener" style="text-decoration:none;">Dresses</a>
+        <a class="pill" href="https://www.pinterest.com/search/pins/?q=tops" target="_blank" rel="noopener" style="text-decoration:none;">Tops</a>
+        <a class="pill" href="https://www.pinterest.com/search/pins/?q=shoes" target="_blank" rel="noopener" style="text-decoration:none;">Shoes</a>
+        <a class="pill" href="https://www.pinterest.com/search/pins/?q=handbags" target="_blank" rel="noopener" style="text-decoration:none;">Bags</a>
+        <a class="pill" href="https://www.pinterest.com/search/pins/?q=jewelry" target="_blank" rel="noopener" style="text-decoration:none;">Jewelry</a>
       </div>
     </div>
 
@@ -155,9 +165,11 @@
       <button class="pill" id="smallBtn" type="button">Smaller</button>
       <button class="pill" id="rotLBtn" type="button">Turn left</button>
       <button class="pill" id="rotRBtn" type="button">Turn right</button>
+      <button class="pill" id="flipBtn" type="button">Flip</button>
       <button class="pill" id="fwdBtn" type="button">Bring forward</button>
       <button class="pill" id="backBtn" type="button">Send backward</button>
       <button class="pill" id="dupBtn" type="button">Copy</button>
+      <button class="pill" id="closetBtn" type="button">Save to closet</button>
       <button class="pill" id="delBtn" type="button">Remove</button>
     </div>
     <p id="status" aria-live="polite"></p>
@@ -176,9 +188,14 @@
       <p class="group-label">My collages</p>
       <div class="gallery" id="savedGallery"></div>
     </div>
+
+    <div class="group">
+      <p class="group-label">My closet</p>
+      <div class="gallery" id="closetGallery"></div>
+    </div>
   </section>
 
-  <div class="version-note">Collage board v8 — Magic wand cutouts</div>
+  <div class="version-note">Collage board v9 — Polyvore touches</div>
 
   <div id="traceOverlay">
     <p class="trace-title">Trace around what you want</p>
@@ -262,7 +279,7 @@
       div.style.left = it.x + '%';
       div.style.top = it.y + '%';
       div.style.width = it.w + '%';
-      div.style.transform = 'rotate(' + it.rot + 'deg)';
+      div.style.transform = 'rotate(' + it.rot + 'deg)' + (it.flip ? ' scaleX(-1)' : '');
       div.style.zIndex = it.z;
       var img = document.createElement('img');
       img.src = it.src;
@@ -670,6 +687,81 @@
   }
   document.getElementById('wandBtn').addEventListener('click', magicWand);
 
+  document.getElementById('flipBtn').addEventListener('click', function () {
+    var it = selected(); if (!it) return;
+    it.flip = !it.flip;
+    render(); saveCurrent();
+    setStatus(it.flip ? 'Flipped! Tap Flip again to flip it back.' : 'Flipped back.');
+  });
+
+  function readCloset() {
+    try { return JSON.parse(localStorage.getItem('ashley-closet') || '[]'); } catch (e) { return []; }
+  }
+  function renderCloset() {
+    var gal = document.getElementById('closetGallery');
+    var items = readCloset();
+    gal.innerHTML = '';
+    if (!items.length) {
+      var p = document.createElement('p');
+      p.className = 'gallery-empty';
+      p.textContent = 'Your closet is empty — tap a cutout piece, then Save to closet, and it will wait here for any board.';
+      gal.appendChild(p);
+      return;
+    }
+    items.forEach(function (src, idx) {
+      var card = document.createElement('div');
+      card.className = 'saved-card';
+      var thumb = document.createElement('img');
+      thumb.src = src; thumb.alt = 'Closet piece';
+      thumb.className = 'closet-thumb';
+      function addFromCloset() { addPiece(src, false); window.scrollTo({ top: boardEl.offsetTop - 10, behavior: 'smooth' }); }
+      thumb.addEventListener('click', addFromCloset);
+      var addBtn = document.createElement('button');
+      addBtn.className = 'pill'; addBtn.type = 'button'; addBtn.textContent = 'Add to board';
+      addBtn.addEventListener('click', addFromCloset);
+      var delBtn = document.createElement('button');
+      delBtn.className = 'pill'; delBtn.type = 'button'; delBtn.textContent = 'Remove';
+      delBtn.addEventListener('click', function () {
+        var list = readCloset();
+        list.splice(idx, 1);
+        try { localStorage.setItem('ashley-closet', JSON.stringify(list)); } catch (e) {}
+        renderCloset();
+        setStatus('Removed from your closet.');
+      });
+      card.appendChild(thumb); card.appendChild(addBtn); card.appendChild(delBtn);
+      gal.appendChild(card);
+    });
+  }
+  document.getElementById('closetBtn').addEventListener('click', function () {
+    var it = selected(); if (!it) return;
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function () {
+      try {
+        var max = 400;
+        var sc = Math.min(1, max / img.width);
+        var c = document.createElement('canvas');
+        c.width = Math.round(img.width * sc);
+        c.height = Math.round(img.height * sc);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        var small = c.toDataURL('image/png');
+        var list = readCloset();
+        list.push(small);
+        try {
+          localStorage.setItem('ashley-closet', JSON.stringify(list));
+          renderCloset();
+          setStatus('Saved to your closet — tap it in My closet anytime to add it to a board.');
+        } catch (e) {
+          setStatus('Your closet is full — remove an old piece first, then try again.');
+        }
+      } catch (e) {
+        setStatus('That piece needs to be uploaded from your phone before it can live in your closet.');
+      }
+    };
+    img.onerror = function () { setStatus("That piece didn't load for the closet — try uploading it from your phone instead."); };
+    img.src = it.src;
+  });
+
   function nudge(fn) { var it = selected(); if (!it) return; fn(it); render(); saveCurrent(); }
   document.getElementById('bigBtn').addEventListener('click', function () { nudge(function (it) { it.w = Math.min(200, it.w + 5); }); });
   document.getElementById('smallBtn').addEventListener('click', function () { nudge(function (it) { it.w = Math.max(5, it.w - 5); }); });
@@ -795,6 +887,7 @@
         ctx.save();
         ctx.translate(cx, cy);
         ctx.rotate(it.rot * Math.PI / 180);
+        if (it.flip) ctx.scale(-1, 1);
         ctx.drawImage(img, -wPx / 2, -hPx / 2, wPx, hPx);
         ctx.restore();
       }
@@ -839,6 +932,7 @@
     }
   } catch (e) {}
   renderSavedList();
+  renderCloset();
   render();
 })();
 </script>
