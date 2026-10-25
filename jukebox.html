@@ -27,10 +27,15 @@
   .status.playing { color: #d8c9a3; }
   .tv-wrap { position: relative; margin: 4px auto 0; line-height: 0; width: 100%; max-width: 640px; }
   .tv-lights { position: absolute; inset: 0; pointer-events: none; z-index: 5; line-height: 0; }
-  .tv-lights .bulb { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--c, #ffcf7d); box-shadow: 0 0 8px 2px var(--c, #ffcf7d); animation: twinkle 1.8s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+  .tv-lights .bulb { position: absolute; width: 12px; height: 14px; margin: -7px 0 0 -6px; border-radius: 50% 50% 50% 50% / 58% 58% 42% 42%; background: var(--c, #ffcf7d); box-shadow: 0 0 10px 3px var(--c, #ffcf7d); animation: twinkle 1.8s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+  .tv-lights .bulb::before { content: ""; position: absolute; left: 50%; top: -5px; width: 3px; height: 5px; margin-left: -1.5px; background: #1c1c1c; border-radius: 1px; }
+  .light-wire { position: absolute; background: #1c1c1c; z-index: 4; pointer-events: none; line-height: 0; }
+  .light-wire.top { left: 6%; top: 30%; width: 88%; height: 2px; }
+  .light-wire.left { left: 6%; top: 30%; width: 2px; height: 64%; }
+  .light-wire.right { left: 94%; top: 30%; width: 2px; height: 64%; }
   @keyframes twinkle { from { opacity: .35; transform: scale(.8); } to { opacity: 1; transform: scale(1.2); } }
-  .skeleton { position: absolute; left: 6%; top: 4%; width: 22%; z-index: 6; pointer-events: none; line-height: 0; animation: skeletonSwing 2.4s ease-in-out infinite alternate; transform-origin: 50% 55%; }
-  .skeleton img { display: block; width: 100%; height: auto; }
+  .skeleton { position: absolute; left: 8%; top: 0%; width: 18%; z-index: 6; pointer-events: none; line-height: 0; animation: skeletonSwing 2.4s ease-in-out infinite alternate; transform-origin: 50% 72%; }
+  .skeleton img { display: block; width: 100%; height: auto; filter: drop-shadow(0 3px 3px rgba(0,0,0,.3)); }
   @keyframes skeletonSwing { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
   @media (max-width: 480px) { .tv-lights .bulb { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
@@ -131,6 +136,9 @@
         <span class="note" style="left:76%;top:66%;animation-delay:1.3s;animation-duration:2.6s;">&#9835;</span>
         <span class="note" style="left:80%;top:60%;animation-delay:2.0s;animation-duration:3.2s;">&#9834;</span>
       </div>
+      <div class="light-wire top" aria-hidden="true"></div>
+      <div class="light-wire left" aria-hidden="true"></div>
+      <div class="light-wire right" aria-hidden="true"></div>
       <div class="tv-lights" aria-hidden="true">
         <span class="bulb" style="left:8%;top:30%;--c:#ff7a00;--d:0.00s;"></span>
         <span class="bulb" style="left:24%;top:30%;--c:#a855f7;--d:0.13s;"></span>
