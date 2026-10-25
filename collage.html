@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700;900&family=Indie+Flower&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; background: #fdfdfc; color: #161616; font-family: Georgia, 'Times New Roman', serif; -webkit-font-smoothing: antialiased; }
+  body { margin: 0; background: #fdfdfc; color: #161616; font-family: Georgia, 'Times New Roman', serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   .wrap { max-width: 880px; margin: 0 auto; padding: 20px 22px 48px; }
   header { text-align: center; }
   h1.masthead { margin: 18px 0 0; font-family: 'Indie Flower', cursive; font-weight: 400; font-size: 84px; line-height: 1.05; color: #111; }
@@ -35,7 +35,7 @@
   .swatches { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-family: Arial, Helvetica, sans-serif; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #666; }
   .swatch { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #111; cursor: pointer; padding: 0; }
   .swatch.on { outline: 3px solid #b9975b; outline-offset: 2px; }
-  #board { position: relative; width: 100%; max-width: 640px; margin: 18px auto 0; aspect-ratio: 9 / 16; border: 2px solid #111; overflow: hidden; background: #fdfdfc; touch-action: pan-y; }
+  #board { position: relative; width: 100%; max-width: 640px; margin: 18px auto 0; aspect-ratio: 9 / 16; overflow: visible; background: #fdfdfc; touch-action: pan-y; }
   .piece { position: absolute; cursor: grab; touch-action: none; }
   .piece img { display: block; width: 100%; height: auto; pointer-events: none; -webkit-user-drag: none; }
   .piece.sel { outline: 3px dashed #b9975b; outline-offset: 2px; }
@@ -115,7 +115,7 @@
   <section>
     <h2>My Collage Board</h2>
     <p class="howto">Tap Search Pinterest or Search Google to go find pictures, save the ones you love to your phone, then come back here and upload them — your board is saved automatically while you're away, so nothing is lost. Tap a piece, then Cut out to remove the background, and arrange everything on a board that's nearly as tall as your phone screen. It doubles as a moodboard.
-    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. There's no limit on how many pieces fit on the board. Your saved boards live below in My collages, and they save in this browser only, like your blog and calendar — for the ones you want forever, tap Export picture and save it to your phone.</small></p>
+    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. No border, no limits — pieces can hang right off the edges, and there's no limit on how many fit. If one wanders off where you can't grab it, Gather pieces brings them all back. Your saved boards live below in My collages and save in this browser only, like your blog and calendar — for keepers, tap Export picture and save it to your phone. Note: the export still crops to the board rectangle, so hanging-off bits won't show in it.</small></p>
 
     <div class="group">
       <p class="group-label">Add pictures</p>
@@ -158,6 +158,7 @@
         <button class="pill" id="saveBtn" type="button">Save this board</button>
         <button class="pill" id="exportBtn" type="button">Export picture</button>
         <button class="pill" id="clearBtn" type="button">Clear board</button>
+        <button class="pill" id="gatherBtn" type="button">Gather pieces</button>
       </div>
     </div>
 
@@ -167,7 +168,7 @@
     </div>
   </section>
 
-  <div class="version-note">Collage board v3</div>
+  <div class="version-note">Collage board v4 — no borders, no limits</div>
 
   <footer><div class="foot-name">Ashley Ayala</div>&copy; 2026 Ashley Ayala</footer>
 </main>
@@ -307,13 +308,13 @@
       var r = boardEl.getBoundingClientRect();
       var d = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
       var scale = d / g.pinch.startDist;
-      var newW = Math.max(10, Math.min(100, g.pinch.startW * scale));
+      var newW = Math.max(5, Math.min(200, g.pinch.startW * scale));
       var newHpx = (newW / 100) * r.width * g.pinch.aspect;
       var midX = (pts[0].x + pts[1].x) / 2 - r.left;
       var midY = (pts[0].y + pts[1].y) / 2 - r.top;
       g.it.w = newW;
-      g.it.x = Math.max(0, Math.min(95, ((midX - (newW / 100) * r.width / 2) / r.width) * 100));
-      g.it.y = Math.max(0, Math.min(95, ((midY - newHpx / 2) / r.height) * 100));
+      g.it.x = ((midX - (newW / 100) * r.width / 2) / r.width) * 100;
+      g.it.y = ((midY - newHpx / 2) / r.height) * 100;
       g.div.style.width = newW + '%';
       g.div.style.left = g.it.x + '%';
       g.div.style.top = g.it.y + '%';
@@ -329,8 +330,8 @@
       g.dragging = true;
     }
     var r3 = boardEl.getBoundingClientRect();
-    g.it.x = Math.max(0, Math.min(95, ((e.clientX - r3.left - g.grabX) / r3.width) * 100));
-    g.it.y = Math.max(0, Math.min(95, ((e.clientY - r3.top - g.grabY) / r3.height) * 100));
+    g.it.x = ((e.clientX - r3.left - g.grabX) / r3.width) * 100;
+    g.it.y = ((e.clientY - r3.top - g.grabY) / r3.height) * 100;
     g.div.style.left = g.it.x + '%';
     g.div.style.top = g.it.y + '%';
   }
@@ -444,8 +445,8 @@
   });
 
   function nudge(fn) { var it = selected(); if (!it) return; fn(it); render(); saveCurrent(); }
-  document.getElementById('bigBtn').addEventListener('click', function () { nudge(function (it) { it.w = Math.min(100, it.w + 5); }); });
-  document.getElementById('smallBtn').addEventListener('click', function () { nudge(function (it) { it.w = Math.max(10, it.w - 5); }); });
+  document.getElementById('bigBtn').addEventListener('click', function () { nudge(function (it) { it.w = Math.min(200, it.w + 5); }); });
+  document.getElementById('smallBtn').addEventListener('click', function () { nudge(function (it) { it.w = Math.max(5, it.w - 5); }); });
   document.getElementById('rotLBtn').addEventListener('click', function () { nudge(function (it) { it.rot -= 15; }); });
   document.getElementById('rotRBtn').addEventListener('click', function () { nudge(function (it) { it.rot += 15; }); });
   document.getElementById('fwdBtn').addEventListener('click', function () { nudge(function (it) { it.z = zTop++; }); });
@@ -459,6 +460,16 @@
     var it = selected(); if (!it) return;
     board.items = board.items.filter(function (x) { return x.id !== it.id; });
     selectedId = null; render(); saveCurrent();
+  });
+
+  document.getElementById('gatherBtn').addEventListener('click', function () {
+    if (!board.items.length) return;
+    board.items.forEach(function (it, i) {
+      it.x = 10 + (i % 4) * 15;
+      it.y = 10 + Math.floor(i / 4) * 15;
+    });
+    selectedId = null; render(); saveCurrent();
+    setStatus('All pieces gathered back onto the board.');
   });
 
   document.getElementById('clearBtn').addEventListener('click', function () {
