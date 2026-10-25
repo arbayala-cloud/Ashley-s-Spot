@@ -41,6 +41,12 @@
   .cd-credit { font-size: 11px; color: #e8ddc8; margin-top: 2px; word-break: break-word; }
   .cd-del { position: absolute; top: -8px; right: -6px; width: 24px; height: 24px; border-radius: 50%; border: 1px solid #c9c2b6; background: #fff; color: #888; font-size: 16px; line-height: 1; cursor: pointer; z-index: 2; }
   .cd-del:hover { color: #c62828; }
+  .credits { margin-top: 20px; font-size: 13px; color: #6f6a62; }
+  .credits h3 { font-family: Fraunces, Georgia, serif; font-size: 17px; font-weight: 600; margin: 0 0 6px; color: #22211e; }
+  .credits ul { margin: 0 0 8px; padding-left: 18px; }
+  .credits p { margin: 0; font-size: 12.5px; }
+  body.dark .credits, body.dark .credits h3 { color: #b8b0a3; }
+  body.dark .credits h3 { color: #f4f1ea; }
   .empty { font-style: italic; color: #8a857e; font-size: 15.5px; line-height: 1.6; margin: 0; }
   .tools { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
   .hint { font-size: 12.5px; color: #8a857e; margin-top: 16px; text-align: center; }
@@ -130,21 +136,31 @@
 <script>
   var KEY = 'ashley-cd-shelf';
   var STARTERS = [
-    {title: 'The Marshall Mathers LP', artist: 'Eminem', year: '2000', img: '', credit: ''},
-    {title: 'Get Rich or Die Tryin\'', artist: '50 Cent', year: '2003', img: '', credit: ''},
-    {title: 'Wonder What\'s Next', artist: 'Chevelle', year: '2002', img: '', credit: ''},
-    {title: 'We Are Not Alone', artist: 'Breaking Benjamin', year: '2004', img: '', credit: ''},
-    {title: 'The Emancipation of Mimi', artist: 'Mariah Carey', year: '2005', img: '', credit: ''},
-    {title: 'Dangerously in Love', artist: 'Beyoncé', year: '2003', img: '', credit: ''},
-    {title: '(What\'s the Story) Morning Glory?', artist: 'Oasis', year: '1995', img: '', credit: ''},
-    {title: 'OK Computer', artist: 'Radiohead', year: '1997', img: '', credit: ''}
+    {title: 'The Marshall Mathers LP', artist: 'Eminem', year: '2000', img: 'https://i.discogs.com/dT8wMqCg53QADUVvuUpsoSk6egBiNdx-m5jihPqzRPo/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5MzEw/NzgtMTU2OTUwOTY5/MC0xODYyLnBuZw.jpeg', credit: 'Album cover via Discogs'},
+    {title: 'Get Rich or Die Tryin\'', artist: '50 Cent', year: '2003', img: 'https://i.discogs.com/mrW3WOzybw66zjyGE7BnlM_8eMBd0aAY9PzATBYeXRg/rs:fit/g:sm/q:90/h:600/w:596/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0OTIz/MDQ0LTE1ODU2ODkw/NTktNTU5Ny5qcGVn.jpeg', credit: 'Album cover via Discogs'},
+    {title: 'Wonder What\'s Next', artist: 'Chevelle', year: '2002', img: 'https://i.discogs.com/ACzYltMK3ocpFYVhmcKjqe5miqPYB5xX74S_E4Hrndo/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU4Mzky/MDctMTcxMjI3NTE1/Mi0yNjIzLmpwZWc.jpeg', credit: 'Album cover via Discogs'},
+    {title: 'We Are Not Alone', artist: 'Breaking Benjamin', year: '2004', img: 'https://pimg.awa.io/v2/jacket/1d0b084dcaa8f70b5b07.w630.h630.v1737212639.jpg', credit: 'Album cover via AWA'},
+    {title: 'The Emancipation of Mimi', artist: 'Mariah Carey', year: '2005', img: 'https://i.discogs.com/aeIpJFiwetX9auQgT58NocRphWrTbpN65Bpoe_ZRVzQ/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI1ODgz/NDctMTQzNTk2MjE4/OC02MDQ2LmpwZWc.jpeg', credit: 'Album cover via Discogs'},
+    {title: 'Dangerously in Love', artist: 'Beyoncé', year: '2003', img: 'https://i.discogs.com/Zl_QJC8ZTCk-MDNzFBDHgEU00OwCXJaBZTCPi7SbA-8/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NjA5/NzAyLTE2ODg3NTc4/ODMtODI0OS5qcGVn.jpeg', credit: 'Album cover via Discogs'},
+    {title: '(What\'s the Story) Morning Glory?', artist: 'Oasis', year: '1995', img: 'https://i.discogs.com/p0PZtlQFjWnEx_BwjX9VrMorrZDUEgvDZDWeKTRD-Zw/rs:fit/g:sm/q:90/h:589/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1OTk4/Mzc4LTE2NzM5ODI5/MzgtMjM3My5qcGVn.jpeg', credit: 'Album cover via Discogs'},
+    {title: 'OK Computer', artist: 'Radiohead', year: '1997', img: 'https://i.discogs.com/AFtAMbntBehYk1cwIYfhSHswNQ_hhzfmLXoYUtzOkWk/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNTk2/NjEwLTE2MzUzNTE3/MDYtNzIyNS5qcGVn.jpeg', credit: 'Album cover via Discogs'}
   ];
   var COLORS = ['#7e2d3a','#22211e','#2b6cb0','#5b3a6e','#3a6b4f','#8a5a2e','#4a5568','#6b2d5b'];
   function loadCDs() {
     try {
       var raw = localStorage.getItem(KEY);
       if (raw === null) { saveCDs(STARTERS.slice()); return STARTERS.slice(); }
-      return JSON.parse(raw || '[]');
+      var cds = JSON.parse(raw || '[]');
+      // Upgrade shelves saved before covers were added: fill in the starter covers.
+      var upgraded = false;
+      cds.forEach(function (c) {
+        if (!c.img) {
+          var s = STARTERS.filter(function (x) { return x.title === c.title; })[0];
+          if (s) { c.img = s.img; c.credit = s.credit; upgraded = true; }
+        }
+      });
+      if (upgraded) saveCDs(cds);
+      return cds;
     } catch (e) { return []; }
   }
   function saveCDs(cds) { try { localStorage.setItem(KEY, JSON.stringify(cds)); } catch (e) {} }
@@ -171,6 +187,12 @@
         '<div class="cd-meta"><b>' + esc(c.title) + '</b><span>' + esc(c.artist) + (c.year ? ' · ' + esc(c.year) : '') + '</span></div>' +
         (c.credit ? '<div class="cd-credit">Cover credit: ' + esc(c.credit) + '</div>' : '') + '</div>';
     }).join('') + '</div>';
+    var credited = cds.filter(function (c) { return c.credit; });
+    if (credited.length) {
+      wrap.innerHTML += '<div class="credits"><h3>Cover credits</h3><ul>' +
+        credited.map(function (c) { return '<li>' + esc(c.title) + ' — ' + esc(c.artist) + ': ' + esc(c.credit) + '</li>'; }).join('') +
+        '</ul><p>Album artwork belongs to the artists and their labels — shown here on a personal, non-commercial shelf, with credit above.</p></div>';
+    }
     wrap.querySelectorAll('[data-del]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         if (!confirm('Remove this CD from your shelf?')) return;
