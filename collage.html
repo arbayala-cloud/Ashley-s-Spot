@@ -101,7 +101,7 @@
   <section>
     <h2>My Collage Board</h2>
     <p class="howto">Find a photo on Google or Pinterest and save it to your phone, or upload straight from your phone. Add it here, tap it, then Cut out to remove the background. Drag each piece wherever you want it, and your board doubles as a moodboard.
-    <small>Your boards save in this browser only, so they stay yours — the same as your blog and calendar. If you want to keep one forever, tap Export picture and save it to your phone.</small></p>
+    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. Your boards save in this browser only, so they stay yours — the same as your blog and calendar. If you want to keep one forever, tap Export picture and save it to your phone.</small></p>
 
     <div class="toolbar">
       <label class="pill" for="fileInput">Upload from my phone</label>
@@ -225,29 +225,103 @@
     });
   }
 
+  var gesture = null;
+
   function startDrag(ev, it, div) {
+    // Second finger landing on the same piece: join the gesture for pinching.
+    if (gesture && gesture.it.id === it.id) {
+      gesture.pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+      if (gesture.pointers.size === 2) beginPinch(gesture);
+      ev.preventDefault();
+      return;
+    }
     selectedId = it.id;
     render();
-    var reRendered = boardEl.querySelector('.piece.sel');
-    if (reRendered) div = reRendered;
-    var rect = boardEl.getBoundingClientRect();
-    var grabX = ev.clientX - rect.left - (it.x / 100) * rect.width;
-    var grabY = ev.clientY - rect.top - (it.y / 100) * rect.height;
-    function move(e) {
-      var r = boardEl.getBoundingClientRect();
-      it.x = Math.max(0, Math.min(95, ((e.clientX - r.left - grabX) / r.width) * 100));
-      it.y = Math.max(0, Math.min(95, ((e.clientY - r.top - grabY) / r.height) * 100));
-      div.style.left = it.x + '%';
-      div.style.top = it.y + '%';
-    }
-    function up() {
-      window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerup', up);
-      saveCurrent();
-    }
-    window.addEventListener('pointermove', move);
-    window.addEventListener('pointerup', up);
+    var fresh = boardEl.querySelector('.piece.sel');
+    if (fresh) div = fresh;
+    if (gesture) endGesture();
+    gesture = {
+      it: it, div: div,
+      pointers: new Map([[ev.pointerId, { x: ev.clientX, y: ev.clientY }]]),
+      dragging: false, startClientX: ev.clientX, startClientY: ev.clientY,
+      grabX: 0, grabY: 0, pinch: null
+    };
+    window.addEventListener('pointermove', onGestureMove);
+    window.addEventListener('pointerup', onGestureUp);
+    window.addEventListener('pointercancel', onGestureUp);
     ev.preventDefault();
+  }
+
+  function beginPinch(g) {
+    var pts = Array.from(g.pointers.values());
+    var r = boardEl.getBoundingClientRect();
+    var d = Math.max(24, Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y));
+    var rect = g.div.getBoundingClientRect();
+    g.pinch = {
+      startDist: d, startW: g.it.w,
+      aspect: rect.height / Math.max(1, rect.width)
+    };
+    g.dragging = true;
+  }
+
+  function onGestureMove(e) {
+    var g = gesture;
+    if (!g || !g.pointers.has(e.pointerId)) return;
+    g.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (g.pointers.size >= 2) {
+      if (!g.pinch) beginPinch(g);
+      var pts = Array.from(g.pointers.values()).slice(0, 2);
+      var r = boardEl.getBoundingClientRect();
+      var d = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+      var scale = d / g.pinch.startDist;
+      var newW = Math.max(10, Math.min(100, g.pinch.startW * scale));
+      var newHpx = (newW / 100) * r.width * g.pinch.aspect;
+      var midX = (pts[0].x + pts[1].x) / 2 - r.left;
+      var midY = (pts[0].y + pts[1].y) / 2 - r.top;
+      g.it.w = newW;
+      g.it.x = Math.max(0, Math.min(95, ((midX - (newW / 100) * r.width / 2) / r.width) * 100));
+      g.it.y = Math.max(0, Math.min(95, ((midY - newHpx / 2) / r.height) * 100));
+      g.div.style.width = newW + '%';
+      g.div.style.left = g.it.x + '%';
+      g.div.style.top = g.it.y + '%';
+      return;
+    }
+    // One finger: don't budge the piece until the finger really moves.
+    if (!g.dragging) {
+      var moved = Math.hypot(e.clientX - g.startClientX, e.clientY - g.startClientY);
+      if (moved < 12) return;
+      var r2 = boardEl.getBoundingClientRect();
+      g.grabX = e.clientX - r2.left - (g.it.x / 100) * r2.width;
+      g.grabY = e.clientY - r2.top - (g.it.y / 100) * r2.height;
+      g.dragging = true;
+    }
+    var r3 = boardEl.getBoundingClientRect();
+    g.it.x = Math.max(0, Math.min(95, ((e.clientX - r3.left - g.grabX) / r3.width) * 100));
+    g.it.y = Math.max(0, Math.min(95, ((e.clientY - r3.top - g.grabY) / r3.height) * 100));
+    g.div.style.left = g.it.x + '%';
+    g.div.style.top = g.it.y + '%';
+  }
+
+  function onGestureUp(e) {
+    var g = gesture;
+    if (!g || !g.pointers.has(e.pointerId)) return;
+    g.pointers.delete(e.pointerId);
+    if (g.pointers.size === 0) { endGesture(); return; }
+    g.pinch = null;
+    if (g.pointers.size === 1) {
+      var rest = Array.from(g.pointers.values())[0];
+      g.startClientX = rest.x;
+      g.startClientY = rest.y;
+      g.dragging = false;
+    }
+  }
+
+  function endGesture() {
+    window.removeEventListener('pointermove', onGestureMove);
+    window.removeEventListener('pointerup', onGestureUp);
+    window.removeEventListener('pointercancel', onGestureUp);
+    gesture = null;
+    saveCurrent();
   }
 
   boardEl.addEventListener('pointerdown', function (ev) {
