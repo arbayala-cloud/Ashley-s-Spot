@@ -241,32 +241,61 @@
     if (!q) { status.textContent = 'Type something to search for first.'; return; }
     status.textContent = 'Searching...';
     box.innerHTML = '';
+    // Wikimedia Commons first: it answers browser searches reliably, unlike
+    // the first picture library, which sometimes answers with a bot-check page
+    // instead of pictures. Openverse is kept as a fallback only.
+    var commonsUrl = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*'
+      + '&generator=search&gsrsearch=' + encodeURIComponent(q + ' filetype:bitmap')
+      + '&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=400';
+    fetch(commonsUrl)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var pages = (data && data.query && data.query.pages) || {};
+        var items = Object.keys(pages).map(function (k) { return pages[k]; }).filter(function (pg) {
+          return pg.imageinfo && pg.imageinfo[0] && pg.imageinfo[0].thumburl;
+        });
+        if (!items.length) return searchOpenverse(q, status, box);
+        showResults(items.map(function (pg) {
+          var info = pg.imageinfo[0];
+          var artist = (info.extmetadata && info.extmetadata.Artist && info.extmetadata.Artist.value) || '';
+          artist = artist.replace(/<[^>]*>/g, '').trim();
+          return { src: info.thumburl, title: pg.title.replace(/^File:/, '').replace(/\.[a-zA-Z0-9]+$/, ''), credit: artist ? 'Wikimedia Commons' : 'Wikimedia Commons' };
+        }), status, box);
+      })
+      .catch(function () { searchOpenverse(q, status, box); });
+  }
+  function searchOpenverse(q, status, box) {
     fetch('https://api.openverse.org/v1/images/?q=' + encodeURIComponent(q) + '&page_size=12&license_type=commercial')
       .then(function (r) { return r.json(); })
       .then(function (data) {
         var items = (data && data.results) || [];
         if (!items.length) { status.textContent = 'Nothing found for that — try another word.'; return; }
-        status.textContent = 'Tap a picture to pin it to your board.';
-        items.forEach(function (item) {
-          var card = document.createElement('button');
-          card.className = 'result'; card.type = 'button';
-          var img = document.createElement('img');
-          img.src = item.url; img.alt = item.title || q; img.loading = 'lazy';
-          card.appendChild(img);
-          var lab = document.createElement('span');
-          lab.textContent = 'Pin this';
-          card.appendChild(lab);
-          card.addEventListener('click', function () {
-            addPin({ type: 'photo', src: item.url, title: item.title || q, credit: item.creator || '' });
-            status.textContent = 'Pinned! Find it on your board below.';
-            document.querySelector('.board').scrollIntoView({ behavior: 'smooth', block: 'start' });
-          });
-          box.appendChild(card);
-        });
+        showResults(items.map(function (item) {
+          return { src: item.url, title: item.title || q, credit: item.creator || '' };
+        }), status, box);
       })
       .catch(function () {
-        status.textContent = 'Search could not reach the picture library just now — check your connection and try again, or pin an image link or photo below instead.';
+        status.textContent = 'Search could not reach a picture library just now — check your connection and try again, or pin an image link or photo below instead.';
       });
+  }
+  function showResults(items, status, box) {
+    status.textContent = 'Tap a picture to pin it to your board.';
+    items.forEach(function (item) {
+      var card = document.createElement('button');
+      card.className = 'result'; card.type = 'button';
+      var img = document.createElement('img');
+      img.src = item.src; img.alt = item.title; img.loading = 'lazy';
+      card.appendChild(img);
+      var lab = document.createElement('span');
+      lab.textContent = 'Pin this';
+      card.appendChild(lab);
+      card.addEventListener('click', function () {
+        addPin({ type: 'photo', src: item.src, title: item.title, credit: item.credit });
+        status.textContent = 'Pinned! Find it on your board below.';
+        document.querySelector('.board').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      box.appendChild(card);
+    });
   }
 
   document.getElementById('addNoteBtn').addEventListener('click', function () {
