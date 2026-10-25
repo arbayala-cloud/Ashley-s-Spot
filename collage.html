@@ -43,6 +43,7 @@
   #editbar { display: none; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
   #editbar.show { display: flex; }
   #status { min-height: 20px; margin-top: 12px; font-size: 14px; font-style: italic; color: #666; text-align: center; }
+  .version-note { text-align: center; font-size: 12px; font-style: italic; color: #999; margin-top: 22px; }
   .saved-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 16px; }
   .saved-row select { font-family: Georgia, serif; font-size: 15px; padding: 8px 10px; border: 1.5px solid #bbb; border-radius: 8px; background: #fff; color: #111; max-width: 100%; }
   footer { border-top: 3px double #111; margin-top: 46px; padding-top: 16px; font-family: Arial, Helvetica, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; text-align: center; color: #999; }
@@ -140,6 +141,8 @@
     </div>
   </section>
 
+  <div class="version-note">Collage board v2 — pinch to resize</div>
+
   <footer><div class="foot-name">Ashley Ayala</div>&copy; 2026 Ashley Ayala</footer>
 </main>
 <script>
@@ -235,11 +238,13 @@
       ev.preventDefault();
       return;
     }
+    // A finger landing on another piece mid-gesture: ignore it, don't disturb the piece being moved.
+    if (gesture) { ev.preventDefault(); return; }
     selectedId = it.id;
-    render();
-    var fresh = boardEl.querySelector('.piece.sel');
-    if (fresh) div = fresh;
-    if (gesture) endGesture();
+    // Mark the selection in place — rebuilding the board here would yank the
+    // piece out from under the finger and make touches jumpy.
+    boardEl.querySelectorAll('.piece').forEach(function (el) { el.classList.toggle('sel', el === div); });
+    editbar.className = 'show';
     gesture = {
       it: it, div: div,
       pointers: new Map([[ev.pointerId, { x: ev.clientX, y: ev.clientY }]]),
@@ -325,7 +330,12 @@
   }
 
   boardEl.addEventListener('pointerdown', function (ev) {
-    if (ev.target === boardEl) { selectedId = null; render(); }
+    if (gesture) return;
+    if (ev.target === boardEl) {
+      selectedId = null;
+      boardEl.querySelectorAll('.piece').forEach(function (el) { el.classList.remove('sel'); });
+      editbar.className = '';
+    }
   });
 
   function addPiece(src, external) {
