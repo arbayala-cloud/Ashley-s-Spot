@@ -95,6 +95,42 @@
     .card { padding: 18px 12px; }
     .post-title { font-size: 20px; }
   }
+
+  /* Fun mode: colourful themes that keep the same layout and fonts, only colours change. */
+  body.fun[data-fun="0"] { --fun-bg: #ffe3d3; --fun-card: #fff7f0; --fun-text: #4a2438; --fun-muted: #8a5a6b; --fun-accent: #ff5d8f; --fun-border: #f2c4b3; }
+  body.fun[data-fun="1"] { --fun-bg: #d6f2ff; --fun-card: #f0fbff; --fun-text: #123a4d; --fun-muted: #4a7a92; --fun-accent: #0096c7; --fun-border: #a8d8ea; }
+  body.fun[data-fun="2"] { --fun-bg: #e9dcff; --fun-card: #faf5ff; --fun-text: #3b215e; --fun-muted: #7a5aa0; --fun-accent: #7b2ff7; --fun-border: #c9b3f0; }
+  body.fun[data-fun="3"] { --fun-bg: #e2f7c8; --fun-card: #fbfff0; --fun-text: #243d12; --fun-muted: #5a7a3a; --fun-accent: #65a30d; --fun-border: #bcd99a; }
+  body.fun[data-fun="4"] { --fun-bg: #ffd6ec; --fun-card: #fff0f7; --fun-text: #5e1a3d; --fun-muted: #9a4a72; --fun-accent: #e0218a; --fun-border: #f0a8cd; }
+  body.fun { background: var(--fun-bg); color: var(--fun-text); }
+  body.fun .eyebrow { color: var(--fun-accent); }
+  body.fun .sub, body.fun .playlist-label, body.fun .playlist-menu label, body.fun .note, body.fun .privacy-note, body.fun .hint, body.fun .empty, body.fun .post-date, body.fun .footer, body.fun .shelf-count { color: var(--fun-muted); }
+  body.fun .divider { background: var(--fun-accent); }
+  body.fun .menu-row button { color: var(--fun-text); border-color: var(--fun-text); }
+  body.fun .menu-panel { background: var(--fun-card); border-color: var(--fun-border); }
+  body.fun .menu-panel a { color: var(--fun-text); border-bottom-color: var(--fun-border); }
+  body.fun .menu-panel button.install-btn { color: var(--fun-text); border-bottom-color: var(--fun-border); }
+  body.fun .theme-toggle { color: var(--fun-muted); border-top-color: var(--fun-border); }
+  body.fun .card { background: var(--fun-card); border-color: var(--fun-border); }
+  body.fun .btn { background: var(--fun-accent); color: #fff; }
+  body.fun .btn.secondary { background: var(--fun-card); color: var(--fun-text); border-color: var(--fun-border); }
+  body.fun input[type="text"], body.fun input[type="url"], body.fun textarea, body.fun .song-select { background: var(--fun-card); color: var(--fun-text); border-color: var(--fun-border); }
+  body.fun .playlist-menu.active label { color: var(--fun-accent); }
+  body.fun .playlist-menu.active .song-select { border-color: var(--fun-accent); box-shadow: 0 0 0 1px var(--fun-accent); background: var(--fun-card); }
+  body.fun .backlink a, body.fun .read-more { color: var(--fun-accent); }
+  body.fun .post { border-top-color: var(--fun-border); }
+  body.fun .post-body, body.fun .modal-body { color: var(--fun-text); }
+  body.fun .modal { background: var(--fun-card); }
+  body.fun .credit-note { background: var(--fun-bg); border-color: var(--fun-border); color: var(--fun-muted); }
+  body.fun .credits, body.fun .credits h3 { color: var(--fun-text); }
+  body.fun .shelf { background: linear-gradient(var(--fun-accent), var(--fun-accent)); box-shadow: inset 0 -10px 0 rgba(0,0,0,.15); }
+  body.fun h1.masthead a { color: var(--fun-text); }
+  body.fun .rule-top { border-top-color: var(--fun-text); border-bottom-color: var(--fun-text); }
+  body.fun .tagline, body.fun .caption, body.fun .foot-name { color: var(--fun-muted); }
+  body.fun section h2 { color: var(--fun-text); border-bottom-color: var(--fun-text); }
+  body.fun .story-note { color: var(--fun-text); }
+  body.fun footer { border-top-color: var(--fun-border); color: var(--fun-muted); }
+  body.fun .home-link a { color: var(--fun-text); border-color: var(--fun-text); }
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#111111">
@@ -112,6 +148,7 @@
     <a href="blog.html">Blog</a>
     <a href="jukebox.html">Jukebox</a>
       <button class="install-btn" id="installBtn" type="button">Install App</button>
+      <button class="install-btn" id="funBtn" type="button">Fun mode</button>
       <div class="theme-toggle">
         <span>Light</span>
         <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
@@ -345,6 +382,33 @@
         }
       });
     }
+  })();
+</script>
+
+<script>
+  // Fun mode: a colourful theme saved site-wide. Tap again to shuffle to the next colour.
+  // Flipping the Light/Dark switch turns Fun mode back off.
+  (function () {
+    var btn = document.getElementById('funBtn');
+    var toggle = document.getElementById('themeToggle');
+    var PALS = ['Sunset', 'Ocean', 'Grape', 'Lime', 'Candy'];
+    function getPal() { try { var p = parseInt(localStorage.getItem('ashleys-fun-palette') || '0', 10); return isNaN(p) ? 0 : p % PALS.length; } catch (e) { return 0; } }
+    function applyFun(on, pal) {
+      document.body.classList.toggle('fun', on);
+      document.body.setAttribute('data-fun', String(pal));
+      if (btn) btn.textContent = on ? ('Fun mode: ' + PALS[pal] + ' \u2014 tap to shuffle') : 'Fun mode';
+      try { localStorage.setItem('ashleys-fun', on ? '1' : '0'); localStorage.setItem('ashleys-fun-palette', String(pal)); } catch (e) {}
+    }
+    var on = false, pal = 0;
+    try { on = localStorage.getItem('ashleys-fun') === '1'; pal = getPal(); } catch (e) {}
+    if (on) applyFun(true, pal); else if (btn) btn.textContent = 'Fun mode';
+    if (btn) btn.addEventListener('click', function () {
+      if (document.body.classList.contains('fun')) applyFun(true, (getPal() + 1) % PALS.length);
+      else applyFun(true, getPal());
+    });
+    if (toggle) toggle.addEventListener('change', function () {
+      if (document.body.classList.contains('fun')) applyFun(false, getPal());
+    });
   })();
 </script>
 </body>
