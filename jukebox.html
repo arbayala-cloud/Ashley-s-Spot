@@ -70,7 +70,7 @@
   @media (max-width: 480px) { .tv-lights .bulb { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
   .playlist-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 20px 0 8px; text-align: center; }
-  .playlist-menus { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 780px; margin: 0 auto; }
+  .playlist-menus { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-width: 780px; margin: 0 auto; }
   .playlist-menu { text-align: left; min-width: 0; }
   .playlist-menu label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; font-weight: 600; margin: 0 0 6px 4px; }
   .song-select { width: 100%; height: 50px; padding: 0 12px; font-size: 15px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; }
@@ -143,7 +143,7 @@
 <div class="wrap">
   <p class="eyebrow">Ashley&rsquo;s Spot</p>
   <h1>Ashley&rsquo;s Jukebox</h1>
-  <p class="sub">1995, 2001, 2003 &amp; 2005 playlists, played through YouTube</p>
+  <p class="sub">1995, 1997, 2001, 2003 &amp; 2005 playlists, played through YouTube</p>
   <hr class="divider">
   <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
   <nav id="menuPanel" class="menu-panel">
@@ -225,20 +225,24 @@
       <select id="songs1995" class="song-select" data-playlist="0"><option value="">Choose a 1995 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="1">
-      <label for="songs2001">2001</label>
-      <select id="songs2001" class="song-select" data-playlist="1"><option value="">Choose a 2001 song&hellip;</option></select>
+      <label for="songs1997">1997</label>
+      <select id="songs1997" class="song-select" data-playlist="1"><option value="">Choose a 1997 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="2">
-      <label for="songs2003">2003</label>
-      <select id="songs2003" class="song-select" data-playlist="2"><option value="">Choose a 2003 song&hellip;</option></select>
+      <label for="songs2001">2001</label>
+      <select id="songs2001" class="song-select" data-playlist="2"><option value="">Choose a 2001 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="3">
+      <label for="songs2003">2003</label>
+      <select id="songs2003" class="song-select" data-playlist="3"><option value="">Choose a 2003 song&hellip;</option></select>
+    </div>
+    <div class="playlist-menu" data-playlist="4">
       <label for="songs2005">2005</label>
-      <select id="songs2005" class="song-select" data-playlist="3"><option value="">Choose a 2005 song&hellip;</option></select>
+      <select id="songs2005" class="song-select" data-playlist="4"><option value="">Choose a 2005 song&hellip;</option></select>
     </div>
   </div>
 
-  <p class="note">Pick a song from 1995, 2001, 2003 or 2005 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a song from 1995, 1997, 2001, 2003 or 2005 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
   <p class="footer">Ashley&rsquo;s Spot &middot; Playlists</p>
 </div>
 <script>
@@ -278,6 +282,24 @@ var PLAYLISTS = [
   ["Just a Girl", "No Doubt", "PHzOOQfhPFg"],
   ["Strange Currencies", "R.E.M.", "j4iuG7StmPc"],
   ["Say It Ain't So", "Weezer", "ENXvZ9YRjbo"]
+  ] },
+  { name: "1997", songs: [
+  ["Everlong", "Foo Fighters", "eBG7P-K-r1Y"],
+  ["Karma Police", "Radiohead", "1uYWYWPc9HU"],
+  ["Song 2", "Blur", "SSbBvKaM6sk"],
+  ["Bitter Sweet Symphony", "The Verve", "1lyu1KKwC74"],
+  ["Tubthumping", "Chumbawamba", "2H5uWRjFsGc"],
+  ["Semi-Charmed Life", "Third Eye Blind", "beINamVRGy4"],
+  ["Good Riddance (Time of Your Life)", "Green Day", "CnQ8N1KacJc"],
+  ["The Impression That I Get", "The Mighty Mighty Bosstones", "NIGMUAMevH0"],
+  ["Brick", "Ben Folds Five", "Wt5EHAqhR1c"],
+  ["Push", "Matchbox Twenty", "HAkHqYlqops"],
+  ["If You Could Only See", "Tonic", "Sfg6-4mBs6Y"],
+  ["The Freshmen", "The Verve Pipe", "1umEXpGHc0E"],
+  ["Walkin' on the Sun", "Smash Mouth", "LQj--Kjn0z8"],
+  ["My Own Prison", "Creed", "iBBqjGd3fHQ"],
+  ["Fly", "Sugar Ray", "zUtnwcv-quE"],
+  ["One Headlight", "The Wallflowers", "Zzyfcys1aLM"]
   ] },
   { name: "2001", songs: [
   ["Fallin'", "Alicia Keys", "Urdlvw0SSEc"],
