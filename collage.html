@@ -38,7 +38,6 @@
   #board { position: relative; width: 100%; max-width: 640px; margin: 18px auto 0; aspect-ratio: 9 / 16; overflow: visible; background: #fdfdfc; touch-action: pan-y; }
   .piece { position: absolute; cursor: grab; touch-action: none; }
   .piece img { display: block; width: 100%; height: auto; pointer-events: none; -webkit-user-drag: none; }
-  .piece.sel { outline: 3px dashed #b9975b; outline-offset: 2px; }
   .piece:active { cursor: grabbing; }
   #editbar { display: none; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
   #editbar.show { display: flex; }
@@ -125,7 +124,7 @@
   <section>
     <h2>My Collage Board</h2>
     <p class="howto">Tap Search Pinterest or Search Google to go find pictures, save the ones you love to your phone, then come back here and upload them — your board is saved automatically while you're away, so nothing is lost. Tap a piece, then Cut out to remove the background, and arrange everything on a board that's nearly as tall as your phone screen. It doubles as a moodboard.
-    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. No border, no limits — pieces can hang right off the edges, and there's no limit on how many fit. For clothes on a plain background, Magic wand cuts it instantly with no download at all. Want it cut by hand instead? Tap a piece, then Trace cut by hand, and draw a loop around just what you want to keep — or around what you want gone. If one wanders off where you can't grab it, Gather pieces brings them all back. Your saved boards live below in My collages and save in this browser only, like your blog and calendar — for keepers, tap Export picture and save it to your phone. Tap a cutout piece, then Save to closet, and it waits in My closet for any board — your own little Polyvore stash. The Browse taps open Pinterest searches for dresses, tops, shoes, bags, and jewelry — save what you love, then upload it here. Note: the export still crops to the board rectangle, so hanging-off bits won't show in it.</small></p>
+    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. No border, no limits — pieces can hang right off the edges, and there's no limit on how many fit. For clothes on a plain background, Magic wand cuts it instantly with no download at all. Want it cut by hand instead? Tap a piece, then Trace cut by hand, and draw a loop around just what you want to keep — or around what you want gone. If one wanders off where you can't grab it, Gather pieces brings them all back. Your saved boards live below in My collages and save in this browser only, like your blog and calendar — for keepers, tap Export picture and save it to your phone. Tap a cutout piece, then Save to closet, and it waits in My closet for any board — your own little Polyvore stash. Tap Add words to put words right on your set, Polyvore-style. The Browse taps open Pinterest searches for dresses, tops, shoes, bags, jewelry, beauty, and accessories — save what you love, then upload it here. Note: the export still crops to the board rectangle, so hanging-off bits won't show in it.</small></p>
 
     <div class="group">
       <p class="group-label">Add pictures</p>
@@ -134,6 +133,7 @@
         <input id="fileInput" type="file" accept="image/*" multiple hidden>
         <a class="pill" href="https://www.pinterest.com/" target="_blank" rel="noopener" style="text-decoration:none;">Search Pinterest</a>
         <a class="pill" href="https://images.google.com/" target="_blank" rel="noopener" style="text-decoration:none;">Search Google</a>
+        <button class="pill" id="wordsBtn" type="button">Add words</button>
       </div>
       <div class="link-row">
         <input id="linkInput" type="text" placeholder="Or paste a picture link from Pinterest or Google…" aria-label="Picture link">
@@ -146,6 +146,8 @@
         <a class="pill" href="https://www.pinterest.com/search/pins/?q=shoes" target="_blank" rel="noopener" style="text-decoration:none;">Shoes</a>
         <a class="pill" href="https://www.pinterest.com/search/pins/?q=handbags" target="_blank" rel="noopener" style="text-decoration:none;">Bags</a>
         <a class="pill" href="https://www.pinterest.com/search/pins/?q=jewelry" target="_blank" rel="noopener" style="text-decoration:none;">Jewelry</a>
+        <a class="pill" href="https://www.pinterest.com/search/pins/?q=beauty" target="_blank" rel="noopener" style="text-decoration:none;">Beauty</a>
+        <a class="pill" href="https://www.pinterest.com/search/pins/?q=accessories" target="_blank" rel="noopener" style="text-decoration:none;">Accessories</a>
       </div>
     </div>
 
@@ -158,8 +160,8 @@
     <div id="board" aria-label="Collage board"></div>
 
     <div id="editbar">
-      <button class="pill" id="cutBtn" type="button">Cut out for me</button>
       <button class="pill" id="wandBtn" type="button">Magic wand</button>
+      <button class="pill" id="cutBtn" type="button">Cut out for me</button>
       <button class="pill" id="traceBtn" type="button">Trace cut by hand</button>
       <button class="pill" id="bigBtn" type="button">Bigger</button>
       <button class="pill" id="smallBtn" type="button">Smaller</button>
@@ -195,7 +197,7 @@
     </div>
   </section>
 
-  <div class="version-note">Collage board v9 — Polyvore touches</div>
+  <div class="version-note">Collage board v10 — faster cutting, words, no dashed outline</div>
 
   <div id="traceOverlay">
     <p class="trace-title">Trace around what you want</p>
@@ -281,10 +283,25 @@
       div.style.width = it.w + '%';
       div.style.transform = 'rotate(' + it.rot + 'deg)' + (it.flip ? ' scaleX(-1)' : '');
       div.style.zIndex = it.z;
-      var img = document.createElement('img');
-      img.src = it.src;
-      img.alt = 'Collage piece';
-      div.appendChild(img);
+      if (it.text) {
+        var sp = document.createElement('span');
+        sp.textContent = it.text;
+        sp.style.display = 'block';
+        sp.style.fontFamily = "'Bitter', Georgia, serif";
+        sp.style.fontWeight = '700';
+        sp.style.color = '#111';
+        sp.style.textAlign = 'center';
+        sp.style.lineHeight = '1.25';
+        sp.style.wordWrap = 'break-word';
+        var bw = boardEl.clientWidth || 360;
+        sp.style.fontSize = Math.max(14, Math.round(bw * (it.w / 100) * 0.14)) + 'px';
+        div.appendChild(sp);
+      } else {
+        var img = document.createElement('img');
+        img.src = it.src;
+        img.alt = 'Collage piece';
+        div.appendChild(img);
+      }
       div.addEventListener('pointerdown', function (ev) { startDrag(ev, it, div); });
       boardEl.appendChild(div);
     });
@@ -309,6 +326,7 @@
     // A finger landing on another piece mid-gesture: ignore it, don't disturb the piece being moved.
     if (gesture) { ev.preventDefault(); return; }
     selectedId = it.id;
+    warmCutter();
     // Mark the selection in place — rebuilding the board here would yank the
     // piece out from under the finger and make touches jumpy.
     boardEl.querySelectorAll('.piece').forEach(function (el) { el.classList.toggle('sel', el === div); });
@@ -410,10 +428,25 @@
     var it = { id: uid(), src: src, x: 20 + Math.random() * 15, y: 15 + Math.random() * 10, w: 45, rot: 0, z: zTop++, external: !!external };
     board.items.push(it);
     selectedId = it.id;
+    warmCutter();
     render();
     saveCurrent();
     setStatus(external ? 'Added from the link. Tap it, then Cut out to try removing the background.' : 'Added! Tap it, then Cut out to remove the background.');
   }
+
+  function addTextPiece(text) {
+    var it = { id: uid(), text: text, x: 20, y: 40, w: 55, rot: 0, z: zTop++ };
+    board.items.push(it);
+    selectedId = it.id;
+    render();
+    saveCurrent();
+    setStatus('Words added! Drag them where you like, pinch to resize, turn or flip them.');
+  }
+  document.getElementById('wordsBtn').addEventListener('click', function () {
+    var text = prompt('What should it say?');
+    if (!text) return;
+    addTextPiece(text);
+  });
 
   function downscale(dataUrl, done) {
     var img = new Image();
@@ -469,6 +502,7 @@
   document.getElementById('cutBtn').addEventListener('click', async function () {
     var it = selected();
     if (!it || cutting) return;
+    if (!it.src) { setStatus('Words don\'t need cutting — they\'re already just words.'); return; }
     cutting = true;
     var btn = document.getElementById('cutBtn');
     btn.disabled = true;
@@ -520,6 +554,7 @@
   function openTrace() {
     var it = selected();
     if (!it) return;
+    if (!it.src) { setStatus('Words don\'t need cutting — they\'re already just words.'); return; }
     var img = new Image();
     img.onload = function () {
       traceImg = img;
@@ -614,11 +649,13 @@
   function magicWand() {
     var it = selected();
     if (!it) return;
+    if (!it.src) { setStatus('Words don\'t need cutting — they\'re already just words.'); return; }
+    setStatus('Wanding it…');
     var img = new Image();
     img.crossOrigin = 'anonymous';
     img.onload = function () {
       try {
-        var max = 900;
+        var max = 640;
         var sc = Math.min(1, max / img.width);
         var c = document.createElement('canvas');
         c.width = Math.round(img.width * sc);
@@ -628,18 +665,23 @@
         var W = c.width, H = c.height;
         var id = x.getImageData(0, 0, W, H);
         var d = id.data;
-        var samples = [];
-        function patch(cx, cy) {
-          for (var yy = 0; yy < 4; yy++) for (var xx = 0; xx < 4; xx++) {
-            var i = ((cy + yy) * W + (cx + xx)) * 4;
-            if (d[i + 3] >= 128) samples.push([d[i], d[i + 1], d[i + 2]]);
-          }
+        var buckets = {};
+        var borderTotal = 0;
+        function sampleBorder(bx, by) {
+          var i = (by * W + bx) * 4;
+          if (d[i + 3] < 128) return;
+          var key = ((d[i] >> 4) * 256) + ((d[i + 1] >> 4) * 16) + (d[i + 2] >> 4);
+          var b = buckets[key] || (buckets[key] = { n: 0, r: 0, g: 0, bl: 0 });
+          b.n++; b.r += d[i]; b.g += d[i + 1]; b.bl += d[i + 2];
+          borderTotal++;
         }
-        patch(0, 0); patch(W - 4, 0); patch(0, H - 4); patch(W - 4, H - 4);
-        if (!samples.length) { setStatus('The wand needs a photo with a background to remove.'); return; }
-        var bg = [0, 0, 0];
-        samples.forEach(function (s) { bg[0] += s[0]; bg[1] += s[1]; bg[2] += s[2]; });
-        bg = bg.map(function (v) { return v / samples.length; });
+        for (var bx = 0; bx < W; bx++) { sampleBorder(bx, 0); sampleBorder(bx, H - 1); }
+        for (var by = 0; by < H; by++) { sampleBorder(0, by); sampleBorder(W - 1, by); }
+        var best = null;
+        for (var k in buckets) { if (!best || buckets[k].n > best.n) best = buckets[k]; }
+        if (!best) { setStatus('That piece already has no background to remove.'); return; }
+        if (best.n / Math.max(1, borderTotal) < 0.25) { setStatus("The wand couldn't find a plain background in that photo — try Cut out for me instead."); return; }
+        var bg = [best.r / best.n, best.g / best.n, best.bl / best.n];
         function dist(i) {
           var dr = d[i] - bg[0], dg = d[i + 1] - bg[1], db = d[i + 2] - bg[2];
           return Math.sqrt(dr * dr + dg * dg + db * db);
@@ -647,13 +689,18 @@
         var tol = 90;
         var seen = new Uint8Array(W * H);
         var removed = new Uint8Array(W * H);
+        var removedList = [];
+        var opaqueRemoved = 0;
+        var edge = [];
+        var edgeMarked = new Uint8Array(W * H);
         var stack = [];
         function push(px, py) {
           if (px < 0 || py < 0 || px >= W || py >= H) return;
           var idx = py * W + px;
           if (seen[idx]) return;
           seen[idx] = 1;
-          if (d[idx * 4 + 3] < 128 || dist(idx * 4) < tol) { removed[idx] = 1; stack.push(idx); }
+          if (d[idx * 4 + 3] < 128 || dist(idx * 4) < tol) { removed[idx] = 1; removedList.push(idx); if (d[idx * 4 + 3] >= 128) opaqueRemoved++; stack.push(idx); }
+          else if (!edgeMarked[idx]) { edgeMarked[idx] = 1; edge.push(idx); }
         }
         for (var xx = 0; xx < W; xx++) { push(xx, 0); push(xx, H - 1); }
         for (var yy = 0; yy < H; yy++) { push(0, yy); push(W - 1, yy); }
@@ -662,9 +709,11 @@
           var cx = cur % W, cy = Math.floor(cur / W);
           push(cx + 1, cy); push(cx - 1, cy); push(cx, cy + 1); push(cx, cy - 1);
         }
-        for (var y = 0; y < H; y++) for (var xx2 = 0; xx2 < W; xx2++) {
-          var i = y * W + xx2;
-          if (removed[i]) { d[i * 4 + 3] = 0; continue; }
+        if (opaqueRemoved / (W * H) > 0.95) { setStatus("The wand couldn't find a plain background in that photo — try Cut out for me instead."); return; }
+        for (var ri = 0; ri < removedList.length; ri++) d[removedList[ri] * 4 + 3] = 0;
+        for (var ei = 0; ei < edge.length; ei++) {
+          var i = edge[ei];
+          var xx2 = i % W, y = Math.floor(i / W);
           var rn = 0;
           for (var dy = -1; dy <= 1; dy++) for (var dx = -1; dx <= 1; dx++) {
             if (dx === 0 && dy === 0) continue;
@@ -686,6 +735,15 @@
     img.src = it.src;
   }
   document.getElementById('wandBtn').addEventListener('click', magicWand);
+
+  var cutterWarming = false, cutterReady = false;
+  function warmCutter() {
+    if (cutterWarming || cutterReady) return;
+    cutterWarming = true;
+    import('https://esm.sh/@imgly/background-removal').then(function (mod) {
+      return mod.preload({ model: 'isnet_quint8', device: 'gpu', output: { format: 'image/png' } });
+    }).then(function () { cutterReady = true; }).catch(function () { cutterWarming = false; });
+  }
 
   document.getElementById('flipBtn').addEventListener('click', function () {
     var it = selected(); if (!it) return;
@@ -734,6 +792,7 @@
   }
   document.getElementById('closetBtn').addEventListener('click', function () {
     var it = selected(); if (!it) return;
+    if (!it.src) { setStatus('Words live on the board, not in the closet.'); return; }
     var img = new Image();
     img.crossOrigin = 'anonymous';
     img.onload = function () {
@@ -874,22 +933,50 @@
       var sorted = board.items.slice().sort(function (a, b) { return a.z - b.z; });
       for (var i = 0; i < sorted.length; i++) {
         var it = sorted[i];
-        var img = await new Promise(function (resolve, reject) {
-          var im = new Image();
-          im.onload = function () { resolve(im); };
-          im.onerror = reject;
-          im.src = it.src;
-        });
         var wPx = (it.w / 100) * W;
-        var hPx = wPx * (img.height / img.width);
-        var cx = (it.x / 100) * W + wPx / 2;
-        var cy = (it.y / 100) * H + hPx / 2;
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(it.rot * Math.PI / 180);
-        if (it.flip) ctx.scale(-1, 1);
-        ctx.drawImage(img, -wPx / 2, -hPx / 2, wPx, hPx);
-        ctx.restore();
+        if (it.text) {
+          var bw = boardEl.clientWidth || 360;
+          var fs = Math.max(14, Math.round(bw * (it.w / 100) * 0.14)) * (W / bw);
+          ctx.font = '700 ' + fs + "px Bitter, Georgia, serif";
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          var words = it.text.split(/\s+/);
+          var lines = [];
+          var line = '';
+          words.forEach(function (wd) {
+            var trial = line ? line + ' ' + wd : wd;
+            if (ctx.measureText(trial).width > wPx && line) { lines.push(line); line = wd; }
+            else line = trial;
+          });
+          if (line) lines.push(line);
+          var lh = fs * 1.25;
+          var hPx = lines.length * lh;
+          ctx.save();
+          ctx.translate((it.x / 100) * W + wPx / 2, (it.y / 100) * H + hPx / 2);
+          ctx.rotate(it.rot * Math.PI / 180);
+          if (it.flip) ctx.scale(-1, 1);
+          ctx.fillStyle = '#111';
+          lines.forEach(function (ln, li) {
+            ctx.fillText(ln, 0, (li - (lines.length - 1) / 2) * lh);
+          });
+          ctx.restore();
+        } else {
+          var img = await new Promise(function (resolve, reject) {
+            var im = new Image();
+            im.onload = function () { resolve(im); };
+            im.onerror = reject;
+            im.src = it.src;
+          });
+          var hPx = wPx * (img.height / img.width);
+          var cx = (it.x / 100) * W + wPx / 2;
+          var cy = (it.y / 100) * H + hPx / 2;
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(it.rot * Math.PI / 180);
+          if (it.flip) ctx.scale(-1, 1);
+          ctx.drawImage(img, -wPx / 2, -hPx / 2, wPx, hPx);
+          ctx.restore();
+        }
       }
       c.toBlob(function (blob) {
         if (!blob) { setStatus('Export hiccup — try again.'); return; }
