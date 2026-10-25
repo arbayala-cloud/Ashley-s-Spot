@@ -43,6 +43,26 @@
   .pumpkin { position: absolute; left: 74%; top: 11.1%; width: 18%; z-index: 6; pointer-events: none; line-height: 0; animation: pumpkinRock 2.2s ease-in-out infinite alternate; transform-origin: 50% 100%; }
   .pumpkin img { display: block; width: 100%; height: auto; filter: drop-shadow(0 3px 3px rgba(0,0,0,.3)); }
   @keyframes pumpkinRock { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
+  .theme-switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
+  .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .theme-switch .slider { position: absolute; inset: 0; background: #c9c2b6; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: .25s; }
+  .theme-switch input:checked + .slider { background: #b9975b; }
+  .theme-switch input:checked + .slider::before { transform: translateX(22px); }
+  .theme-switch input:focus-visible + .slider { outline: 2px solid #b9975b; outline-offset: 2px; }
+  body.dark { background: #1c1a17; color: #f4f1ea; }
+  body.dark .eyebrow { color: #d4b978; }
+  body.dark .sub, body.dark .playlist-label, body.dark .playlist-menu label, body.dark .note { color: #b8b0a3; }
+  body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
+  body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
+  body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .menu-panel a:hover { background: #33302b; }
+  body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
+  body.dark .song-select { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .playlist-menu.active label { color: #d4b978; }
+  body.dark .playlist-menu.active .song-select { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background: #3a3226; }
+  body.dark .footer { color: #9a948c; }
   @media (max-width: 480px) { .tv-lights .bulb { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
   .playlist-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 20px 0 8px; text-align: center; }
@@ -125,6 +145,11 @@
     <a href="period-calendar.html">Period Calendar</a>
     <a href="blog.html">Blog</a>
     <a href="jukebox.html">Jukebox</a>
+    <div class="theme-toggle">
+      <span>Light</span>
+      <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+      <span>Dark</span>
+    </div>
   </nav>
 
     <div class="tv-wrap" id="tvWrap">
@@ -214,6 +239,18 @@ document.getElementById('menuBtn').addEventListener('click', function () {
   var panel = document.getElementById('menuPanel');
   var open = panel.classList.toggle('open');
   this.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+
+var themeToggle = document.getElementById('themeToggle');
+try {
+  if (localStorage.getItem('ashleys-theme') === 'dark') {
+    document.body.classList.add('dark');
+    themeToggle.checked = true;
+  }
+} catch (e) {}
+themeToggle.addEventListener('change', function () {
+  document.body.classList.toggle('dark', this.checked);
+  try { localStorage.setItem('ashleys-theme', this.checked ? 'dark' : 'light'); } catch (e) {}
 });
 
 var PLAYLISTS = [
