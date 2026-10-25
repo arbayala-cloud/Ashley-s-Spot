@@ -18,6 +18,10 @@
   .menu-panel { display: none; margin: 10px auto 0; max-width: 420px; background: #fff; border: 1px solid #ddd7cc; border-radius: 12px; padding: 6px 0; }
   .menu-panel.open { display: block; }
   .menu-panel a { display: block; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 600; color: #22211e; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 600; color: #22211e; background: none; border: none; padding: 10px 0; cursor: pointer; }
+  .menu-panel button.install-btn:hover { background: #f7f4ee; }
+  body.dark .menu-panel button.install-btn { color: #f4f1ea; }
+  body.dark .menu-panel button.install-btn:hover { background: #33302b; }
   .menu-panel a:hover { background: #f7f4ee; }
   .menu-panel a:last-child { border-bottom: none; }
   .radio { margin-top: 16px; background: linear-gradient(180deg, #2b2d33, #1e2024); border: 1px solid #3d4048; border-radius: 18px; padding: 20px; color: #f5f2ec; box-shadow: 0 14px 32px rgba(0,0,0,.18); text-align: left; }
@@ -132,6 +136,8 @@
     .tv-controls-under .tv-btn { flex: 1 1 0; width: auto; min-width: 0; font-size: 12px; }
   }
 </style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#111111">
 </head>
 <body>
 <div class="wrap">
@@ -145,6 +151,7 @@
     <a href="period-calendar.html">Period Calendar</a>
     <a href="blog.html">Blog</a>
     <a href="jukebox.html">Jukebox</a>
+      <button class="install-btn" id="installBtn" type="button">Install App</button>
     <div class="theme-toggle">
       <span>Light</span>
       <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
@@ -539,6 +546,30 @@ for (var i = 0; i < songSelects.length; i++) {
     };
   })(songSelects[i]);
 }
+</script>
+
+<script>
+  (function() {
+    var installBtn = document.getElementById('installBtn');
+    var deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+    if (installBtn) {
+      installBtn.addEventListener('click', function() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then(function() { deferredPrompt = null; });
+        } else {
+          alert("To install Ashley's Spot on your phone: open this page in Chrome, tap the three dots menu, then tap Add to Home Screen.");
+        }
+      });
+    }
+  })();
 </script>
 </body>
 </html>
