@@ -123,7 +123,7 @@
   <section>
     <h2>My Collage Board</h2>
     <p class="howto">Tap Search Pinterest or Search Google to go find pictures, save the ones you love to your phone, then come back here and upload them — your board is saved automatically while you're away, so nothing is lost. Tap a piece, then Cut out to remove the background, and arrange everything on a board that's nearly as tall as your phone screen. It doubles as a moodboard.
-    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. No border, no limits — pieces can hang right off the edges, and there's no limit on how many fit. Want it cut by hand instead? Tap a piece, then Trace cut by hand, and draw a loop around just what you want to keep — or around what you want gone. If one wanders off where you can't grab it, Gather pieces brings them all back. Your saved boards live below in My collages and save in this browser only, like your blog and calendar — for keepers, tap Export picture and save it to your phone. Note: the export still crops to the board rectangle, so hanging-off bits won't show in it.</small></p>
+    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. No border, no limits — pieces can hang right off the edges, and there's no limit on how many fit. For clothes on a plain background, Magic wand cuts it instantly with no download at all. Want it cut by hand instead? Tap a piece, then Trace cut by hand, and draw a loop around just what you want to keep — or around what you want gone. If one wanders off where you can't grab it, Gather pieces brings them all back. Your saved boards live below in My collages and save in this browser only, like your blog and calendar — for keepers, tap Export picture and save it to your phone. Note: the export still crops to the board rectangle, so hanging-off bits won't show in it.</small></p>
 
     <div class="group">
       <p class="group-label">Add pictures</p>
@@ -149,6 +149,7 @@
 
     <div id="editbar">
       <button class="pill" id="cutBtn" type="button">Cut out for me</button>
+      <button class="pill" id="wandBtn" type="button">Magic wand</button>
       <button class="pill" id="traceBtn" type="button">Trace cut by hand</button>
       <button class="pill" id="bigBtn" type="button">Bigger</button>
       <button class="pill" id="smallBtn" type="button">Smaller</button>
@@ -177,7 +178,7 @@
     </div>
   </section>
 
-  <div class="version-note">Collage board v7 — faster automatic cutouts</div>
+  <div class="version-note">Collage board v8 — Magic wand cutouts</div>
 
   <div id="traceOverlay">
     <p class="trace-title">Trace around what you want</p>
@@ -592,6 +593,82 @@
   document.getElementById('traceKeepOut').addEventListener('click', function () { applyTrace('out'); });
   document.getElementById('traceClear').addEventListener('click', function () { tracePoints = []; drawTrace(); });
   document.getElementById('traceCancel').addEventListener('click', function () { traceOverlay.className = ''; });
+
+  function magicWand() {
+    var it = selected();
+    if (!it) return;
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function () {
+      try {
+        var max = 900;
+        var sc = Math.min(1, max / img.width);
+        var c = document.createElement('canvas');
+        c.width = Math.round(img.width * sc);
+        c.height = Math.round(img.height * sc);
+        var x = c.getContext('2d');
+        x.drawImage(img, 0, 0, c.width, c.height);
+        var W = c.width, H = c.height;
+        var id = x.getImageData(0, 0, W, H);
+        var d = id.data;
+        var samples = [];
+        function patch(cx, cy) {
+          for (var yy = 0; yy < 4; yy++) for (var xx = 0; xx < 4; xx++) {
+            var i = ((cy + yy) * W + (cx + xx)) * 4;
+            if (d[i + 3] >= 128) samples.push([d[i], d[i + 1], d[i + 2]]);
+          }
+        }
+        patch(0, 0); patch(W - 4, 0); patch(0, H - 4); patch(W - 4, H - 4);
+        if (!samples.length) { setStatus('The wand needs a photo with a background to remove.'); return; }
+        var bg = [0, 0, 0];
+        samples.forEach(function (s) { bg[0] += s[0]; bg[1] += s[1]; bg[2] += s[2]; });
+        bg = bg.map(function (v) { return v / samples.length; });
+        function dist(i) {
+          var dr = d[i] - bg[0], dg = d[i + 1] - bg[1], db = d[i + 2] - bg[2];
+          return Math.sqrt(dr * dr + dg * dg + db * db);
+        }
+        var tol = 90;
+        var seen = new Uint8Array(W * H);
+        var removed = new Uint8Array(W * H);
+        var stack = [];
+        function push(px, py) {
+          if (px < 0 || py < 0 || px >= W || py >= H) return;
+          var idx = py * W + px;
+          if (seen[idx]) return;
+          seen[idx] = 1;
+          if (d[idx * 4 + 3] < 128 || dist(idx * 4) < tol) { removed[idx] = 1; stack.push(idx); }
+        }
+        for (var xx = 0; xx < W; xx++) { push(xx, 0); push(xx, H - 1); }
+        for (var yy = 0; yy < H; yy++) { push(0, yy); push(W - 1, yy); }
+        while (stack.length) {
+          var cur = stack.pop();
+          var cx = cur % W, cy = Math.floor(cur / W);
+          push(cx + 1, cy); push(cx - 1, cy); push(cx, cy + 1); push(cx, cy - 1);
+        }
+        for (var y = 0; y < H; y++) for (var xx2 = 0; xx2 < W; xx2++) {
+          var i = y * W + xx2;
+          if (removed[i]) { d[i * 4 + 3] = 0; continue; }
+          var rn = 0;
+          for (var dy = -1; dy <= 1; dy++) for (var dx = -1; dx <= 1; dx++) {
+            if (dx === 0 && dy === 0) continue;
+            var nx = xx2 + dx, ny = y + dy;
+            if (nx >= 0 && ny >= 0 && nx < W && ny < H && removed[ny * W + nx]) rn++;
+          }
+          d[i * 4 + 3] = Math.max(127, d[i * 4 + 3] - rn * 16);
+        }
+        x.putImageData(id, 0, 0);
+        it.src = c.toDataURL('image/png');
+        it.external = false;
+        render(); saveCurrent();
+        setStatus('Magic wand cut! Best on plain backgrounds — if it ate part of your piece, try Cut out for me instead.');
+      } catch (e) {
+        setStatus('The wand needs a photo uploaded from your phone — linked photos block editing.');
+      }
+    };
+    img.onerror = function () { setStatus("That photo didn't load for the wand — try uploading it from your phone instead."); };
+    img.src = it.src;
+  }
+  document.getElementById('wandBtn').addEventListener('click', magicWand);
 
   function nudge(fn) { var it = selected(); if (!it) return; fn(it); render(); saveCurrent(); }
   document.getElementById('bigBtn').addEventListener('click', function () { nudge(function (it) { it.w = Math.min(200, it.w + 5); }); });
