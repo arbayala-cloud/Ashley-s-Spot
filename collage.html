@@ -44,6 +44,14 @@
   #editbar.show { display: flex; }
   #status { min-height: 20px; margin-top: 12px; font-size: 14px; font-style: italic; color: #666; text-align: center; }
   .version-note { text-align: center; font-size: 12px; font-style: italic; color: #999; margin-top: 22px; }
+  #traceOverlay { display: none; position: fixed; inset: 0; z-index: 50; background: rgba(20, 18, 16, 0.96); padding: 18px 14px; overflow-y: auto; text-align: center; }
+  #traceOverlay.show { display: block; }
+  .trace-title { font-family: 'Bitter', Georgia, serif; font-weight: 900; font-size: 22px; color: #fdfdfc; margin: 6px 0 12px; }
+  .trace-hint { font-size: 14px; font-style: italic; color: #cfc8bb; margin: 12px 0 0; }
+  #traceCanvas { width: 100%; max-width: 640px; height: auto; display: block; margin: 0 auto; touch-action: none; background-color: #ffffff; background-image: linear-gradient(45deg, #e5e5e5 25%, transparent 25%), linear-gradient(-45deg, #e5e5e5 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e5e5e5 75%), linear-gradient(-45deg, transparent 75%, #e5e5e5 75%); background-size: 24px 24px; background-position: 0 0, 0 12px, 12px -12px, -12px 0; }
+  .trace-btns { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 14px; }
+  #traceOverlay .pill { color: #fdfdfc; border-color: #fdfdfc; }
+  #traceOverlay .pill:active { background: #fdfdfc; color: #161616; }
   .group { border: 1.5px solid #ddd6c9; border-radius: 12px; padding: 12px 14px 14px; margin-top: 14px; background: #f7f5ef; }
   .group-label { font-family: Arial, Helvetica, sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 0 0 10px; }
   .swatch-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -115,7 +123,7 @@
   <section>
     <h2>My Collage Board</h2>
     <p class="howto">Tap Search Pinterest or Search Google to go find pictures, save the ones you love to your phone, then come back here and upload them — your board is saved automatically while you're away, so nothing is lost. Tap a piece, then Cut out to remove the background, and arrange everything on a board that's nearly as tall as your phone screen. It doubles as a moodboard.
-    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. No border, no limits — pieces can hang right off the edges, and there's no limit on how many fit. If one wanders off where you can't grab it, Gather pieces brings them all back. Your saved boards live below in My collages and save in this browser only, like your blog and calendar — for keepers, tap Export picture and save it to your phone. Note: the export still crops to the board rectangle, so hanging-off bits won't show in it.</small></p>
+    <small>Pinch a piece with two fingers to make it bigger or smaller. A piece only starts moving once your finger really moves, so just tapping it won't nudge it. No border, no limits — pieces can hang right off the edges, and there's no limit on how many fit. Want it cut by hand instead? Tap a piece, then Trace cut, and draw a loop around just what you want to keep — or around what you want gone. If one wanders off where you can't grab it, Gather pieces brings them all back. Your saved boards live below in My collages and save in this browser only, like your blog and calendar — for keepers, tap Export picture and save it to your phone. Note: the export still crops to the board rectangle, so hanging-off bits won't show in it.</small></p>
 
     <div class="group">
       <p class="group-label">Add pictures</p>
@@ -141,6 +149,7 @@
 
     <div id="editbar">
       <button class="pill" id="cutBtn" type="button">Cut out</button>
+      <button class="pill" id="traceBtn" type="button">Trace cut</button>
       <button class="pill" id="bigBtn" type="button">Bigger</button>
       <button class="pill" id="smallBtn" type="button">Smaller</button>
       <button class="pill" id="rotLBtn" type="button">Turn left</button>
@@ -168,7 +177,19 @@
     </div>
   </section>
 
-  <div class="version-note">Collage board v4 — no borders, no limits</div>
+  <div class="version-note">Collage board v5 — trace your own cutouts</div>
+
+  <div id="traceOverlay">
+    <p class="trace-title">Trace around what you want</p>
+    <canvas id="traceCanvas"></canvas>
+    <p class="trace-hint">Draw a loop around it with your finger, then choose: keep what's inside the loop, or keep everything outside it.</p>
+    <div class="trace-btns">
+      <button class="pill" id="traceKeepIn" type="button">Keep inside</button>
+      <button class="pill" id="traceKeepOut" type="button">Keep outside</button>
+      <button class="pill" id="traceClear" type="button">Clear trace</button>
+      <button class="pill" id="traceCancel" type="button">Cancel</button>
+    </div>
+  </div>
 
   <footer><div class="foot-name">Ashley Ayala</div>&copy; 2026 Ashley Ayala</footer>
 </main>
@@ -443,6 +464,105 @@
       setStatus("Couldn't cut that one out automatically — it stays as-is, and you can still use it. Photos uploaded from your phone cut out best.");
     }
   });
+
+  var traceOverlay = document.getElementById('traceOverlay');
+  var traceCanvas = document.getElementById('traceCanvas');
+  var tctx = traceCanvas.getContext('2d');
+  var traceImg = null, tracePoints = [], traceDrawing = false;
+
+  function openTrace() {
+    var it = selected();
+    if (!it) return;
+    var img = new Image();
+    img.onload = function () {
+      traceImg = img;
+      var scale = Math.min(1, 900 / img.width);
+      traceCanvas.width = Math.round(img.width * scale);
+      traceCanvas.height = Math.round(img.height * scale);
+      tracePoints = [];
+      drawTrace();
+      traceOverlay.className = 'show';
+    };
+    img.onerror = function () { setStatus("That photo didn't load for tracing — try uploading it from your phone instead."); };
+    img.src = it.src;
+  }
+
+  function tracePos(ev) {
+    var r = traceCanvas.getBoundingClientRect();
+    return {
+      x: (ev.clientX - r.left) * (traceCanvas.width / r.width),
+      y: (ev.clientY - r.top) * (traceCanvas.height / r.height)
+    };
+  }
+
+  function drawTrace() {
+    if (!traceImg) return;
+    tctx.clearRect(0, 0, traceCanvas.width, traceCanvas.height);
+    tctx.drawImage(traceImg, 0, 0, traceCanvas.width, traceCanvas.height);
+    if (tracePoints.length > 1) {
+      tctx.save();
+      tctx.strokeStyle = '#e53935';
+      tctx.lineWidth = 3;
+      tctx.setLineDash([10, 8]);
+      tctx.beginPath();
+      tctx.moveTo(tracePoints[0].x, tracePoints[0].y);
+      for (var i = 1; i < tracePoints.length; i++) tctx.lineTo(tracePoints[i].x, tracePoints[i].y);
+      if (!traceDrawing) tctx.closePath();
+      tctx.stroke();
+      tctx.restore();
+    }
+  }
+
+  traceCanvas.addEventListener('pointerdown', function (ev) {
+    traceDrawing = true;
+    tracePoints = [tracePos(ev)];
+    try { traceCanvas.setPointerCapture(ev.pointerId); } catch (e) {}
+    drawTrace();
+    ev.preventDefault();
+  });
+  traceCanvas.addEventListener('pointermove', function (ev) {
+    if (!traceDrawing) return;
+    var p = tracePos(ev);
+    var last = tracePoints[tracePoints.length - 1];
+    if (!last || Math.hypot(p.x - last.x, p.y - last.y) > 4) tracePoints.push(p);
+    drawTrace();
+  });
+  function endTrace() {
+    if (!traceDrawing) return;
+    traceDrawing = false;
+    drawTrace();
+  }
+  traceCanvas.addEventListener('pointerup', endTrace);
+  traceCanvas.addEventListener('pointercancel', endTrace);
+
+  function applyTrace(mode) {
+    var it = selected();
+    if (!it || !traceImg || tracePoints.length < 3) { setStatus('Trace a loop around something first.'); return; }
+    try {
+      var c = document.createElement('canvas');
+      c.width = traceCanvas.width; c.height = traceCanvas.height;
+      var x = c.getContext('2d');
+      x.drawImage(traceImg, 0, 0, c.width, c.height);
+      x.globalCompositeOperation = (mode === 'in') ? 'destination-in' : 'destination-out';
+      x.beginPath();
+      x.moveTo(tracePoints[0].x, tracePoints[0].y);
+      for (var i = 1; i < tracePoints.length; i++) x.lineTo(tracePoints[i].x, tracePoints[i].y);
+      x.closePath();
+      x.fill();
+      it.src = c.toDataURL('image/png');
+      it.external = false;
+      traceOverlay.className = '';
+      render(); saveCurrent();
+      setStatus(mode === 'in' ? 'Cut out — only what you traced is kept.' : 'Cut out — what you traced is gone, the rest stays.');
+    } catch (e) {
+      setStatus('Tracing needs a photo uploaded from your phone — linked photos block editing.');
+    }
+  }
+  document.getElementById('traceBtn').addEventListener('click', openTrace);
+  document.getElementById('traceKeepIn').addEventListener('click', function () { applyTrace('in'); });
+  document.getElementById('traceKeepOut').addEventListener('click', function () { applyTrace('out'); });
+  document.getElementById('traceClear').addEventListener('click', function () { tracePoints = []; drawTrace(); });
+  document.getElementById('traceCancel').addEventListener('click', function () { traceOverlay.className = ''; });
 
   function nudge(fn) { var it = selected(); if (!it) return; fn(it); render(); saveCurrent(); }
   document.getElementById('bigBtn').addEventListener('click', function () { nudge(function (it) { it.w = Math.min(200, it.w + 5); }); });
