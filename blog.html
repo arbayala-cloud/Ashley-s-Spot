@@ -3,86 +3,92 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blog — Ashley Ayala</title>
+<title>Blog — Ashley's Spot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700;900&family=Indie+Flower&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; background: #fdfdfc; color: #161616; font-family: Georgia, 'Times New Roman', serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-  .wrap { width: calc(100% - 24px); max-width: 880px; margin: 0 auto; padding: 20px 22px 48px; }
-  header { text-align: center; }
-  h1.masthead { margin: 18px 0 0; font-family: 'Indie Flower', cursive; font-weight: 400; font-size: 84px; line-height: 1.05; color: #111; }
-  h1.masthead a { color: #111; text-decoration: none; }
-  .rule-top { border-top: 3px solid #111; border-bottom: 1px solid #111; height: 4px; margin-top: 10px; }
-  .tagline { margin-top: 14px; font-family: Arial, Helvetica, sans-serif; font-size: 11px; letter-spacing: 2.2px; text-transform: uppercase; color: #444; text-align: center; }
-  section { margin-top: 38px; }
-  section h2 { margin: 0 0 14px; font-family: 'Bitter', Georgia, serif; font-weight: 900; font-size: 27px; letter-spacing: .2px; color: #111; border-bottom: 2px solid #111; padding-bottom: 10px; }
-  footer { border-top: 3px double #111; margin-top: 46px; padding-top: 16px; font-family: Arial, Helvetica, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; text-align: center; color: #999; }
-  .menu-row { text-align: center; margin: 14px 0 0; }
-  .menu-row button { font-family: Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; background: none; color: #111; border: 1.5px solid #111; border-radius: 999px; padding: 7px 18px; cursor: pointer; }
-  .menu-panel { display: none; text-align: center; margin-top: 6px; }
-  .menu-panel.open { display: block; }
-  .menu-panel a { display: block; font-family: 'Bitter', Georgia, serif; font-weight: 700; font-size: 20px; line-height: 1.3; color: #111; text-decoration: none; padding: 8px 0; }
-  @media (hover: hover) { .menu-panel a:hover { text-decoration: underline; text-underline-offset: 3px; } }
-  .foot-name { font-size: 12px; letter-spacing: 3px; color: #555; margin-bottom: 8px; }
-  .blog-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 34px; }
-  .blog-form input[type="text"], .blog-form textarea { font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.5; color: #161616; border: 1.5px solid #d9b8c8; border-radius: 12px; padding: 10px 12px; background: #fff; width: 100%; min-width: 0; }
-  .blog-form textarea { min-height: 140px; resize: vertical; }
-  .btn { align-self: flex-start; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 700; background: #6d2f4d; color: #fff; border: none; border-radius: 999px; padding: 10px 22px; cursor: pointer; }
-  .privacy-note { font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #999; margin: 0; }
-  .post { border-top: 1px solid #e9e2e6; padding: 20px 0 24px; cursor: pointer; }
-  .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 100; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
-  .modal-backdrop.open { display: flex; }
-  .modal { background: #fff; border-radius: 18px; width: 100%; max-width: 600px; padding: 22px 22px 28px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-  .modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-  .modal-title { margin: 0; font-family: 'Bitter', Georgia, serif; font-weight: 700; font-size: 24px; line-height: 1.3; color: #111; }
-  .modal-date { margin: 6px 0 14px; padding-bottom: 12px; border-bottom: 1px solid #e9e2e6; font-family: Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #999; }
-  .modal-body { margin: 0; font-size: 16px; line-height: 1.65; color: #2b2b2b; white-space: pre-wrap; }
-  .modal-close { flex: 0 0 auto; background: none; border: none; color: #999; font-size: 28px; line-height: 1; cursor: pointer; padding: 0; }
-  .modal-close:hover { color: #6d2f4d; }
+  body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 32px 16px 48px; }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .backlink { font-size: 13px; margin: 0 0 18px; }
+  .backlink a { color: #8a7443; text-decoration: none; font-weight: 600; }
+  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a7443; font-weight: 600; margin: 0 0 10px; text-align: center; }
+  h1 { font-family: Fraunces, Georgia, serif; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.5px; margin: 0 0 8px; text-align: center; }
+  .sub { color: #6f6a62; font-size: 15px; margin: 0 0 14px; text-align: center; }
+  .divider { width: 48px; height: 2px; background: #b9975b; margin: 0 auto 24px; border: none; }
+  .card { background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 24px 20px; box-shadow: 0 2px 12px rgba(0,0,0,.05); }
+  h2 { font-family: Fraunces, Georgia, serif; font-size: 22px; font-weight: 600; margin: 28px 0 12px; }
+  h2:first-child { margin-top: 0; }
+  .blog-form { display: flex; flex-direction: column; gap: 10px; }
+  .blog-form input[type="text"], .blog-form textarea { font-family: Inter, Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.6; color: #22211e; border: 1px solid #c9c2b6; border-radius: 12px; padding: 11px 12px; background: #fff; width: 100%; min-width: 0; }
+  .blog-form textarea { min-height: 160px; resize: vertical; }
+  .form-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .btn { font-size: 14px; font-weight: 600; background: #22211e; color: #fff; border: none; border-radius: 999px; padding: 11px 22px; cursor: pointer; }
+  .btn.secondary { background: #fff; color: #22211e; border: 1.5px solid #c9c2b6; }
+  .btn:focus-visible, .blog-form input:focus-visible, .blog-form textarea:focus-visible { outline: 2px solid #b9975b; outline-offset: 2px; }
+  .privacy-note { font-size: 12.5px; color: #8a857e; margin: 0; }
+  .post { border-top: 1px solid #eee9df; padding: 20px 0 22px; cursor: pointer; }
   .post:first-of-type { border-top: none; padding-top: 4px; }
   .post-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-  .post-title { margin: 0; font-family: 'Bitter', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.3; color: #111; }
-  .post-date { margin: 4px 0 10px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #999; }
-  .post-body { margin: 0; font-size: 16px; line-height: 1.65; color: #2b2b2b; white-space: pre-wrap; }
-  .read-more { margin: 10px 0 0; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 700; color: #6d2f4d; }
+  .post-title { margin: 0; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 22px; line-height: 1.3; }
+  .post-date { margin: 4px 0 10px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #8a857e; }
+  .post-body { margin: 0; font-size: 15.5px; line-height: 1.65; color: #3a3835; white-space: pre-wrap; }
+  .read-more { margin: 10px 0 0; font-size: 13px; font-weight: 600; color: #8a7443; }
+  .post-actions { flex: 0 0 auto; display: flex; gap: 4px; }
+  .icon-btn { background: none; border: none; color: #bbb; font-size: 13px; font-weight: 600; cursor: pointer; padding: 2px 6px; }
+  .icon-btn:hover { color: #8a7443; }
+  .icon-btn.del:hover { color: #c62828; }
   @media (hover: hover) { .post:hover .post-title { text-decoration: underline; text-underline-offset: 3px; } }
-  .del { flex: 0 0 auto; background: none; border: none; color: #bbb; font-size: 22px; line-height: 1; cursor: pointer; padding: 0 2px; }
-  .del:hover { color: #6d2f4d; }
-  .empty { font-style: italic; color: #888; font-size: 16px; line-height: 1.6; margin: 0; }
-  @media (max-width: 640px) { h1.masthead { font-size: 42px; } .wrap { padding: 20px 14px 40px; } section h2 { font-size: 23px; } .post-title { font-size: 20px; } }
-  @media (min-width: 641px) { .post-body { text-align: justify; hyphens: auto; } }
+  .empty { font-style: italic; color: #8a857e; font-size: 15.5px; line-height: 1.6; margin: 0; }
+  .tools { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
+  .hint { font-size: 12.5px; color: #8a857e; margin-top: 16px; text-align: center; }
+  .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 100; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+  .modal-backdrop.open { display: flex; }
+  .modal { background: #fff; border-radius: 16px; width: 100%; max-width: 600px; padding: 24px 22px 28px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+  .modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .modal-title { margin: 0; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.3; }
+  .modal-date { margin: 6px 0 14px; padding-bottom: 12px; border-bottom: 1px solid #eee9df; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #8a857e; }
+  .modal-body { margin: 0; font-size: 16px; line-height: 1.7; color: #3a3835; white-space: pre-wrap; }
+  .modal-close { flex: 0 0 auto; background: none; border: none; color: #bbb; font-size: 28px; line-height: 1; cursor: pointer; padding: 0; }
+  .modal-close:hover { color: #22211e; }
+  @media (max-width: 520px) {
+    body { padding: 24px 10px 40px; }
+    h1 { font-size: 32px; }
+    .card { padding: 18px 12px; }
+    .post-title { font-size: 20px; }
+  }
 </style>
 </head>
 <body>
 <main class="wrap">
-  <header>
-    <div class="rule-top"></div>
-    <h1 class="masthead"><a href="index.html">Ashley Ayala</a></h1>
-    <div class="tagline">Blog</div>
-    <div class="rule-top"></div>
-    <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
-    <nav id="menuPanel" class="menu-panel">
-      <a href="index.html">Home</a>
-      <a href="period-calendar.html">Period Calendar</a>
-      <a href="blog.html">Blog</a>
-      <a href="jukebox.html">Jukebox</a>
-    </nav>
-  </header>
+  <p class="backlink"><a href="index.html">&larr; Ashley's Spot</a> &nbsp;·&nbsp; <a href="period-calendar.html">Period Calendar</a> &nbsp;·&nbsp; <a href="jukebox.html">Jukebox</a></p>
+  <p class="eyebrow">Ashley's Spot</p>
+  <h1>Blog</h1>
+  <p class="sub">Write it down here, and it will be waiting for you whenever you come back to read it.</p>
+  <hr class="divider">
 
-  <section>
-    <h2>Write something</h2>
+  <section class="card">
+    <h2 id="formTitle">Write something</h2>
     <div class="blog-form">
-      <input id="postTitle" type="text" placeholder="Title (optional)">
+      <input id="postTitle" type="text" placeholder="Title (optional)" maxlength="140">
       <textarea id="postBody" placeholder="Write it here..."></textarea>
-      <button class="btn" type="button" id="postBtn">Post</button>
-      <p class="privacy-note">Your posts save in this browser only, so they stay yours.</p>
+      <div class="form-actions">
+        <button class="btn" type="button" id="postBtn">Post</button>
+        <button class="btn secondary" type="button" id="cancelEditBtn" style="display:none;">Cancel edit</button>
+      </div>
+      <p class="privacy-note">Your posts save in this browser on this device only — they are not sent anywhere. Your unfinished writing is saved as a draft as you type.</p>
     </div>
+
     <h2>Posts</h2>
     <div id="posts"></div>
-  </section>
 
-  <footer><div class="foot-name">Ashley Ayala</div>&copy; 2026 Ashley Ayala</footer>
+    <div class="tools">
+      <button class="btn secondary" id="exportBtn" type="button">Download backup</button>
+      <button class="btn secondary" id="importBtn" type="button">Import backup</button>
+      <input type="file" id="importFile" accept="application/json" hidden>
+    </div>
+    <p class="hint">Download a backup now and then, so your writing survives a new phone or a cleared browser.</p>
+  </section>
 </main>
 <div id="postModal" class="modal-backdrop" role="dialog" aria-modal="true">
   <div class="modal">
@@ -92,25 +98,24 @@
   </div>
 </div>
 <script>
-  document.getElementById('menuBtn').addEventListener('click', function () {
-    var panel = document.getElementById('menuPanel');
-    var open = panel.classList.toggle('open');
-    this.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-
   var KEY = 'ashley-blog';
+  var DRAFT_KEY = 'ashley-blog-draft';
+  var editingIndex = null;
   function loadPosts() {
     try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; }
   }
   function savePosts(posts) {
-    localStorage.setItem(KEY, JSON.stringify(posts));
+    try { localStorage.setItem(KEY, JSON.stringify(posts)); } catch (e) {}
   }
   function esc(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
+  function fmtDate(iso) {
+    return new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+  }
   function openPost(p) {
     document.getElementById('modalTitle').textContent = p.title || 'Untitled';
-    document.getElementById('modalDate').textContent = new Date(p.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('modalDate').textContent = fmtDate(p.date);
     document.getElementById('modalBody').textContent = p.body;
     document.getElementById('postModal').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -134,7 +139,6 @@
       return;
     }
     box.innerHTML = posts.map(function (p, i) {
-      var date = new Date(p.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
       var excerpt = p.body;
       var truncated = false;
       if (p.body.length > 200) {
@@ -145,37 +149,108 @@
         truncated = true;
       }
       return '<article class="post"><div class="post-head"><h3 class="post-title">' + esc(p.title || 'Untitled') + '</h3>' +
-        '<button class="del" type="button" aria-label="Delete post" data-i="' + i + '">&times;</button></div>' +
-        '<p class="post-date">' + esc(date) + '</p>' +
+        '<span class="post-actions">' +
+        '<button class="icon-btn" type="button" aria-label="Edit post" data-edit="' + i + '">Edit</button>' +
+        '<button class="icon-btn del" type="button" aria-label="Delete post" data-del="' + i + '">&times;</button></span></div>' +
+        '<p class="post-date">' + esc(fmtDate(p.date)) + '</p>' +
         '<p class="post-body">' + esc(excerpt) + '</p>' +
         (truncated ? '<p class="read-more">Read more &rarr;</p>' : '') + '</article>';
     }).join('');
-    box.querySelectorAll('.post').forEach(function (card) {
-      card.addEventListener('click', function () {
-        openPost(loadPosts()[parseInt(card.querySelector('.del').getAttribute('data-i'), 10)]);
-      });
+    box.querySelectorAll('.post').forEach(function (card, idx) {
+      card.addEventListener('click', function () { openPost(loadPosts()[idx]); });
     });
-    box.querySelectorAll('.del').forEach(function (btn) {
+    box.querySelectorAll('[data-edit]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
+        var p = loadPosts()[parseInt(btn.getAttribute('data-edit'), 10)];
+        editingIndex = parseInt(btn.getAttribute('data-edit'), 10);
+        document.getElementById('postTitle').value = p.title || '';
+        document.getElementById('postBody').value = p.body;
+        document.getElementById('postBtn').textContent = 'Save changes';
+        document.getElementById('cancelEditBtn').style.display = 'inline-block';
+        document.getElementById('formTitle').textContent = 'Edit post';
+        document.getElementById('postTitle').focus();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+    box.querySelectorAll('[data-del]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (!confirm('Delete this post?')) return;
         var posts = loadPosts();
-        posts.splice(parseInt(btn.getAttribute('data-i'), 10), 1);
+        posts.splice(parseInt(btn.getAttribute('data-del'), 10), 1);
         savePosts(posts);
         render();
       });
     });
   }
+  function clearForm() {
+    editingIndex = null;
+    document.getElementById('postTitle').value = '';
+    document.getElementById('postBody').value = '';
+    document.getElementById('postBtn').textContent = 'Post';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+    document.getElementById('formTitle').textContent = 'Write something';
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+  }
+  document.getElementById('cancelEditBtn').addEventListener('click', clearForm);
+  // Save a draft as she types, so unfinished writing is not lost.
+  function saveDraft() {
+    if (editingIndex !== null) return;
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({
+        title: document.getElementById('postTitle').value,
+        body: document.getElementById('postBody').value
+      }));
+    } catch (e) {}
+  }
+  document.getElementById('postTitle').addEventListener('input', saveDraft);
+  document.getElementById('postBody').addEventListener('input', saveDraft);
   document.getElementById('postBtn').addEventListener('click', function () {
     var title = document.getElementById('postTitle').value.trim();
     var body = document.getElementById('postBody').value.trim();
     if (!body) return;
     var posts = loadPosts();
-    posts.unshift({ title: title, body: body, date: new Date().toISOString() });
+    if (editingIndex !== null) {
+      posts[editingIndex].title = title;
+      posts[editingIndex].body = body;
+    } else {
+      posts.unshift({ title: title, body: body, date: new Date().toISOString() });
+    }
     savePosts(posts);
-    document.getElementById('postTitle').value = '';
-    document.getElementById('postBody').value = '';
+    clearForm();
     render();
   });
+  document.getElementById('exportBtn').addEventListener('click', function () {
+    var blob = new Blob([JSON.stringify(loadPosts(), null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'blog-backup.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('importBtn').addEventListener('click', function () { document.getElementById('importFile').click(); });
+  document.getElementById('importFile').addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        if (Array.isArray(data)) { savePosts(data); render(); alert('Backup imported.'); }
+      } catch (err) { alert('That file could not be read as a backup.'); }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+  // Restore an unfinished draft, if there is one.
+  try {
+    var draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+    if (draft && (draft.title || draft.body)) {
+      document.getElementById('postTitle').value = draft.title || '';
+      document.getElementById('postBody').value = draft.body || '';
+    }
+  } catch (e) {}
   render();
 </script>
 </body>
