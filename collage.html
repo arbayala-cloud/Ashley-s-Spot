@@ -197,7 +197,7 @@
     </div>
   </section>
 
-  <div class="version-note">Collage board v10 — faster cutting, words, no dashed outline</div>
+  <div class="version-note">Collage board v11 — no more lag</div>
 
   <div id="traceOverlay">
     <p class="trace-title">Trace around what you want</p>
@@ -266,17 +266,33 @@
 
   function setStatus(msg) { statusEl.textContent = msg || ''; }
   function uid() { return 'p' + Date.now().toString(36) + Math.floor(Math.random() * 9999).toString(36); }
-  function saveCurrent() {
+  var saveTimer = null;
+  function flushSave() {
     try { localStorage.setItem('ashley-collage-current', JSON.stringify(board)); } catch (e) { /* storage full: export still works */ }
   }
+  function saveCurrent() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(flushSave, 250);
+  }
+  window.addEventListener('pagehide', flushSave);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) flushSave(); });
   function selected() { return board.items.find(function (it) { return it.id === selectedId; }) || null; }
 
+  var pieceEls = {};
   function render() {
     boardEl.style.background = board.bg;
-    boardEl.innerHTML = '';
     var sorted = board.items.slice().sort(function (a, b) { return a.z - b.z; });
+    var live = {};
     sorted.forEach(function (it) {
-      var div = document.createElement('div');
+      live[it.id] = true;
+      var div = pieceEls[it.id];
+      if (!div) {
+        div = document.createElement('div');
+        div.className = 'piece';
+        div.addEventListener('pointerdown', function (ev) { startDrag(ev, div._piece, div); });
+        pieceEls[it.id] = div;
+      }
+      div._piece = it;
       div.className = 'piece' + (it.id === selectedId ? ' sel' : '');
       div.style.left = it.x + '%';
       div.style.top = it.y + '%';
@@ -284,26 +300,39 @@
       div.style.transform = 'rotate(' + it.rot + 'deg)' + (it.flip ? ' scaleX(-1)' : '');
       div.style.zIndex = it.z;
       if (it.text) {
-        var sp = document.createElement('span');
+        var sp = div.querySelector('span');
+        if (!sp || div._kind !== 'text') {
+          div.innerHTML = '';
+          sp = document.createElement('span');
+          sp.style.display = 'block';
+          sp.style.fontFamily = "'Bitter', Georgia, serif";
+          sp.style.fontWeight = '700';
+          sp.style.color = '#111';
+          sp.style.textAlign = 'center';
+          sp.style.lineHeight = '1.25';
+          sp.style.wordWrap = 'break-word';
+          div.appendChild(sp);
+          div._kind = 'text';
+        }
         sp.textContent = it.text;
-        sp.style.display = 'block';
-        sp.style.fontFamily = "'Bitter', Georgia, serif";
-        sp.style.fontWeight = '700';
-        sp.style.color = '#111';
-        sp.style.textAlign = 'center';
-        sp.style.lineHeight = '1.25';
-        sp.style.wordWrap = 'break-word';
         var bw = boardEl.clientWidth || 360;
         sp.style.fontSize = Math.max(14, Math.round(bw * (it.w / 100) * 0.14)) + 'px';
-        div.appendChild(sp);
       } else {
-        var img = document.createElement('img');
-        img.src = it.src;
-        img.alt = 'Collage piece';
-        div.appendChild(img);
+        var img = div.querySelector('img');
+        if (!img || div._kind !== 'img') {
+          div.innerHTML = '';
+          img = document.createElement('img');
+          img.alt = 'Collage piece';
+          img.decoding = 'async';
+          div.appendChild(img);
+          div._kind = 'img';
+        }
+        if (img.getAttribute('src') !== it.src) img.src = it.src;
       }
-      div.addEventListener('pointerdown', function (ev) { startDrag(ev, it, div); });
       boardEl.appendChild(div);
+    });
+    Object.keys(pieceEls).forEach(function (id) {
+      if (!live[id]) { pieceEls[id].remove(); delete pieceEls[id]; }
     });
     editbar.className = selected() ? 'show' : '';
     document.querySelectorAll('#swatches .swatch').forEach(function (s) {
@@ -326,7 +355,7 @@
     // A finger landing on another piece mid-gesture: ignore it, don't disturb the piece being moved.
     if (gesture) { ev.preventDefault(); return; }
     selectedId = it.id;
-    warmCutter();
+    clearTimeout(warmTimer);
     // Mark the selection in place — rebuilding the board here would yank the
     // piece out from under the finger and make touches jumpy.
     boardEl.querySelectorAll('.piece').forEach(function (el) { el.classList.toggle('sel', el === div); });
@@ -337,6 +366,7 @@
       dragging: false, startClientX: ev.clientX, startClientY: ev.clientY,
       grabX: 0, grabY: 0, pinch: null
     };
+    gesture.boardRect = boardEl.getBoundingClientRect();
     window.addEventListener('pointermove', onGestureMove);
     window.addEventListener('pointerup', onGestureUp);
     window.addEventListener('pointercancel', onGestureUp);
@@ -345,7 +375,7 @@
 
   function beginPinch(g) {
     var pts = Array.from(g.pointers.values());
-    var r = boardEl.getBoundingClientRect();
+    var r = g.boardRect;
     var d = Math.max(24, Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y));
     var rect = g.div.getBoundingClientRect();
     g.pinch = {
@@ -362,7 +392,7 @@
     if (g.pointers.size >= 2) {
       if (!g.pinch) beginPinch(g);
       var pts = Array.from(g.pointers.values()).slice(0, 2);
-      var r = boardEl.getBoundingClientRect();
+      var r = g.boardRect;
       var d = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
       var scale = d / g.pinch.startDist;
       var newW = Math.max(5, Math.min(200, g.pinch.startW * scale));
@@ -381,12 +411,12 @@
     if (!g.dragging) {
       var moved = Math.hypot(e.clientX - g.startClientX, e.clientY - g.startClientY);
       if (moved < 12) return;
-      var r2 = boardEl.getBoundingClientRect();
+      var r2 = g.boardRect;
       g.grabX = e.clientX - r2.left - (g.it.x / 100) * r2.width;
       g.grabY = e.clientY - r2.top - (g.it.y / 100) * r2.height;
       g.dragging = true;
     }
-    var r3 = boardEl.getBoundingClientRect();
+    var r3 = g.boardRect;
     g.it.x = ((e.clientX - r3.left - g.grabX) / r3.width) * 100;
     g.it.y = ((e.clientY - r3.top - g.grabY) / r3.height) * 100;
     g.div.style.left = g.it.x + '%';
@@ -413,6 +443,7 @@
     window.removeEventListener('pointercancel', onGestureUp);
     gesture = null;
     saveCurrent();
+    scheduleWarm();
   }
 
   boardEl.addEventListener('pointerdown', function (ev) {
@@ -428,7 +459,7 @@
     var it = { id: uid(), src: src, x: 20 + Math.random() * 15, y: 15 + Math.random() * 10, w: 45, rot: 0, z: zTop++, external: !!external };
     board.items.push(it);
     selectedId = it.id;
-    warmCutter();
+    scheduleWarm();
     render();
     saveCurrent();
     setStatus(external ? 'Added from the link. Tap it, then Cut out to try removing the background.' : 'Added! Tap it, then Cut out to remove the background.');
@@ -743,6 +774,13 @@
     import('https://esm.sh/@imgly/background-removal').then(function (mod) {
       return mod.preload({ model: 'isnet_quint8', device: 'gpu', output: { format: 'image/png' } });
     }).then(function () { cutterReady = true; }).catch(function () { cutterWarming = false; });
+  }
+  var warmTimer = null;
+  function scheduleWarm() {
+    if (cutterWarming || cutterReady) return;
+    if (navigator.connection && navigator.connection.saveData) return;
+    clearTimeout(warmTimer);
+    warmTimer = setTimeout(function () { if (!gesture) warmCutter(); }, 6000);
   }
 
   document.getElementById('flipBtn').addEventListener('click', function () {
