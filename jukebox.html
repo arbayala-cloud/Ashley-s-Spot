@@ -46,7 +46,7 @@
   @media (max-width: 480px) { .tv-lights .bulb { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
   .playlist-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 20px 0 8px; text-align: center; }
-  .playlist-menus { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 640px; margin: 0 auto; }
+  .playlist-menus { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 780px; margin: 0 auto; }
   .playlist-menu { text-align: left; min-width: 0; }
   .playlist-menu label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; font-weight: 600; margin: 0 0 6px 4px; }
   .song-select { width: 100%; height: 50px; padding: 0 12px; font-size: 15px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; }
@@ -117,7 +117,7 @@
 <div class="wrap">
   <p class="eyebrow">Ashley&rsquo;s Spot</p>
   <h1>Ashley&rsquo;s Jukebox</h1>
-  <p class="sub">1995, 2001 &amp; 2003 playlists, played through YouTube</p>
+  <p class="sub">1995, 2001, 2003 &amp; 2005 playlists, played through YouTube</p>
   <hr class="divider">
   <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
   <nav id="menuPanel" class="menu-panel">
@@ -200,9 +200,13 @@
       <label for="songs2003">2003</label>
       <select id="songs2003" class="song-select" data-playlist="2"><option value="">Choose a 2003 song&hellip;</option></select>
     </div>
+    <div class="playlist-menu" data-playlist="3">
+      <label for="songs2005">2005</label>
+      <select id="songs2005" class="song-select" data-playlist="3"><option value="">Choose a 2005 song&hellip;</option></select>
+    </div>
   </div>
 
-  <p class="note">Pick a song from 1995, 2001 or 2003 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a song from 1995, 2001, 2003 or 2005 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
   <p class="footer">Ashley&rsquo;s Spot &middot; Playlists</p>
 </div>
 <script>
@@ -304,6 +308,24 @@ var PLAYLISTS = [
   ["Molly's Chambers", "Kings of Leon", "uLaJkbkG5NI"],
   ["Girl's Not Grey", "AFI", "1Yzu-4kJg6g"],
   ["Like a Stone", "Audioslave", "7QU1nvuxaMA"]
+  ] },
+  { name: "2005", songs: [
+  ["Feel Good Inc.", "Gorillaz", "HyHNuVaZJ-k"],
+  ["Best of You", "Foo Fighters", "h_L4Rixya64"],
+  ["Sugar, We're Goin Down", "Fall Out Boy", "uhG-vLZrb-g"],
+  ["I Bet You Look Good on the Dancefloor", "Arctic Monkeys", "pK7egZaT3hs"],
+  ["Speed of Sound", "Coldplay", "0k_1kvDh2UA"],
+  ["Do You Want To", "Franz Ferdinand", "YZzbB4ta-YY"],
+  ["Blue Orchid", "The White Stripes", "jW8UlrtcEac"],
+  ["B.Y.O.B.", "System of a Down", "zUzd9KyIDrM"],
+  ["Wake Me Up When September Ends", "Green Day", "NU9JoFKlaZ0"],
+  ["Helena", "My Chemical Romance", "UCCyoocDxBA"],
+  ["Lyla", "Oasis", "oQZQ5MHehes"],
+  ["Juicebox", "The Strokes", "GoltwBHXCx8"],
+  ["Soul Meets Body", "Death Cab for Cutie", "uizQVriWp8M"],
+  ["Banquet", "Bloc Party", "vdkmhquF60o"],
+  ["The Hand That Feeds", "Nine Inch Nails", "zL-U2DPyv68"],
+  ["Little Sister", "Queens of the Stone Age", "hGRqnNEOpe0"]
   ] }
 ];
 var SONGS = PLAYLISTS[0].songs;
