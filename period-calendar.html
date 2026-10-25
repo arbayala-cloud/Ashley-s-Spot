@@ -67,6 +67,42 @@
   .muted { color: #8a857e; }
   .tools { display: flex; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
   .hint { font-size: 12.5px; color: #8a857e; margin-top: 16px; text-align: center; }
+  .menu-row { text-align: center; margin: 0 0 18px; }
+  .menu-row button { font-family: Inter, Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #22211e; border: 1.5px solid #22211e; border-radius: 999px; padding: 8px 18px; cursor: pointer; }
+  .menu-panel { display: none; background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 8px 16px; margin: 0 auto 18px; max-width: 720px; text-align: center; }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-size: 15px; font-weight: 600; color: #22211e; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel a:last-of-type { border-bottom: none; }
+
+  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
+  .theme-switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
+  .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .theme-switch .slider { position: absolute; inset: 0; background: #c9c2b6; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: .25s; }
+  .theme-switch input:checked + .slider { background: #b9975b; }
+  .theme-switch input:checked + .slider::before { transform: translateX(22px); }
+  .theme-switch input:focus-visible + .slider { outline: 2px solid #b9975b; outline-offset: 2px; }
+
+  body.dark { background: #1c1a17; color: #f4f1ea; }
+  body.dark .eyebrow { color: #d4b978; }
+  body.dark .sub, body.dark .muted, body.dark .stat .label, body.dark .hint, body.dark .legend { color: #b8b0a3; }
+  body.dark .backlink a { color: #d4b978; }
+  body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
+  body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
+  body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
+  body.dark .card { background: #2a2723; border-color: #44403a; }
+  body.dark .day { background: #2a2723; border-color: #44403a; }
+  body.dark .day .num { color: #f4f1ea; }
+  body.dark .day.period .num, body.dark .day.ovulation .num { color: #fff; }
+  body.dark .day.empty { background: transparent; border: none; }
+  body.dark .stat { background: #33302b; border-color: #3a3631; }
+  body.dark .panel { border-top-color: #44403a; }
+  body.dark .entries li { border-color: #44403a; }
+  body.dark .history li { border-bottom-color: #3a3631; }
+  body.dark .jump select, body.dark .jump button, body.dark .form-row input[type="text"] { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .btn.secondary { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+
   @media (max-width: 520px) {
     body { padding: 24px 10px 40px; }
     h1 { font-size: 32px; }
@@ -84,6 +120,18 @@
   <h1>Period Calendar</h1>
   <p class="sub">Tap a day to log your period. Everything stays in this browser, month after month, year after year.</p>
   <hr class="divider">
+  <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
+  <nav id="menuPanel" class="menu-panel">
+    <a href="index.html">Home</a>
+    <a href="period-calendar.html">Period Calendar</a>
+    <a href="blog.html">Blog</a>
+    <a href="jukebox.html">Jukebox</a>
+      <div class="theme-toggle">
+        <span>Light</span>
+        <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+        <span>Dark</span>
+      </div>
+  </nav>
 
   <section class="card">
     <div class="nav">
@@ -424,6 +472,24 @@
     reader.readAsText(file);
     e.target.value = '';
   });
+
+  document.getElementById('menuBtn').addEventListener('click', function () {
+    var panel = document.getElementById('menuPanel');
+    var open = panel.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  // Site-wide dark / light choice, saved so every page opens the same way.
+  (function () {
+    var toggle = document.getElementById('themeToggle');
+    function applyTheme(dark) {
+      document.body.classList.toggle('dark', dark);
+      if (toggle) toggle.checked = dark;
+      try { localStorage.setItem('ashleys-theme', dark ? 'dark' : 'light'); } catch (e) {}
+    }
+    try { if (localStorage.getItem('ashleys-theme') === 'dark') applyTheme(true); } catch (e) {}
+    if (toggle) toggle.addEventListener('change', function () { applyTheme(this.checked); });
+  })();
 
   render();
   renderPanel();
