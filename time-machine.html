@@ -6,7 +6,7 @@
 <title>The Time Machine — Ashley Ayala</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#111111">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Dancing+Script:wght@600;700&family=Sancreek&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Dancing+Script:wght@600;700&family=Oswald:wght@500;600;700&family=Sancreek&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; text-align: center; padding: 32px 16px 48px; line-height: 1.5; }
@@ -276,6 +276,49 @@
   body.dark.polished .card { background: #24262c; border-color: #3a3f47; border-top-color: #b08a4f; }
   body.dark.polished .capsule { background: #22241f; border-color: #b08a4f; }
   body.dark.polished .group-head { background: #2c3a55; }
+
+  /* --- Masculine mood: mature, strong, no frills --- */
+  body.masculine .mood-btn.active { background: #26221e; border-color: #26221e; color: #e8ddcb; box-shadow: 0 8px 18px rgba(38,34,30,.30); }
+  body.masculine { background: #d8d2c7; color: #26221e; }
+  body.masculine .wrap { background: #f4f1ea; border: 2px solid #4a4238; border-radius: 10px; box-shadow: 0 18px 40px rgba(38,34,30,.22); }
+  body.masculine .eyebrow { background: #26221e; border-color: #26221e; color: #d9c9a8; letter-spacing: 4px; }
+  body.masculine h1 { font-family: Oswald, Inter, sans-serif; font-size: 40px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #26221e; text-shadow: none; }
+  body.masculine .script-note { font-family: Inter, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #6e6252; }
+  body.masculine .bow-divider { color: #8a5a33; font-size: 13px; }
+  body.masculine .sub { color: #575046; }
+  body.masculine .menu-row button { border-color: #26221e; color: #26221e; box-shadow: none; border-radius: 8px; }
+  body.masculine .menu-panel { border-color: #4a4238; border-radius: 8px; box-shadow: 0 12px 28px rgba(38,34,30,.20); }
+  body.masculine .menu-panel a, body.masculine .menu-panel button.install-btn { font-family: Oswald, Inter, sans-serif; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; color: #26221e; }
+  body.masculine .year-select { border: 2px solid #26221e; color: #26221e; background: #fff; box-shadow: none; border-radius: 8px; font-family: Oswald, Inter, sans-serif; letter-spacing: 1px; }
+  body.masculine .year-title { font-family: Oswald, Inter, sans-serif; font-weight: 700; letter-spacing: 3px; color: #26221e; font-size: 42px; }
+  body.masculine .year-title::before, body.masculine .year-title::after { content: ""; }
+  body.masculine .timeline input[type="range"] { accent-color: #26221e; }
+  body.masculine .timeline-labels { color: #6e6252; font-family: Oswald, Inter, sans-serif; letter-spacing: 2px; }
+  body.masculine .mood-label { color: #6e6252; }
+  body.masculine .nav-btn { border-color: #26221e; color: #26221e; background: #fff; box-shadow: none; border-radius: 8px; font-family: Oswald, Inter, sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+  body.masculine .surprise-btn { background: #26221e; border-color: #26221e; color: #e8ddcb; box-shadow: none; border-radius: 8px; font-family: Oswald, Inter, sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+  body.masculine .group-head { font-family: Oswald, Inter, sans-serif; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; background: #26221e; outline: none; color: #e8ddcb !important; padding: 9px 18px; box-shadow: none; border-radius: 6px; }
+  body.masculine .group-head::before { content: ""; }
+  body.masculine .card { border: 1.5px solid #8d8271; border-top: 5px solid #26221e; border-radius: 8px; box-shadow: 0 6px 16px rgba(38,34,30,.10); padding-top: 22px; background: #fbf9f4; }
+  body.masculine .card::before { display: none; }
+  body.masculine .card::after { content: ""; }
+  body.masculine .card h2 { font-family: Oswald, Inter, sans-serif; font-size: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #26221e; }
+  body.masculine .card h2 .hicon { background: #e6dfd0; }
+  body.masculine .item-list li { border-bottom: 1px solid #ddd5c3; }
+  body.masculine .item-list .t, body.masculine .capsule .t { color: #57452c; }
+  body.masculine .capsule { background: #efe9db; border: 2px solid #8a5a33; outline: 1.5px solid rgba(138,90,51,.45); outline-offset: -8px; border-radius: 8px; box-shadow: 0 10px 24px rgba(38,34,30,.14); }
+  body.masculine .capsule .cap-eyebrow { color: #8a5a33; font-family: Oswald, Inter, sans-serif; letter-spacing: 3px; }
+  body.masculine .capsule h2 { font-family: Oswald, Inter, sans-serif; font-size: 25px; text-transform: uppercase; letter-spacing: 1.5px; color: #26221e; }
+  body.masculine .capsule li { border-bottom: 1px solid #ddd0b4; }
+  body.masculine .toon { border-color: #4a4238; border-radius: 8px; box-shadow: none; }
+  body.masculine .footer { font-family: Oswald, Inter, sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #6e6252; }
+  body.dark.masculine { background: #141210; }
+  body.dark.masculine .wrap { background: #1e1b17; border-color: #57503f; box-shadow: 0 18px 40px rgba(0,0,0,.5); }
+  body.dark.masculine h1, body.dark.masculine .year-title, body.dark.masculine .capsule h2, body.dark.masculine .card h2 { color: #ece5d3; }
+  body.dark.masculine .card { background: #26221d; border-color: #57503f; border-top-color: #c8a165; }
+  body.dark.masculine .capsule { background: #262017; border-color: #c8a165; }
+  body.dark.masculine .group-head { background: #0f0d0b; color: #d9c9a8 !important; }
+  body.dark.masculine .sub, body.dark.masculine .footer { color: #a89e88; }
 </style>
 </head>
 <body class="cowgirl">
@@ -315,6 +358,7 @@
     <button class="mood-btn" id="moodGirlie" type="button" aria-pressed="false">&#127872; Girlie</button>
     <button class="mood-btn" id="moodCowgirl" type="button" aria-pressed="true">&#129312; Cowgirl</button>
     <button class="mood-btn" id="moodPolished" type="button" aria-pressed="false">&#128188; Polished</button>
+    <button class="mood-btn" id="moodMasculine" type="button" aria-pressed="false">&#127913; Masculine</button>
   </div>
   <select class="year-select" id="yearSelect" aria-label="Choose a year"></select>
   <div class="timeline">
@@ -598,11 +642,11 @@ themeToggle.addEventListener("change", function () {
   try { localStorage.setItem("ashleys-theme", this.checked ? "dark" : "light"); } catch (e) {}
 });
 
-var moodBtns = { girlie: document.getElementById("moodGirlie"), cowgirl: document.getElementById("moodCowgirl"), polished: document.getElementById("moodPolished") };
-var moodLines = { girlie: "a little trip back in time, with love", cowgirl: "a little trip back in time, darlin\u2019", polished: "A look back at 1990\u20132009, beautifully put together." };
+var moodBtns = { girlie: document.getElementById("moodGirlie"), cowgirl: document.getElementById("moodCowgirl"), polished: document.getElementById("moodPolished"), masculine: document.getElementById("moodMasculine") };
+var moodLines = { girlie: "a little trip back in time, with love", cowgirl: "a little trip back in time, darlin\u2019", polished: "A look back at 1990\u20132009, beautifully put together.", masculine: "1990\u20132009. The way it was." };
 function applyMood(mood) {
   if (!moodBtns[mood]) mood = "cowgirl";
-  ["girlie", "cowgirl", "polished"].forEach(function (m) {
+  ["girlie", "cowgirl", "polished", "masculine"].forEach(function (m) {
     document.body.classList.toggle(m, m === mood);
     moodBtns[m].classList.toggle("active", m === mood);
     moodBtns[m].setAttribute("aria-pressed", m === mood ? "true" : "false");
@@ -611,11 +655,12 @@ function applyMood(mood) {
   try { localStorage.setItem("ashleys-tm-mood", mood); } catch (e) {}
 }
 var savedMood = "cowgirl";
-try { var sm = localStorage.getItem("ashleys-tm-mood"); if (sm === "girlie" || sm === "polished") savedMood = sm; } catch (e) {}
+try { var sm = localStorage.getItem("ashleys-tm-mood"); if (sm === "girlie" || sm === "polished" || sm === "masculine") savedMood = sm; } catch (e) {}
 applyMood(savedMood);
 moodBtns.girlie.addEventListener("click", function () { applyMood("girlie"); });
 moodBtns.cowgirl.addEventListener("click", function () { applyMood("cowgirl"); });
 moodBtns.polished.addEventListener("click", function () { applyMood("polished"); });
+moodBtns.masculine.addEventListener("click", function () { applyMood("masculine"); });
 
 var deferredPrompt = null;
 window.addEventListener("beforeinstallprompt", function (e) { deferredPrompt = e; });
