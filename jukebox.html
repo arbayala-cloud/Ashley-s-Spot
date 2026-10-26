@@ -233,40 +233,40 @@
   <div class="playlist-label">Pick a song</div>
   <div class="playlist-menus">
     <div class="playlist-menu active" data-playlist="0">
-      <label for="songs1995">1995</label>
-      <select id="songs1995" class="song-select" data-playlist="0"><option value="">Choose a 1995 song&hellip;</option></select>
+      <label for="songsHalloween">Halloween</label>
+      <select id="songsHalloween" class="song-select" data-playlist="0"><option value="">Choose a Halloween song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="1">
-      <label for="songs1997">1997</label>
-      <select id="songs1997" class="song-select" data-playlist="1"><option value="">Choose a 1997 song&hellip;</option></select>
+      <label for="songs1990">1990</label>
+      <select id="songs1990" class="song-select" data-playlist="1"><option value="">Choose a 1990 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="2">
-      <label for="songs2001">2001</label>
-      <select id="songs2001" class="song-select" data-playlist="2"><option value="">Choose a 2001 song&hellip;</option></select>
+      <label for="songs1995">1995</label>
+      <select id="songs1995" class="song-select" data-playlist="2"><option value="">Choose a 1995 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="3">
-      <label for="songs2003">2003</label>
-      <select id="songs2003" class="song-select" data-playlist="3"><option value="">Choose a 2003 song&hellip;</option></select>
+      <label for="songs1997">1997</label>
+      <select id="songs1997" class="song-select" data-playlist="3"><option value="">Choose a 1997 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="4">
-      <label for="songs2005">2005</label>
-      <select id="songs2005" class="song-select" data-playlist="4"><option value="">Choose a 2005 song&hellip;</option></select>
+      <label for="songs2001">2001</label>
+      <select id="songs2001" class="song-select" data-playlist="4"><option value="">Choose a 2001 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="5">
-      <label for="songs1990">1990</label>
-      <select id="songs1990" class="song-select" data-playlist="5"><option value="">Choose a 1990 song&hellip;</option></select>
+      <label for="songs2003">2003</label>
+      <select id="songs2003" class="song-select" data-playlist="5"><option value="">Choose a 2003 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="6">
-      <label for="songs2007">2007</label>
-      <select id="songs2007" class="song-select" data-playlist="6"><option value="">Choose a 2007 song&hellip;</option></select>
+      <label for="songs2005">2005</label>
+      <select id="songs2005" class="song-select" data-playlist="6"><option value="">Choose a 2005 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="7">
-      <label for="songsHalloween">Halloween</label>
-      <select id="songsHalloween" class="song-select" data-playlist="7"><option value="">Choose a Halloween song&hellip;</option></select>
+      <label for="songs2007">2007</label>
+      <select id="songs2007" class="song-select" data-playlist="7"><option value="">Choose a 2007 song&hellip;</option></select>
     </div>
   </div>
 
-  <p class="note">Pick a song from 1990, 1995, 1997, 2001, 2003, 2005, 2007 or Halloween below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a song from Halloween, 1990, 1995, 1997, 2001, 2003, 2005 or 2007 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
   <p class="footer">Ashley&rsquo;s Spot &middot; Playlists</p>
 </div>
 <script>
@@ -289,6 +289,47 @@ themeToggle.addEventListener('change', function () {
 });
 
 var PLAYLISTS = [
+  { name: "Halloween", songs: [
+  ["Thriller", "Michael Jackson", "sOnqjkJTMaA"],
+  ["Monster Mash", "Bobby \u201cBoris\u201d Pickett", "82jWhLCcxNU"],
+  ["Ghostbusters", "Ray Parker Jr.", "TgNWyBXBC0E"],
+  ["Time Warp", "The Rocky Horror Picture Show", "-QkJ-PqUmc4"],
+  ["Season of the Witch", "Donovan", "KBrhL3on2yo"],
+  ["I Put a Spell on You", "Screamin' Jay Hawkins", "Sk0c1w7IJBU"],
+  ["Werewolves of London", "Warren Zevon", "qae25976UgA"],
+  ["Superstition", "Stevie Wonder", "7_tmeHCO1IM"],
+  ["Sympathy for the Devil", "The Rolling Stones", "GgnClrx8N2k"],
+  ["Black Magic Woman", "Santana", "9wT1s96JIb0"],
+  ["This Is Halloween", "Danny Elfman", "ntsrWX-0FE4"],
+  ["Zombie", "The Cranberries", "6Ejga4kJUts"],
+  ["Bad Moon Rising", "Creedence Clearwater Revival", "iwC5G6NfiPs"],
+  ["People Are Strange", "The Doors", "lYY0P7X7oX0"],
+  ["Highway to Hell", "AC/DC", "l482T0yNkeo"],
+  ["Sweet Dreams (Are Made of This)", "Eurythmics", "qeMFqkcPYcg"]
+  ] },
+  { name: "1990", songs: [
+  ["Vogue", "Madonna", "GuJQSAiODqI"],
+  ["Vision of Love", "Mariah Carey", "tov22NtCMC4"],
+  ["Ice Ice Baby", "Vanilla Ice", "rog8ou-ZepE"],
+  ["U Can't Touch This", "MC Hammer", "otCpCn0l4Wo"],
+  ["Nothing Compares 2 U", "Sinéad O'Connor", "0-EF60neguk"],
+  ["Hold On", "Wilson Phillips", "uIbXvaE39wM"],
+  ["It Must Have Been Love", "Roxette", "k2C5TjS2sh4"],
+  ["Gonna Make You Sweat", "C+C Music Factory", "LaTGrV58wec"],
+  ["Unskinny Bop", "Poison", "Nn9cuBWPUoU"],
+  ["Thunderstruck", "AC/DC", "v2AC41dglnM"],
+  ["Freedom '90", "George Michael", "kDXtCEMPsEc"],
+  ["Blaze of Glory", "Jon Bon Jovi", "MfmYCM4CS8o"],
+  ["Enjoy the Silence", "Depeche Mode", "aGSKrC7dGcY"],
+  ["Groove Is in the Heart", "Deee-Lite", "etviGf1uWlg"],
+  ["Been Caught Stealing", "Jane's Addiction", "jrwjiO1MCVs"],
+  ["Joey", "Concrete Blonde", "OdpTcvSn8HQ"],
+  ["Friends in Low Places", "Garth Brooks", "4w8wcmZQ-pc"],
+  ["The Dance", "Garth Brooks", "MidNVTMGggI"],
+  ["Rumor Has It", "Reba McEntire", "SlsRzSU9Emo"],
+  ["Love Without End, Amen", "George Strait", "rkscNqCCDl0"],
+  ["When I Call Your Name", "Vince Gill", "uwmGWCJOxnw"]
+  ] },
   { name: "1995", songs: [
   ["Wonderwall", "Oasis", "bx1Bh8ZvH84"],
   ["Fake Plastic Trees", "Radiohead", "n5h0qHwNrHk"],
@@ -424,29 +465,6 @@ var PLAYLISTS = [
   ["Candy Shop", "50 Cent feat. Olivia", "SRcnnId15BA"],
   ["Sooner or Later", "Breaking Benjamin", "WxzpvSvMdhk"]
   ] },
-  { name: "1990", songs: [
-  ["Vogue", "Madonna", "GuJQSAiODqI"],
-  ["Vision of Love", "Mariah Carey", "tov22NtCMC4"],
-  ["Ice Ice Baby", "Vanilla Ice", "rog8ou-ZepE"],
-  ["U Can't Touch This", "MC Hammer", "otCpCn0l4Wo"],
-  ["Nothing Compares 2 U", "Sinéad O'Connor", "0-EF60neguk"],
-  ["Hold On", "Wilson Phillips", "uIbXvaE39wM"],
-  ["It Must Have Been Love", "Roxette", "k2C5TjS2sh4"],
-  ["Gonna Make You Sweat", "C+C Music Factory", "LaTGrV58wec"],
-  ["Unskinny Bop", "Poison", "Nn9cuBWPUoU"],
-  ["Thunderstruck", "AC/DC", "v2AC41dglnM"],
-  ["Freedom '90", "George Michael", "kDXtCEMPsEc"],
-  ["Blaze of Glory", "Jon Bon Jovi", "MfmYCM4CS8o"],
-  ["Enjoy the Silence", "Depeche Mode", "aGSKrC7dGcY"],
-  ["Groove Is in the Heart", "Deee-Lite", "etviGf1uWlg"],
-  ["Been Caught Stealing", "Jane's Addiction", "jrwjiO1MCVs"],
-  ["Joey", "Concrete Blonde", "OdpTcvSn8HQ"],
-  ["Friends in Low Places", "Garth Brooks", "4w8wcmZQ-pc"],
-  ["The Dance", "Garth Brooks", "MidNVTMGggI"],
-  ["Rumor Has It", "Reba McEntire", "SlsRzSU9Emo"],
-  ["Love Without End, Amen", "George Strait", "rkscNqCCDl0"],
-  ["When I Call Your Name", "Vince Gill", "uwmGWCJOxnw"]
-  ] },
   { name: "2007", songs: [
   ["Umbrella", "Rihanna ft. Jay-Z", "CvBfHwUxHIk"],
   ["Girlfriend", "Avril Lavigne", "Bg59q4puhmg"],
@@ -469,25 +487,7 @@ var PLAYLISTS = [
   ["Teardrops on My Guitar", "Taylor Swift", "xKCek6_dB0M"],
   ["Our Song", "Taylor Swift", "Jb2stN7kH28"],
   ["Wasted", "Carrie Underwood", "paMzF1lnwGg"]
-  ] },
-  { name: "Halloween", songs: [
-  ["Thriller", "Michael Jackson", "sOnqjkJTMaA"],
-  ["Monster Mash", "Bobby \u201cBoris\u201d Pickett", "82jWhLCcxNU"],
-  ["Ghostbusters", "Ray Parker Jr.", "TgNWyBXBC0E"],
-  ["Time Warp", "The Rocky Horror Picture Show", "-QkJ-PqUmc4"],
-  ["Season of the Witch", "Donovan", "KBrhL3on2yo"],
-  ["I Put a Spell on You", "Screamin' Jay Hawkins", "Sk0c1w7IJBU"],
-  ["Werewolves of London", "Warren Zevon", "qae25976UgA"],
-  ["Superstition", "Stevie Wonder", "7_tmeHCO1IM"],
-  ["Sympathy for the Devil", "The Rolling Stones", "GgnClrx8N2k"],
-  ["Black Magic Woman", "Santana", "9wT1s96JIb0"],
-  ["This Is Halloween", "Danny Elfman", "ntsrWX-0FE4"],
-  ["Zombie", "The Cranberries", "6Ejga4kJUts"],
-  ["Bad Moon Rising", "Creedence Clearwater Revival", "iwC5G6NfiPs"],
-  ["People Are Strange", "The Doors", "lYY0P7X7oX0"],
-  ["Highway to Hell", "AC/DC", "l482T0yNkeo"],
-  ["Sweet Dreams (Are Made of This)", "Eurythmics", "qeMFqkcPYcg"]
-  ] },
+  ] }
 ];
 var BPM2007 = { "CvBfHwUxHIk": 87, "Bg59q4puhmg": 164, "MrTz5xjmso4": 130, "rywUS-ohqeE": 90, "ZSM3w1v-A_Y": 118, "qi7Yh16dA0w": 123, "PsO6ZnUZI0g": 104, "8UFIYGkROII": 140, "agrXgrAgQ0U": 113, "ykW4rtW2eu0": 177, "SBjQ9tuuTJQ": 173, "1OjTspCqvk8": 92, "BJk6gZuPKRE": 106, "aCyGvGEtOwc": 173, "onzL0EM1pKY": 154, "DRlwSBY5oe8": 120, "gy8HPSIFXEM": 132, "5VnOSO1J22M": 89, "xKCek6_dB0M": 100, "Jb2stN7kH28": 89, "paMzF1lnwGg": 95 };
 var SONGS = PLAYLISTS[0].songs;
@@ -620,7 +620,7 @@ function stopBeatSync() {
 }
 function startBeatSync() {
   stopBeatSync();
-  if (!eqEl || currentPlaylistIndex !== 6 || currentIndex < 0) return;
+  if (!eqEl || currentPlaylistIndex !== 7 || currentIndex < 0) return;
   var bpm = BPM2007[SONGS[currentIndex][2]];
   if (!bpm) return;
   if (bpm > 150) { bpm = bpm / 2; }
@@ -656,7 +656,7 @@ function startDecoSync() {
 }
 function updateBeatSync() {
   if (!isPlaying || !isPowered) { stopBeatSync(); }
-  else if (currentPlaylistIndex === 6) { startBeatSync(); }
+  else if (currentPlaylistIndex === 7) { startBeatSync(); }
   else { startDecoSync(); }
 }
 buildEq();function setPlaylist(idx) {
