@@ -79,7 +79,7 @@
   @media (max-width: 480px) { .tv-lights .bulb { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
   .playlist-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 20px 0 8px; text-align: center; }
-  .playlist-menus { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; max-width: 920px; margin: 0 auto; }
+  .playlist-menus { display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; max-width: 1020px; margin: 0 auto; }
   .playlist-menu { text-align: center; min-width: 0; }
   .playlist-menu label { display: block; font-family: 'Indie Flower', cursive; font-size: 17px; letter-spacing: 1px; text-transform: uppercase; color: #6f6a62; font-weight: 600; margin: 0 0 6px 0; }
   .song-select { width: 100%; height: 50px; padding: 0 12px; font-family: 'Indie Flower', cursive; font-size: 20px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; }
@@ -264,9 +264,13 @@
       <label for="songs2007">2007</label>
       <select id="songs2007" class="song-select" data-playlist="7"><option value="">Choose a 2007 song&hellip;</option></select>
     </div>
+    <div class="playlist-menu" data-playlist="8">
+      <label for="songs2009">2009</label>
+      <select id="songs2009" class="song-select" data-playlist="8"><option value="">Choose a 2009 song&hellip;</option></select>
+    </div>
   </div>
 
-  <p class="note">Pick a song from Halloween, 1990, 1995, 1997, 2001, 2003, 2005 or 2007 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a song from Halloween, 1990, 1995, 1997, 2001, 2003, 2005, 2007 or 2009 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
   <p class="footer">Ashley&rsquo;s Spot &middot; Playlists</p>
 </div>
 <script>
@@ -487,7 +491,26 @@ var PLAYLISTS = [
   ["Teardrops on My Guitar", "Taylor Swift", "xKCek6_dB0M"],
   ["Our Song", "Taylor Swift", "Jb2stN7kH28"],
   ["Wasted", "Carrie Underwood", "paMzF1lnwGg"]
-  ] }
+  ] },
+  { name: "2009", songs: [
+  ["I Gotta Feeling", "Black Eyed Peas", "uSD4vsh1zDA"],
+  ["Bad Romance", "Lady Gaga", "qrO4YZeyl0I"],
+  ["Party in the U.S.A.", "Miley Cyrus", "M11SvDtPBhA"],
+  ["Empire State of Mind", "Jay-Z feat. Alicia Keys", "vk6014HuxcE"],
+  ["Fireflies", "Owl City", "psuRGfAaju4"],
+  ["Battlefield", "Jordin Sparks", "suPlYwJ3YvM"],
+  ["Down", "Jay Sean feat. Lil Wayne", "M_8V_RyijlI"],
+  ["We Made You", "Eminem", "RSdKmX2BH7o"],
+  ["Crack a Bottle", "Eminem, Dr. Dre & 50 Cent", "_wN3wl473M0"],
+  ["Letter from a Thief", "Chevelle", "7Ooyiccq3Fg"],
+  ["21 Guns", "Green Day", "r00ikilDxW4"],
+  ["Second Chance", "Shinedown", "H25ORRgLxdA"],
+  ["My Life Would Suck Without You", "Kelly Clarkson", "cRM70Jw7F4M"],
+  ["Blame It", "Jamie Foxx feat. T-Pain", "rfjtpp90lu8"],
+  ["Tik Tok", "Kesha", "iP6XpLQM2Cs"],
+  ["Good Girls Go Bad", "Cobra Starship feat. Leighton Meester", "Ix5z1bRz4Sc"],
+  ["Use Somebody", "Kings of Leon", "gnhXHvRoUd0"]
+  ] },
 ];
 var BPM2007 = { "CvBfHwUxHIk": 87, "Bg59q4puhmg": 164, "MrTz5xjmso4": 130, "rywUS-ohqeE": 90, "ZSM3w1v-A_Y": 118, "qi7Yh16dA0w": 123, "PsO6ZnUZI0g": 104, "8UFIYGkROII": 140, "agrXgrAgQ0U": 113, "ykW4rtW2eu0": 177, "SBjQ9tuuTJQ": 173, "1OjTspCqvk8": 92, "BJk6gZuPKRE": 106, "aCyGvGEtOwc": 173, "onzL0EM1pKY": 154, "DRlwSBY5oe8": 120, "gy8HPSIFXEM": 132, "5VnOSO1J22M": 89, "xKCek6_dB0M": 100, "Jb2stN7kH28": 89, "paMzF1lnwGg": 95 };
 var SONGS = PLAYLISTS[0].songs;
