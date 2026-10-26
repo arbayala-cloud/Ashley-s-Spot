@@ -39,7 +39,7 @@
   .year-title { font-family: Fraunces, Georgia, serif; font-size: 34px; font-weight: 600; margin: 0 0 18px; }
   .card { background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 20px 22px; margin: 0 auto 16px; max-width: 720px; text-align: left; }
   .card h2 { font-family: Fraunces, Georgia, serif; font-size: 22px; font-weight: 600; margin: 0 0 12px; }
-  .card h2 .hicon { width: 24px; height: 24px; vertical-align: -5px; margin-right: 8px; }
+  .card h2 .hicon { width: 28px; height: 28px; vertical-align: -8px; margin-right: 10px; }
   .item-list { list-style: none; margin: 0; padding: 0; }
   .item-list li { padding: 7px 0; border-bottom: 1px solid #eee9df; font-size: 15px; }
   .item-list li:last-child { border-bottom: none; }
@@ -76,6 +76,17 @@
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gPink" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff8ec2"/><stop offset="55%" stop-color="#ff5da2"/><stop offset="100%" stop-color="#e11d74"/></linearGradient>
+<linearGradient id="gPurple" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c084fc"/><stop offset="55%" stop-color="#a855f7"/><stop offset="100%" stop-color="#7e22ce"/></linearGradient>
+<linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7dd3fc"/><stop offset="55%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0284c7"/></linearGradient>
+<linearGradient id="gTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5eead4"/><stop offset="55%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#0d9488"/></linearGradient>
+<linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#bef264"/><stop offset="55%" stop-color="#a3e635"/><stop offset="100%" stop-color="#65a30d"/></linearGradient>
+<linearGradient id="gYellow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="55%" stop-color="#f5c542"/><stop offset="100%" stop-color="#d97706"/></linearGradient>
+<linearGradient id="gOrange" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fdba74"/><stop offset="55%" stop-color="#ff7a00"/><stop offset="100%" stop-color="#ea580c"/></linearGradient>
+<linearGradient id="gRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fda4af"/><stop offset="55%" stop-color="#fb7185"/><stop offset="100%" stop-color="#e11d48"/></linearGradient>
+<filter id="icShadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.25"/></filter>
+</defs></svg>
 <div class="wrap">
   <p class="eyebrow">Ashley's Spot</p>
   <h1>The Time Machine</h1>
@@ -99,64 +110,64 @@
   <p class="year-title" id="yearTitle">1997</p>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h18"/><path d="M3 10l1.8-5h14.4L21 10"/><path d="M3 10v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9"/><path d="M8 5l2 5M13 5l2 5M17.5 5l1.5 5"/></svg> Movies from this year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M3 10h18v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9z" fill="url(#gPurple)"/><path d="M3 10l1.8-5h14.4L21 10H3z" fill="url(#gPink)"/><path d="M8 5l2 5M13 5l2 5M17.5 5l1.5 5" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="8" cy="14" rx="3" ry="1.6" fill="#fff" opacity="0.45" transform="rotate(-15 8 14)"/></g></svg> Movies from this year</h2>
     <ul class="item-list" id="movieList"></ul>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V6l10-2v11"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="15" r="2.5"/></svg> Songs from this year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M9 18V6l10-2v11" fill="none" stroke="url(#gPink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="6.5" cy="18" rx="2.8" ry="2.4" fill="url(#gPink)"/><ellipse cx="16.5" cy="15" rx="2.8" ry="2.4" fill="url(#gPink)"/><ellipse cx="8" cy="7" rx="2.2" ry="1.2" fill="#fff" opacity="0.6" transform="rotate(-15 8 7)"/></g></svg> Songs from this year</h2>
     <ul class="item-list" id="songList"></ul>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1-4L16 5l3 3L8 19l-4 1z"/><path d="M14 7l3 3"/></svg> Cartoons that premiered this year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M5 19L17 7" stroke="url(#gYellow)" stroke-width="5" stroke-linecap="round"/><path d="M17 7l3-3" stroke="#fcd9a0" stroke-width="5" stroke-linecap="round"/><path d="M20 4l1.5-1.5" stroke="#44403a" stroke-width="3" stroke-linecap="round"/><path d="M5 19l-2 2" stroke="url(#gPink)" stroke-width="5" stroke-linecap="round"/></g></svg> Cartoons that premiered this year</h2>
     <div class="toon-grid" id="toonGrid"></div>
     <p class="note" id="toonNote" style="display:none;"></p>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 8l1.2 2.4 2.8.4-2 2 1 2.7-3-1.5-3 1.5 1-2.7-2-2 2.8-.4z"/></svg> Toy everyone wanted this year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="4" y="4" width="16" height="16" rx="3" fill="url(#gBlue)"/><path d="M12 8l1.2 2.4 2.8.4-2 2 1 2.7-3-1.5-3 1.5 1-2.7-2-2 2.8-.4z" fill="url(#gYellow)"/><ellipse cx="9" cy="8" rx="3" ry="1.6" fill="#fff" opacity="0.5" transform="rotate(-15 9 8)"/></g></svg> Toy everyone wanted this year</h2>
     <p class="toy" id="toyText"></p>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4h8l9 9-8 8-9-9z"/><circle cx="8" cy="9" r="1.5"/></svg> Prices that year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M3 12V4h8l9 9-8 8-9-9z" fill="url(#gGreen)"/><circle cx="8" cy="9" r="1.8" fill="#fff"/><ellipse cx="10" cy="8" rx="3" ry="1.6" fill="#fff" opacity="0.5" transform="rotate(-20 10 8)"/></g></svg> Prices that year</h2>
     <ul class="item-list" id="priceList"></ul>
     <p class="note">Average US prices, rounded.</p>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3L4 5l2.5 4L9 7.5V21h6V7.5L17.5 9 20 5l-5-2a3.5 3.5 0 0 1-6 0z"/></svg> What everyone was wearing</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M9 3L4 5l2.5 4L9 7.5V21h6V7.5L17.5 9 20 5l-5-2a3.5 3.5 0 0 1-6 0z" fill="url(#gTeal)"/><ellipse cx="9" cy="8" rx="2.6" ry="1.5" fill="#fff" opacity="0.5" transform="rotate(-15 9 8)"/></g></svg> What everyone was wearing</h2>
     <p class="toy" id="clothesText"></p>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H10l-5 5v-5H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg> Words everyone was saying</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M5 3h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H10l-5 5v-5H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" fill="url(#gOrange)"/><ellipse cx="10" cy="8" rx="3.4" ry="1.7" fill="#fff" opacity="0.55"/></g></svg> Words everyone was saying</h2>
     <p class="toy" id="wordsText"></p>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M8 6L12 2l4 4"/><path d="M9 19h6"/></svg> TV shows popular that year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="3" y="6" width="18" height="13" rx="2.5" fill="url(#gRed)"/><rect x="6" y="9" width="9" height="7" rx="1" fill="#e0f2fe"/><path d="M8 6L12 2l4 4" stroke="#44403a" stroke-width="1.6" stroke-linecap="round" fill="none"/><circle cx="17.5" cy="11.5" r="1" fill="#fff"/><circle cx="17.5" cy="14.5" r="1" fill="#fff"/><ellipse cx="8" cy="8.5" rx="2.4" ry="1.2" fill="#fff" opacity="0.5" transform="rotate(-15 8 8.5)"/></g></svg> TV shows popular that year</h2>
     <ul class="item-list" id="showList"></ul>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10a5 5 0 0 1 5 5c0 3-2 5-4 4l-2-1H8l-2 1c-2 1-4-1-4-4a5 5 0 0 1 5-5z"/><path d="M8 11v4M6 13h4"/><circle cx="16" cy="12" r="1"/><circle cx="18.5" cy="14.5" r="1"/></svg> Video game everyone was playing</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M7 7h10a5 5 0 0 1 5 5c0 3-2 5-4 4l-2-1H8l-2 1c-2 1-4-1-4-4a5 5 0 0 1 5-5z" fill="url(#gPurple)"/><path d="M8 11v4M6 13h4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><circle cx="16" cy="12" r="1.3" fill="url(#gYellow)"/><circle cx="18.5" cy="14.5" r="1.3" fill="url(#gPink)"/><ellipse cx="10" cy="9" rx="2.6" ry="1.3" fill="#fff" opacity="0.45" transform="rotate(-15 10 9)"/></g></svg> Video game everyone was playing</h2>
     <p class="toy" id="gameText"></p>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M10.5 18.5h3"/></svg> Gadget everyone wanted</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="7" y="3" width="10" height="18" rx="2.5" fill="url(#gBlue)"/><rect x="9.5" y="5.5" width="5" height="9" rx="1" fill="#e0f2fe"/><circle cx="12" cy="18" r="1.3" fill="#fff"/><ellipse cx="10" cy="7" rx="1.8" ry="1" fill="#fff" opacity="0.6"/></g></svg> Gadget everyone wanted</h2>
     <p class="toy" id="gadgetText"></p>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 3v18"/><path d="M13 8h3M13 12h3"/></svg> Book everyone was reading</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="5" y="3" width="14" height="18" rx="1.5" fill="url(#gPink)"/><rect x="9" y="3" width="10" height="18" rx="1" fill="#fff" opacity="0.9"/><path d="M12 6h4M12 10h4M12 14h4" stroke="url(#gPink)" stroke-width="1.4" stroke-linecap="round"/><path d="M6 3h3v6l-1.5-1.5L6 9V3z" fill="url(#gYellow)"/></g></svg> Book everyone was reading</h2>
     <p class="toy" id="bookText"></p>
   </section>
 
   <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M12 13v8"/></svg> Snack everyone was eating</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M12 13v8" stroke="#d6b88a" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="8" r="5" fill="url(#gRed)"/><path d="M9 6a3 3 0 0 1 4 2" stroke="#fff" stroke-width="1.4" stroke-linecap="round" fill="none"/><circle cx="12" cy="8" r="2" fill="#fff" opacity="0.85"/></g></svg> Snack everyone was eating</h2>
     <p class="toy" id="snackText"></p>
   </section>
 
