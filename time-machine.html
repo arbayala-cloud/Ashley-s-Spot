@@ -234,6 +234,48 @@
   body.dark.girlie .group-head { background: linear-gradient(90deg, #a34e72, #8a3d5f); }
   body.dark.girlie .year-title { color: #f6aec6; }
   body.dark.girlie .wrap { box-shadow: 0 26px 64px rgba(0,0,0,.4); }
+
+  /* --- Polished mood: professional, put together, mature --- */
+  body.polished .mood-btn.active { background: #22314a; border-color: #22314a; color: #fff; box-shadow: 0 8px 18px rgba(34,49,74,.28); }
+  body.polished { background: #eceae6; color: #23272e; }
+  body.polished .wrap { background: #ffffff; border: 1px solid #cfd3d9; border-radius: 18px; box-shadow: 0 18px 44px rgba(35,39,46,.12); }
+  body.polished .eyebrow { background: none; border: none; padding: 0; color: #7a6a45; letter-spacing: 4px; }
+  body.polished h1 { font-family: Fraunces, Georgia, serif; font-size: 44px; font-weight: 600; color: #1d2430; text-shadow: none; }
+  body.polished .script-note { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: 17px; color: #6d7280; }
+  body.polished .bow-divider { color: #b08a4f; font-size: 15px; }
+  body.polished .sub { color: #5c6270; }
+  body.polished .menu-row button { border-color: #22314a; color: #22314a; box-shadow: none; }
+  body.polished .menu-panel { border-color: #cfd3d9; border-radius: 12px; box-shadow: 0 12px 28px rgba(35,39,46,.12); }
+  body.polished .menu-panel a, body.polished .menu-panel button.install-btn { font-family: Fraunces, Georgia, serif; font-size: 19px; color: #1d2430; }
+  body.polished .year-select { border: 1.5px solid #9aa3af; color: #1d2430; background: #fff; box-shadow: none; }
+  body.polished .year-title { font-family: Fraunces, Georgia, serif; font-weight: 600; letter-spacing: .5px; color: #1d2430; font-size: 40px; }
+  body.polished .year-title::before, body.polished .year-title::after { content: "\2014"; color: #b08a4f; font-size: 22px; vertical-align: 6px; }
+  body.polished .timeline input[type="range"] { accent-color: #22314a; }
+  body.polished .timeline-labels { color: #7a6a45; font-family: Inter, Arial, sans-serif; letter-spacing: 2px; }
+  body.polished .mood-label { color: #7a6a45; }
+  body.polished .nav-btn { border-color: #22314a; color: #22314a; background: #fff; box-shadow: none; }
+  body.polished .surprise-btn { background: #22314a; border-color: #22314a; box-shadow: none; }
+  body.polished .group-head { font-family: Inter, Arial, sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; background: #22314a; outline: none; color: #fff !important; padding: 8px 16px; box-shadow: none; }
+  body.polished .group-head::before { content: ""; }
+  body.polished .card { border: 1px solid #dde0e4; border-top: 3px solid #b08a4f; border-radius: 14px; box-shadow: 0 6px 18px rgba(35,39,46,.06); padding-top: 22px; }
+  body.polished .card::before { display: none; }
+  body.polished .card::after { content: ""; }
+  body.polished .card h2 { font-family: Fraunces, Georgia, serif; font-size: 22px; font-weight: 600; color: #1d2430; }
+  body.polished .card h2 .hicon { background: #eef0f3; }
+  body.polished .item-list li { border-bottom: 1px solid #e7e9ec; }
+  body.polished .item-list .t, body.polished .capsule .t { color: #39445a; }
+  body.polished .capsule { background: #fbfaf7; border: 1px solid #b08a4f; outline: none; border-radius: 14px; box-shadow: 0 10px 24px rgba(35,39,46,.08); }
+  body.polished .capsule .cap-eyebrow { color: #7a6a45; }
+  body.polished .capsule h2 { font-family: Fraunces, Georgia, serif; font-size: 26px; color: #1d2430; }
+  body.polished .capsule li { border-bottom: 1px solid #e7e0cf; }
+  body.polished .toon { border-color: #cfd3d9; border-radius: 12px; box-shadow: none; }
+  body.polished .footer { font-family: Inter, Arial, sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8a8f98; }
+  body.dark.polished { background: #17181c; }
+  body.dark.polished .wrap { background: #1f2126; border-color: #3a3f47; box-shadow: 0 18px 44px rgba(0,0,0,.4); }
+  body.dark.polished h1, body.dark.polished .year-title, body.dark.polished .capsule h2, body.dark.polished .card h2 { color: #eceef1; }
+  body.dark.polished .card { background: #24262c; border-color: #3a3f47; border-top-color: #b08a4f; }
+  body.dark.polished .capsule { background: #22241f; border-color: #b08a4f; }
+  body.dark.polished .group-head { background: #2c3a55; }
 </style>
 </head>
 <body class="cowgirl">
@@ -251,7 +293,7 @@
 <div class="wrap">
   <p class="eyebrow">&#9733; Ashley's Spot &#9733;</p>
   <h1>The Time Machine</h1>
-  <p class="script-note">a little trip back in time, darlin&#8217;</p>
+  <p class="script-note" id="scriptNote">a little trip back in time, darlin&#8217;</p>
   <p class="sub">Pick a year, 1990 through 2009, and see what was popular: the movies, songs, cartoons, toys, prices, clothes, hairstyles, beauty, words, big moments, TV shows, video games, gadgets, books, snacks, sports moments, and heartthrobs.</p>
   <div class="bow-divider" aria-hidden="true"><span>&#127872;</span></div>
   <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
@@ -272,6 +314,7 @@
     <p class="mood-label">Pick your mood</p>
     <button class="mood-btn" id="moodGirlie" type="button" aria-pressed="false">&#127872; Girlie</button>
     <button class="mood-btn" id="moodCowgirl" type="button" aria-pressed="true">&#129312; Cowgirl</button>
+    <button class="mood-btn" id="moodPolished" type="button" aria-pressed="false">&#128188; Polished</button>
   </div>
   <select class="year-select" id="yearSelect" aria-label="Choose a year"></select>
   <div class="timeline">
@@ -555,23 +598,24 @@ themeToggle.addEventListener("change", function () {
   try { localStorage.setItem("ashleys-theme", this.checked ? "dark" : "light"); } catch (e) {}
 });
 
-var moodGirlieBtn = document.getElementById("moodGirlie");
-var moodCowgirlBtn = document.getElementById("moodCowgirl");
+var moodBtns = { girlie: document.getElementById("moodGirlie"), cowgirl: document.getElementById("moodCowgirl"), polished: document.getElementById("moodPolished") };
+var moodLines = { girlie: "a little trip back in time, with love", cowgirl: "a little trip back in time, darlin\u2019", polished: "A look back at 1990\u20132009, beautifully put together." };
 function applyMood(mood) {
-  var girlie = mood === "girlie";
-  document.body.classList.toggle("girlie", girlie);
-  document.body.classList.toggle("cowgirl", !girlie);
-  moodGirlieBtn.classList.toggle("active", girlie);
-  moodCowgirlBtn.classList.toggle("active", !girlie);
-  moodGirlieBtn.setAttribute("aria-pressed", girlie ? "true" : "false");
-  moodCowgirlBtn.setAttribute("aria-pressed", girlie ? "false" : "true");
-  try { localStorage.setItem("ashleys-tm-mood", girlie ? "girlie" : "cowgirl"); } catch (e) {}
+  if (!moodBtns[mood]) mood = "cowgirl";
+  ["girlie", "cowgirl", "polished"].forEach(function (m) {
+    document.body.classList.toggle(m, m === mood);
+    moodBtns[m].classList.toggle("active", m === mood);
+    moodBtns[m].setAttribute("aria-pressed", m === mood ? "true" : "false");
+  });
+  document.getElementById("scriptNote").textContent = moodLines[mood];
+  try { localStorage.setItem("ashleys-tm-mood", mood); } catch (e) {}
 }
 var savedMood = "cowgirl";
-try { if (localStorage.getItem("ashleys-tm-mood") === "girlie") savedMood = "girlie"; } catch (e) {}
+try { var sm = localStorage.getItem("ashleys-tm-mood"); if (sm === "girlie" || sm === "polished") savedMood = sm; } catch (e) {}
 applyMood(savedMood);
-moodGirlieBtn.addEventListener("click", function () { applyMood("girlie"); });
-moodCowgirlBtn.addEventListener("click", function () { applyMood("cowgirl"); });
+moodBtns.girlie.addEventListener("click", function () { applyMood("girlie"); });
+moodBtns.cowgirl.addEventListener("click", function () { applyMood("cowgirl"); });
+moodBtns.polished.addEventListener("click", function () { applyMood("polished"); });
 
 var deferredPrompt = null;
 window.addEventListener("beforeinstallprompt", function (e) { deferredPrompt = e; });
