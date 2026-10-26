@@ -33,9 +33,10 @@
   .eq { display: flex; align-items: stretch; justify-content: center; gap: 4px; max-width: 520px; margin: 0 auto 8px; padding: 6px 8px; background: transparent; border: 0; }
   .eq .col { flex: 1; max-width: 16px; display: flex; flex-direction: column-reverse; gap: 2px; }
   .eq .seg { display: block; height: 3px; border-radius: 1px; background: rgba(0,0,0,0.08); transition: background .12s, box-shadow .12s; }
-  .eq .col .seg:nth-child(-n+6) { --c: #2eff5e; }
-  .eq .col .seg:nth-child(n+7):nth-child(-n+8) { --c: #ffcc00; }
-  .eq .col .seg:nth-child(n+9) { --c: #ff2a2a; }
+  .eq .col .seg:nth-child(-n+3) { --c: #2dd4d4; }
+  .eq .col .seg:nth-child(n+4):nth-child(-n+6) { --c: #ff5da2; }
+  .eq .col .seg:nth-child(n+7):nth-child(-n+8) { --c: #a78bfa; }
+  .eq .col .seg:nth-child(n+9) { --c: #ffd60a; }
   .eq .seg.on { background: var(--c); box-shadow: 0 0 6px var(--c); }
 
   .tv-lights { position: absolute; inset: 0; pointer-events: none; z-index: 5; line-height: 0; }
