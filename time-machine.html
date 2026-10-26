@@ -6,7 +6,7 @@
 <title>The Time Machine — Ashley Ayala</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#111111">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; text-align: center; padding: 32px 16px 48px; line-height: 1.5; }
@@ -95,6 +95,54 @@
     h1 { font-size: 32px; }
     .card { padding: 16px; }
   }
+
+  /* --- Sophie's girlie preppy makeover --- */
+  body { background: radial-gradient(circle at 12% 0%, #fdeef3 0, transparent 34%), radial-gradient(circle at 88% 8%, #fdf3d8 0, transparent 30%), radial-gradient(#f3cdd8 1px, transparent 1.4px) 0 0 / 26px 26px, linear-gradient(180deg, #fdf7f3 0%, #f9efe9 100%); }
+  .wrap { background: rgba(255,255,255,.72); border: 1px solid #f3d3dd; border-radius: 30px; padding: 30px 26px 34px; box-shadow: 0 24px 60px rgba(212,98,138,.14), 0 4px 18px rgba(185,151,91,.12); }
+  .eyebrow { color: #c05a80; letter-spacing: 4px; }
+  h1 { color: #33242a; text-shadow: 0 2px 0 #fdeef3; }
+  .script-note { font-family: 'Dancing Script', cursive; font-size: 30px; font-weight: 700; line-height: 1.15; color: #d4628a; margin: 2px 0 8px; }
+  .sub { color: #7a6670; max-width: 620px; margin-left: auto; margin-right: auto; }
+  .bow-divider { display: flex; align-items: center; gap: 12px; max-width: 340px; margin: 14px auto 22px; color: #d4628a; font-size: 22px; }
+  .bow-divider::before, .bow-divider::after { content: ""; height: 2px; flex: 1; background: linear-gradient(90deg, transparent, #e9a9bf, #b9975b); }
+  .bow-divider::after { background: linear-gradient(90deg, #b9975b, #e9a9bf, transparent); }
+  .menu-row button { border-color: #c05a80; color: #8a3d5c; background: #fff; box-shadow: 0 4px 12px rgba(212,98,138,.16); }
+  .menu-panel { border-color: #f0c4d2; border-radius: 20px; box-shadow: 0 16px 36px rgba(212,98,138,.18); overflow: hidden; }
+  .year-select { border-color: #e9a9bf; box-shadow: 0 6px 16px rgba(212,98,138,.14); }
+  .year-select:focus { outline: 3px solid #fbd9e4; outline-offset: 2px; }
+  .year-title { color: #33242a; font-size: 42px; }
+  .year-title::before, .year-title::after { content: "\2726"; color: #e39db6; font-size: 22px; vertical-align: 10px; margin: 0 12px; }
+  .timeline-labels { color: #c05a80; }
+  .timeline input[type="range"] { accent-color: #d4628a; }
+  .nav-btn { border-color: #c05a80; color: #8a3d5c; background: #fff; box-shadow: 0 4px 12px rgba(212,98,138,.14); }
+  .surprise-btn { background: linear-gradient(135deg, #e383a0 0%, #d4628a 55%, #c99327 130%); border-color: #d4628a; box-shadow: 0 8px 20px rgba(212,98,138,.30); }
+  .capsule { position: relative; background: linear-gradient(180deg, #fff8fa 0%, #fdeef3 58%, #fbf0da 100%); border: 2px solid #e9a9bf; outline: 1.5px dashed rgba(192,90,128,.55); outline-offset: -9px; border-radius: 24px; box-shadow: 0 16px 38px rgba(212,98,138,.20); padding-top: 28px; }
+  .capsule .cap-eyebrow { color: #c05a80; }
+  .capsule h2 { font-family: 'Dancing Script', cursive; font-size: 34px; color: #8a3d5c; }
+  .capsule li { border-bottom: 1px dotted #eeb6c6; }
+  .capsule .t { color: #8a3d5c; }
+  .group-head { justify-self: start; background: linear-gradient(90deg, #fdeef3, #fbf0da); border: 1px solid #f0c4d2; border-radius: 999px; padding: 7px 16px; color: #a0476c !important; letter-spacing: 2.5px; }
+  .group-head::before { content: "\2661  "; color: #d4628a; }
+  .card { border-color: #f0d0da; border-top: 4px solid #eeb6c6; border-radius: 22px; box-shadow: 0 10px 26px rgba(212,98,138,.10); transition: transform .18s ease, box-shadow .18s ease; }
+  @media (hover: hover) { .card:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(212,98,138,.18); } }
+  .card h2 { color: #3a2a31; }
+  .item-list li { border-bottom: 1px dotted #f0c9d6; }
+  .item-list .t { color: #6b4456; }
+  .toon img { border-color: #f0c4d2; border-radius: 16px; }
+  .footer { color: #bd8299; }
+  body.dark { background: radial-gradient(circle at 12% 0%, #3a2430 0, transparent 36%), radial-gradient(#4a2f3c 1px, transparent 1.4px) 0 0 / 26px 26px, #1d171b; }
+  body.dark .wrap { background: rgba(38,29,34,.88); border-color: #5b3a48; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+  body.dark h1, body.dark .year-title { color: #f7e8ee; text-shadow: none; }
+  body.dark .script-note, body.dark .capsule h2 { color: #efa9c1; }
+  body.dark .sub { color: #cdb8c0; }
+  body.dark .group-head { background: linear-gradient(90deg, #3d2732, #38301f); border-color: #5b3a48; color: #efa9c1 !important; }
+  body.dark .card { border-color: #513844; border-top-color: #a05a78; background: #2b2227; }
+  body.dark .item-list li { border-bottom-color: #4a3540; }
+  body.dark .item-list .t, body.dark .capsule .t { color: #f0bfd0; }
+  body.dark .capsule { background: linear-gradient(180deg, #33252c 0%, #2b2126 60%, #2e281c 100%); border-color: #a05a78; }
+  body.dark .capsule li { border-bottom-color: #513844; }
+  body.dark .nav-btn { background: #2b2227; }
+  @media (max-width: 640px) { .wrap { padding: 22px 14px 28px; border-radius: 22px; } .script-note { font-size: 26px; } .year-title { font-size: 36px; } }
 </style>
 </head>
 <body>
@@ -110,10 +158,11 @@
 <filter id="icShadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.22"/></filter>
 </defs></svg>
 <div class="wrap">
-  <p class="eyebrow">Ashley's Spot</p>
+  <p class="eyebrow">&#9825; Ashley's Spot &#9825;</p>
   <h1>The Time Machine</h1>
+  <p class="script-note">a little trip back in time, with love</p>
   <p class="sub">Pick a year, 1990 through 2009, and see what was popular: the movies, songs, cartoons, toys, prices, clothes, hairstyles, words, big moments, TV shows, video games, gadgets, books, snacks, sports moments, and heartthrobs.</p>
-  <hr class="divider">
+  <div class="bow-divider" aria-hidden="true"><span>&#127872;</span></div>
   <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
   <nav id="menuPanel" class="menu-panel">
     <a href="index.html">Home</a>
@@ -231,7 +280,7 @@
     <button class="surprise-btn" id="surpriseBtnBottom" type="button">&#10024; Surprise Me</button>
     <button class="nav-btn" id="nextYearBtnBottom" type="button">Next Year &rarr;</button>
   </div>
-<p class="footer">Ashley's Spot &middot; The Time Machine</p>
+<p class="footer">Ashley's Spot &middot; The Time Machine &middot; made with &#9825;</p>
 </div>
 <script>
 var YEARS = {
