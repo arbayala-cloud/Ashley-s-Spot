@@ -79,7 +79,7 @@
   @media (max-width: 480px) { .tv-lights .bulb { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
   .playlist-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 20px 0 8px; text-align: center; }
-  .playlist-menus { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; max-width: 780px; margin: 0 auto; }
+  .playlist-menus { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; max-width: 920px; margin: 0 auto; }
   .playlist-menu { text-align: center; min-width: 0; }
   .playlist-menu label { display: block; font-family: 'Indie Flower', cursive; font-size: 17px; letter-spacing: 1px; text-transform: uppercase; color: #6f6a62; font-weight: 600; margin: 0 0 6px 0; }
   .song-select { width: 100%; height: 50px; padding: 0 12px; font-family: 'Indie Flower', cursive; font-size: 20px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; }
@@ -260,9 +260,13 @@
       <label for="songs2007">2007</label>
       <select id="songs2007" class="song-select" data-playlist="6"><option value="">Choose a 2007 song&hellip;</option></select>
     </div>
+    <div class="playlist-menu" data-playlist="7">
+      <label for="songsHalloween">Halloween</label>
+      <select id="songsHalloween" class="song-select" data-playlist="7"><option value="">Choose a Halloween song&hellip;</option></select>
+    </div>
   </div>
 
-  <p class="note">Pick a song from 1990, 1995, 1997, 2001, 2003, 2005 or 2007 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a song from 1990, 1995, 1997, 2001, 2003, 2005, 2007 or Halloween below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
   <p class="footer">Ashley&rsquo;s Spot &middot; Playlists</p>
 </div>
 <script>
@@ -465,7 +469,25 @@ var PLAYLISTS = [
   ["Teardrops on My Guitar", "Taylor Swift", "xKCek6_dB0M"],
   ["Our Song", "Taylor Swift", "Jb2stN7kH28"],
   ["Wasted", "Carrie Underwood", "paMzF1lnwGg"]
-  ] }
+  ] },
+  { name: "Halloween", songs: [
+  ["Thriller", "Michael Jackson", "sOnqjkJTMaA"],
+  ["Monster Mash", "Bobby \u201cBoris\u201d Pickett", "82jWhLCcxNU"],
+  ["Ghostbusters", "Ray Parker Jr.", "TgNWyBXBC0E"],
+  ["Time Warp", "The Rocky Horror Picture Show", "-QkJ-PqUmc4"],
+  ["Season of the Witch", "Donovan", "KBrhL3on2yo"],
+  ["I Put a Spell on You", "Screamin' Jay Hawkins", "Sk0c1w7IJBU"],
+  ["Werewolves of London", "Warren Zevon", "qae25976UgA"],
+  ["Superstition", "Stevie Wonder", "7_tmeHCO1IM"],
+  ["Sympathy for the Devil", "The Rolling Stones", "GgnClrx8N2k"],
+  ["Black Magic Woman", "Santana", "9wT1s96JIb0"],
+  ["This Is Halloween", "Danny Elfman", "ntsrWX-0FE4"],
+  ["Zombie", "The Cranberries", "6Ejga4kJUts"],
+  ["Bad Moon Rising", "Creedence Clearwater Revival", "iwC5G6NfiPs"],
+  ["People Are Strange", "The Doors", "lYY0P7X7oX0"],
+  ["Highway to Hell", "AC/DC", "l482T0yNkeo"],
+  ["Sweet Dreams (Are Made of This)", "Eurythmics", "qeMFqkcPYcg"]
+  ] },
 ];
 var BPM2007 = { "CvBfHwUxHIk": 87, "Bg59q4puhmg": 164, "MrTz5xjmso4": 130, "rywUS-ohqeE": 90, "ZSM3w1v-A_Y": 118, "qi7Yh16dA0w": 123, "PsO6ZnUZI0g": 104, "8UFIYGkROII": 140, "agrXgrAgQ0U": 113, "ykW4rtW2eu0": 177, "SBjQ9tuuTJQ": 173, "1OjTspCqvk8": 92, "BJk6gZuPKRE": 106, "aCyGvGEtOwc": 173, "onzL0EM1pKY": 154, "DRlwSBY5oe8": 120, "gy8HPSIFXEM": 132, "5VnOSO1J22M": 89, "xKCek6_dB0M": 100, "Jb2stN7kH28": 89, "paMzF1lnwGg": 95 };
 var SONGS = PLAYLISTS[0].songs;
