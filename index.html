@@ -298,5 +298,34 @@ var CARTOONS = [{"name": "Hey Arnold", "img": "https://artworks.thetvdb.com/bann
   show(idx);
 })();
 </script>
+<script>
+(function () {
+  var ctx = null, last = 0;
+  function tone(freq, dur, delay) {
+    try {
+      if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+      if (ctx.state === 'suspended') ctx.resume();
+      var t = ctx.currentTime + (delay || 0);
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'square'; o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.05, t + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(t); o.stop(t + dur + 0.05);
+    } catch (e) {}
+  }
+  function blip() { tone(880, 0.07, 0); }
+  function chirp() { tone(660, 0.07, 0); tone(990, 0.09, 0.07); }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('button, a, label') : null;
+    if (!t) return;
+    var now = Date.now();
+    if (now - last < 90) return;
+    last = now;
+    if (t.id === 'sotdPlayBtn') chirp(); else blip();
+  }, true);
+})();
+</script>
 </body>
 </html>
