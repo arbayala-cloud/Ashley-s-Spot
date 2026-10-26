@@ -6,7 +6,7 @@
 <title>The Time Machine — Ashley Ayala</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#111111">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Dancing+Script:wght@600;700&family=Sancreek&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; text-align: center; padding: 32px 16px 48px; line-height: 1.5; }
@@ -182,6 +182,29 @@
   .toon img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 32%; background: #fdeef3; border: 1px solid #f0c4d2; border-radius: 12px; }
   body.dark .toon { background: #3a2831; border-color: #6e4155; }
   body.dark .toon img { background: #472c3a; border-color: #6e4155; }
+
+  /* --- Western, but make it feminine: rhinestone cowgirl --- */
+  .wrap { border-color: #d9b98a; box-shadow: 0 26px 64px rgba(160,110,60,.20), 0 0 0 6px #fdf3e3, 0 0 0 7.5px #e4c491; }
+  .eyebrow { background: #fdf3e3; border-color: #d9b98a; color: #9a6a2f; }
+  .script-note { color: #a97a45; }
+  .bow-divider { color: #c99327; }
+  .year-select { border-color: #89a0bb; color: #42597a; background: #f4f7fb; }
+  .year-title { font-family: 'Sancreek', Fraunces, Georgia, serif; font-weight: 400; letter-spacing: 2px; color: #b3543f; font-size: 44px; }
+  .year-title::before, .year-title::after { content: "\2605"; color: #d9a441; font-size: 22px; vertical-align: 10px; }
+  .timeline input[type="range"] { accent-color: #b3543f; }
+  .timeline-labels { color: #9a6a2f; font-family: 'Sancreek', Georgia, serif; letter-spacing: 1px; }
+  .group-head { background: linear-gradient(90deg, #5d748f, #42597a); outline: 1.5px dashed rgba(255,255,255,.75); outline-offset: -5px; box-shadow: 0 8px 18px rgba(66,89,122,.28); }
+  .group-head::before { content: "\2605  "; color: #ffd98a; }
+  .card::before { background: repeating-linear-gradient(90deg, #5d748f 0 16px, #fbd9e4 16px 24px, #fff 24px 30px); }
+  .card::after { content: "\2605"; color: #d9a441; font-size: 15px; }
+  .card h2 .hicon { background: #eef2f7; }
+  .nav-btn { border-color: #42597a; color: #42597a; }
+  .surprise-btn { background: linear-gradient(135deg, #e383a0 0%, #c96f52 130%); border-color: #c05a80; }
+  .capsule { border-color: #c99327; outline: 2px dashed rgba(160,110,60,.55); outline-offset: -10px; background: linear-gradient(180deg, #fffaf0 0%, #fdeef3 62%, #fbeed3 100%); }
+  .capsule .cap-eyebrow { color: #9a6a2f; }
+  body.dark .wrap { box-shadow: 0 26px 64px rgba(0,0,0,.4), 0 0 0 6px #2e241a, 0 0 0 7.5px #7c5f33; }
+  body.dark .group-head { background: linear-gradient(90deg, #42597a, #31435e); }
+  body.dark .year-title { color: #eda58c; }
 </style>
 </head>
 <body>
@@ -197,9 +220,9 @@
 <filter id="icShadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.22"/></filter>
 </defs></svg>
 <div class="wrap">
-  <p class="eyebrow">&#9825; Ashley's Spot &#9825;</p>
+  <p class="eyebrow">&#9733; Ashley's Spot &#9733;</p>
   <h1>The Time Machine</h1>
-  <p class="script-note">a little trip back in time, with love</p>
+  <p class="script-note">a little trip back in time, darlin&#8217;</p>
   <p class="sub">Pick a year, 1990 through 2009, and see what was popular: the movies, songs, cartoons, toys, prices, clothes, hairstyles, words, big moments, TV shows, video games, gadgets, books, snacks, sports moments, and heartthrobs.</p>
   <div class="bow-divider" aria-hidden="true"><span>&#127872;</span></div>
   <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
