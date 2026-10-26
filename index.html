@@ -393,7 +393,10 @@ var CARTOONS = [{"name": "Hey Arnold", "year": 1996, "img": "https://artworks.th
       s.style.left = (x + (Math.random() * 16 - 8)) + 'px';
       s.style.top = (y + (Math.random() * 16 - 8)) + 'px';
       s.style.fontSize = size + 'px';
-      s.style.color = Math.random() < 0.6 ? '#b9975b' : '#ffffff';
+      var colors = ['#ff5da2', '#a855f7', '#2dd4bf', '#f5c542', '#38bdf8', '#ff7a00', '#a3e635'];
+      var col = colors[Math.floor(Math.random() * colors.length)];
+      s.style.color = col;
+      s.style.textShadow = '0 0 8px ' + col;
       s.style.setProperty('--dx', (Math.random() * 40 - 20) + 'px');
       s.addEventListener('animationend', function () { s.remove(); });
       layer.appendChild(s);
