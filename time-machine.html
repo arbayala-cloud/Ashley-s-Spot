@@ -32,12 +32,13 @@
   .theme-switch input:checked + .slider { background: #b9975b; }
   .theme-switch input:checked + .slider::before { transform: translateX(22px); }
   .theme-switch input:focus-visible + .slider { outline: 2px solid #b9975b; outline-offset: 2px; }
-  .year-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-width: 640px; margin: 0 auto 24px; }
-  .year-btn { font-family: Inter, Arial, sans-serif; font-size: 15px; font-weight: 600; color: #22211e; background: #fff; border: 1.5px solid #ddd7cc; border-radius: 999px; padding: 9px 0; cursor: pointer; }
-  .year-btn:hover { border-color: #b9975b; }
-  .year-btn.active { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background: #fdf8ee; color: #8a7443; }
+  .year-select { display: block; width: 100%; max-width: 320px; margin: 0 auto 24px; font-family: Inter, Arial, sans-serif; font-size: 15px; font-weight: 600; color: #22211e; background: #fff; border: 1.5px solid #ddd7cc; border-radius: 999px; padding: 10px 16px; cursor: pointer; }
+  .card-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 720px; margin: 0 auto; }
+  @media (min-width: 720px) { .card-grid { grid-template-columns: 1fr 1fr; } }
+  .group-head { grid-column: 1 / -1; font-family: Inter, Arial, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #8a7443; margin: 10px 0 2px; text-align: left; }
+  .card-grid > .group-head:first-child { margin-top: 0; }
   .year-title { font-family: Fraunces, Georgia, serif; font-size: 34px; font-weight: 600; margin: 0 0 18px; }
-  .card { background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 20px 22px; margin: 0 auto 16px; max-width: 720px; text-align: left; }
+  .card { background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 20px 22px; margin: 0; text-align: left; }
   .card h2 { font-family: Fraunces, Georgia, serif; font-size: 22px; font-weight: 600; margin: 0 0 12px; }
   .card h2 .hicon { width: 30px; height: 30px; vertical-align: -9px; margin-right: 10px; }
   .item-list { list-style: none; margin: 0; padding: 0; }
@@ -62,14 +63,13 @@
   body.dark .menu-panel button.install-btn { color: #f4f1ea; }
   body.dark .menu-panel button.install-btn:hover { background: #33302b; }
   body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
-  body.dark .year-btn { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
-  body.dark .year-btn.active { background: #3a3226; color: #d4b978; }
+  body.dark .year-select { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .group-head { color: #d4b978; }
   body.dark .card { background: #2a2723; border-color: #44403a; }
   body.dark .item-list li { border-bottom-color: #3a3631; }
   body.dark .toon img { border-color: #55504a; background: #33302b; }
   body.dark .toon-credit, body.dark .note, body.dark .footer { color: #9a948c; }
   @media (max-width: 480px) {
-    .year-grid { grid-template-columns: repeat(4, 1fr); }
     h1 { font-size: 32px; }
     .card { padding: 16px; }
   }
@@ -106,92 +106,85 @@
     </div>
   </nav>
 
-  <div class="year-grid" id="yearGrid"></div>
+  <select class="year-select" id="yearSelect" aria-label="Choose a year"></select>
   <p class="year-title" id="yearTitle">1990</p>
 
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="3" y="10" width="18" height="11" rx="1.5" fill="url(#gDark)"/><path d="M3 10l1.8-5h14.4L21 10H3z" fill="#111827"/><path d="M7 5l2 5M11 5l2 5M15 5l2 5" stroke="#f8fafc" stroke-width="1.6"/><circle cx="5" cy="12.5" r="0.9" fill="#9ca3af"/><circle cx="19" cy="12.5" r="0.9" fill="#9ca3af"/><path d="M6 15h12M6 18h8" stroke="#f8fafc" stroke-width="1" opacity="0.7"/></g></svg> Movies from this year</h2>
-    <ul class="item-list" id="movieList"></ul>
-  </section>
+    <div class="card-grid">
+    <h3 class="group-head">Watch &amp; Listen</h3>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="3" y="10" width="18" height="11" rx="1.5" fill="url(#gDark)"/><path d="M3 10l1.8-5h14.4L21 10H3z" fill="#111827"/><path d="M7 5l2 5M11 5l2 5M15 5l2 5" stroke="#f8fafc" stroke-width="1.6"/><circle cx="5" cy="12.5" r="0.9" fill="#9ca3af"/><circle cx="19" cy="12.5" r="0.9" fill="#9ca3af"/><path d="M6 15h12M6 18h8" stroke="#f8fafc" stroke-width="1" opacity="0.7"/></g></svg> Movies from this year</h2>
+        <ul class="item-list" id="movieList"></ul>
+      </section>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M9 18V6l10-2v11" fill="none" stroke="#1f2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="6.5" cy="18" rx="2.8" ry="2.4" fill="#111827"/><ellipse cx="16.5" cy="15" rx="2.8" ry="2.4" fill="#111827"/><ellipse cx="5.8" cy="17.2" rx="0.9" ry="0.6" fill="#fff" opacity="0.5" transform="rotate(-20 5.8 17.2)"/></g></svg> Songs from this year</h2>
+        <ul class="item-list" id="songList"></ul>
+      </section>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><g transform="rotate(-45 12 12)"><rect x="10" y="2" width="4" height="2.5" rx="0.8" fill="#e78a9a"/><rect x="10" y="4.5" width="4" height="1.5" fill="url(#gSilver)"/><rect x="10" y="6" width="4" height="10" fill="url(#gPencil)"/><path d="M10 16l2 5 2-5z" fill="#e8c39a"/><path d="M11.3 18.8L12 21l0.7-2.2z" fill="#44403a"/></g></g></svg> Cartoons that premiered this year</h2>
+        <div class="toon-grid" id="toonGrid"></div>
+        <p class="note" id="toonNote" style="display:none;"></p>
+      </section>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="3" y="6" width="18" height="13" rx="2" fill="url(#gWood)" stroke="#5d3a1a" stroke-width="0.7"/><rect x="5.5" y="8.5" width="9" height="8" rx="1" fill="url(#gGlass)"/><path d="M7 16.5L12 8.5" stroke="#fff" stroke-width="1.4" opacity="0.5" stroke-linecap="round"/><circle cx="17" cy="10.5" r="1.2" fill="#d6d3d1" stroke="#78716c" stroke-width="0.5"/><circle cx="17" cy="14" r="1.2" fill="#d6d3d1" stroke="#78716c" stroke-width="0.5"/><path d="M16 16.5h2M16 18h2" stroke="#5d3a1a" stroke-width="0.8"/><path d="M8 6L12 2l4 4" stroke="#44403a" stroke-width="1.3" stroke-linecap="round" fill="none"/><path d="M6 19h2M16 19h2" stroke="#5d3a1a" stroke-width="1.4" stroke-linecap="round"/></g></svg> TV shows popular that year</h2>
+        <ul class="item-list" id="showList"></ul>
+      </section>
+    <h3 class="group-head">Playtime</h3>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="4" y="4" width="16" height="16" rx="2" fill="url(#gWood)" stroke="#7c4f26" stroke-width="0.8" opacity="1"/><rect x="6.5" y="6.5" width="11" height="11" rx="1" fill="none" stroke="#fff" stroke-opacity="0.25"/><path d="M12 8.5l1.1 2.2 2.4.35-1.75 1.7.4 2.4-2.15-1.15-2.15 1.15.4-2.4-1.75-1.7 2.4-.35z" fill="#b91c1c"/></g></svg> Toy everyone wanted this year</h2>
+        <p class="toy" id="toyText"></p>
+      </section>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M7 7h10a5 5 0 0 1 5 5c0 3-2 5-4 4l-2-1H8l-2 1c-2 1-4-1-4-4a5 5 0 0 1 5-5z" fill="url(#gDark)"/><ellipse cx="12" cy="8" rx="4" ry="1" fill="#fff" opacity="0.12"/><path d="M8 11v4M6 13h4" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="12" r="1.4" fill="#b91c1c"/><circle cx="18.5" cy="14.5" r="1.4" fill="#d1d5db"/></g></svg> Video game everyone was playing</h2>
+        <p class="toy" id="gameText"></p>
+      </section>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="7" y="3" width="10" height="18" rx="2.5" fill="#111827" stroke="#374151" stroke-width="0.7"/><rect x="9" y="5.5" width="6" height="11" rx="0.8" fill="url(#gGlass)"/><path d="M10.5 16.5L14 5.5" stroke="#fff" stroke-width="1.2" opacity="0.45" stroke-linecap="round"/><path d="M10.5 4.5h3" stroke="#4b5563" stroke-width="0.8" stroke-linecap="round"/><path d="M10.5 18.5h3" stroke="#4b5563" stroke-width="1" stroke-linecap="round"/></g></svg> Gadget everyone wanted</h2>
+        <p class="toy" id="gadgetText"></p>
+      </section>
+    <h3 class="group-head">Everyday Life</h3>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M4 11V4h7l9 9-7 7-9-9z" fill="url(#gCream)" stroke="#d6cfbd" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.6" fill="#fff" stroke="#d6cfbd" stroke-width="0.8"/><path d="M8.5 8.5c2-2 3-3 4-4" stroke="#9ca3af" stroke-width="0.8" fill="none"/><path d="M7 14h8" stroke="#b91c1c" stroke-width="1" opacity="0.6"/></g></svg> Prices that year</h2>
+        <ul class="item-list" id="priceList"></ul>
+        <p class="note">Average US prices, rounded.</p>
+      </section>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M9 3L4 5l2.5 4L9 7.5V21h6V7.5L17.5 9 20 5l-5-2a3.5 3.5 0 0 1-6 0z" fill="url(#gWhite)" stroke="#cbd5e1" stroke-width="0.7"/><path d="M9 7.5V21h1.5V8.5L9 7.5z" fill="#000" opacity="0.06"/><path d="M9 3a3.5 3.5 0 0 0 6 0" fill="none" stroke="#9ca3af" stroke-width="1"/></g></svg> What everyone was wearing</h2>
+        <p class="toy" id="clothesText"></p>
+      </section>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><circle cx="8" cy="17" r="2.5" fill="none" stroke="#374151" stroke-width="1.4"/><circle cx="16" cy="17" r="2.5" fill="none" stroke="#374151" stroke-width="1.4"/><path d="M9.5 15L17 5M14.5 15L7 5" stroke="url(#gSilver)" stroke-width="1.8" stroke-linecap="round"/></g></svg> Hairstyle everyone had</h2>
+        <p class="toy" id="hairText"></p>
+      </section>
+    <h3 class="group-head">Words &amp; Moments</h3>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M5 3h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H10l-5 5v-5H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" fill="#ffffff" stroke="#374151" stroke-width="1.2"/></g></svg> Words everyone was saying</h2>
+        <p class="toy" id="wordsText"></p>
+      </section>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="4" y="3" width="16" height="18" rx="1" fill="url(#gCream)" stroke="#d6cfbd" stroke-width="0.8"/><rect x="6.5" y="5.5" width="6" height="4" fill="#9ca3af"/><path d="M14 6h4M14 8h4M6.5 12h11M6.5 14.5h11M6.5 17h7" stroke="#6b7280" stroke-width="1" stroke-linecap="round"/></g></svg> Big moment that year</h2>
+        <p class="toy" id="momentText"></p>
+      </section>
+    <h3 class="group-head">Books &amp; Snacks</h3>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="5" y="3" width="14" height="18" rx="1.5" fill="url(#gLeather)"/><rect x="13" y="4.5" width="5" height="15" rx="0.8" fill="url(#gCream)"/><path d="M14.5 6v12M16 6v12M17.5 6v12" stroke="#d6cfbd" stroke-width="0.5"/><path d="M5 7h8M5 17h8" stroke="#000" stroke-width="0.8" opacity="0.3"/><path d="M7 3h2.5v6l-1.25-1.2L7 9V3z" fill="#d97706"/></g></svg> Book everyone was reading</h2>
+        <p class="toy" id="bookText"></p>
+      </section>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M12 13v8" stroke="#f5f5f4" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="8" r="5" fill="#dc2626"/><path d="M12 3a5 5 0 0 1 0 10 3.5 3.5 0 0 1 0-7 2 2 0 0 1 0 4 1 1 0 0 1 0-2" stroke="#fff" stroke-width="1.1" fill="none" opacity="0.9"/><ellipse cx="10" cy="5.5" rx="1.6" ry="1" fill="#fff" opacity="0.75" transform="rotate(-25 10 5.5)"/></g></svg> Snack everyone was eating</h2>
+        <p class="toy" id="snackText"></p>
+      </section>
+    <h3 class="group-head">Sports &amp; Heartthrobs</h3>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M7 3h10v3a5 5 0 0 1-10 0V3z" fill="url(#gYellow)"/><path d="M7 4H4a3 3 0 0 0 3 4M17 4h3a3 3 0 0 1-3 4" fill="none" stroke="#d97706" stroke-width="1.4"/><path d="M12 11v3" stroke="#d97706" stroke-width="1.6"/><rect x="9" y="14" width="6" height="2" rx="0.8" fill="#7c4f26"/><rect x="8" y="16" width="8" height="2" rx="0.8" fill="#5d3a1a"/><ellipse cx="10" cy="6" rx="1.4" ry="2" fill="#fff" opacity="0.5"/></g></svg> Sports moment that year</h2>
+        <p class="toy" id="sportText"></p>
+      </section>
+    <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#dc2626"/><ellipse cx="9" cy="8" rx="2" ry="1.2" fill="#fff" opacity="0.55" transform="rotate(-20 9 8)"/></g></svg> Heartthrob that year</h2>
+        <ul class="item-list" id="crushList"></ul>
+      </section>
+  </div>
 
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M9 18V6l10-2v11" fill="none" stroke="#1f2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="6.5" cy="18" rx="2.8" ry="2.4" fill="#111827"/><ellipse cx="16.5" cy="15" rx="2.8" ry="2.4" fill="#111827"/><ellipse cx="5.8" cy="17.2" rx="0.9" ry="0.6" fill="#fff" opacity="0.5" transform="rotate(-20 5.8 17.2)"/></g></svg> Songs from this year</h2>
-    <ul class="item-list" id="songList"></ul>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><g transform="rotate(-45 12 12)"><rect x="10" y="2" width="4" height="2.5" rx="0.8" fill="#e78a9a"/><rect x="10" y="4.5" width="4" height="1.5" fill="url(#gSilver)"/><rect x="10" y="6" width="4" height="10" fill="url(#gPencil)"/><path d="M10 16l2 5 2-5z" fill="#e8c39a"/><path d="M11.3 18.8L12 21l0.7-2.2z" fill="#44403a"/></g></g></svg> Cartoons that premiered this year</h2>
-    <div class="toon-grid" id="toonGrid"></div>
-    <p class="note" id="toonNote" style="display:none;"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="4" y="4" width="16" height="16" rx="2" fill="url(#gWood)" stroke="#7c4f26" stroke-width="0.8" opacity="1"/><rect x="6.5" y="6.5" width="11" height="11" rx="1" fill="none" stroke="#fff" stroke-opacity="0.25"/><path d="M12 8.5l1.1 2.2 2.4.35-1.75 1.7.4 2.4-2.15-1.15-2.15 1.15.4-2.4-1.75-1.7 2.4-.35z" fill="#b91c1c"/></g></svg> Toy everyone wanted this year</h2>
-    <p class="toy" id="toyText"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M4 11V4h7l9 9-7 7-9-9z" fill="url(#gCream)" stroke="#d6cfbd" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.6" fill="#fff" stroke="#d6cfbd" stroke-width="0.8"/><path d="M8.5 8.5c2-2 3-3 4-4" stroke="#9ca3af" stroke-width="0.8" fill="none"/><path d="M7 14h8" stroke="#b91c1c" stroke-width="1" opacity="0.6"/></g></svg> Prices that year</h2>
-    <ul class="item-list" id="priceList"></ul>
-    <p class="note">Average US prices, rounded.</p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M9 3L4 5l2.5 4L9 7.5V21h6V7.5L17.5 9 20 5l-5-2a3.5 3.5 0 0 1-6 0z" fill="url(#gWhite)" stroke="#cbd5e1" stroke-width="0.7"/><path d="M9 7.5V21h1.5V8.5L9 7.5z" fill="#000" opacity="0.06"/><path d="M9 3a3.5 3.5 0 0 0 6 0" fill="none" stroke="#9ca3af" stroke-width="1"/></g></svg> What everyone was wearing</h2>
-    <p class="toy" id="clothesText"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><circle cx="8" cy="17" r="2.5" fill="none" stroke="#374151" stroke-width="1.4"/><circle cx="16" cy="17" r="2.5" fill="none" stroke="#374151" stroke-width="1.4"/><path d="M9.5 15L17 5M14.5 15L7 5" stroke="url(#gSilver)" stroke-width="1.8" stroke-linecap="round"/></g></svg> Hairstyle everyone had</h2>
-    <p class="toy" id="hairText"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M5 3h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H10l-5 5v-5H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" fill="#ffffff" stroke="#374151" stroke-width="1.2"/></g></svg> Words everyone was saying</h2>
-    <p class="toy" id="wordsText"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="4" y="3" width="16" height="18" rx="1" fill="url(#gCream)" stroke="#d6cfbd" stroke-width="0.8"/><rect x="6.5" y="5.5" width="6" height="4" fill="#9ca3af"/><path d="M14 6h4M14 8h4M6.5 12h11M6.5 14.5h11M6.5 17h7" stroke="#6b7280" stroke-width="1" stroke-linecap="round"/></g></svg> Big moment that year</h2>
-    <p class="toy" id="momentText"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="3" y="6" width="18" height="13" rx="2" fill="url(#gWood)" stroke="#5d3a1a" stroke-width="0.7"/><rect x="5.5" y="8.5" width="9" height="8" rx="1" fill="url(#gGlass)"/><path d="M7 16.5L12 8.5" stroke="#fff" stroke-width="1.4" opacity="0.5" stroke-linecap="round"/><circle cx="17" cy="10.5" r="1.2" fill="#d6d3d1" stroke="#78716c" stroke-width="0.5"/><circle cx="17" cy="14" r="1.2" fill="#d6d3d1" stroke="#78716c" stroke-width="0.5"/><path d="M16 16.5h2M16 18h2" stroke="#5d3a1a" stroke-width="0.8"/><path d="M8 6L12 2l4 4" stroke="#44403a" stroke-width="1.3" stroke-linecap="round" fill="none"/><path d="M6 19h2M16 19h2" stroke="#5d3a1a" stroke-width="1.4" stroke-linecap="round"/></g></svg> TV shows popular that year</h2>
-    <ul class="item-list" id="showList"></ul>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M7 7h10a5 5 0 0 1 5 5c0 3-2 5-4 4l-2-1H8l-2 1c-2 1-4-1-4-4a5 5 0 0 1 5-5z" fill="url(#gDark)"/><ellipse cx="12" cy="8" rx="4" ry="1" fill="#fff" opacity="0.12"/><path d="M8 11v4M6 13h4" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="12" r="1.4" fill="#b91c1c"/><circle cx="18.5" cy="14.5" r="1.4" fill="#d1d5db"/></g></svg> Video game everyone was playing</h2>
-    <p class="toy" id="gameText"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="7" y="3" width="10" height="18" rx="2.5" fill="#111827" stroke="#374151" stroke-width="0.7"/><rect x="9" y="5.5" width="6" height="11" rx="0.8" fill="url(#gGlass)"/><path d="M10.5 16.5L14 5.5" stroke="#fff" stroke-width="1.2" opacity="0.45" stroke-linecap="round"/><path d="M10.5 4.5h3" stroke="#4b5563" stroke-width="0.8" stroke-linecap="round"/><path d="M10.5 18.5h3" stroke="#4b5563" stroke-width="1" stroke-linecap="round"/></g></svg> Gadget everyone wanted</h2>
-    <p class="toy" id="gadgetText"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><rect x="5" y="3" width="14" height="18" rx="1.5" fill="url(#gLeather)"/><rect x="13" y="4.5" width="5" height="15" rx="0.8" fill="url(#gCream)"/><path d="M14.5 6v12M16 6v12M17.5 6v12" stroke="#d6cfbd" stroke-width="0.5"/><path d="M5 7h8M5 17h8" stroke="#000" stroke-width="0.8" opacity="0.3"/><path d="M7 3h2.5v6l-1.25-1.2L7 9V3z" fill="#d97706"/></g></svg> Book everyone was reading</h2>
-    <p class="toy" id="bookText"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M12 13v8" stroke="#f5f5f4" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="8" r="5" fill="#dc2626"/><path d="M12 3a5 5 0 0 1 0 10 3.5 3.5 0 0 1 0-7 2 2 0 0 1 0 4 1 1 0 0 1 0-2" stroke="#fff" stroke-width="1.1" fill="none" opacity="0.9"/><ellipse cx="10" cy="5.5" rx="1.6" ry="1" fill="#fff" opacity="0.75" transform="rotate(-25 10 5.5)"/></g></svg> Snack everyone was eating</h2>
-    <p class="toy" id="snackText"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M7 3h10v3a5 5 0 0 1-10 0V3z" fill="url(#gYellow)"/><path d="M7 4H4a3 3 0 0 0 3 4M17 4h3a3 3 0 0 1-3 4" fill="none" stroke="#d97706" stroke-width="1.4"/><path d="M12 11v3" stroke="#d97706" stroke-width="1.6"/><rect x="9" y="14" width="6" height="2" rx="0.8" fill="#7c4f26"/><rect x="8" y="16" width="8" height="2" rx="0.8" fill="#5d3a1a"/><ellipse cx="10" cy="6" rx="1.4" ry="2" fill="#fff" opacity="0.5"/></g></svg> Sports moment that year</h2>
-    <p class="toy" id="sportText"></p>
-  </section>
-
-  <section class="card">
-    <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><g filter="url(#icShadow)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#dc2626"/><ellipse cx="9" cy="8" rx="2" ry="1.2" fill="#fff" opacity="0.55" transform="rotate(-20 9 8)"/></g></svg> Heartthrob that year</h2>
-    <ul class="item-list" id="crushList"></ul>
-  </section>
-
-  <p class="footer">Ashley's Spot &middot; The Time Machine</p>
+<p class="footer">Ashley's Spot &middot; The Time Machine</p>
 </div>
 <script>
 var YEARS = {
@@ -282,19 +275,17 @@ function showYear(y) {
     li.innerHTML = '<span class="t">' + c[0] + ":</span> " + esc(c[1]);
     cl.appendChild(li);
   });
-  var btns = document.querySelectorAll(".year-btn");
-  btns.forEach(function (b) { b.classList.toggle("active", b.textContent === String(y)); });
+  document.getElementById("yearSelect").value = String(y);
 }
 
-var grid = document.getElementById("yearGrid");
+var sel = document.getElementById("yearSelect");
 Object.keys(YEARS).sort().forEach(function (y) {
-  var b = document.createElement("button");
-  b.className = "year-btn";
-  b.type = "button";
-  b.textContent = y;
-  b.addEventListener("click", function () { showYear(y); });
-  grid.appendChild(b);
+  var o = document.createElement("option");
+  o.value = y;
+  o.textContent = y;
+  sel.appendChild(o);
 });
+sel.addEventListener("change", function () { showYear(this.value); });
 showYear("1990");
 
 document.getElementById("menuBtn").addEventListener("click", function () {
