@@ -795,5 +795,21 @@ for (var i = 0; i < songSelects.length; i++) {
 </script>
 
 
+
+<script>
+// Deep link from the homepage Song of the Day: jukebox.html?play=<YouTubeID>
+// jumps straight to that song in its own playlist.
+(function () {
+  try {
+    var id = new URLSearchParams(window.location.search).get('play');
+    if (!id) return;
+    for (var p = 0; p < PLAYLISTS.length; p++) {
+      for (var s = 0; s < PLAYLISTS[p].songs.length; s++) {
+        if (PLAYLISTS[p].songs[s][2] === id) { selectSong(p, s); return; }
+      }
+    }
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
