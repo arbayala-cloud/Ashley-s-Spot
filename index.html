@@ -72,7 +72,9 @@
   #sotdPlayer { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   body.dark .sotd-label { color: #b8b0a3; }
   body.dark .sotd-track { color: #f4f1ea; }
-  .polaroid { background: #fff; border: 1px solid #ddd7cc; padding: 12px 12px 16px; margin: 0; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28); }
+  .polaroid { background-color: #fdfcf6; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); background-size: 300px 300px; background-blend-mode: multiply; border: 1px solid rgba(0, 0, 0, 0.08); padding: 14px 14px 26px; margin: 0; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18), 0 14px 30px rgba(0, 0, 0, 0.35); }
+  .polaroid-photo { position: relative; }
+  .polaroid-photo::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.14), inset 0 0 30px rgba(0, 0, 0, 0.22); pointer-events: none; }
   .cartoon-photo { width: 100%; height: auto; display: block; }
   .polaroid-caption { font-family: 'Rock Salt', cursive; font-size: 13px; line-height: 1.5; color: #222; text-align: center; margin-top: 12px; }
   .cartoon-credit { text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #888; margin: 6px 0 0; }
@@ -106,7 +108,7 @@
 
   <section>
     <figure class="polaroid">
-      <img class="cartoon-photo" id="dailyCartoon" src="" alt="90s cartoon of the day">
+      <div class="polaroid-photo"><img class="cartoon-photo" id="dailyCartoon" src="" alt="90s cartoon of the day"></div>
       <figcaption class="polaroid-caption" id="polaroidCaption"></figcaption>
     </figure>
     <p class="cartoon-credit" id="cartoonCredit"></p>
