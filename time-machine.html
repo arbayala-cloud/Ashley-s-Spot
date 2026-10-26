@@ -205,9 +205,38 @@
   body.dark .wrap { box-shadow: 0 26px 64px rgba(0,0,0,.4), 0 0 0 6px #2e241a, 0 0 0 7.5px #7c5f33; }
   body.dark .group-head { background: linear-gradient(90deg, #42597a, #31435e); }
   body.dark .year-title { color: #eda58c; }
+
+  /* --- Mood switch --- */
+  .mood-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin: 0 auto 20px; }
+  .mood-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; color: #9a6a2f; width: 100%; margin: 0; }
+  .mood-btn { font-family: Inter, Arial, sans-serif; font-size: 14px; font-weight: 700; border-radius: 999px; padding: 9px 20px; cursor: pointer; background: #fff; color: #6b4456; border: 1.5px solid #d9b98a; }
+  body.girlie .mood-btn.active { background: linear-gradient(135deg, #e383a0, #d4628a); border-color: #d4628a; color: #fff; box-shadow: 0 8px 18px rgba(212,98,138,.30); }
+  body.cowgirl .mood-btn.active { background: linear-gradient(90deg, #5d748f, #42597a); border-color: #42597a; color: #fff; box-shadow: 0 8px 18px rgba(66,89,122,.30); }
+  /* Girlie mood: bring back the all-pink look */
+  body.girlie .wrap { border-color: #f6c6d6; box-shadow: 0 26px 64px rgba(212,98,138,.22); }
+  body.girlie .eyebrow { background: #fde3ec; border-color: #f6c6d6; color: #c05a80; }
+  body.girlie .script-note { color: #d4628a; }
+  body.girlie .bow-divider { color: #d4628a; }
+  body.girlie .year-select { border-color: #f19ec0; color: #a83a64; background: #fff8fa; }
+  body.girlie .year-title { font-family: 'Dancing Script', cursive; font-weight: 700; letter-spacing: 0; color: #c24d7c; font-size: 48px; }
+  body.girlie .year-title::before, body.girlie .year-title::after { content: "\2661"; color: #f19ec0; font-size: 26px; }
+  body.girlie .timeline input[type="range"] { accent-color: #d4628a; }
+  body.girlie .timeline-labels { color: #c05a80; font-family: Inter, Arial, sans-serif; letter-spacing: 2px; }
+  body.girlie .group-head { background: linear-gradient(90deg, #e88ca9, #dd6f9c); outline: none; box-shadow: 0 8px 18px rgba(212,98,138,.28); }
+  body.girlie .group-head::before { content: "\2661  "; color: #ffe3ee; }
+  body.girlie .card::before { background: repeating-linear-gradient(45deg, #fbd9e4 0 12px, #fff 12px 24px); }
+  body.girlie .card::after { content: "\1F380"; color: inherit; font-size: 14px; }
+  body.girlie .nav-btn { border-color: #c05a80; color: #8a3d5c; }
+  body.girlie .surprise-btn { background: linear-gradient(135deg, #e383a0 0%, #d4628a 55%, #c99327 130%); border-color: #d4628a; }
+  body.girlie .capsule { border-color: #e9a9bf; outline: 1.5px dashed rgba(192,90,128,.55); outline-offset: -9px; background: linear-gradient(180deg, #fff8fa 0%, #fdeef3 58%, #fbf0da 100%); }
+  body.girlie .capsule .cap-eyebrow { color: #c05a80; }
+  body.girlie .mood-label { color: #c05a80; }
+  body.dark.girlie .group-head { background: linear-gradient(90deg, #a34e72, #8a3d5f); }
+  body.dark.girlie .year-title { color: #f6aec6; }
+  body.dark.girlie .wrap { box-shadow: 0 26px 64px rgba(0,0,0,.4); }
 </style>
 </head>
-<body>
+<body class="cowgirl">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <linearGradient id="gDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#374151"/><stop offset="100%" stop-color="#111827"/></linearGradient>
 <linearGradient id="gWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c98d54"/><stop offset="100%" stop-color="#7c4f26"/></linearGradient>
@@ -239,6 +268,11 @@
     </div>
   </nav>
 
+  <div class="mood-row">
+    <p class="mood-label">Pick your mood</p>
+    <button class="mood-btn" id="moodGirlie" type="button" aria-pressed="false">&#127872; Girlie</button>
+    <button class="mood-btn" id="moodCowgirl" type="button" aria-pressed="true">&#129312; Cowgirl</button>
+  </div>
   <select class="year-select" id="yearSelect" aria-label="Choose a year"></select>
   <div class="timeline">
     <input type="range" id="yearSlider" min="1990" max="2009" step="1" value="1990" aria-label="Slide through the years">
@@ -520,6 +554,24 @@ themeToggle.addEventListener("change", function () {
   applyTheme(this.checked);
   try { localStorage.setItem("ashleys-theme", this.checked ? "dark" : "light"); } catch (e) {}
 });
+
+var moodGirlieBtn = document.getElementById("moodGirlie");
+var moodCowgirlBtn = document.getElementById("moodCowgirl");
+function applyMood(mood) {
+  var girlie = mood === "girlie";
+  document.body.classList.toggle("girlie", girlie);
+  document.body.classList.toggle("cowgirl", !girlie);
+  moodGirlieBtn.classList.toggle("active", girlie);
+  moodCowgirlBtn.classList.toggle("active", !girlie);
+  moodGirlieBtn.setAttribute("aria-pressed", girlie ? "true" : "false");
+  moodCowgirlBtn.setAttribute("aria-pressed", girlie ? "false" : "true");
+  try { localStorage.setItem("ashleys-tm-mood", girlie ? "girlie" : "cowgirl"); } catch (e) {}
+}
+var savedMood = "cowgirl";
+try { if (localStorage.getItem("ashleys-tm-mood") === "girlie") savedMood = "girlie"; } catch (e) {}
+applyMood(savedMood);
+moodGirlieBtn.addEventListener("click", function () { applyMood("girlie"); });
+moodCowgirlBtn.addEventListener("click", function () { applyMood("cowgirl"); });
 
 var deferredPrompt = null;
 window.addEventListener("beforeinstallprompt", function (e) { deferredPrompt = e; });
