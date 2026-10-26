@@ -92,6 +92,9 @@
   .polaroid-caption { font-family: 'Pixelise', 'Press Start 2P', monospace; font-size: 20px; line-height: 1.5; color: #222; text-align: center; margin-top: 19px; }
   .cartoon-credit { text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #888; margin: 6px 0 0; }
   body.dark .cartoon-credit { color: #9a948c; }
+  #sparkleLayer { position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden; }
+  .sparkle { position: absolute; line-height: 1; pointer-events: none; animation: sparkleFall 0.8s ease-out forwards; text-shadow: 0 0 6px rgba(185, 151, 91, 0.8); }
+  @keyframes sparkleFall { 0% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); } 100% { opacity: 0; transform: translate(var(--dx, 0px), 28px) scale(0.3) rotate(90deg); } }
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#111111">
@@ -372,6 +375,38 @@ var CARTOONS = [{"name": "Hey Arnold", "year": 1996, "img": "https://artworks.th
     last = now;
     if (t.id === 'sotdPlayBtn') chirp(); else blip();
   }, true);
+})();
+</script>
+<script>
+(function () {
+  var layer = document.createElement('div');
+  layer.id = 'sparkleLayer';
+  document.body.appendChild(layer);
+  var last = 0, lastX = -999, lastY = -999;
+  function spawn(x, y, n) {
+    for (var k = 0; k < n; k++) {
+      if (layer.childNodes.length > 40) return;
+      var s = document.createElement('span');
+      s.className = 'sparkle';
+      var size = 8 + Math.random() * 8;
+      s.textContent = ['\u2726', '\u2727', '\u2605'][Math.floor(Math.random() * 3)];
+      s.style.left = (x + (Math.random() * 16 - 8)) + 'px';
+      s.style.top = (y + (Math.random() * 16 - 8)) + 'px';
+      s.style.fontSize = size + 'px';
+      s.style.color = Math.random() < 0.6 ? '#b9975b' : '#ffffff';
+      s.style.setProperty('--dx', (Math.random() * 40 - 20) + 'px');
+      s.addEventListener('animationend', function () { s.remove(); });
+      layer.appendChild(s);
+    }
+  }
+  document.addEventListener('pointermove', function (e) {
+    var now = Date.now();
+    if (now - last < 40) return;
+    if (Math.abs(e.clientX - lastX) < 6 && Math.abs(e.clientY - lastY) < 6) return;
+    last = now; lastX = e.clientX; lastY = e.clientY;
+    spawn(e.clientX, e.clientY, 1);
+  }, { passive: true });
+  document.addEventListener('pointerdown', function (e) { spawn(e.clientX, e.clientY, 5); }, { passive: true });
 })();
 </script>
 </body>
