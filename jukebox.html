@@ -70,7 +70,7 @@
   @media (max-width: 480px) { .tv-lights .bulb { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
   .playlist-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 20px 0 8px; text-align: center; }
-  .playlist-menus { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; max-width: 780px; margin: 0 auto; }
+  .playlist-menus { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; max-width: 780px; margin: 0 auto; }
   .playlist-menu { text-align: center; min-width: 0; }
   .playlist-menu label { display: block; font-family: 'Indie Flower', cursive; font-size: 17px; letter-spacing: 1px; text-transform: uppercase; color: #6f6a62; font-weight: 600; margin: 0 0 6px 0; }
   .song-select { width: 100%; height: 50px; padding: 0 12px; font-family: 'Indie Flower', cursive; font-size: 20px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; }
@@ -246,9 +246,13 @@
       <label for="songs1990">1990</label>
       <select id="songs1990" class="song-select" data-playlist="5"><option value="">Choose a 1990 song&hellip;</option></select>
     </div>
+    <div class="playlist-menu" data-playlist="6">
+      <label for="songs2007">2007</label>
+      <select id="songs2007" class="song-select" data-playlist="6"><option value="">Choose a 2007 song&hellip;</option></select>
+    </div>
   </div>
 
-  <p class="note">Pick a song from 1990, 1995, 1997, 2001, 2003 or 2005 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a song from 1990, 1995, 1997, 2001, 2003, 2005 or 2007 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
   <p class="footer">Ashley&rsquo;s Spot &middot; Playlists</p>
 </div>
 <script>
@@ -428,6 +432,29 @@ var PLAYLISTS = [
   ["Rumor Has It", "Reba McEntire", "SlsRzSU9Emo"],
   ["Love Without End, Amen", "George Strait", "rkscNqCCDl0"],
   ["When I Call Your Name", "Vince Gill", "uwmGWCJOxnw"]
+  ] },
+  { name: "2007", songs: [
+  ["Umbrella", "Rihanna ft. Jay-Z", "CvBfHwUxHIk"],
+  ["Girlfriend", "Avril Lavigne", "Bg59q4puhmg"],
+  ["Beautiful Girls", "Sean Kingston", "MrTz5xjmso4"],
+  ["No One", "Alicia Keys", "rywUS-ohqeE"],
+  ["Apologize", "Timbaland ft. OneRepublic", "ZSM3w1v-A_Y"],
+  ["Love Song", "Sara Bareilles", "qi7Yh16dA0w"],
+  ["Stronger", "Kanye West", "PsO6ZnUZI0g"],
+  ["Crank That (Soulja Boy)", "Soulja Boy Tell'em", "8UFIYGkROII"],
+  ["Big Girls Don't Cry", "Fergie", "agrXgrAgQ0U"],
+  ["Untouched", "The Veronicas", "ykW4rtW2eu0"],
+  ["The Pretender", "Foo Fighters", "SBjQ9tuuTJQ"],
+  ["Icky Thump", "The White Stripes", "1OjTspCqvk8"],
+  ["Paralyzer", "Finger Eleven", "BJk6gZuPKRE"],
+  ["Misery Business", "Paramore", "aCyGvGEtOwc"],
+  ["Thnks fr th Mmrs", "Fall Out Boy", "onzL0EM1pKY"],
+  ["What I've Done", "Linkin Park", "DRlwSBY5oe8"],
+  ["Fake It", "Seether", "gy8HPSIFXEM"],
+  ["Never Wanted Nothing More", "Kenny Chesney", "5VnOSO1J22M"],
+  ["Teardrops on My Guitar", "Taylor Swift", "xKCek6_dB0M"],
+  ["Our Song", "Taylor Swift", "Jb2stN7kH28"],
+  ["Wasted", "Carrie Underwood", "paMzF1lnwGg"]
   ] }
 ];
 var SONGS = PLAYLISTS[0].songs;
