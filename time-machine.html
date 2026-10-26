@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Machine — Ashley Ayala</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111111">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; text-align: center; padding: 32px 16px 48px; line-height: 1.5; }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a7443; font-weight: 600; margin: 0 0 10px; }
+  h1 { font-family: Fraunces, Georgia, serif; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.5px; margin: 0 0 8px; }
+  .sub { color: #6f6a62; font-size: 15px; margin: 0 0 14px; }
+  .divider { width: 48px; height: 2px; background: #b9975b; margin: 0 auto 20px; border: none; }
+  .menu-row { margin: 0 0 18px; }
+  .menu-row button { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; background: transparent; color: #22211e; border: 1.5px solid #22211e; border-radius: 999px; padding: 8px 20px; cursor: pointer; font-weight: 600; }
+  .menu-panel { display: none; margin: 10px auto 0; max-width: 420px; background: #fff; border: 1px solid #ddd7cc; border-radius: 12px; padding: 6px 0; }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 600; color: #22211e; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 600; color: #22211e; background: none; border: none; padding: 10px 0; cursor: pointer; }
+  .menu-panel button.install-btn:hover { background: #f7f4ee; }
+  .menu-panel a:hover { background: #f7f4ee; }
+  .menu-panel a:last-child { border-bottom: none; }
+  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
+  .theme-switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
+  .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .theme-switch .slider { position: absolute; inset: 0; background: #c9c2b6; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: .25s; }
+  .theme-switch input:checked + .slider { background: #b9975b; }
+  .theme-switch input:checked + .slider::before { transform: translateX(22px); }
+  .theme-switch input:focus-visible + .slider { outline: 2px solid #b9975b; outline-offset: 2px; }
+  .year-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-width: 640px; margin: 0 auto 24px; }
+  .year-btn { font-family: Inter, Arial, sans-serif; font-size: 15px; font-weight: 600; color: #22211e; background: #fff; border: 1.5px solid #ddd7cc; border-radius: 999px; padding: 9px 0; cursor: pointer; }
+  .year-btn:hover { border-color: #b9975b; }
+  .year-btn.active { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background: #fdf8ee; color: #8a7443; }
+  .year-title { font-family: Fraunces, Georgia, serif; font-size: 34px; font-weight: 600; margin: 0 0 18px; }
+  .card { background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 20px 22px; margin: 0 auto 16px; max-width: 720px; text-align: left; }
+  .card h2 { font-family: Fraunces, Georgia, serif; font-size: 22px; font-weight: 600; margin: 0 0 12px; }
+  .item-list { list-style: none; margin: 0; padding: 0; }
+  .item-list li { padding: 7px 0; border-bottom: 1px solid #eee9df; font-size: 15px; }
+  .item-list li:last-child { border-bottom: none; }
+  .item-list .t { font-weight: 600; }
+  .toon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+  .toon { text-align: center; }
+  .toon img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; border: 1px solid #ddd7cc; background: #eee9df; }
+  .toon-name { font-size: 14px; font-weight: 600; margin: 7px 0 0; }
+  .toon-credit { font-size: 11px; color: #8a857e; margin: 0; }
+  .toy { font-family: Fraunces, Georgia, serif; font-size: 24px; font-weight: 600; margin: 0; }
+  .note { color: #8a857e; font-size: 14px; margin: 0; }
+  .footer { margin-top: 24px; color: #8a857e; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  body.dark { background: #1c1a17; color: #f4f1ea; }
+  body.dark .eyebrow { color: #d4b978; }
+  body.dark .sub { color: #b8b0a3; }
+  body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
+  body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
+  body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .menu-panel a:hover { background: #33302b; }
+  body.dark .menu-panel button.install-btn { color: #f4f1ea; }
+  body.dark .menu-panel button.install-btn:hover { background: #33302b; }
+  body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
+  body.dark .year-btn { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .year-btn.active { background: #3a3226; color: #d4b978; }
+  body.dark .card { background: #2a2723; border-color: #44403a; }
+  body.dark .item-list li { border-bottom-color: #3a3631; }
+  body.dark .toon img { border-color: #55504a; background: #33302b; }
+  body.dark .toon-credit, body.dark .note, body.dark .footer { color: #9a948c; }
+  @media (max-width: 480px) {
+    .year-grid { grid-template-columns: repeat(4, 1fr); }
+    h1 { font-size: 32px; }
+    .card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Ashley's Spot</p>
+  <h1>Time Machine</h1>
+  <p class="sub">Pick a year, 1990 through 2009, and see what was popular: the movies, songs, cartoons, and toys.</p>
+  <hr class="divider">
+  <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
+  <nav id="menuPanel" class="menu-panel">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="jukebox.html">Jukebox</a>
+    <a href="time-machine.html">Time Machine</a>
+      <button class="install-btn" id="installBtn" type="button">Install App</button>
+    <div class="theme-toggle">
+      <span>Light</span>
+      <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+      <span>Dark</span>
+    </div>
+  </nav>
+
+  <div class="year-grid" id="yearGrid"></div>
+  <p class="year-title" id="yearTitle">1997</p>
+
+  <section class="card">
+    <h2>&#127916; Movies from this year</h2>
+    <ul class="item-list" id="movieList"></ul>
+  </section>
+
+  <section class="card">
+    <h2>&#127926; Songs from this year</h2>
+    <ul class="item-list" id="songList"></ul>
+  </section>
+
+  <section class="card">
+    <h2>&#127902; Cartoons that premiered this year</h2>
+    <div class="toon-grid" id="toonGrid"></div>
+    <p class="note" id="toonNote" style="display:none;"></p>
+  </section>
+
+  <section class="card">
+    <h2>&#129513; Toy everyone wanted this year</h2>
+    <p class="toy" id="toyText"></p>
+  </section>
+
+  <p class="footer">Ashley's Spot &middot; Time Machine</p>
+</div>
+<script>
+var YEARS = {
+1990: { movies: ["Home Alone", "Pretty Woman"], toy: "Teenage Mutant Ninja Turtles action figures", songs: [["Ice Ice Baby", "Vanilla Ice"], ["U Can't Touch This", "MC Hammer"], ["Vogue", "Madonna"], ["Nothing Compares 2 U", "Sinéad O'Connor"]], toons: [{ n: "Tiny Toon Adventures", img: "https://wallpapercave.com/wp/wp11101903.jpg", c: "WallpaperCave" }] },
+1991: { movies: ["Beauty and the Beast", "Terminator 2: Judgment Day"], toy: "Super Soaker", songs: [["Smells Like Teen Spirit", "Nirvana"], ["Black or White", "Michael Jackson"], ["Losing My Religion", "R.E.M."], ["One", "U2"]], toons: [{ n: "Rugrats", img: "https://s3.cine3.com/2020/06/Rugrats.jpg", c: "Cine3" }, { n: "Doug", img: "https://vignette.wikia.nocookie.net/doug/images/a/a5/Doug_Funnie2.png/revision/latest/scale-to-width-down/310?cb=20180531191407", c: "Doug Wiki" }] },
+1992: { movies: ["Aladdin", "Home Alone 2: Lost in New York"], toy: "Super Nintendo", songs: [["I Will Always Love You", "Whitney Houston"], ["Under the Bridge", "Red Hot Chili Peppers"], ["November Rain", "Guns N' Roses"], ["Jump", "Kriss Kross"]], toons: [{ n: "Batman: The Animated Series", img: "https://serializd-tmdb-images.b-cdn.net/t/p/w500/wK7mVHirAmVYN9UZWo5BK1jABL1.jpg", c: "TMDB" }] },
+1993: { movies: ["Jurassic Park", "Mrs. Doubtfire"], toy: "Mighty Morphin Power Rangers figures", songs: [["Whoomp! (There It Is)", "Tag Team"], ["What's Up?", "4 Non Blondes"], ["Dreamlover", "Mariah Carey"], ["Mr. Jones", "Counting Crows"]], toons: [{ n: "Rocko's Modern Life", img: "https://image.tmdb.org/t/p/original/eNFd9Hz17mI76LfUzP66jIZPYCU.jpg", c: "TMDB" }, { n: "Animaniacs", img: "https://flxt.tmsimg.com/assets/p18658414_i_h8_aa.jpg", c: "TMS" }] },
+1994: { movies: ["The Lion King", "Forrest Gump"], toy: "POGs", songs: [["The Sign", "Ace of Base"], ["Stay (I Missed You)", "Lisa Loeb"], ["Can You Feel the Love Tonight", "Elton John"], ["Black Hole Sun", "Soundgarden"]], toons: [{ n: "Aaahh!!! Real Monsters", img: "https://images.sr.roku.com/idType/roku/context/global/id/af13cb1d67a550f889aa7bf6351b289f/rokuFeed/assets/284e90f347295df38367c7d4662d4f81.jpg/magic/fit-in/0x720/filters:format(webp)", c: "Roku" }] },
+1995: { movies: ["Toy Story", "Apollo 13"], toy: "Buzz Lightyear", songs: [["Gangsta's Paradise", "Coolio"], ["Waterfalls", "TLC"], ["Wonderwall", "Oasis"], ["Kiss from a Rose", "Seal"]], toons: [{ n: "Pinky and the Brain", img: "https://static1.srcdn.com/wordpress/wp-content/uploads/2016/09/Forgotten-Cartoons-Pinky-and-the-Brain.jpg", c: "Screen Rant" }] },
+1996: { movies: ["Independence Day", "Twister"], toy: "Beanie Babies", songs: [["One Sweet Day", "Mariah Carey & Boyz II Men"], ["Because You Loved Me", "Celine Dion"], ["Macarena", "Los del Río"], ["Ironic", "Alanis Morissette"]], toons: [{ n: "Hey Arnold", img: "https://artworks.thetvdb.com/banners/v4/series/72005/clearart/611c7629a0d5f.png", c: "TheTVDB" }, { n: "Dexter's Laboratory", img: "https://i.pinimg.com/originals/a1/15/1d/a1151dc9ad0272a6c9694fbde0990a2e.jpg", c: "Pinterest" }, { n: "Arthur", img: "https://is1-ssl.mzstatic.com/image/thumb/Video113/v4/f9/28/3d/f9283d5d-77bc-fbed-3570-8c553007909b/pr_source.png/1200x675.webp", c: "Apple TV" }] },
+1997: { movies: ["Titanic", "Men in Black"], toy: "Tamagotchi", songs: [["MMMBop", "Hanson"], ["Barbie Girl", "Aqua"], ["Tubthumping", "Chumbawamba"], ["Bitter Sweet Symphony", "The Verve"]], toons: [{ n: "The Angry Beavers", img: "https://images.theposterdb.com/prod/public/images/posters/optimized/shows/29552/season_c/s7mYch33139hd6dvBJ4QRh3pdMMOr3IT5CFE5YoH.webp", c: "The Poster DB" }, { n: "Johnny Bravo", img: "https://wallpapers.com/images/high/cool-johnny-bravo-flexing-muscles-pcruylbkuro9bkra.jpg", c: "Wallpapers.com" }, { n: "Cow and Chicken", img: "https://seriesytemporadas.com//mediabank/posters/6581/6581_66438a4d422cb.jpg", c: "Series y Temporadas" }, { n: "Recess", img: "https://cdn.mos.cms.futurecdn.net/J7KAagMAR6UMLXhimxtNtM.jpg", c: "CinemaBlend" }, { n: "Pepper Ann", img: "https://bilder.fernsehserien.de/gfx/bv/pepper-ann_329919.jpg", c: "fernsehserien.de" }, { n: "Pokemon", img: "https://static0.srcdn.com/wordpress/wp-content/uploads/2022/12/ash-poster.jpg?q=49&fit=contain&w=1400&h=700&dpr=2", c: "Screen Rant" }] },
+1998: { movies: ["Saving Private Ryan", "Armageddon"], toy: "Furby", songs: [["My Heart Will Go On", "Celine Dion"], ["Iris", "Goo Goo Dolls"], ["Torn", "Natalie Imbruglia"], ["I Don't Want to Wait", "Paula Cole"]], toons: [{ n: "CatDog", img: "https://images.fineartamerica.com/images/artworkimages/medium/3/catdog-classic-title-poster-kaycen-sumeyr-transparent.png", c: "Fine Art America" }, { n: "The Wild Thornberrys", img: "https://i.pinimg.com/originals/37/56/a1/3756a148f412f83852f0bd2274507543.jpg", c: "Pinterest" }, { n: "The Powerpuff Girls", img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhmrZqTaNe759YgDpD6aROk32ftnjB_AkYzD7Wx5djxr5Nv00hLej-xgEiejCPNbBJ2GMJ8TJipbn2LRjDtk90KOr81-RuAGfkK3BRkInDwsq2Q0WHZZZMM-DRHzSY29YOnRrgLGwDppY0/s400/7950super_poderosas.jpg", c: "Blogspot" }] },
+1999: { movies: ["The Matrix", "Star Wars: Episode I - The Phantom Menace"], toy: "Pokémon cards", songs: [["...Baby One More Time", "Britney Spears"], ["No Scrubs", "TLC"], ["Smooth", "Santana ft. Rob Thomas"], ["Livin' la Vida Loca", "Ricky Martin"]], toons: [{ n: "Ed, Edd n Eddy", img: "https://i.pinimg.com/originals/f1/5d/c2/f15dc25c69747cc3c5478b25e6d69576.jpg", c: "Pinterest" }, { n: "Courage the Cowardly Dog", img: "https://images.plex.tv/photo?size=large-1920&scale=1&url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2FuJQsBgzlrgZpjeB5fHBtJQA04nS.jpg", c: "Plex" }, { n: "SpongeBob SquarePants", img: "https://image.tmdb.org/t/p/w500/b2MHt0CCufI8SjvU9oS5qn84RPE.jpg", c: "TMDB" }, { n: "Rocket Power", img: "https://wwwimage-us.pplusstatic.com/thumbnails/photos/w600-q80/show_asset/52/88/22/show_asset_95feee55-2e5b-4f2e-bcd3-0330543b0e88.jpg?format=webp", c: "Paramount+" }] },
+2000: { movies: ["Gladiator", "Cast Away"], toy: "Razor scooter", songs: [["Bye Bye Bye", "*NSYNC"], ["Oops!... I Did It Again", "Britney Spears"], ["Beautiful Day", "U2"], ["It Wasn't Me", "Shaggy"]], toons: [{ n: "As Told by Ginger", img: "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/lXQpWlN24cxwBjNvqOUju2WouDg.jpg", c: "TMDB" }] },
+2001: { movies: ["Shrek", "Harry Potter and the Sorcerer's Stone"], toy: "Bratz dolls", songs: [["Fallin'", "Alicia Keys"], ["How You Remind Me", "Nickelback"], ["Drops of Jupiter", "Train"], ["I'm Real", "Jennifer Lopez"]], toons: [{ n: "The Fairly OddParents", img: "https://static0.thegamerimages.com/wordpress/wp-content/uploads/2021/04/Fairly-Odd-Parents-1.jpg", c: "TheGamer" }, { n: "The Proud Family", img: "https://m.media-amazon.com/images/S/pv-target-images/0fb64b3f29a43ad278e3498aab16f9c4aa01c82c8174eccbd4f9e96de670bbf6._BR-6_AC_SX720_FMjpg_.jpg", c: "Amazon Prime Video" }, { n: "Samurai Jack", img: "https://flxt.tmsimg.com/assets/p481593_i_v9_ae.jpg", c: "TMS" }, { n: "Invader Zim", img: "https://wallpapers.com/images/hd/invader-zim-pictures-yzt2p9xrbk8h1nyu.jpg", c: "Wallpapers.com" }] },
+2002: { movies: ["Spider-Man", "Harry Potter and the Chamber of Secrets"], toy: "Beyblades", songs: [["Lose Yourself", "Eminem"], ["A Thousand Miles", "Vanessa Carlton"], ["Hot in Herre", "Nelly"], ["Dilemma", "Nelly ft. Kelly Rowland"]], toons: [{ n: "Jimmy Neutron", img: "https://image.tmdb.org/t/p/w300_and_h450_bestv2//gkyWqFS4H8ZLpLoBhNvig6Qtgzs.jpg", c: "TMDB" }, { n: "Kim Possible", img: "https://media.christophernguyen.dev/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Fw500%2FqsDNX8DPwWydDn9oUIhe1WcTuUH.jpg&w=1080&q=75", c: "TMDB" }, { n: "Codename: Kids Next Door", img: "https://images.plex.tv/photo?size=large-1920&scale=1&url=https%3A%2F%2Fmetadata-static.plex.tv%2F2%2Fgracenote%2F2c5e47d30885893a65b7747164ddf1e3.jpg", c: "Plex" }] },
+2003: { movies: ["Finding Nemo", "Pirates of the Caribbean: The Curse of the Black Pearl"], toy: "Yu-Gi-Oh! cards", songs: [["In da Club", "50 Cent"], ["Crazy in Love", "Beyoncé ft. Jay-Z"], ["Hey Ya!", "Outkast"], ["Seven Nation Army", "The White Stripes"]], toons: [{ n: "Teen Titans", img: "https://image.tmdb.org/t/p/w440_and_h660_face/cAkgNr5EfsBYVlQhKqSLtXFyAzE.jpg", c: "TMDB" }, { n: "The Grim Adventures of Billy & Mandy", img: "https://d17lbu6bbzbdc8.cloudfront.net/wp-content/uploads/2021/12/07213227/billy-mandy-1200x900-1.jpg", c: "YouCut" }, { n: "My Life as a Teenage Robot", img: "https://d2biqbseuutm43.cloudfront.net/wp-content/uploads/2021/07/23132521/NAS-mylifeas-1.png", c: "Cloudfront" }, { n: "Lilo & Stitch: The Series", img: "https://image.tmdb.org/t/p/w1280/b5hcQ4fMpZTmGrzmxoCGJzbEMTC.jpg", c: "TMDB" }] },
+2004: { movies: ["Shrek 2", "Spider-Man 2"], toy: "Robosapien", songs: [["Yeah!", "Usher ft. Lil Jon & Ludacris"], ["Goodies", "Ciara"], ["My Place", "Nelly"], ["Slow Jamz", "Twista"]], toons: [{ n: "Danny Phantom", img: "https://static0.srcdn.com/wordpress/wp-content/uploads/2019/03/Danny-Phantom.jpg?q=50&fit=crop&w=1600&h=900&dpr=1.5", c: "Screen Rant" }, { n: "Foster's Home for Imaginary Friends", img: "https://image.tmdb.org/t/p/original/rocStLc3VNlVTg5p7TY0uqUcGCw.jpg", c: "TMDB" }] },
+2005: { movies: ["Batman Begins", "Harry Potter and the Goblet of Fire"], toy: "Webkinz", songs: [["We Belong Together", "Mariah Carey"], ["Hollaback Girl", "Gwen Stefani"], ["Gold Digger", "Kanye West"], ["Since U Been Gone", "Kelly Clarkson"]], toons: [{ n: "Avatar: The Last Airbender", img: "https://m.media-amazon.com/images/S/pv-target-images/38c48cea1f7c66a881f0e917991661e58aca623d87f06d83abd8a9d8bf4ec65c._SX1080_FMjpg_.jpg", c: "Amazon" }, { n: "Ben 10", img: "https://cipit.strathmore.edu/wp-content/uploads/2013/10/ben-10-cartoon-network-cn-poster.jpg", c: "Strathmore University" }] },
+2006: { movies: ["Pirates of the Caribbean: Dead Man's Chest", "Cars"], toy: "Tickle Me Elmo TMX", songs: [["Crazy", "Gnarls Barkley"], ["Hips Don't Lie", "Shakira ft. Wyclef Jean"], ["SexyBack", "Justin Timberlake"], ["Promiscuous", "Nelly Furtado ft. Timbaland"]], toons: [] },
+2007: { movies: ["Ratatouille", "Spider-Man 3"], toy: "Wii", songs: [["Umbrella", "Rihanna ft. Jay-Z"], ["Apologize", "Timbaland ft. OneRepublic"], ["Stronger", "Kanye West"], ["No One", "Alicia Keys"]], toons: [{ n: "Phineas and Ferb", img: "https://flxt.tmsimg.com/assets/p186178_b_h9_az.jpg", c: "TMS" }, { n: "Chowder", img: "https://i.pinimg.com/736x/84/89/a3/8489a3b59aa50fd21ca20724b9fe8403--chowder-cartoon-network-chowders.jpg", c: "Pinterest" }] },
+2008: { movies: ["The Dark Knight", "WALL-E"], toy: "Bakugan", songs: [["I Kissed a Girl", "Katy Perry"], ["Single Ladies (Put a Ring on It)", "Beyoncé"], ["Poker Face", "Lady Gaga"], ["Disturbia", "Rihanna"]], toons: [{ n: "The Marvelous Misadventures of Flapjack", img: "https://i.pinimg.com/originals/a1/45/51/a14551dc394a51f9797da216961afa86.jpg", c: "Pinterest" }] },
+2009: { movies: ["Avatar", "Up"], toy: "Zhu Zhu Pets", songs: [["I Gotta Feeling", "Black Eyed Peas"], ["Bad Romance", "Lady Gaga"], ["Party in the U.S.A.", "Miley Cyrus"], ["Fireflies", "Owl City"]], toons: [] }
+};
+
+function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+
+function showYear(y) {
+  var d = YEARS[y];
+  document.getElementById("yearTitle").textContent = y;
+  var ml = document.getElementById("movieList");
+  ml.innerHTML = "";
+  d.movies.forEach(function (m) {
+    var li = document.createElement("li");
+    li.innerHTML = '<span class="t">' + esc(m) + "</span>";
+    ml.appendChild(li);
+  });
+  var sl = document.getElementById("songList");
+  sl.innerHTML = "";
+  d.songs.forEach(function (s) {
+    var li = document.createElement("li");
+    li.innerHTML = '<span class="t">' + esc(s[0]) + "</span> - " + esc(s[1]);
+    sl.appendChild(li);
+  });
+  var tg = document.getElementById("toonGrid");
+  var tn = document.getElementById("toonNote");
+  tg.innerHTML = "";
+  if (d.toons.length === 0) {
+    tn.style.display = "block";
+    tn.textContent = "No cartoon from your collection premiered in " + y + ".";
+  } else {
+    tn.style.display = "none";
+    d.toons.forEach(function (t) {
+      var div = document.createElement("div");
+      div.className = "toon";
+      div.innerHTML = '<img src="' + t.img + '" alt="' + esc(t.n) + '" loading="lazy" onerror="this.style.display=\'none\'"><p class="toon-name">' + esc(t.n) + '</p><p class="toon-credit">Photo: ' + esc(t.c) + "</p>";
+      tg.appendChild(div);
+    });
+  }
+  document.getElementById("toyText").textContent = d.toy;
+  var btns = document.querySelectorAll(".year-btn");
+  btns.forEach(function (b) { b.classList.toggle("active", b.textContent === String(y)); });
+}
+
+var grid = document.getElementById("yearGrid");
+Object.keys(YEARS).sort().forEach(function (y) {
+  var b = document.createElement("button");
+  b.className = "year-btn";
+  b.type = "button";
+  b.textContent = y;
+  b.addEventListener("click", function () { showYear(y); });
+  grid.appendChild(b);
+});
+showYear("1997");
+
+document.getElementById("menuBtn").addEventListener("click", function () {
+  var panel = document.getElementById("menuPanel");
+  panel.classList.toggle("open");
+  this.setAttribute("aria-expanded", panel.classList.contains("open"));
+});
+
+var themeToggle = document.getElementById("themeToggle");
+function applyTheme(dark) {
+  document.body.classList.toggle("dark", dark);
+  themeToggle.checked = dark;
+}
+try { if (localStorage.getItem("ashleys-theme") === "dark") applyTheme(true); } catch (e) {}
+themeToggle.addEventListener("change", function () {
+  applyTheme(this.checked);
+  try { localStorage.setItem("ashleys-theme", this.checked ? "dark" : "light"); } catch (e) {}
+});
+
+var deferredPrompt = null;
+window.addEventListener("beforeinstallprompt", function (e) { deferredPrompt = e; });
+var installBtn = document.getElementById("installBtn");
+if (installBtn) {
+  installBtn.addEventListener("click", function () {
+    if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; }
+    else { alert("To install Ashley's Spot on your phone: open this page in Chrome, tap the three dots menu, then tap Add to Home Screen."); }
+  });
+}
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    try { navigator.serviceWorker.register("sw.js"); } catch (e) {}
+  });
+}
+</script>
+</body>
+</html>
