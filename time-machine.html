@@ -39,6 +39,7 @@
   .year-title { font-family: Fraunces, Georgia, serif; font-size: 34px; font-weight: 600; margin: 0 0 18px; }
   .card { background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 20px 22px; margin: 0 auto 16px; max-width: 720px; text-align: left; }
   .card h2 { font-family: Fraunces, Georgia, serif; font-size: 22px; font-weight: 600; margin: 0 0 12px; }
+  .card h2 .hicon { width: 24px; height: 24px; vertical-align: -5px; margin-right: 8px; }
   .item-list { list-style: none; margin: 0; padding: 0; }
   .item-list li { padding: 7px 0; border-bottom: 1px solid #eee9df; font-size: 15px; }
   .item-list li:last-child { border-bottom: none; }
@@ -98,64 +99,64 @@
   <p class="year-title" id="yearTitle">1997</p>
 
   <section class="card">
-    <h2>&#127916; Movies from this year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h18"/><path d="M3 10l1.8-5h14.4L21 10"/><path d="M3 10v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9"/><path d="M8 5l2 5M13 5l2 5M17.5 5l1.5 5"/></svg> Movies from this year</h2>
     <ul class="item-list" id="movieList"></ul>
   </section>
 
   <section class="card">
-    <h2>&#127926; Songs from this year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V6l10-2v11"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="15" r="2.5"/></svg> Songs from this year</h2>
     <ul class="item-list" id="songList"></ul>
   </section>
 
   <section class="card">
-    <h2>&#127902; Cartoons that premiered this year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1-4L16 5l3 3L8 19l-4 1z"/><path d="M14 7l3 3"/></svg> Cartoons that premiered this year</h2>
     <div class="toon-grid" id="toonGrid"></div>
     <p class="note" id="toonNote" style="display:none;"></p>
   </section>
 
   <section class="card">
-    <h2>&#129513; Toy everyone wanted this year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 8l1.2 2.4 2.8.4-2 2 1 2.7-3-1.5-3 1.5 1-2.7-2-2 2.8-.4z"/></svg> Toy everyone wanted this year</h2>
     <p class="toy" id="toyText"></p>
   </section>
 
   <section class="card">
-    <h2>&#128176; Prices that year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4h8l9 9-8 8-9-9z"/><circle cx="8" cy="9" r="1.5"/></svg> Prices that year</h2>
     <ul class="item-list" id="priceList"></ul>
     <p class="note">Average US prices, rounded.</p>
   </section>
 
   <section class="card">
-    <h2>&#128096; What everyone was wearing</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3L4 5l2.5 4L9 7.5V21h6V7.5L17.5 9 20 5l-5-2a3.5 3.5 0 0 1-6 0z"/></svg> What everyone was wearing</h2>
     <p class="toy" id="clothesText"></p>
   </section>
 
   <section class="card">
-    <h2>&#128172; Words everyone was saying</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H10l-5 5v-5H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg> Words everyone was saying</h2>
     <p class="toy" id="wordsText"></p>
   </section>
 
   <section class="card">
-    <h2>&#128250; TV shows popular that year</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M8 6L12 2l4 4"/><path d="M9 19h6"/></svg> TV shows popular that year</h2>
     <ul class="item-list" id="showList"></ul>
   </section>
 
   <section class="card">
-    <h2>&#127918; Video game everyone was playing</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10a5 5 0 0 1 5 5c0 3-2 5-4 4l-2-1H8l-2 1c-2 1-4-1-4-4a5 5 0 0 1 5-5z"/><path d="M8 11v4M6 13h4"/><circle cx="16" cy="12" r="1"/><circle cx="18.5" cy="14.5" r="1"/></svg> Video game everyone was playing</h2>
     <p class="toy" id="gameText"></p>
   </section>
 
   <section class="card">
-    <h2>&#128241; Gadget everyone wanted</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M10.5 18.5h3"/></svg> Gadget everyone wanted</h2>
     <p class="toy" id="gadgetText"></p>
   </section>
 
   <section class="card">
-    <h2>&#128214; Book everyone was reading</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 3v18"/><path d="M13 8h3M13 12h3"/></svg> Book everyone was reading</h2>
     <p class="toy" id="bookText"></p>
   </section>
 
   <section class="card">
-    <h2>&#127848; Snack everyone was eating</h2>
+    <h2><svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="#b9975b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M12 13v8"/></svg> Snack everyone was eating</h2>
     <p class="toy" id="snackText"></p>
   </section>
 
