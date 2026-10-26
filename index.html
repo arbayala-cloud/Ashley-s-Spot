@@ -72,6 +72,10 @@
   #sotdPlayer { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   body.dark .sotd-label { color: #b8b0a3; }
   body.dark .sotd-track { color: #f4f1ea; }
+  .cartoon-photo { width: 100%; height: auto; display: block; border: 1px solid #111; padding: 8px; background: #fff; }
+  body.dark .cartoon-photo { border-color: #f4f1ea; background: #1c1a17; }
+  .cartoon-credit { text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #888; margin: 6px 0 0; }
+  body.dark .cartoon-credit { color: #9a948c; }
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#111111">
@@ -100,8 +104,8 @@
   </header>
 
   <section>
-    <img class="mila-photo" src="mila.jpg" alt="Mila">
-    <p class="caption">She rules the whole house.</p>
+    <img class="cartoon-photo" id="dailyCartoon" src="" alt="90s cartoon of the day">
+    <p class="cartoon-credit" id="cartoonCredit"></p>
   </section>
 
 
@@ -269,6 +273,30 @@ var SOTD = [["Thriller", "Michael Jackson", "sOnqjkJTMaA"], ["Monster Mash", "Bo
     wantPlay = true;
     if (playerReady) { player.loadVideoById(song[2]); started = true; }
   });
+})();
+</script>
+
+<script>
+var CARTOONS = [{"name": "Hey Arnold", "img": "https://artworks.thetvdb.com/banners/v4/series/72005/clearart/611c7629a0d5f.png", "credit": "TheTVDB"}, {"name": "CatDog", "img": "https://images.fineartamerica.com/images/artworkimages/medium/3/catdog-classic-title-poster-kaycen-sumeyr-transparent.png", "credit": "Fine Art America"}, {"name": "Rugrats", "img": "https://s3.cine3.com/2020/06/Rugrats.jpg", "credit": "Cine3"}, {"name": "Doug", "img": "https://vignette.wikia.nocookie.net/doug/images/a/a5/Doug_Funnie2.png/revision/latest/scale-to-width-down/310?cb=20180531191407", "credit": "Doug Wiki (Fandom)"}, {"name": "Rocko's Modern Life", "img": "https://image.tmdb.org/t/p/original/eNFd9Hz17mI76LfUzP66jIZPYCU.jpg", "credit": "TMDB"}, {"name": "Aaahh!!! Real Monsters", "img": "https://images.sr.roku.com/idType/roku/context/global/id/af13cb1d67a550f889aa7bf6351b289f/rokuFeed/assets/284e90f347295df38367c7d4662d4f81.jpg/magic/fit-in/0x720/filters:format(webp)", "credit": "Roku"}, {"name": "The Wild Thornberrys", "img": "https://i.pinimg.com/originals/37/56/a1/3756a148f412f83852f0bd2274507543.jpg", "credit": "Pinterest"}, {"name": "The Angry Beavers", "img": "https://images.theposterdb.com/prod/public/images/posters/optimized/shows/29552/season_c/s7mYch33139hd6dvBJ4QRh3pdMMOr3IT5CFE5YoH.webp", "credit": "The Poster DB"}];
+(function () {
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var day = Math.floor((now - start) / 86400000);
+  var idx = day % CARTOONS.length;
+  var tries = 0;
+  var img = document.getElementById('dailyCartoon');
+  var cred = document.getElementById('cartoonCredit');
+  function show(i) {
+    var c = CARTOONS[i % CARTOONS.length];
+    img.alt = c.name + ' - 90s cartoon of the day';
+    cred.textContent = c.name + ' \u2014 Photo: ' + c.credit;
+    img.src = c.img;
+  }
+  img.onerror = function () {
+    tries++;
+    if (tries < CARTOONS.length) { idx = (idx + 1) % CARTOONS.length; show(idx); }
+  };
+  show(idx);
 })();
 </script>
 </body>
