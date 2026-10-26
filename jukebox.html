@@ -33,6 +33,7 @@
   .eq { display: flex; align-items: flex-end; justify-content: center; gap: 3px; height: 46px; max-width: 640px; margin: 0 auto 10px; }
   .eq i { flex: 1; max-width: 14px; height: 100%; border-radius: 4px 4px 2px 2px; transform-origin: bottom; animation: eqbounce 0.9s ease-in-out infinite alternate; animation-play-state: paused; }
   .eq.playing i { animation-play-state: running; }
+  .eq.beatsync i { animation: none; }
   .eq i:nth-child(7n+1) { background: #ff5d8f; }
   .eq i:nth-child(7n+2) { background: #ff9f1c; }
   .eq i:nth-child(7n+3) { background: #ffd60a; }
@@ -478,6 +479,7 @@ var PLAYLISTS = [
   ["Wasted", "Carrie Underwood", "paMzF1lnwGg"]
   ] }
 ];
+var BPM2007 = { "CvBfHwUxHIk": 87, "Bg59q4puhmg": 164, "MrTz5xjmso4": 130, "rywUS-ohqeE": 90, "ZSM3w1v-A_Y": 118, "qi7Yh16dA0w": 123, "PsO6ZnUZI0g": 104, "8UFIYGkROII": 140, "agrXgrAgQ0U": 113, "ykW4rtW2eu0": 177, "SBjQ9tuuTJQ": 173, "1OjTspCqvk8": 92, "BJk6gZuPKRE": 106, "aCyGvGEtOwc": 173, "onzL0EM1pKY": 154, "DRlwSBY5oe8": 120, "gy8HPSIFXEM": 132, "5VnOSO1J22M": 89, "xKCek6_dB0M": 100, "Jb2stN7kH28": 89, "paMzF1lnwGg": 95 };
 var SONGS = PLAYLISTS[0].songs;
 var currentPlaylistIndex = 0;
 
@@ -506,6 +508,7 @@ function onYouTubeIframeAPIReady() {
         else if (e.data === 2) { setPlaying(false); }
       },
       onError: function() {
+        isPlaying = false;
         setStatus("This video could not play here");
       }
     }
@@ -537,6 +540,7 @@ function setStatus(text, playing) {
   }
   notesEl.classList.toggle("playing", !!playing);
   if (eqEl) { eqEl.classList.toggle("playing", !!playing); }
+  updateBeatSync();
 }
 function showChannelBanner() {
   if (currentIndex < 0) return;
@@ -568,6 +572,46 @@ function setPower(on) {
 function setPlaying(playing) {
   isPlaying = playing;
   setStatus(playing ? "Playing" : "Paused", playing);
+}
+var beatTimer = null;
+var beatBars = null;
+var beatGen = 0;
+function stopBeatSync() {
+  if (beatTimer) { clearInterval(beatTimer); beatTimer = null; }
+  beatGen++;
+  if (eqEl) { eqEl.classList.remove("beatsync"); }
+  if (beatBars) { for (var i = 0; i < beatBars.length; i++) { beatBars[i].style.transform = ""; beatBars[i].style.transition = ""; } beatBars = null; }
+}
+function startBeatSync() {
+  stopBeatSync();
+  if (!eqEl || currentPlaylistIndex !== 6 || currentIndex < 0) return;
+  var bpm = BPM2007[SONGS[currentIndex][2]];
+  if (!bpm) return;
+  if (bpm > 150) { bpm = bpm / 2; }
+  beatBars = eqEl.querySelectorAll("i");
+  eqEl.classList.add("beatsync");
+  var period = 60000 / bpm;
+  var gen = beatGen;
+  var tick = function() {
+    if (!isPlaying) return;
+    for (var i = 0; i < beatBars.length; i++) {
+      (function(bar) {
+        var peak = 0.45 + Math.random() * 0.55;
+        bar.style.transition = "transform " + Math.round(period * 0.18) + "ms ease-out";
+        bar.style.transform = "scaleY(" + peak.toFixed(2) + ")";
+        setTimeout(function() {
+          if (gen !== beatGen) return;
+          bar.style.transition = "transform " + Math.round(period * 0.8) + "ms ease-in";
+          bar.style.transform = "scaleY(0.15)";
+        }, Math.round(period * 0.2));
+      })(beatBars[i]);
+    }
+  };
+  tick();
+  beatTimer = setInterval(tick, period);
+}
+function updateBeatSync() {
+  if (isPlaying && currentPlaylistIndex === 6) { startBeatSync(); } else { stopBeatSync(); }
 }
 function setPlaylist(idx) {
   if (idx < 0 || idx >= PLAYLISTS.length || idx === currentPlaylistIndex) return;
