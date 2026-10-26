@@ -69,6 +69,28 @@
   body.dark .item-list li { border-bottom-color: #3a3631; }
   body.dark .toon img { border-color: #55504a; background: #33302b; }
   body.dark .toon-credit, body.dark .note, body.dark .footer { color: #9a948c; }
+
+  .year-nav { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin: 0 auto 18px; max-width: 520px; }
+  .year-nav.bottom { margin: 26px auto 4px; }
+  .nav-btn { font-family: Inter, Arial, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: #fff; color: #22211e; border: 1.5px solid #22211e; border-radius: 999px; padding: 9px 18px; cursor: pointer; }
+  .nav-btn:disabled { opacity: .35; cursor: default; }
+  .surprise-btn { font-family: Inter, Arial, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: #b9975b; color: #fff; border: 1.5px solid #b9975b; border-radius: 999px; padding: 9px 20px; cursor: pointer; }
+  .nav-btn:hover:not(:disabled), .surprise-btn:hover { filter: brightness(1.06); }
+  .timeline { max-width: 520px; margin: 0 auto 6px; }
+  .timeline input[type="range"] { width: 100%; accent-color: #b9975b; cursor: pointer; }
+  .timeline-labels { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 2px; color: #8a7443; font-weight: 700; margin-bottom: 16px; }
+  .capsule { max-width: 720px; margin: 0 auto 22px; background: linear-gradient(180deg, #fffdf7 0%, #f7efe0 100%); border: 1.5px solid #b9975b; border-radius: 18px; padding: 22px 24px; text-align: left; box-shadow: 0 8px 24px rgba(185,151,91,.18); }
+  .capsule .cap-eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a7443; font-weight: 700; margin: 0 0 6px; text-align: center; }
+  .capsule h2 { font-family: Fraunces, Georgia, serif; font-size: 25px; font-weight: 600; margin: 0 0 14px; text-align: center; }
+  .capsule ul { list-style: none; margin: 0 0 16px; padding: 0; }
+  .capsule li { padding: 7px 0; border-bottom: 1px solid #e9dfca; font-size: 15px; }
+  .capsule li:last-child { border-bottom: none; }
+  .capsule .t { font-weight: 700; }
+  .capsule .shuffle-row { text-align: center; }
+  body.dark .nav-btn { background: #2a2723; color: #f4f1ea; border-color: #f4f1ea; }
+  body.dark .capsule { background: linear-gradient(180deg, #2c2823 0%, #241f19 100%); border-color: #b9975b; }
+  body.dark .capsule li { border-bottom-color: #3f382d; }
+  body.dark .timeline-labels { color: #d4b978; }
   @media (max-width: 480px) {
     h1 { font-size: 32px; }
     .card { padding: 16px; }
@@ -107,7 +129,23 @@
   </nav>
 
   <select class="year-select" id="yearSelect" aria-label="Choose a year"></select>
+  <div class="timeline">
+    <input type="range" id="yearSlider" min="1990" max="2009" step="1" value="1990" aria-label="Slide through the years">
+    <div class="timeline-labels"><span>1990</span><span>2009</span></div>
+  </div>
+  <div class="year-nav">
+    <button class="nav-btn" id="prevYearBtn" type="button">&larr; Prev Year</button>
+    <button class="surprise-btn" id="surpriseBtn" type="button">&#10024; Surprise Me</button>
+    <button class="nav-btn" id="nextYearBtn" type="button">Next Year &rarr;</button>
+  </div>
   <p class="year-title" id="yearTitle">1990</p>
+
+  <section class="capsule" aria-label="My Time Capsule">
+    <p class="cap-eyebrow">&#127872; My Time Capsule</p>
+    <h2 id="capsuleTitle">If I lived in 1990&hellip;</h2>
+    <ul id="capsuleList"></ul>
+    <div class="shuffle-row"><button class="surprise-btn" id="shuffleCapsuleBtn" type="button">Shuffle My Picks</button></div>
+  </section>
 
     <div class="card-grid">
     <h3 class="group-head">Watch &amp; Listen</h3>
@@ -188,6 +226,11 @@
       </section>
   </div>
 
+<div class="year-nav bottom">
+    <button class="nav-btn" id="prevYearBtnBottom" type="button">&larr; Prev Year</button>
+    <button class="surprise-btn" id="surpriseBtnBottom" type="button">&#10024; Surprise Me</button>
+    <button class="nav-btn" id="nextYearBtnBottom" type="button">Next Year &rarr;</button>
+  </div>
 <p class="footer">Ashley's Spot &middot; The Time Machine</p>
 </div>
 <script>
@@ -216,9 +259,38 @@ var YEARS = {
 
 function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
 
+var currentYear = 1990;
+var capsulePick = { movie: 0, song: 0, show: 0, crush: 0 };
+
+function renderCapsule(d) {
+  document.getElementById("capsuleTitle").textContent = "If I lived in " + currentYear + "\u2026";
+  var items = [
+    ["Movie night", d.movies[capsulePick.movie % d.movies.length]],
+    ["Dancing around my room to", "\u201C" + d.songs[capsulePick.song % d.songs.length][0] + "\u201D \u2014 " + d.songs[capsulePick.song % d.songs.length][1]],
+    ["On TV", d.shows[capsulePick.show % d.shows.length]],
+    ["The look", d.clothes + " + " + d.hair.toLowerCase()],
+    ["Snack in my bag", d.snack],
+    ["Poster on my wall", d.crush[capsulePick.crush % d.crush.length]]
+  ];
+  var cl2 = document.getElementById("capsuleList");
+  cl2.innerHTML = "";
+  items.forEach(function (it) {
+    var li = document.createElement("li");
+    li.innerHTML = '<span class="t">' + esc(it[0]) + ":</span> " + esc(it[1]);
+    cl2.appendChild(li);
+  });
+}
+
 function showYear(y) {
   var d = YEARS[y];
+  if (String(y) !== String(currentYear)) { capsulePick = { movie: 0, song: 0, show: 0, crush: 0 }; }
+  currentYear = parseInt(y, 10);
   document.getElementById("yearTitle").textContent = y;
+  document.getElementById("yearSlider").value = String(y);
+  var atStart = currentYear <= 1990, atEnd = currentYear >= 2009;
+  ["prevYearBtn", "prevYearBtnBottom"].forEach(function (id) { document.getElementById(id).disabled = atStart; });
+  ["nextYearBtn", "nextYearBtnBottom"].forEach(function (id) { document.getElementById(id).disabled = atEnd; });
+  renderCapsule(d);
   var ml = document.getElementById("movieList");
   ml.innerHTML = "";
   d.movies.forEach(function (m) {
@@ -297,6 +369,17 @@ Object.keys(YEARS).sort().forEach(function (y) {
   sel.appendChild(o);
 });
 sel.addEventListener("change", function () { showYear(this.value); });
+document.getElementById("yearSlider").addEventListener("input", function () { showYear(this.value); });
+function goYear(delta) { var y = currentYear + delta; if (y >= 1990 && y <= 2009) { showYear(String(y)); window.scrollTo({ top: 0, behavior: "smooth" }); } }
+function surpriseYear() { var years = Object.keys(YEARS); var y; do { y = years[Math.floor(Math.random() * years.length)]; } while (String(y) === String(currentYear) && years.length > 1); showYear(y); window.scrollTo({ top: 0, behavior: "smooth" }); }
+["prevYearBtn", "prevYearBtnBottom"].forEach(function (id) { document.getElementById(id).addEventListener("click", function () { goYear(-1); }); });
+["nextYearBtn", "nextYearBtnBottom"].forEach(function (id) { document.getElementById(id).addEventListener("click", function () { goYear(1); }); });
+["surpriseBtn", "surpriseBtnBottom"].forEach(function (id) { document.getElementById(id).addEventListener("click", surpriseYear); });
+document.getElementById("shuffleCapsuleBtn").addEventListener("click", function () {
+  var d = YEARS[currentYear];
+  capsulePick = { movie: Math.floor(Math.random() * d.movies.length), song: Math.floor(Math.random() * d.songs.length), show: Math.floor(Math.random() * d.shows.length), crush: Math.floor(Math.random() * d.crush.length) };
+  renderCapsule(d);
+});
 showYear("1990");
 
 document.getElementById("menuBtn").addEventListener("click", function () {
