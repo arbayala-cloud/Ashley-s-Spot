@@ -70,7 +70,7 @@
   @media (max-width: 480px) { .tv-lights .bulb { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
   .playlist-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 20px 0 8px; text-align: center; }
-  .playlist-menus { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-width: 780px; margin: 0 auto; }
+  .playlist-menus { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; max-width: 780px; margin: 0 auto; }
   .playlist-menu { text-align: center; min-width: 0; }
   .playlist-menu label { display: block; font-family: 'Indie Flower', cursive; font-size: 17px; letter-spacing: 1px; text-transform: uppercase; color: #6f6a62; font-weight: 600; margin: 0 0 6px 0; }
   .song-select { width: 100%; height: 50px; padding: 0 12px; font-family: 'Indie Flower', cursive; font-size: 20px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; }
@@ -242,9 +242,13 @@
       <label for="songs2005">2005</label>
       <select id="songs2005" class="song-select" data-playlist="4"><option value="">Choose a 2005 song&hellip;</option></select>
     </div>
+    <div class="playlist-menu" data-playlist="5">
+      <label for="songs1990">1990</label>
+      <select id="songs1990" class="song-select" data-playlist="5"><option value="">Choose a 1990 song&hellip;</option></select>
+    </div>
   </div>
 
-  <p class="note">Pick a song from 1995, 1997, 2001, 2003 or 2005 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
+  <p class="note">Pick a song from 1990, 1995, 1997, 2001, 2003 or 2005 below, then use CH up / down under the TV to change channels, and Power to turn the TV off and on. When a song ends, the next one plays automatically.</p>
   <p class="footer">Ashley&rsquo;s Spot &middot; Playlists</p>
 </div>
 <script>
@@ -401,6 +405,29 @@ var PLAYLISTS = [
   ["Mockingbird", "Eminem", "S9bCLPwzSC0"],
   ["Candy Shop", "50 Cent feat. Olivia", "SRcnnId15BA"],
   ["Sooner or Later", "Breaking Benjamin", "WxzpvSvMdhk"]
+  ] },
+  { name: "1990", songs: [
+  ["Vogue", "Madonna", "GuJQSAiODqI"],
+  ["Vision of Love", "Mariah Carey", "tov22NtCMC4"],
+  ["Ice Ice Baby", "Vanilla Ice", "rog8ou-ZepE"],
+  ["U Can't Touch This", "MC Hammer", "otCpCn0l4Wo"],
+  ["Nothing Compares 2 U", "Sinéad O'Connor", "0-EF60neguk"],
+  ["Hold On", "Wilson Phillips", "uIbXvaE39wM"],
+  ["It Must Have Been Love", "Roxette", "k2C5TjS2sh4"],
+  ["Gonna Make You Sweat", "C+C Music Factory", "LaTGrV58wec"],
+  ["Unskinny Bop", "Poison", "Nn9cuBWPUoU"],
+  ["Thunderstruck", "AC/DC", "v2AC41dglnM"],
+  ["Freedom '90", "George Michael", "kDXtCEMPsEc"],
+  ["Blaze of Glory", "Jon Bon Jovi", "MfmYCM4CS8o"],
+  ["Enjoy the Silence", "Depeche Mode", "aGSKrC7dGcY"],
+  ["Groove Is in the Heart", "Deee-Lite", "etviGf1uWlg"],
+  ["Been Caught Stealing", "Jane's Addiction", "jrwjiO1MCVs"],
+  ["Joey", "Concrete Blonde", "OdpTcvSn8HQ"],
+  ["Friends in Low Places", "Garth Brooks", "4w8wcmZQ-pc"],
+  ["The Dance", "Garth Brooks", "MidNVTMGggI"],
+  ["Rumor Has It", "Reba McEntire", "SlsRzSU9Emo"],
+  ["Love Without End, Amen", "George Strait", "rkscNqCCDl0"],
+  ["When I Call Your Name", "Vince Gill", "uwmGWCJOxnw"]
   ] }
 ];
 var SONGS = PLAYLISTS[0].songs;
