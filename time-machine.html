@@ -241,6 +241,17 @@
   body.dark.masculine .capsule { background: #262017; border-color: #c8a165; }
   body.dark.masculine .group-head { background: #0f0d0b; color: #d9c9a8 !important; }
   body.dark.masculine .sub, body.dark.masculine .footer { color: #a89e88; }
+
+  .card.wide { grid-column: 1 / -1; }
+  .chart-btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+  .chart-btn { font-family: Oswald, Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; border: 1.5px solid #26221e; background: #fff; color: #26221e; border-radius: 6px; padding: 7px 14px; cursor: pointer; }
+  .chart-btn.active { background: #26221e; color: #e8ddcb; }
+  #priceChart { width: 100%; height: 240px; display: block; cursor: pointer; }
+  .chart-readout { font-family: Oswald, Inter, sans-serif; letter-spacing: 1px; font-size: 15px; color: #26221e; margin: 10px 0 2px; }
+  .chart-hint { font-size: 12px; color: #6e6252; margin: 0; }
+  body.dark .chart-btn { background: #26221d; color: #ece5d3; border-color: #c8a165; }
+  body.dark .chart-btn.active { background: #c8a165; color: #171410; }
+  body.dark .chart-readout { color: #ece5d3; }
 </style>
 </head>
 <body class="masculine">
@@ -365,6 +376,19 @@
         <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="5" fill="#f28bb4" stroke="#8a5570" stroke-width="1"/><path d="M12 13v8" stroke="#93d8cb" stroke-width="1.8" stroke-linecap="round"/><circle cx="10.5" cy="6.5" r="1.2" fill="#ffdf8a"/><circle cx="13.5" cy="9.5" r="1.2" fill="#c9e7a1"/></svg> Snack everyone was eating</h2>
         <p class="toy" id="snackText"></p>
       </section>
+    <h3 class="group-head">By The Numbers</h3>
+    <article class="card wide">
+      <h2>The Price Line, 1990&#8211;2009</h2>
+      <div class="chart-btns" role="group" aria-label="Choose what to chart">
+        <button class="chart-btn active" type="button" data-metric="gas">Gas</button>
+        <button class="chart-btn" type="button" data-metric="ticket">Movie ticket</button>
+        <button class="chart-btn" type="button" data-metric="milk">Milk</button>
+        <button class="chart-btn" type="button" data-metric="house">House</button>
+      </div>
+      <canvas id="priceChart" aria-label="Line chart of prices from 1990 to 2009"></canvas>
+      <p class="chart-readout" id="chartReadout"></p>
+      <p class="chart-hint">Tap any point on the line to jump the whole page to that year.</p>
+    </article>
     <h3 class="group-head">Sports &amp; Heartthrobs</h3>
     <section class="card">
         <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v3a5 5 0 0 1-10 0V3z" fill="#ffdf8a" stroke="#8a5570" stroke-width="1" stroke-linejoin="round"/><path d="M7 4H4a3 3 0 0 0 3 4M17 4h3a3 3 0 0 1-3 4" fill="none" stroke="#f28bb4" stroke-width="1.4" stroke-linecap="round"/><path d="M12 11v3M8 19h8M10 16h4" stroke="#93d8cb" stroke-width="1.4" stroke-linecap="round"/></svg> Sports moment that year</h2>
@@ -441,6 +465,7 @@ function showYear(y) {
   ["prevYearBtn", "prevYearBtnBottom"].forEach(function (id) { document.getElementById(id).disabled = atStart; });
   ["nextYearBtn", "nextYearBtnBottom"].forEach(function (id) { document.getElementById(id).disabled = atEnd; });
   renderCapsule(d);
+  if (typeof drawChart === "function") drawChart();
   var ml = document.getElementById("movieList");
   ml.innerHTML = "";
   d.movies.forEach(function (m) {
@@ -556,6 +581,66 @@ themeToggle.addEventListener("change", function () {
   try { localStorage.setItem("ashleys-theme", this.checked ? "dark" : "light"); } catch (e) {}
 });
 
+
+
+var chartMetric = "gas";
+var chartLabels = { gas: "Gas (a gallon)", ticket: "Movie ticket", milk: "Milk (a gallon)", house: "Median house" };
+function chartVal(year, metric) { return parseFloat(String(YEARS[year].prices[metric]).replace(/,/g, "")); }
+function chartFmt(metric, v) { return metric === "house" ? "$" + Math.round(v).toLocaleString("en-US") : "$" + v.toFixed(2); }
+function drawChart() {
+  if (typeof chartMetric === "undefined" || typeof chartLabels === "undefined") return;
+  var canvas = document.getElementById("priceChart");
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  var years = []; for (var y = 1990; y <= 2009; y++) years.push(y);
+  var vals = years.map(function (yr) { return chartVal(yr, chartMetric); });
+  var dpr = window.devicePixelRatio || 1;
+  var W = canvas.clientWidth || 640, H = 240;
+  if (canvas.width !== W * dpr) { canvas.width = W * dpr; canvas.height = H * dpr; }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  var dark = document.body.classList.contains("dark");
+  var ink = dark ? "#ece5d3" : "#26221e", grid = dark ? "rgba(236,229,211,.18)" : "rgba(38,34,30,.14)", accent = "#b07a3f";
+  var padL = 52, padR = 14, padT = 14, padB = 26, pw = W - padL - padR, ph = H - padT - padB;
+  var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals), span = (max - min) || 1;
+  min -= span * .15; max += span * .15; span = max - min;
+  ctx.font = "11px Inter, Arial, sans-serif"; ctx.fillStyle = ink; ctx.strokeStyle = grid; ctx.lineWidth = 1;
+  for (var g = 0; g <= 4; g++) {
+    var gy = padT + ph - (ph * g / 4), gv = min + span * g / 4;
+    ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + pw, gy); ctx.stroke();
+    ctx.textAlign = "right"; ctx.fillText(chartFmt(chartMetric, gv), padL - 6, gy + 4);
+  }
+  ctx.textAlign = "center";
+  years.forEach(function (yr, i) { if (yr % 5 === 0 || yr === 2009) ctx.fillText(String(yr), padL + pw * i / 19, H - 8); });
+  ctx.beginPath();
+  vals.forEach(function (v, i) { var x = padL + pw * i / 19, yy = padT + ph - (ph * (v - min) / span); i === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy); });
+  ctx.strokeStyle = ink; ctx.lineWidth = 2.5; ctx.stroke();
+  vals.forEach(function (v, i) {
+    var x = padL + pw * i / 19, yy = padT + ph - (ph * (v - min) / span), sel = years[i] === currentYear;
+    ctx.beginPath(); ctx.arc(x, yy, sel ? 6 : 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = sel ? accent : ink; ctx.fill();
+    if (sel) { ctx.lineWidth = 2; ctx.strokeStyle = accent; ctx.stroke(); }
+  });
+  var ro = document.getElementById("chartReadout");
+  if (ro) ro.textContent = chartLabels[chartMetric] + " in " + currentYear + ": " + chartFmt(chartMetric, chartVal(currentYear, chartMetric));
+}
+document.querySelectorAll(".chart-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    chartMetric = btn.getAttribute("data-metric");
+    document.querySelectorAll(".chart-btn").forEach(function (b2) { b2.classList.toggle("active", b2 === btn); });
+    drawChart();
+  });
+});
+document.getElementById("priceChart").addEventListener("click", function (ev) {
+  var rect = this.getBoundingClientRect(), padL = 52, pw = rect.width - padL - 14;
+  var idx = Math.round((ev.clientX - rect.left - padL) / pw * 19);
+  idx = Math.max(0, Math.min(19, idx));
+  showYear(String(1990 + idx));
+});
+window.addEventListener("resize", drawChart);
+document.getElementById("themeToggle").addEventListener("click", function () { setTimeout(drawChart, 60); });
+drawChart();
 
 var deferredPrompt = null;
 window.addEventListener("beforeinstallprompt", function (e) { deferredPrompt = e; });
