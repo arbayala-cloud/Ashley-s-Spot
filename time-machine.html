@@ -336,6 +336,11 @@
         <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5" fill="#c9a8ea" stroke="#8a5570" stroke-width="1"/><rect x="9" y="4" width="6" height="6" rx="0.8" fill="#c9e7a1" stroke="#8a5570" stroke-width="0.7"/><circle cx="10.5" cy="15.5" r="1.6" fill="#f28bb4"/><circle cx="14" cy="18" r="1.2" fill="#93d8cb"/></svg> Gadget everyone wanted</h2>
         <p class="toy" id="gadgetText"></p>
       </section>
+    <article class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16v-5l3-1 3-4h6l3 4h3a2 2 0 0 1 2 2v4h-2.2" fill="#d9c9a8" stroke="#57452c" stroke-width="1.2" stroke-linejoin="round"/><path d="M2 16h4.2M13.8 16h4" stroke="#57452c" stroke-width="1.2"/><circle cx="8" cy="16.5" r="2" fill="#ece5d3" stroke="#57452c" stroke-width="1.2"/><circle cx="16" cy="16.5" r="2" fill="#ece5d3" stroke="#57452c" stroke-width="1.2"/><path d="M9 6v4h5l-2-4z" fill="#93a7bd"/></svg> Dream truck that year</h2>
+        <p class="toy" id="truckName"></p>
+        <p id="truckNote"></p>
+      </article>
     <h3 class="group-head">Everyday Life</h3>
     <section class="card">
         <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11V4h7l9 9-7 7-9-9z" fill="#c9e7a1" stroke="#8a5570" stroke-width="1" stroke-linejoin="round"/><circle cx="8.5" cy="8.5" r="1.6" fill="#f28bb4" stroke="#8a5570" stroke-width="0.7"/></svg> Prices that year</h2>
@@ -431,6 +436,30 @@ var YEARS = {
 2009: { movies: ["Avatar", "Up"], toy: "Zhu Zhu Pets", prices: { gas: "2.35", house: "216,700", milk: "3.10", bread: "1.39", ticket: "7.50", stamp: "0.44", wage: "7.25" }, clothes: "Jeggings", words: "Epic fail", shows: ["Modern Family", "Glee"], game: "Minecraft", gadget: "Amazon Kindle", book: "The Lost Symbol", snack: "Cupcakes", hair: "Dip-dyed ends", moment: "Michael Jackson dies at 50", sport: "Usain Bolt runs 9.58 seconds, the fastest ever", crush: ["Taylor Lautner", "Selena Gomez"], songs: [["I Gotta Feeling", "Black Eyed Peas"], ["Bad Romance", "Lady Gaga"], ["Party in the U.S.A.", "Miley Cyrus"], ["Fireflies", "Owl City"]], toons: [], names: ["Jacob", "Isabella"], powder: { makeup: "A statement lip — hot pink, Gaga era — or a full smoky eye", nails: "Matte nails in grey and taupe", scent: "Bath & Body Works Twilight Woods" }    }
 };
 
+var TRUCKS = {
+  1990: { n: "Ford F-150", note: "The eighth-generation F-Series \u2014 America's best-selling vehicle, full stop. Square, honest, everywhere." },
+  1991: { n: "GMC Syclone", note: "A turbocharged V6 pickup that outran a Ferrari in the quarter mile. Only about 3,000 built \u2014 the original sport truck." },
+  1992: { n: "Ford F-150 (new generation)", note: "The ninth-generation F-150 arrives with a smoother nose \u2014 the truck most driveways in America knew by heart." },
+  1993: { n: "Ford SVT Lightning", note: "Ford's Special Vehicle Team turns the F-150 into a muscle truck: 5.8L V8, lowered, mean. The Lightning strikes." },
+  1994: { n: "Dodge Ram 1500", note: "The redesign that changed trucks forever \u2014 that big-rig hood and drop fenders. Sales doubled almost overnight." },
+  1995: { n: "Ford F-150 Eddie Bauer", note: "The fancy one \u2014 two-tone paint and a trim named after an outdoor outfitter. Country-club truck, in a good way." },
+  1996: { n: "Chevrolet C/K 1500", note: "The GMT400 Chevy in its prime \u2014 the square-body-adjacent workhorse half the South learned to drive on." },
+  1997: { n: "Ford F-150 (tenth generation)", note: "The controversial rounded redesign \u2014 softer lines, Triton V8s, and it still sold like crazy." },
+  1998: { n: "Dodge Dakota R/T", note: "A midsize truck with a 5.9L Magnum V8 stuffed in it. Smaller truck, biggest attitude." },
+  1999: { n: "Chevrolet Silverado 1500", note: "The Silverado name goes solo on the all-new GMT800 \u2014 the modern Chevy truck era starts here." },
+  2000: { n: "Toyota Tundra", note: "Toyota's first full-size American truck, built in Indiana \u2014 and suddenly Detroit had real competition." },
+  2001: { n: "Ford F-150 SuperCrew", note: "Four real doors and a short bed \u2014 the truck becomes the family vehicle without apologizing for it." },
+  2002: { n: "Chevrolet Avalanche", note: "Truck? SUV? Both \u2014 the fold-down midgate turned the bed into the cab. A genuinely clever idea." },
+  2003: { n: "Dodge Ram 1500 HEMI", note: "The 5.7L HEMI V8 returns under that big hood, and \u201Cthat thing got a Hemi?\u201D enters the language." },
+  2004: { n: "Ford F-150 (eleventh generation)", note: "A bigger, tougher, quieter F-150 \u2014 and Motor Trend's Truck of the Year. The benchmark, reset." },
+  2005: { n: "Toyota Tacoma X-Runner", note: "The redesigned Tacoma's street-performance trim \u2014 proof a smaller truck could be the fun one." },
+  2006: { n: "Dodge Ram Mega Cab", note: "The biggest cab ever put on a pickup \u2014 reclining rear seats in a truck. Subtle, it was not." },
+  2007: { n: "Chevrolet Silverado (GMT900)", note: "All-new Silverado with a grown-up interior \u2014 and Truck of the Year honors to match." },
+  2008: { n: "Ford Super Duty", note: "The redesigned heavy-duty line, up to the F-450 \u2014 a truck that could tow a house, and looked it." },
+  2009: { n: "Dodge Ram 1500", note: "The fourth-generation Ram swaps leaf springs for coils out back and rides like a car \u2014 a gamble that paid off." }
+};
+
+
 function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
 
 var currentYear = 1990;
@@ -523,6 +552,9 @@ function showYear(y) {
   });
   document.getElementById("gameText").textContent = d.game;
   document.getElementById("gadgetText").textContent = d.gadget;
+  var trk = TRUCKS[y];
+  document.getElementById("truckName").textContent = trk.n;
+  document.getElementById("truckNote").textContent = trk.note;
   document.getElementById("bookText").textContent = d.book;
   document.getElementById("snackText").textContent = d.snack;
   document.getElementById("sportText").textContent = d.sport;
