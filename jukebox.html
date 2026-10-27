@@ -4,39 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jukebox — Ashley Ayala</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&family=Libre+Baskerville:wght@400;700&family=Indie+Flower&family=Gaegu:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&family=Libre+Baskerville:wght@400;700&family=Indie+Flower&family=Gaegu:wght@300;400;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; text-align: center; padding: 32px 16px 48px; line-height: 1.5; }
   .wrap { max-width: 780px; margin: 0 auto; }
-  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a7443; font-weight: 600; margin: 0 0 10px; }
-  h1 { font-family: Fraunces, Georgia, serif; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.5px; margin: 0 0 8px; }
+  .eyebrow { display: inline-block; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #d9c9a8; background: #26221e; border-radius: 6px; padding: 6px 14px; font-weight: 600; margin: 0 0 12px; }
+  h1 { font-family: Oswald, Inter, sans-serif; font-size: 40px; line-height: 1.1; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; margin: 0 0 8px; color: #26221e; }
   .sub { color: #6f6a62; font-size: 15px; margin: 0 0 14px; }
-  .divider { width: 48px; height: 2px; background: #b9975b; margin: 0 auto 20px; border: none; }
+  .divider { width: 64px; height: 3px; background: #8a5a33; margin: 0 auto 20px; border: none; border-radius: 2px; }
   .menu-row { margin: 0 0 18px; }
-  .menu-row button { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; background: transparent; color: #22211e; border: 1.5px solid #22211e; border-radius: 999px; padding: 8px 20px; cursor: pointer; font-weight: 600; }
-  .menu-panel { display: none; margin: 10px auto 0; max-width: 420px; background: #fff; border: 1px solid #ddd7cc; border-radius: 12px; padding: 6px 0; }
+  .menu-row button { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; background: transparent; color: #26221e; border: 1.5px solid #26221e; border-radius: 8px; padding: 9px 22px; cursor: pointer; font-weight: 600; }
+  .menu-panel { display: none; margin: 10px auto 0; max-width: 420px; background: #fff; border: 1px solid #cfc8b8; border-radius: 10px; padding: 6px 0; box-shadow: 0 14px 30px rgba(38,34,30,.12); }
   .menu-panel.open { display: block; }
-  .menu-panel a { display: block; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 600; color: #22211e; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #eee9df; }
-  .menu-panel button.install-btn { display: block; width: 100%; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 600; color: #22211e; background: none; border: none; padding: 10px 0; cursor: pointer; }
+  .menu-panel a { display: block; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; text-decoration: none; padding: 11px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; background: none; border: none; padding: 11px 0; cursor: pointer; }
   .menu-panel button.install-btn:hover { background: #f7f4ee; }
   body.dark .menu-panel button.install-btn { color: #f4f1ea; }
   body.dark .menu-panel button.install-btn:hover { background: #33302b; }
   .menu-panel a:hover { background: #f7f4ee; }
   .menu-panel a:last-child { border-bottom: none; }
-  .radio { margin-top: 16px; background: linear-gradient(180deg, #2b2d33, #1e2024); border: 1px solid #3d4048; border-radius: 18px; padding: 20px; color: #f5f2ec; box-shadow: 0 14px 32px rgba(0,0,0,.18); text-align: left; }
+  .radio { margin-top: 16px; background: linear-gradient(180deg, #2b2620, #1b1813); border: 2px solid #4a4238; border-radius: 14px; padding: 22px; color: #f5f2ec; box-shadow: 0 22px 44px rgba(38,34,30,.30); text-align: left; }
   .radio-top { display: flex; justify-content: space-between; align-items: center; padding: 2px 4px 14px; }
-  .brand { font-size: 11px; letter-spacing: 3px; font-weight: 600; color: #d8c9a3; }
+  .brand { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 3px; font-weight: 600; color: #d8c9a3; }
   .status { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #b9b2a6; }
   .status.playing { color: #d8c9a3; }
   .tv-wrap { position: relative; margin: 4px auto 0; line-height: 0; width: 100%; max-width: 640px; }
   .eq { display: flex; align-items: stretch; justify-content: center; gap: 4px; max-width: 520px; margin: 0 auto 8px; padding: 6px 8px; background: transparent; border: 0; }
   .eq .col { flex: 1; max-width: 16px; display: flex; flex-direction: column-reverse; gap: 2px; }
   .eq .seg { display: block; height: 3px; border-radius: 1px; background: rgba(0,0,0,0.08); transition: background .12s, box-shadow .12s; }
-  .eq .col .seg:nth-child(-n+3) { --c: #2dd4d4; }
-  .eq .col .seg:nth-child(n+4):nth-child(-n+6) { --c: #ff5da2; }
-  .eq .col .seg:nth-child(n+7):nth-child(-n+8) { --c: #a78bfa; }
-  .eq .col .seg:nth-child(n+9) { --c: #ffd60a; }
+  .eq .col .seg:nth-child(-n+3) { --c: #8a5a33; }
+  .eq .col .seg:nth-child(n+4):nth-child(-n+6) { --c: #b07a3f; }
+  .eq .col .seg:nth-child(n+7):nth-child(-n+8) { --c: #c8a165; }
+  .eq .col .seg:nth-child(n+9) { --c: #e8ddcb; }
   .eq .seg.on { background: var(--c); box-shadow: 0 0 6px var(--c); }
 
   .tv-lights { position: absolute; inset: 0; pointer-events: none; z-index: 5; line-height: 0; }
@@ -78,15 +78,15 @@
   body.dark .footer { color: #9a948c; }
   @media (max-width: 480px) { .tv-lights .bulb { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
   .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: nowrap; }
-  .playlist-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; margin: 20px 0 8px; text-align: center; }
-  .playlist-menus { display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; max-width: 1020px; margin: 0 auto; }
+  .playlist-label { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #6e6252; margin: 24px 0 10px; text-align: center; }
+  .playlist-menus { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 14px; max-width: 1020px; margin: 0 auto; }
   .playlist-menu { text-align: center; min-width: 0; }
-  .playlist-menu label { display: block; font-family: 'Gaegu', cursive; font-size: 17px; letter-spacing: 1px; text-transform: uppercase; color: #6f6a62; font-weight: 600; margin: 0 0 6px 0; }
-  .song-select { width: 100%; height: 50px; padding: 0 12px; font-family: 'Gaegu', cursive; text-align: center; text-align-last: center; font-size: 20px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; cursor: pointer; }
+  .playlist-menu label { display: block; font-family: Oswald, Inter, sans-serif; font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; color: #6e6252; font-weight: 600; margin: 0 0 7px 0; }
+  .song-select { width: 100%; height: 50px; padding: 0 12px; font-family: Inter, Arial, sans-serif; text-align: center; text-align-last: center; font-size: 15px; font-weight: 600; border-radius: 10px; border: 1.5px solid #c9c2b6; background: #fff; color: #26221e; box-sizing: border-box; cursor: pointer; }
   .song-select:focus-visible { outline: 2px solid #b9975b; outline-offset: 2px; }
   .song-select option { font-size: 16px; }
-  .playlist-menu.active label { color: #8a7443; }
-  .playlist-menu.active .song-select { border-color: #b9975b; box-shadow: 0 0 0 1px #b9975b; background: #fdf8ee; }
+  .playlist-menu.active label { color: #8a5a33; }
+  .playlist-menu.active .song-select { border-color: #8a5a33; box-shadow: 0 0 0 1px #8a5a33; background: #faf5ea; }
   .tv-controls-under .tv-btn { width: 120px; height: 56px; flex: 0 0 auto; }
   .tv-image { display: block; width: 100%; height: auto; border-radius: 8px; }
   .tv-video { position: absolute; left: 12.9%; top: 32.6%; width: 73.5%; height: 46.4%; background: #000; border-radius: 14px; overflow: hidden; line-height: 1.4; }
@@ -97,36 +97,36 @@
   .tv-wrap.off .tv-video .off-screen { display: flex; }
   .tv-wrap.off .tv-video iframe { visibility: hidden; }
   .tv-controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 14px; line-height: 1.4; align-items: stretch; }
-  .tv-btn { background: #2f3238; color: #f5f2ec; border: 1px solid #55585f; border-radius: 12px; padding: 8px 6px; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; line-height: 1.2; height: 56px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .tv-btn { background: #2e2a24; color: #f5f2ec; border: 1px solid #57503f; border-radius: 8px; font-family: Oswald, Inter, sans-serif; letter-spacing: 1px; text-transform: uppercase; padding: 8px 6px; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; line-height: 1.2; height: 56px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
   .tv-btn small { display: block; font-size: 10px; letter-spacing: 1px; color: #b9b2a6; font-weight: 500; }
-  .tv-btn.power { background: #7a1f1f; border-color: #a33333; }
+  .tv-btn.power { background: #6e1d1d; border-color: #93392e; }
   .tv-btn:disabled { opacity: .45; cursor: default; }
-  .now-playing { background: #121316; border: 1px solid rgba(216,201,163,.45); border-radius: 14px; padding: 14px 16px; text-align: center; margin-top: 16px; }
+  .now-playing { background: #100e0b; border: 1px solid rgba(200,161,101,.55); border-radius: 10px; padding: 16px; text-align: center; margin-top: 16px; }
   .now-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #a99f8f; margin-bottom: 4px; }
-  .now-title { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 22px; line-height: 1.2; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.35); }
+  .now-title { font-family: Oswald, Inter, sans-serif; font-weight: 600; letter-spacing: .5px; font-size: 22px; line-height: 1.2; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.35); }
   .now-artist { font-size: 14px; color: #c9c2b6; margin-top: 2px; }
   .notes { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
   .note { position: absolute; font-size: 26px; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,.9), 0 0 2px #000; opacity: 0; }
   .notes.playing .note { animation: floatNote 3s ease-in infinite; }
   @keyframes floatNote { 0% { transform: translateY(8px) rotate(-8deg); opacity: 0; } 18% { opacity: 1; } 100% { transform: translateY(-72px) rotate(14deg); opacity: 0; } }
-  .deck-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #a9a29a; margin: 18px 4px 10px; }
-  .track-select { width: 100%; padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; }
+  .deck-label { font-family: Oswald, Inter, sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #a9a29a; margin: 18px 4px 10px; }
+  .track-select { width: 100%; padding: 12px; font-size: 15px; font-weight: 600; border-radius: 10px; border: 1.5px solid #c9c2b6; background: #fff; color: #26221e; box-sizing: border-box; }
   .prev-next-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
-  .prev-next-row button { background: #f4f1ea; color: #22211e; border: 1px solid #c9c2b6; border-radius: 12px; padding: 13px 12px; font-size: 16px; font-weight: 700; cursor: pointer; height: 50px; box-sizing: border-box; }
+  .prev-next-row button { background: #f4f1ea; color: #26221e; border: 1.5px solid #c9c2b6; border-radius: 10px; padding: 13px 12px; font-size: 15px; font-weight: 700; cursor: pointer; height: 50px; box-sizing: border-box; font-family: Oswald, Inter, sans-serif; letter-spacing: 1px; text-transform: uppercase; }
   .prev-next-row button:hover:not(:disabled), .play-genre-row button:hover:not(:disabled) { background: #e9e4da; }
   .prev-next-row button:disabled, .play-genre-row button:disabled { opacity: .45; cursor: default; }
   .play-genre-row { display: flex; gap: 10px; align-items: flex-end; margin-top: 14px; flex-wrap: nowrap; }
-  .play-genre-row button.primary { background: #d8c9a3; border: 1px solid #d8c9a3; border-radius: 12px; padding: 0 18px; font-size: 16px; font-weight: 700; cursor: pointer; height: 50px; box-sizing: border-box; flex: 0 0 auto; min-width: 92px; }
+  .play-genre-row button.primary { background: #c8a165; border: 1px solid #c8a165; color: #171410; border-radius: 10px; font-family: Oswald, Inter, sans-serif; letter-spacing: 1px; text-transform: uppercase; padding: 0 18px; font-size: 16px; font-weight: 700; cursor: pointer; height: 50px; box-sizing: border-box; flex: 0 0 auto; min-width: 92px; }
   .play-genre-row .field { flex: 1; min-width: 0; }
   .controls-row { display: flex; gap: 10px; margin-top: 10px; }
-  .controls-row button { flex: 0 0 auto; background: #f4f1ea; color: #22211e; border: 1px solid #c9c2b6; border-radius: 10px; padding: 12px 16px; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .controls-row button { flex: 0 0 auto; background: #f4f1ea; color: #26221e; border: 1px solid #c9c2b6; border-radius: 8px; padding: 12px 16px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: Oswald, Inter, sans-serif; letter-spacing: 1px; text-transform: uppercase; }
   .controls-row button:hover:not(:disabled) { background: #e9e4da; }
   .controls-row button:focus-visible, .controls-row select:focus-visible, .field select:focus-visible, .track-select:focus-visible, .prev-next-row button:focus-visible, .play-genre-row button:focus-visible { outline: 2px solid #b9975b; outline-offset: 2px; }
   .controls-row button:disabled { opacity: .45; cursor: default; }
-  .controls-row button.primary { background: #d8c9a3; border-color: #d8c9a3; }
+  .controls-row button.primary { background: #c8a165; border-color: #c8a165; color: #171410; }
   .controls-row select { flex: 1; min-width: 0; padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; }
   .field { flex: 1; min-width: 0; text-align: left; }
-  .field label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #a9a29a; margin: 0 0 6px 4px; white-space: nowrap; }
+  .field label { display: block; font-family: Oswald, Inter, sans-serif; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #a9a29a; margin: 0 0 6px 4px; white-space: nowrap; }
   .field select { width: 100%; height: 50px; padding: 0 12px; font-size: 15px; border-radius: 12px; border: 1px solid #c9c2b6; background: #fff; color: #22211e; box-sizing: border-box; }
   .watch { display: inline-block; margin-top: 14px; color: #d8c9a3; font-size: 14px; font-weight: 600; text-decoration: none; }
   .watch.disabled { color: #8a857e; pointer-events: none; text-decoration: none; }
@@ -135,7 +135,7 @@
   .volume-row input { flex: 1; accent-color: #d8c9a3; }
   .hidden-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: none; overflow: hidden; }
   .note { margin-top: 18px; color: #6f6a62; font-size: 13px; }
-  .footer { margin-top: 24px; color: #8a857e; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  .footer { margin-top: 24px; color: #8a857e; font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
   @media (max-width: 480px) {
     h1 { font-size: 34px; }
     .tv-btn { font-size: 12px; }
@@ -164,6 +164,7 @@
     <a href="blog.html">Blog</a>
     <a href="jukebox.html">Jukebox</a>
     <a href="time-machine.html">Time Machine</a>
+    <a href="lite-brite.html">Lite-Brite</a>
       <button class="install-btn" id="installBtn" type="button">Install App</button>
     <div class="theme-toggle">
       <span>Light</span>
