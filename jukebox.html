@@ -191,12 +191,16 @@
       <select id="songs2005" class="song-select" data-playlist="6"><option value="">Choose a 2005 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="7">
-      <label for="songs2007">2007</label>
-      <select id="songs2007" class="song-select" data-playlist="7"><option value="">Choose a 2007 song&hellip;</option></select>
+      <label for="songs2006">2006</label>
+      <select id="songs2006" class="song-select" data-playlist="7"><option value="">Choose a 2006 song&hellip;</option></select>
     </div>
     <div class="playlist-menu" data-playlist="8">
+      <label for="songs2007">2007</label>
+      <select id="songs2007" class="song-select" data-playlist="8"><option value="">Choose a 2007 song&hellip;</option></select>
+    </div>
+    <div class="playlist-menu" data-playlist="9">
       <label for="songs2009">2009</label>
-      <select id="songs2009" class="song-select" data-playlist="8"><option value="">Choose a 2009 song&hellip;</option></select>
+      <select id="songs2009" class="song-select" data-playlist="9"><option value="">Choose a 2009 song&hellip;</option></select>
     </div>
   </div>
   <p class="note">Pick a song from Halloween, 1990, 1995, 1997, 2001, 2003, 2005, 2007 or 2009, then use CH up / down to change channels, and Power to turn the receiver off and on. When a song ends, the next one plays automatically.</p>
@@ -399,6 +403,27 @@ var PLAYLISTS = [
   ["Candy Shop", "50 Cent feat. Olivia", "SRcnnId15BA"],
   ["Sooner or Later", "Breaking Benjamin", "WxzpvSvMdhk"]
   ] },
+  { name: "2006", songs: [
+  ["Hips Don't Lie", "Shakira", "DUT5rEU6pqM"],
+  ["SexyBack", "Justin Timberlake", "3gOHvDP_vCs"],
+  ["Irreplaceable", "Beyoncé", "2EwViQxSJJQ"],
+  ["Promiscuous", "Nelly Furtado", "0J3vgcE5i2o"],
+  ["SOS", "Rihanna", "IXmF4GbA86E"],
+  ["Crazy", "Gnarls Barkley", "-N4jf6rtyuw"],
+  ["Dani California", "Red Hot Chili Peppers", "Sb5aq5HcS1A"],
+  ["Chasing Cars", "Snow Patrol", "GemKqzILV4w"],
+  ["How to Save a Life", "The Fray", "cjVQ36NhbMk"],
+  ["Unwritten", "Natasha Bedingfield", "b7k0a5hYnSI"],
+  ["Put Your Records On", "Corinne Bailey Rae", "rjOhZZyn30k"],
+  ["Lips of an Angel", "Hinder", "RiSfTyrvJlg"],
+  ["Move Along", "The All-American Rejects", "XleOkGsYgO8"],
+  ["Tim McGraw", "Taylor Swift", "GkD20ajVxnY"],
+  ["Teardrops on My Guitar", "Taylor Swift", "xKCek6_dB0M"],
+  ["Before He Cheats", "Carrie Underwood", "WaSy8yy-mr8"],
+  ["What Hurts the Most", "Rascal Flatts", "7qH4qyi1-Ys"],
+  ["Would You Go With Me", "Josh Turner", "uFz61X2PQTw"],
+  ["Not Ready to Make Nice", "Dixie Chicks", "pojL_35QlSI"]
+  ] },
   { name: "2007", songs: [
   ["Umbrella", "Rihanna ft. Jay-Z", "CvBfHwUxHIk"],
   ["Girlfriend", "Avril Lavigne", "Bg59q4puhmg"],
@@ -573,7 +598,7 @@ function stopBeatSync() {
 }
 function startBeatSync() {
   stopBeatSync();
-  if (!eqEl || currentPlaylistIndex !== 7 || currentIndex < 0) return;
+  if (!eqEl || currentPlaylistIndex !== 8 || currentIndex < 0) return;
   var bpm = BPM2007[SONGS[currentIndex][2]];
   if (!bpm) return;
   if (bpm > 150) { bpm = bpm / 2; }
@@ -609,7 +634,7 @@ function startDecoSync() {
 }
 function updateBeatSync() {
   if (!isPlaying || !isPowered) { stopBeatSync(); }
-  else if (currentPlaylistIndex === 7) { startBeatSync(); }
+  else if (currentPlaylistIndex === 8) { startBeatSync(); }
   else { startDecoSync(); }
 }
 buildEq();function setPlaylist(idx) {
