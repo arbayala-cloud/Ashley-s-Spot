@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Doll House — Ashley Ayala</title>
+<meta name="theme-color" content="#26221e">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #d8d2c7; color: #26221e; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 32px 16px 48px; }
+  .wrap { max-width: 980px; margin: 0 auto; background: #f4f1ea; border: 2px solid #4a4238; border-radius: 12px; box-shadow: 0 18px 40px rgba(38,34,30,.22); padding: 30px 26px 26px; text-align: center; }
+  .backlink { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 18px; }
+  .backlink a { color: #8a5a33; text-decoration: none; font-weight: 600; }
+  .eyebrow { display: inline-block; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #d9c9a8; background: #26221e; border-radius: 6px; padding: 6px 14px; font-weight: 600; margin: 0 0 12px; }
+  h1 { font-family: Oswald, Inter, sans-serif; font-size: 42px; line-height: 1.1; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin: 0 0 8px; color: #26221e; }
+  .sub { color: #6f6a62; font-size: 15px; margin: 0 0 14px; }
+  .divider { width: 64px; height: 3px; background: #8a5a33; margin: 0 auto 22px; border: none; border-radius: 2px; }
+  .menu-row { text-align: center; margin: 0 0 18px; }
+  .menu-row button { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #26221e; border: 1.5px solid #26221e; border-radius: 8px; padding: 9px 22px; cursor: pointer; }
+  .menu-panel { display: none; background: #fff; border: 1px solid #cfc8b8; border-radius: 10px; padding: 6px 0; margin: 10px auto 18px; max-width: 420px; text-align: center; box-shadow: 0 14px 30px rgba(38,34,30,.12); }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; text-decoration: none; padding: 11px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel a:last-of-type { border-bottom: none; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; background: none; border: none; padding: 11px 0; cursor: pointer; }
+  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
+  .theme-switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
+  .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .theme-switch .slider { position: absolute; inset: 0; background: #c9c2b6; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: .25s; }
+  .theme-switch input:checked + .slider { background: #b9975b; }
+  .theme-switch input:checked + .slider::before { transform: translateX(22px); }
+  .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 0 0 16px; }
+  .ctl { font-family: Oswald, Inter, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: #26221e; color: #f5f2ec; border: 1.5px solid #26221e; border-radius: 8px; padding: 11px 20px; cursor: pointer; transition: background .15s, border-color .15s; }
+  .ctl:hover { background: #8a5a33; border-color: #8a5a33; }
+  .ctl.secondary { background: #fff; color: #26221e; }
+  .ctl.secondary:hover { background: #26221e; color: #f5f2ec; }
+  .stage { border: 2px solid #4a4238; border-radius: 12px; overflow: hidden; background: linear-gradient(180deg, #a8d8ea 0%, #dff2fa 55%, #e9f7ee 100%); box-shadow: 0 16px 34px rgba(38,34,30,.25); transition: background 1s; }
+  body.night .stage { background: linear-gradient(180deg, #141b36 0%, #232c4e 55%, #2c3554 100%); }
+  #houseScale { transition: transform .7s cubic-bezier(.4,0,.2,1); transform-origin: 50% 50%; }
+  svg { display: block; width: 100%; height: auto; }
+  .caption { margin: 16px auto 0; max-width: 640px; background: #26221e; color: #f2ead6; border-radius: 10px; padding: 13px 18px; font-size: 15px; box-shadow: 0 10px 22px rgba(38,34,30,.2); }
+  .caption b { font-family: Oswald, Inter, sans-serif; letter-spacing: 1.5px; text-transform: uppercase; color: #d9c9a8; font-size: 13px; display: block; margin-bottom: 2px; }
+  .hint { font-size: 12.5px; color: #8a857e; margin-top: 14px; }
+  /* ---- SVG scene ---- */
+  #skyRect { fill: transparent; }
+  .stars { opacity: 0; transition: opacity 1s; }
+  body.night .stars { opacity: 1; }
+  .room { cursor: pointer; }
+  .room > .roomshade { fill: rgba(20,16,10,0); transition: fill .5s; pointer-events: none; }
+  body.night .room > .roomshade { fill: rgba(16,14,30,.34); }
+  body.night .room.lit > .roomshade { fill: rgba(255,190,90,.13); }
+  .hot { cursor: pointer; }
+  .hot:hover { filter: drop-shadow(0 0 5px rgba(255,205,90,.95)); }
+  .flames { transform-box: fill-box; transform-origin: 50% 100%; }
+  .flames.on .fl { animation: flick .5s ease-in-out infinite alternate; }
+  .flames .fl { opacity: 0; }
+  .flames.on .fl { opacity: 1; }
+  .flames.on .fl2 { animation-delay: .16s; } .flames.on .fl3 { animation-delay: .3s; }
+  @keyframes flick { from { transform: scaleY(.82) scaleX(1); } to { transform: scaleY(1.12) scaleX(.94); } }
+  .fireglow { opacity: 0; transition: opacity .6s; }
+  .fireglow.on { opacity: .55; }
+  .tvshow { opacity: 0; transition: opacity .4s; }
+  .tvshow.on { opacity: 1; }
+  .tvshow.on .dancer { animation: bounce .6s ease-in-out infinite alternate; }
+  @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+  .lampglow { opacity: 0; transition: opacity .5s; }
+  .lampglow.on { opacity: .8; }
+  .fridgedoor { transform-box: fill-box; transform-origin: 0% 50%; transition: transform .6s; }
+  .fridgedoor.open { transform: perspective(300px) rotateY(-52deg); }
+  .fridgeinside { opacity: 0; transition: opacity .4s; }
+  .fridgeinside.open { opacity: 1; }
+  .burner { opacity: 0; transition: opacity .4s; }
+  .burner.on { opacity: 1; }
+  .steam { opacity: 0; }
+  .steam.on { opacity: .85; animation: rise 1.6s ease-in-out infinite; }
+  @keyframes rise { 0% { transform: translateY(0); opacity: 0; } 30% { opacity: .85; } 100% { transform: translateY(-16px); opacity: 0; } }
+  .water { opacity: 0; }
+  .water.on { opacity: .8; animation: fall .5s linear infinite; }
+  @keyframes fall { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 14; } }
+  .mobile { transform-box: fill-box; transform-origin: 50% 0%; }
+  .mobile.spin { animation: spin 5s linear infinite; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .drum { transform-box: fill-box; transform-origin: 50% 50%; }
+  .drum.spin { animation: spin 1.1s linear infinite; }
+  .washerbody.shake { animation: shake .3s linear infinite; }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(1.6px); } 75% { transform: translateX(-1.6px); } }
+  .swing { transform-box: fill-box; transform-origin: 50% 0%; }
+  .swing.sway { animation: sway 2.6s ease-in-out infinite alternate; }
+  @keyframes sway { from { transform: rotate(-3.4deg); } to { transform: rotate(3.4deg); } }
+  .puff { animation: puff 4.5s ease-out infinite; opacity: 0; }
+  .puff.p2 { animation-delay: 1.5s; } .puff.p3 { animation-delay: 3s; }
+  @keyframes puff { 0% { transform: translateY(0) scale(.7); opacity: 0; } 18% { opacity: .75; } 100% { transform: translateY(-52px) scale(1.5); opacity: 0; } }
+  #doll { transition: transform 1.1s cubic-bezier(.45,0,.25,1); }
+  #doll.bob { animation: bob .28s ease-in-out infinite alternate; }
+  @keyframes bob { from { margin-top: 0; } to { margin-top: -3px; } }
+  .dooropen { transform-box: fill-box; transform-origin: 0% 50%; transition: transform .6s; }
+  .dooropen.open { transform: perspective(300px) rotateY(-58deg); }
+  body.dark { background: #141210; color: #f4f1ea; }
+  body.dark .wrap { background: #1e1b17; border-color: #57503f; }
+  body.dark h1 { color: #f2ead6; }
+  body.dark .sub, body.dark .hint { color: #b8b0a3; }
+  body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
+  body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
+  body.dark .menu-panel a, body.dark .menu-panel button.install-btn { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
+  @media (max-width: 640px) { body { padding: 20px 8px 36px; } .wrap { padding: 22px 12px 18px; } h1 { font-size: 32px; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="backlink"><a href="index.html">&larr; Ashley's Spot</a> &nbsp;·&nbsp; <a href="time-machine.html">Time Machine</a></p>
+  <p class="eyebrow">Ashley's Spot</p>
+  <h1>The Doll House</h1>
+  <p class="sub">A whole little house, and everything in it works. Go ahead — touch things.</p>
+  <hr class="divider">
+  <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
+  <nav id="menuPanel" class="menu-panel">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="jukebox.html">Jukebox</a>
+    <a href="time-machine.html">Time Machine</a>
+    <a href="lite-brite.html">Lite-Brite</a>
+    <a href="doll-house.html">Doll House</a>
+    <button class="install-btn" id="installBtn" type="button">Install App</button>
+    <div class="theme-toggle">
+      <span>Light</span>
+      <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+      <span>Dark</span>
+    </div>
+  </nav>
+
+  <div class="controls">
+    <button class="ctl" id="modeBtn" type="button">&#127769; Nightfall</button>
+    <button class="ctl secondary" id="resetView" type="button">See the whole house</button>
+  </div>
+
+  <div class="stage" id="stage">
+    <div id="houseScale">
+    <svg id="houseSvg" viewBox="0 0 920 660" role="img" aria-label="An interactive doll house">
+      <defs>
+        <linearGradient id="roofG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a4632"/><stop offset="1" stop-color="#3c2f21"/></linearGradient>
+        <linearGradient id="woodG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a97c50"/><stop offset="1" stop-color="#8a5f3a"/></linearGradient>
+        <linearGradient id="grassG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fae5c"/><stop offset="1" stop-color="#5d8a41"/></linearGradient>
+        <linearGradient id="blanketG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b3543f"/><stop offset="1" stop-color="#96422f"/></linearGradient>
+        <linearGradient id="sofaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#71563a"/><stop offset="1" stop-color="#59422c"/></linearGradient>
+        <linearGradient id="tubG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9e2e0"/></linearGradient>
+        <radialGradient id="glowG"><stop offset="0" stop-color="#ffd98f" stop-opacity=".85"/><stop offset="1" stop-color="#ffd98f" stop-opacity="0"/></radialGradient>
+        <pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><rect width="18" height="18" fill="#dfe5ee"/><circle cx="4" cy="4" r="1.6" fill="#b9c6da"/><circle cx="13" cy="13" r="1.6" fill="#b9c6da"/></pattern>
+        <pattern id="dotsPink" width="18" height="18" patternUnits="userSpaceOnUse"><rect width="18" height="18" fill="#f6e3d9"/><circle cx="4" cy="4" r="1.6" fill="#eec3ae"/><circle cx="13" cy="13" r="1.6" fill="#eec3ae"/></pattern>
+        <pattern id="tile" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#dcebe8"/><rect width="21" height="21" fill="none" stroke="#bcd4cf" stroke-width="1.4"/></pattern>
+        <pattern id="brick" width="36" height="18" patternUnits="userSpaceOnUse"><rect width="36" height="18" fill="#9c5a44"/><rect width="35" height="8" fill="#a86650"/><rect y="9" width="35" height="8" fill="#a86650"/><rect width="36" height="18" fill="none" stroke="#7e4634" stroke-width="1.6"/></pattern>
+        <pattern id="wallLiv" width="26" height="26" patternUnits="userSpaceOnUse"><rect width="26" height="26" fill="#e9dfc9"/><path d="M0 13 H26" stroke="#ddd0b2" stroke-width="1.2"/></pattern>
+      </defs>
+
+      <rect id="skyRect" x="0" y="0" width="920" height="660"/>
+      <g class="stars" fill="#fff">
+        <circle cx="70" cy="36" r="2"/><circle cx="180" cy="70" r="1.5"/><circle cx="300" cy="26" r="1.8"/><circle cx="560" cy="44" r="1.5"/><circle cx="700" cy="22" r="2"/><circle cx="830" cy="64" r="1.6"/><circle cx="880" cy="26" r="1.4"/><circle cx="430" cy="60" r="1.3"/><circle cx="40" cy="96" r="1.3"/><circle cx="896" cy="110" r="1.5"/>
+      </g>
+      <circle id="moonSun" cx="852" cy="52" r="24" fill="#ffd94d" stroke="#f0be2e" stroke-width="3"/>
+
+      <!-- chimney + smoke -->
+      <rect x="636" y="34" width="48" height="76" fill="#8a4f3a" stroke="#6f3d2c" stroke-width="2"/>
+      <rect x="630" y="26" width="60" height="12" fill="#6f3d2c"/>
+      <g fill="#e8e4da"><circle class="puff" cx="660" cy="16" r="9"/><circle class="puff p2" cx="660" cy="16" r="11"/><circle class="puff p3" cx="660" cy="16" r="8"/></g>
+
+      <!-- roof -->
+      <polygon points="30,124 460,6 890,124" fill="url(#roofG)" stroke="#2e2115" stroke-width="3"/>
+      <polygon points="30,124 460,6 890,124 862,124 460,26 58,124" fill="#6e5741" opacity=".55"/>
+      <circle cx="460" cy="82" r="21" fill="#cfe8f5" stroke="#3c2f21" stroke-width="4"/>
+      <path d="M460 61 V103 M439 82 H481" stroke="#3c2f21" stroke-width="3"/>
+
+      <!-- house body -->
+      <rect x="60" y="124" width="800" height="436" fill="#f3ead9" stroke="#4a4238" stroke-width="3"/>
+      <rect x="60" y="336" width="800" height="9" fill="url(#woodG)"/>
+      <rect x="60" y="552" width="800" height="8" fill="url(#woodG)"/>
+
+      <!-- ============ BEDROOM ============ -->
+      <g class="room" data-room="The Bedroom" data-hint="A brass lamp, a big soft bed, and a window made for daydreaming. Tap the lamp." data-fx="23" data-fy="35" data-dx="238" data-dy="238">
+        <rect x="63" y="127" width="294" height="206" fill="url(#dots)"/>
+        <rect x="63" y="307" width="294" height="26" fill="url(#woodG)"/>
+        <rect class="roomshade" x="63" y="127" width="294" height="206"/>
+        <rect x="86" y="148" width="74" height="96" fill="#bfe0f2" stroke="#6b5136" stroke-width="4"/>
+        <path d="M123 148 V244 M86 196 H160" stroke="#6b5136" stroke-width="3"/>
+        <path d="M86 148 h20 v96 h-14 v-88 h-6z" fill="#b3543f" opacity=".85"/><path d="M140 148 h20 v96 h-6 v-88 h-14z" fill="#b3543f" opacity=".85"/>
+        <rect x="66" y="150" width="44" height="182" rx="4" fill="#7a5c3e" stroke="#5d4630" stroke-width="2"/>
+        <path d="M88 150 V332 M70 240 H106" stroke="#5d4630" stroke-width="2"/>
+        <rect x="196" y="238" width="30" height="70" fill="#8a6a48"/>
+        <g class="hot" data-act="lamp" data-cap="The Bedroom|Click — the little brass lamp. Every bedroom deserves a warm pool of light.">
+          <rect x="238" y="272" width="46" height="36" fill="#8a6a48" stroke="#6f5133" stroke-width="2"/>
+          <path d="M261 272 v-16" stroke="#3a3a3a" stroke-width="3"/>
+          <polygon points="247,256 275,256 284,236 238,236" fill="#c8a165" stroke="#8a5a33" stroke-width="2"/>
+          <ellipse class="lampglow" cx="261" cy="252" rx="66" ry="50" fill="url(#glowG)"/>
+        </g>
+        <rect x="176" y="196" width="168" height="26" rx="8" fill="#6f5133"/>
+        <rect x="182" y="218" width="162" height="34" rx="9" fill="#fdfcf8" stroke="#d8d2c2" stroke-width="2"/>
+        <rect x="188" y="222" width="52" height="24" rx="8" fill="#fff" stroke="#ddd5c3" stroke-width="2"/>
+        <rect x="248" y="222" width="52" height="24" rx="8" fill="#fff" stroke="#ddd5c3" stroke-width="2"/>
+        <path d="M182 246 h162 v44 a10 10 0 0 1 -10 10 h-142 a10 10 0 0 1 -10 -10 z" fill="url(#blanketG)"/>
+        <path d="M182 246 h162 v12 h-162z" fill="#e8b4a0" opacity=".7"/>
+        <ellipse cx="272" cy="321" rx="88" ry="9" fill="#cbb593" opacity=".8"/>
+      </g>
+
+      <!-- ============ NURSERY ============ -->
+      <g class="room" data-room="The Nursery" data-hint="Soft pink walls, a crib, and a mobile that spins if you ask it nicely. Tap the mobile." data-fx="52" data-fy="35" data-dx="468" data-dy="238">
+        <rect x="360" y="127" width="237" height="206" fill="url(#dotsPink)"/>
+        <rect x="360" y="307" width="237" height="26" fill="url(#woodG)"/>
+        <rect class="roomshade" x="360" y="127" width="237" height="206"/>
+        <g fill="#e8a2b4"><path d="M392 150 l3.5 7 7.5 1 -5.5 5.2 1.4 7.5 -6.9 -3.7 -6.9 3.7 1.4 -7.5 -5.5 -5.2 7.5 -1z"/><path d="M556 176 l3 6 6.6.9 -4.8 4.6 1.2 6.5 -6 -3.2 -6 3.2 1.2 -6.5 -4.8 -4.6 6.6 -.9z"/></g>
+        <g class="hot" data-act="mobile" data-cap="The Nursery|Click — the mobile twirls a slow little lullaby.">
+          <path d="M442 127 v26" stroke="#8a857e" stroke-width="2.4"/>
+          <g class="mobile" id="mobileG">
+            <path d="M404 160 h76 M442 153 v44" stroke="#8a857e" stroke-width="2.4"/>
+            <path d="M404 160 v14 M480 160 v14 M442 197 v-20" stroke="#b8b0a3" stroke-width="1.6"/>
+            <path d="M404 174 l3 6 6.6.9 -4.8 4.6 1.2 6.4 -6 -3.1 -6 3.1 1.2 -6.4 -4.8 -4.6 6.6 -.9z" fill="#f2b134"/>
+            <circle cx="480" cy="182" r="6.5" fill="#e88bb0"/>
+            <path d="M442 178 c-4 5 -4 9 0 13 c4 -4 4 -8 0 -13z" fill="#93c47d"/>
+          </g>
+        </g>
+        <rect x="382" y="238" width="128" height="14" rx="6" fill="#a97c50"/>
+        <g stroke="#a97c50" stroke-width="4"><path d="M390 252 v44 M410 252 v44 M430 252 v44 M450 252 v44 M470 252 v44 M490 252 v44 M504 252 v44"/></g>
+        <rect x="382" y="292" width="128" height="12" rx="6" fill="#a97c50"/>
+        <rect x="390" y="262" width="112" height="22" rx="8" fill="#fdf3ec"/>
+        <rect x="382" y="226" width="128" height="14" rx="7" fill="#8a5f3a"/>
+        <g class="hot" data-act="rocker" data-cap="The Nursery|The rocking chair — best seat in the house for 2 a.m. stories.">
+          <path d="M540 250 q26 6 24 34 l-4 22 h-12 l2 -20 q1 -12 -6 -18z" fill="#7a5c3e"/>
+          <rect x="516" y="282" width="46" height="10" rx="4" fill="#8a6a48"/>
+          <path d="M520 292 v18 M556 292 v18 M512 316 q28 8 52 0" stroke="#7a5c3e" stroke-width="4" fill="none"/>
+        </g>
+        <ellipse cx="452" cy="322" rx="92" ry="9" fill="#eec9bb" opacity=".85"/>
+      </g>
+
+      <!-- ============ BATHROOM ============ -->
+      <g class="room" data-room="The Bathroom" data-hint="A deep tub for soaking and a shower that actually runs. Tap the shower." data-fx="79" data-fy="35" data-dx="700" data-dy="240">
+        <rect x="600" y="127" width="257" height="206" fill="url(#tile)"/>
+        <rect x="600" y="307" width="257" height="26" fill="#b9cfc9"/>
+        <rect class="roomshade" x="600" y="127" width="257" height="206"/>
+        <rect x="624" y="140" width="64" height="52" rx="6" fill="#cfe8f5" stroke="#7a9a94" stroke-width="3"/>
+        <rect x="700" y="238" width="66" height="34" fill="#8a6a48"/>
+        <rect x="706" y="206" width="54" height="34" rx="4" fill="#eef4f2" stroke="#b9cfc9" stroke-width="2"/>
+        <ellipse cx="733" cy="242" rx="20" ry="7" fill="#fff" stroke="#b9cfc9" stroke-width="2"/>
+        <path d="M733 228 v10 M726 232 q7 -6 14 0" stroke="#9aa5a1" stroke-width="3" fill="none"/>
+        <g class="hot" data-act="tub" data-cap="The Bathroom|Bubble baths are a personality trait around here.">
+          <path d="M616 268 h118 q6 40 -16 48 h-86 q-22 -8 -16 -48z" fill="url(#tubG)" stroke="#b9c4c1" stroke-width="2"/>
+          <ellipse cx="675" cy="268" rx="59" ry="9" fill="#bfe3f2"/>
+          <g fill="#fff" opacity=".9"><circle cx="646" cy="262" r="7"/><circle cx="664" cy="258" r="9"/><circle cx="686" cy="261" r="7"/><circle cx="704" cy="263" r="6"/></g>
+          <path d="M622 316 l-5 12 M728 316 l5 12" stroke="#8a857e" stroke-width="4"/>
+          <path d="M626 244 q10 -12 20 0 v14 h-8 v-10 h-4 v10 h-8z" fill="#c8cdd1"/>
+        </g>
+        <g class="hot" data-act="shower" data-cap="The Bathroom|Click — hot water, good pressure, singing optional but encouraged.">
+          <rect x="786" y="150" width="62" height="166" fill="rgba(190,225,240,.4)" stroke="#9db8bd" stroke-width="2.4"/>
+          <path d="M848 150 v166" stroke="#7a9a94" stroke-width="3"/>
+          <path d="M796 158 h34 M813 158 v14" stroke="#9aa5a1" stroke-width="4"/>
+          <ellipse cx="813" cy="176" rx="13" ry="4.4" fill="#c8cdd1"/>
+          <g class="water" id="showerWater" stroke="#7cc4e8" stroke-width="2.6" stroke-dasharray="6 8"><path d="M802 184 v96 M813 184 v104 M824 184 v96"/></g>
+          <circle cx="838" cy="238" r="5" fill="#c8a165"/>
+        </g>
+      </g>
+
+      <!-- ============ LIVING ROOM ============ -->
+      <g class="room" data-room="The Living Room" data-hint="Fireplace, couch, and the TV. Tap the fire to light it, and the TV to see what's on." data-fx="25" data-fy="68" data-dx="238" data-dy="452">
+        <rect x="63" y="348" width="334" height="202" fill="url(#wallLiv)"/>
+        <rect x="63" y="524" width="334" height="26" fill="url(#woodG)"/>
+        <rect class="roomshade" x="63" y="348" width="334" height="202"/>
+        <ellipse class="fireglow" id="fireGlow" cx="118" cy="470" rx="86" ry="66" fill="url(#glowG)"/>
+        <g class="hot" data-act="fire" data-cap="The Living Room|Click — a real fire. Well. Real enough to warm your imagination.">
+          <rect x="70" y="404" width="96" height="122" fill="url(#brick)" stroke="#6f4232" stroke-width="2"/>
+          <rect x="62" y="394" width="112" height="12" fill="#6f5133"/>
+          <rect x="88" y="446" width="60" height="80" fill="#241a12"/>
+          <rect x="96" y="508" width="44" height="9" rx="4" fill="#5d4630" transform="rotate(-4 118 512)"/>
+          <rect x="96" y="512" width="44" height="9" rx="4" fill="#4c3826" transform="rotate(5 118 516)"/>
+          <g class="flames" id="flames">
+            <path class="fl fl1" d="M118 512 c-14 -16 -10 -34 0 -50 c3 8 7 12 10 20 c8 -8 6 -18 4 -26 c14 14 20 34 8 56 c-6 10 -16 10 -22 0z" fill="#f28c28"/>
+            <path class="fl fl2" d="M118 512 c-9 -10 -7 -24 0 -36 c6 8 13 18 8 30 c-3 8 -5 12 -8 6z" fill="#f7b733"/>
+            <path class="fl fl3" d="M118 512 c-5 -6 -4 -14 0 -22 c4 6 7 12 4 20 c-2 5 -2 6 -4 2z" fill="#ffe08a"/>
+          </g>
+          <path d="M84 420 q6 -10 12 0 q-6 4 -12 0z M140 420 q6 -10 12 0 q-6 4 -12 0z" fill="#a83c32"/>
+          <rect x="86" y="412" width="10" height="16" fill="#c94f42"/><rect x="140" y="412" width="10" height="16" fill="#7fae5c"/>
+        </g>
+        <ellipse cx="256" cy="528" rx="102" ry="10" fill="#a8563c" opacity=".55"/>
+        <g>
+          <rect x="196" y="452" width="118" height="52" rx="12" fill="url(#sofaG)"/>
+          <rect x="188" y="478" width="22" height="46" rx="9" fill="#4c3826"/>
+          <rect x="300" y="478" width="22" height="46" rx="9" fill="#4c3826"/>
+          <rect x="208" y="486" width="46" height="24" rx="7" fill="#7d5f40"/>
+          <rect x="258" y="486" width="46" height="24" rx="7" fill="#7d5f40"/>
+          <rect x="216" y="458" width="36" height="26" rx="6" fill="#b3543f"/>
+          <rect x="262" y="458" width="36" height="26" rx="6" fill="#c8a165"/>
+          <rect x="196" y="520" width="118" height="8" fill="#3c2c1c"/>
+        </g>
+        <g class="hot" data-act="lamp2" data-cap="The Living Room|The reading lamp — for the couch corner and a good chapter.">
+          <path d="M176 524 v-64" stroke="#3a3a3a" stroke-width="4"/>
+          <polygon points="162,460 190,460 198,438 154,438" fill="#c8a165" stroke="#8a5a33" stroke-width="2"/>
+          <ellipse class="lampglow" id="lampGlow2" cx="176" cy="452" rx="58" ry="44" fill="url(#glowG)"/>
+          <ellipse cx="176" cy="528" rx="16" ry="4" fill="#3a3a3a"/>
+        </g>
+        <g class="hot" data-act="tv" data-cap="The Living Room|Click — Saturday morning rules still apply in this house.">
+          <rect x="330" y="492" width="62" height="34" fill="#6f5133"/>
+          <rect x="336" y="430" width="56" height="58" rx="5" fill="#1c1a17" stroke="#000" stroke-width="2"/>
+          <g class="tvshow" id="tvShow">
+            <rect x="340" y="434" width="48" height="50" rx="3" fill="#7cc4e8"/>
+            <rect x="340" y="466" width="48" height="18" fill="#7fae5c"/>
+            <circle cx="352" cy="446" r="5" fill="#ffd94d"/>
+            <g class="dancer"><circle cx="368" cy="452" r="5.4" fill="#333"/><path d="M368 457 v10 M368 462 l-7 5 M368 462 l7 5 M368 467 l-5 9 M368 467 l6 8" stroke="#333" stroke-width="2.6"/></g>
+          </g>
+          <rect x="340" y="434" width="48" height="50" rx="3" fill="none" stroke="#3a3a3a" stroke-width="1.4"/>
+        </g>
+        <g stroke="#8a6a48" stroke-width="3" fill="#b08a5a"><polygon points="352,524 396,524 396,506 352,506"/><polygon points="352,506 396,506 396,488 374,488 374,470 352,470"/></g>
+      </g>
+
+      <!-- ============ KITCHEN ============ -->
+      <g class="room" data-room="The Kitchen" data-hint="The heart of the house. Tap the fridge if you're hungry, or the stove to put the kettle on." data-fx="58" data-fy="68" data-dx="520" data-dy="452">
+        <rect x="400" y="348" width="257" height="202" fill="#efe7d2"/>
+        <rect x="400" y="524" width="257" height="26" fill="url(#woodG)"/>
+        <rect class="roomshade" x="400" y="348" width="257" height="202"/>
+        <rect x="428" y="368" width="66" height="56" fill="#bfe0f2" stroke="#6b5136" stroke-width="4"/>
+        <path d="M461 368 V424 M428 396 H494" stroke="#6b5136" stroke-width="3"/>
+        <g fill="#7a5c3e"><rect x="404" y="356" width="20" height="48" rx="3"/><rect x="498" y="356" width="20" height="48" rx="3"/><rect x="522" y="356" width="42" height="48" rx="3"/><path d="M420 380 h-12 M514 380 h-12 M543 368 v22" stroke="#5d4630" stroke-width="2"/></g>
+        <rect x="404" y="452" width="160" height="14" fill="#8a6a48"/>
+        <rect x="404" y="466" width="160" height="60" fill="#7a5c3e"/>
+        <g stroke="#5d4630" stroke-width="2"><path d="M444 466 v60 M524 466 v60 M404 496 h160"/></g>
+        <g><ellipse cx="436" cy="446" rx="16" ry="5" fill="#dfe5e2" stroke="#9aa5a1" stroke-width="2"/><path d="M452 430 q10 -10 16 2" stroke="#9aa5a1" stroke-width="4" fill="none"/></g>
+        <g class="hot" data-act="stove" data-cap="The Kitchen|Click — kettle's on. Tea first, decisions after.">
+          <rect x="478" y="438" width="72" height="16" fill="#2b2b2b"/>
+          <circle cx="494" cy="446" r="7.4" fill="#171410"/><circle cx="516" cy="446" r="9" fill="#171410"/><circle cx="536" cy="446" r="6" fill="#171410"/>
+          <circle class="burner" id="burnerGlow" cx="516" cy="446" r="9.6" fill="none" stroke="#f2600c" stroke-width="3"/>
+          <path d="M502 438 a14 8 0 0 1 28 0 z" fill="#3f4a52"/>
+          <rect x="512" y="424" width="8" height="8" fill="#3f4a52"/><path d="M502 432 q-8 -4 -4 -10 M530 432 q8 -4 4 -10" stroke="#2b2b2b" stroke-width="3" fill="none"/>
+          <g class="steam" id="kettleSteam" fill="#fff"><circle cx="500" cy="416" r="4"/><circle cx="506" cy="406" r="5"/></g>
+        </g>
+        <g class="hot" data-act="fridge" data-cap="The Kitchen|Click — go on, have a look. There's always something good in here.">
+          <g class="fridgeinside" id="fridgeInside">
+            <rect x="574" y="362" width="62" height="164" fill="#eaf6fb"/>
+            <g><rect x="580" y="392" width="50" height="5" fill="#c8d6da"/><rect x="580" y="432" width="50" height="5" fill="#c8d6da"/><rect x="580" y="472" width="50" height="5" fill="#c8d6da"/>
+            <rect x="584" y="372" width="10" height="18" fill="#e2574c"/><rect x="598" y="376" width="12" height="14" fill="#f2b134"/><circle cx="618" cy="382" r="8" fill="#7fae5c"/>
+            <rect x="586" y="410" width="16" height="20" fill="#fff" stroke="#ccc"/><circle cx="616" cy="420" r="9" fill="#f6c453"/>
+            <rect x="584" y="448" width="12" height="22" fill="#a8d8ea"/><rect x="602" y="452" width="20" height="16" fill="#b3543f"/><circle cx="620" cy="486" r="10" fill="#e88bb0"/></g>
+          </g>
+          <g class="fridgedoor" id="fridgeDoor">
+            <rect x="572" y="360" width="66" height="166" rx="7" fill="#cfd8dc" stroke="#9fb0b5" stroke-width="2"/>
+            <path d="M572 420 h66" stroke="#9fb0b5" stroke-width="2.4"/>
+            <rect x="578" y="376" width="6" height="34" rx="3" fill="#8a9aa0"/><rect x="578" y="428" width="6" height="52" rx="3" fill="#8a9aa0"/>
+            <rect x="596" y="378" width="24" height="18" rx="2" fill="#f6e7c8" transform="rotate(-4 608 387)"/><circle cx="622" cy="412" r="5" fill="#e2574c"/>
+          </g>
+        </g>
+        <g><circle cx="618" cy="392" r="9" fill="#8a6a48"/><circle cx="640" cy="392" r="9" fill="#6f5133"/><path d="M618 383 v-12 M640 383 v-12" stroke="#5d4630" stroke-width="2.4"/></g>
+      </g>
+
+      <!-- ============ MUDROOM ============ -->
+      <g class="room" data-room="The Mudroom" data-hint="Boots by the door, laundry humming. Tap the washer to run a load, or ring the doorbell." data-fx="82" data-fy="68" data-dx="752" data-dy="452">
+        <rect x="660" y="348" width="197" height="202" fill="#e3ddcb"/>
+        <rect x="660" y="524" width="197" height="26" fill="url(#woodG)"/>
+        <rect class="roomshade" x="660" y="348" width="197" height="202"/>
+        <rect x="668" y="428" width="120" height="9" fill="#8a6a48"/>
+        <g fill="#b3543f"><rect x="676" y="404" width="26" height="24" rx="3"/><rect x="710" y="404" width="26" height="24" rx="3" fill="#7fae5c"/><rect x="744" y="404" width="26" height="24" rx="3" fill="#c8a165"/></g>
+        <g class="hot" data-act="washer" data-cap="The Mudroom|Click — one load, coming right up. She sings a little song at the end.">
+          <g class="washerbody" id="washerBody">
+            <rect x="672" y="458" width="62" height="68" rx="6" fill="#eef1f2" stroke="#b9c4c1" stroke-width="2"/>
+            <circle cx="703" cy="496" r="19" fill="#9db8bd"/>
+            <g class="drum" id="washerDrum"><circle cx="703" cy="496" r="14" fill="#cfe8f5"/><path d="M703 482 v28 M689 496 h28" stroke="#7cc4e8" stroke-width="4"/></g>
+            <circle cx="682" cy="468" r="3.4" fill="#8a5a33"/><rect x="694" y="465" width="30" height="6" rx="3" fill="#d8d2c2"/>
+          </g>
+          <rect x="742" y="458" width="62" height="68" rx="6" fill="#e3e8ea" stroke="#b9c4c1" stroke-width="2"/>
+          <circle cx="773" cy="494" r="17" fill="#b9c4c1"/><circle cx="762" cy="468" r="3.4" fill="#8a857e"/>
+        </g>
+        <g class="hot" data-act="door" data-cap="The Mudroom|Ding-dong! Nobody there — probably the neighbor's cat again.">
+          <rect x="818" y="428" width="34" height="98" fill="#8a5a33"/>
+          <g class="dooropen" id="frontDoor">
+            <rect x="818" y="428" width="34" height="98" fill="#a06a3c" stroke="#7c4f28" stroke-width="2"/>
+            <rect x="826" y="438" width="18" height="28" fill="#cfe8f5" stroke="#7c4f28" stroke-width="2"/>
+            <circle cx="846" cy="482" r="3" fill="#ffd94d"/>
+          </g>
+          <circle cx="810" cy="470" r="5" fill="#c8a165" stroke="#8a5a33" stroke-width="1.6"/>
+        </g>
+      </g>
+
+      <!-- the doll -->
+      <g id="doll" transform="translate(238,452)">
+        <ellipse cx="0" cy="76" rx="17" ry="3.6" fill="rgba(0,0,0,.18)"/>
+        <path d="M-6 58 v16 M6 58 v16" stroke="#e8b48f" stroke-width="5" stroke-linecap="round"/>
+        <path d="M-15 62 a15 5 0 0 0 30 0z" fill="#26221e"/>
+        <path d="M0 14 L-16 60 a16 6 0 0 0 32 0z" fill="#b3543f"/>
+        <path d="M0 14 L-5 34 h10z" fill="#96422f"/>
+        <path d="M-11 26 q-8 10 -6 22 M11 26 q8 10 6 22" stroke="#e8b48f" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="0" cy="2" r="13" fill="#f2c49b"/>
+        <path d="M-13 0 a13 13 0 0 1 26 0 l0 -3 a13 10 0 0 0 -26 0z" fill="#5d4630"/>
+        <circle cx="0" cy="-13" r="6" fill="#5d4630"/>
+        <circle cx="-4.6" cy="2" r="1.5" fill="#26221e"/><circle cx="4.6" cy="2" r="1.5" fill="#26221e"/>
+        <path d="M-3.4 7 q3.4 3 6.8 0" stroke="#b3543f" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <circle cx="-8" cy="5.4" r="2.6" fill="#f0a48f" opacity=".8"/><circle cx="8" cy="5.4" r="2.6" fill="#f0a48f" opacity=".8"/>
+      </g>
+
+      <!-- porch + yard -->
+      <rect x="30" y="560" width="860" height="14" fill="url(#woodG)"/>
+      <rect x="0" y="574" width="920" height="86" fill="url(#grassG)"/>
+      <g class="hot" data-act="swing" data-cap="The Porch|A porch swing and nowhere to be. Tap her to set her swaying.">
+        <g class="swing" id="swingG">
+          <path d="M104 574 v34 M216 574 v34" stroke="#5d4630" stroke-width="3"/>
+          <rect x="92" y="606" width="136" height="10" rx="4" fill="#7a5c3e"/>
+          <rect x="92" y="586" width="136" height="8" rx="4" fill="#7a5c3e"/>
+          <path d="M98 594 v12 M222 594 v12" stroke="#5d4630" stroke-width="3"/>
+        </g>
+      </g>
+      <g><path d="M428 574 h64 l10 86 h-84z" fill="#cfc4ac"/><path d="M432 606 h56 M428 632 h62" stroke="#b8ab90" stroke-width="3"/></g>
+      <g fill="#4e7a38"><circle cx="556" cy="586" r="17"/><circle cx="586" cy="592" r="13"/><circle cx="700" cy="588" r="15"/><circle cx="742" cy="594" r="12"/><circle cx="330" cy="590" r="14"/><circle cx="364" cy="594" r="11"/></g>
+      <g fill="#e88bb0"><circle cx="556" cy="580" r="3.4"/><circle cx="700" cy="582" r="3.4"/><circle cx="332" cy="584" r="3.2"/></g>
+      <g fill="#f2b134"><circle cx="586" cy="586" r="3"/><circle cx="742" cy="588" r="3"/><circle cx="362" cy="588" r="3"/></g>
+    </svg>
+    </div>
+  </div>
+
+  <div class="caption" id="caption"><b>The Doll House</b><span id="captionText">Tap any room and she'll show you around. Try the fireplace first — it's chilly in here.</span></div>
+  <p class="hint">Tip: tap a room to step closer. Tap the whole-house button to step back. At night, the lamps matter.</p>
+</main>
+
+<script>
+  document.getElementById('menuBtn').addEventListener('click', function () {
+    var panel = document.getElementById('menuPanel');
+    var open = panel.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  (function () {
+    var toggle = document.getElementById('themeToggle');
+    function applyTheme(dark) {
+      document.body.classList.toggle('dark', dark);
+      if (toggle) toggle.checked = dark;
+      try { localStorage.setItem('ashleys-theme', dark ? 'dark' : 'light'); } catch (e) {}
+    }
+    var saved = null;
+    try { saved = localStorage.getItem('ashleys-theme'); } catch (e) {}
+    if (saved) applyTheme(saved === 'dark');
+    if (toggle) toggle.addEventListener('change', function () { applyTheme(toggle.checked); });
+  })();
+  var deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferredPrompt = e; });
+  document.getElementById('installBtn').addEventListener('click', function () {
+    if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; }
+    else { alert("To install: open your browser menu and choose 'Add to Home screen' or 'Install app'."); }
+  });
+  if ('serviceWorker' in navigator) { window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); }); }
+
+  // ---------- The Doll House ----------
+  var captionTitle = document.querySelector('#caption b');
+  var captionText = document.getElementById('captionText');
+  var scaleBox = document.getElementById('houseScale');
+  var doll = document.getElementById('doll');
+  function say(cap) {
+    var parts = cap.split('|');
+    captionTitle.textContent = parts[0];
+    captionText.textContent = parts[1] || '';
+  }
+  function moveDoll(x, y) {
+    doll.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+    doll.classList.add('bob');
+    setTimeout(function () { doll.classList.remove('bob'); }, 1150);
+  }
+  document.querySelectorAll('.room').forEach(function (room) {
+    room.addEventListener('click', function () {
+      say(room.getAttribute('data-room') + '|' + room.getAttribute('data-hint'));
+      scaleBox.style.transformOrigin = room.getAttribute('data-fx') + '% ' + room.getAttribute('data-fy') + '%';
+      scaleBox.style.transform = 'scale(1.55)';
+      moveDoll(room.getAttribute('data-dx'), room.getAttribute('data-dy'));
+    });
+  });
+  function resetView() {
+    scaleBox.style.transform = 'scale(1)';
+    say('The Doll House|The whole house, all at once. She\u2019s a beauty, isn\u2019t she?');
+  }
+  document.getElementById('resetView').addEventListener('click', resetView);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') resetView(); });
+
+  var night = false;
+  document.getElementById('modeBtn').addEventListener('click', function () {
+    night = !night;
+    document.body.classList.toggle('night', night);
+    document.getElementById('moonSun').setAttribute('fill', night ? '#e8e6da' : '#ffd94d');
+    this.innerHTML = night ? '&#9728;&#65038; Daybreak' : '&#127769; Nightfall';
+    say(night ? 'Nightfall|The house settles in. Lamps on, fire lit, stars out.' : 'Daybreak|Sun\u2019s up, windows open, whole house awake again.');
+  });
+
+  function wireHot(act, fn) {
+    document.querySelectorAll('[data-act="' + act + '"]').forEach(function (el) {
+      el.addEventListener('click', function (e) { e.stopPropagation(); say(el.getAttribute('data-cap')); fn(el); });
+    });
+  }
+  wireHot('fire', function () {
+    document.getElementById('flames').classList.toggle('on');
+    document.getElementById('fireGlow').classList.toggle('on');
+    document.querySelector('[data-room="The Living Room"]').classList.toggle('lit');
+  });
+  wireHot('tv', function () { document.getElementById('tvShow').classList.toggle('on'); });
+  wireHot('lamp', function (el) {
+    el.querySelector('.lampglow').classList.toggle('on');
+    el.closest('.room').classList.toggle('lit');
+  });
+  wireHot('lamp2', function (el) {
+    el.querySelector('.lampglow').classList.toggle('on');
+    el.closest('.room').classList.toggle('lit');
+  });
+  wireHot('fridge', function () {
+    document.getElementById('fridgeDoor').classList.toggle('open');
+    document.getElementById('fridgeInside').classList.toggle('open');
+  });
+  wireHot('stove', function () {
+    document.getElementById('burnerGlow').classList.toggle('on');
+    document.getElementById('kettleSteam').classList.toggle('on');
+  });
+  wireHot('shower', function () { document.getElementById('showerWater').classList.toggle('on'); });
+  wireHot('tub', function () {});
+  wireHot('mobile', function () { document.getElementById('mobileG').classList.toggle('spin'); });
+  wireHot('rocker', function () {});
+  wireHot('washer', function () {
+    document.getElementById('washerDrum').classList.toggle('spin');
+    document.getElementById('washerBody').classList.toggle('shake');
+  });
+  wireHot('door', function () {
+    var d = document.getElementById('frontDoor');
+    d.classList.add('open');
+    setTimeout(function () { d.classList.remove('open'); }, 1600);
+  });
+  wireHot('swing', function () { document.getElementById('swingG').classList.toggle('sway'); });
+  // The fire starts lit — it's a home, after all.
+  document.getElementById('flames').classList.add('on');
+  document.getElementById('fireGlow').classList.add('on');
+</script>
+</body>
+</html>
