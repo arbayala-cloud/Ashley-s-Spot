@@ -145,6 +145,47 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
 .hw-toggle-btn{display:block;width:100%;margin-top:10px;padding:10px 12px;background:#26221e;color:#f4f1ea;border:1.5px solid #4a4238;border-radius:8px;font-family:Oswald,Inter,sans-serif;font-size:15px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
 .hw-toggle-btn:hover{border-color:#e8762c;color:#ffb066;}
 </style>
+<style id="cat-style">
+/* The Cat: a fluffy little resident who floats around Ashley's Spot with her.
+   Original hand-coded SVG art. Coat colors live in the data-coat rules below. */
+#catPal { position: fixed; left: -200px; top: 110vh; width: 104px; z-index: 99990; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: left 4.4s ease-in-out, top 4.4s ease-in-out; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+#catPal .cat-bob { animation: catBob 3.6s ease-in-out infinite; }
+#catPal svg { display: block; width: 100%; height: auto; overflow: visible; }
+#catPal .cat-flip { transition: transform .45s ease; }
+#catPal .cat-flip.flip { transform: scaleX(-1); }
+#catPal .cf { fill: var(--fur); } #catPal .cfd { fill: var(--furd); } #catPal .cb { fill: var(--bib); }
+#catPal .ce { fill: var(--eye); } #catPal .cer { fill: var(--ear); } #catPal .sf { stroke: var(--furd); }
+#catPal[data-coat="midnight"] { --fur: #2e2a36; --furd: #1d1a24; --bib: #47405a; --eye: #ffb347; --ear: #c97b8a; }
+#catPal[data-coat="pumpkin"] { --fur: #df8433; --furd: #b9661f; --bib: #f7c873; --eye: #4f9e57; --ear: #e59a8f; }
+#catPal[data-coat="storm"] { --fur: #8d99ae; --furd: #68738a; --bib: #ccd6e4; --eye: #ffcf5c; --ear: #d99aa6; }
+#catPal[data-coat="snowball"] { --fur: #f3ecdc; --furd: #d9cbae; --bib: #fffaf0; --eye: #5b9bd5; --ear: #e59aab; }
+#catPal[data-coat="calico"] { --fur: #f3ecdc; --furd: #d9cbae; --bib: #fffaf0; --eye: #4f9e57; --ear: #e59aab; }
+#catPal .cat-stripes, #catPal .cat-patches, #catPal .cat-hat { display: none; }
+#catPal[data-coat="pumpkin"] .cat-stripes { display: block; }
+#catPal[data-coat="calico"] .cat-patches { display: block; }
+#catPal.hat-on .cat-hat { display: block; }
+#catPal .cat-tail { transform-box: fill-box; transform-origin: 15% 85%; animation: catTail 2.9s ease-in-out infinite alternate; }
+#catPal .cat-eyes { transform-box: fill-box; transform-origin: center; animation: catBlink 5.4s infinite; }
+#catPal.sleeping .cat-eyes { animation: none; transform: scaleY(.12); }
+#catPal .cat-shadow { transform-box: fill-box; transform-origin: center; animation: catShadow 3.6s ease-in-out infinite; }
+#catPal.petted svg { animation: catSquish .38s ease; }
+#catPal .cat-bubble { position: absolute; left: 50%; bottom: 96%; transform: translate(-50%, 6px) scale(.92); min-width: 128px; max-width: 190px; background: #fffdf6; color: #33302a; border: 2px solid #4a4238; border-radius: 12px; padding: 7px 9px 6px; font: 600 12px/1.35 Inter, system-ui, sans-serif; text-align: center; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; box-shadow: 0 6px 18px rgba(20, 15, 5, .22); }
+#catPal .cat-bubble:after { content: ""; position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%); border: 4px solid transparent; border-top: 6px solid #4a4238; }
+#catPal .cat-bubble.show { opacity: 1; transform: translate(-50%, 0) scale(1); pointer-events: auto; }
+#catPal .cat-btns { display: flex; gap: 5px; justify-content: center; margin-top: 6px; }
+#catPal .cat-btns button { font: 700 10.5px Inter, system-ui, sans-serif; letter-spacing: .02em; border: 1.5px solid #4a4238; background: #f4ead2; color: #4a3625; border-radius: 999px; padding: 3px 8px; cursor: pointer; }
+#catPal .cat-btns button:active { transform: scale(.94); }
+#catPal .cat-heart, #catPal .cat-zzz { position: absolute; left: 50%; top: 6px; font-size: 15px; pointer-events: none; animation: catRise 1.15s ease-out forwards; }
+#catPal .cat-zzz { font: italic 700 13px Georgia, serif; color: #6b6390; }
+@keyframes catBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes catShadow { 0%, 100% { transform: scaleX(1); opacity: .16; } 50% { transform: scaleX(.88); opacity: .11; } }
+@keyframes catTail { from { transform: rotate(-3.5deg); } to { transform: rotate(5deg); } }
+@keyframes catBlink { 0%, 91%, 100% { transform: scaleY(1); } 94.5% { transform: scaleY(.08); } 97.5% { transform: scaleY(1); } }
+@keyframes catSquish { 0% { transform: scale(1, 1); } 35% { transform: scale(1.07, .93); } 70% { transform: scale(.97, 1.04); } 100% { transform: scale(1, 1); } }
+@keyframes catRise { 0% { transform: translate(-50%, 0) scale(.7); opacity: 0; } 18% { opacity: 1; } 100% { transform: translate(calc(-50% + var(--drift, 0px)), -52px) scale(1.15); opacity: 0; } }
+@media (max-width: 560px) { #catPal { width: 88px; } #catPal .cat-bubble { max-width: 168px; } }
+@media (prefers-reduced-motion: reduce) { #catPal { transition: none; } #catPal .cat-bob, #catPal .cat-tail, #catPal .cat-shadow { animation: none; } #catPal .cat-eyes { animation-duration: 9s; } }
+</style>
 </head>
 <body>
 <main class="wrap">
@@ -441,6 +482,167 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
     apply();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
+})();
+</script>
+<script id="cat-script">
+(function () {
+  var KEY = "ashleys-cat-v1";
+  var COATS = ["midnight", "pumpkin", "storm", "snowball", "calico"];
+  var COAT_NAMES = { midnight: "Midnight", pumpkin: "Pumpkin", storm: "Storm Cloud", snowball: "Snowball", calico: "Calico" };
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function todayStr() { var n = new Date(); return n.getFullYear() + "-" + (n.getMonth() + 1) + "-" + n.getDate(); }
+  function ydayStr() { var n = new Date(Date.now() - 864e5); return n.getFullYear() + "-" + (n.getMonth() + 1) + "-" + n.getDate(); }
+  var S = load();
+  if (COATS.indexOf(S.coat) < 0) S.coat = "midnight";
+  if (typeof S.pets !== "number") S.pets = 0;
+  var T = todayStr();
+  if (S.lastDay !== T) { S.streak = (S.lastDay === ydayStr()) ? (S.streak || 0) + 1 : 1; S.lastDay = T; }
+  if (typeof S.visits !== "number") S.visits = 0;
+  S.visits++; save();
+
+  var SVG =
+  "<svg viewBox=\"0 0 220 200\" aria-hidden=\"true\">" +
+  "<ellipse class=\"cat-shadow\" cx=\"110\" cy=\"189\" rx=\"56\" ry=\"8\" fill=\"#140f08\" opacity=\".16\"/>" +
+  "<g class=\"cat-tail\"><path class=\"cf\" d=\"M158,148 C190,138 208,156 202,176 C197,191 178,196 158,191 C175,183 181,168 171,157 C167,152 162,148 158,148 Z\"/><circle class=\"cf\" cx=\"196\" cy=\"156\" r=\"10\"/><circle class=\"cf\" cx=\"201\" cy=\"171\" r=\"9\"/><circle class=\"cb\" cx=\"197\" cy=\"182\" r=\"8\"/></g>" +
+  "<path class=\"cf\" d=\"M110,84 C146,84 166,114 166,144 C166,172 142,188 110,188 C78,188 54,172 54,144 C54,114 74,84 110,84 Z\"/>" +
+  "<circle class=\"cf\" cx=\"58\" cy=\"126\" r=\"9\"/><circle class=\"cf\" cx=\"56\" cy=\"148\" r=\"10\"/><circle class=\"cf\" cx=\"64\" cy=\"168\" r=\"9\"/><circle class=\"cf\" cx=\"162\" cy=\"126\" r=\"9\"/><circle class=\"cf\" cx=\"164\" cy=\"148\" r=\"10\"/><circle class=\"cf\" cx=\"156\" cy=\"168\" r=\"9\"/><circle class=\"cf\" cx=\"84\" cy=\"185\" r=\"8\"/><circle class=\"cf\" cx=\"136\" cy=\"185\" r=\"8\"/>" +
+  "<circle class=\"cb\" cx=\"110\" cy=\"114\" r=\"12\"/><circle class=\"cb\" cx=\"98\" cy=\"127\" r=\"10\"/><circle class=\"cb\" cx=\"122\" cy=\"127\" r=\"10\"/><circle class=\"cb\" cx=\"110\" cy=\"140\" r=\"11\"/>" +
+  "<g class=\"cat-stripes\"><path class=\"sf\" d=\"M60,120 q-5,10 -2,20 M166,120 q5,10 2,20\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".4\"/></g>" +
+  "<g class=\"cat-patches\"><path d=\"M148,116 Q170,124 167,150 Q149,149 143,136 Q143,123 148,116 Z\" fill=\"#2e2a36\" opacity=\".92\"/></g>" +
+  "<ellipse class=\"cf\" cx=\"84\" cy=\"183\" rx=\"15\" ry=\"8\"/><ellipse class=\"cf\" cx=\"136\" cy=\"183\" rx=\"15\" ry=\"8\"/>" +
+  "<path class=\"sf\" d=\"M79,178 v7 M89,178 v7 M131,178 v7 M141,178 v7\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".45\"/>" +
+  "<path class=\"cf\" d=\"M76,32 L64,3 Q62,-3 69,-1 L103,17 Q88,28 76,32 Z\"/><path class=\"cf\" d=\"M144,32 L156,3 Q158,-3 151,-1 L117,17 Q132,28 144,32 Z\"/>" +
+  "<path class=\"cer\" d=\"M78,25 L71,8 L95,17 Q86,23 78,25 Z\"/><path class=\"cer\" d=\"M142,25 L149,8 L125,17 Q134,23 142,25 Z\"/>" +
+  "<circle class=\"cf\" cx=\"110\" cy=\"58\" r=\"42\"/>" +
+  "<circle class=\"cf\" cx=\"71\" cy=\"65\" r=\"10\"/><circle class=\"cf\" cx=\"69\" cy=\"79\" r=\"9\"/><circle class=\"cf\" cx=\"149\" cy=\"65\" r=\"10\"/><circle class=\"cf\" cx=\"151\" cy=\"79\" r=\"9\"/><circle class=\"cf\" cx=\"110\" cy=\"95\" r=\"10\"/>" +
+  "<g class=\"cat-stripes\"><path class=\"sf\" d=\"M96,21 q3,7 0,13 M110,17 q2,8 0,15 M124,21 q-3,7 0,13\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".45\"/></g>" +
+  "<g class=\"cat-patches\"><path d=\"M63,36 Q58,8 84,3 Q97,1 101,14 Q84,15 75,26 Q67,34 63,36 Z\" fill=\"#df8433\" opacity=\".95\"/></g>" +
+  "<g class=\"cat-eyes\"><ellipse class=\"ce\" cx=\"93\" cy=\"58\" rx=\"7\" ry=\"9\"/><ellipse cx=\"93\" cy=\"59\" rx=\"3.2\" ry=\"5.5\" fill=\"#191521\"/><circle cx=\"95.5\" cy=\"54\" r=\"1.8\" fill=\"#fff\" opacity=\".9\"/><ellipse class=\"ce\" cx=\"127\" cy=\"58\" rx=\"7\" ry=\"9\"/><ellipse cx=\"127\" cy=\"59\" rx=\"3.2\" ry=\"5.5\" fill=\"#191521\"/><circle cx=\"129.5\" cy=\"54\" r=\"1.8\" fill=\"#fff\" opacity=\".9\"/></g>" +
+  "<path d=\"M104,72 Q110,69 116,72 Q115,79 110,80 Q105,79 104,72 Z\" fill=\"#e58aa0\"/>" +
+  "<path class=\"sf\" d=\"M110,80 Q110,86 103,85 M110,80 Q110,86 117,85\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\"/>" +
+  "<path class=\"sf\" d=\"M61,73 L35,68 M61,81 L36,83 M63,89 L41,98 M159,73 L185,68 M159,81 L184,83 M157,89 L179,98\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".4\"/>" +
+  "<g class=\"cat-hat\"><g transform=\"rotate(-14 150 16)\"><path d=\"M124,18 Q138,-30 152,-35 Q169,-31 177,15 Q150,5 124,18 Z\" fill=\"#3a2b52\"/><path d=\"M128,11 Q150,1 173,9 L174,17 Q150,8 127,18 Z\" fill=\"#e8762c\"/><rect x=\"145\" y=\"2\" width=\"11\" height=\"10\" rx=\"2\" fill=\"none\" stroke=\"#f4c542\" stroke-width=\"2.5\"/><ellipse cx=\"150\" cy=\"20\" rx=\"33\" ry=\"8\" fill=\"#2e2140\"/></g></g>" +
+  "</svg>";
+
+  var GREET = ["mrrrow! there you are \u{1F43E}", "I followed you here. obviously.", "you came back. good human.", "*happy slow blink* hi."];
+  var PET = ["purr purr purr\u2026", "that\u2019s the spot. THE spot.", "five more minutes of this.", "mrrp! \u{1F495}", "*max purr achieved*", "yes. continue.", "I allow this. \u{1F451}"];
+  var PET_HW = ["fear me. also pet me.", "I am the night. \u{1F987}", "trick or treat? (treat. give treat.)", "spooky AND soft. that\u2019s me."];
+  var IDLE = ["*stares at nothing*", "*judges the room, silently*", "nap first. questions later.", "*sits on the important thing*", "I knocked nothing over today. yet."];
+  var IDLE_HW = ["I saw a ghost. or a dust bunny.", "*counts the pumpkins*", "the veil is thin. so is my patience."];
+
+  var reduced = false;
+  try { reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+  function isHW() { return document.body && document.body.classList.contains("halloween"); }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+  var el = document.createElement("div");
+  el.id = "catPal"; el.setAttribute("data-coat", S.coat);
+  el.setAttribute("role", "img"); el.setAttribute("aria-label", "A fluffy cat who lives on this website. Tap to pet her.");
+  el.innerHTML = "<div class=\"cat-bubble\"><span class=\"cat-say\"></span><div class=\"cat-btns\"><button type=\"button\" class=\"cat-coat-btn\">\u{1F9E5} coat</button><button type=\"button\" class=\"cat-nap-btn\">\u{1F4A4} nap</button></div></div>" +
+    "<div class=\"cat-bob\"><div class=\"cat-flip\">" + SVG + "</div></div>";
+  document.body.appendChild(el);
+  var say = el.querySelector(".cat-say"), bubble = el.querySelector(".cat-bubble"), flip = el.querySelector(".cat-flip");
+  var bubbleTimer = null, wanderTimer = null, idleTimer = null, sleeping = false;
+  var pos = { x: Math.max(8, window.innerWidth - 140), y: window.innerHeight + 40 };
+  el.style.left = pos.x + "px"; el.style.top = pos.y + "px";
+
+  function applyHat() { el.classList.toggle("hat-on", isHW()); }
+  applyHat();
+  if (typeof MutationObserver !== "undefined" && document.body) {
+    new MutationObserver(applyHat).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  }
+
+  function showBubble(text, ms) {
+    say.textContent = text; bubble.classList.add("show");
+    if (bubbleTimer) clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(function () { bubble.classList.remove("show"); }, ms || 3600);
+  }
+  function spawnFloat(txt, cls) {
+    var s = document.createElement("span"); s.className = cls; s.textContent = txt;
+    s.style.setProperty("--drift", (Math.floor(Math.random() * 36) - 18) + "px");
+    s.style.marginLeft = (Math.floor(Math.random() * 30) - 15) + "px";
+    el.appendChild(s); setTimeout(function () { s.remove(); }, 1250);
+  }
+  var AC = null;
+  function chirp() {
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+      if (!AC) AC = new Ctx();
+      var o = AC.createOscillator(), g = AC.createGain(), t = AC.currentTime;
+      o.type = "sine"; o.frequency.setValueAtTime(620, t); o.frequency.exponentialRampToValueAtTime(940, t + .09);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.045, t + .03); g.gain.exponentialRampToValueAtTime(.0001, t + .16);
+      o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + .18);
+    } catch (e) {}
+  }
+  function place(nx, ny) {
+    if (nx < pos.x - 4) flip.classList.add("flip"); else if (nx > pos.x + 4) flip.classList.remove("flip");
+    pos = { x: nx, y: ny }; el.style.left = nx + "px"; el.style.top = ny + "px";
+  }
+  function homePos() {
+    var w = window.innerWidth, h = window.innerHeight;
+    return { x: Math.max(8, w - 132 - Math.floor(Math.random() * w * .18)), y: Math.max(60, h - 210 - Math.floor(Math.random() * h * .14)) };
+  }
+  function wander() {
+    if (sleeping || reduced) return;
+    var w = window.innerWidth, h = window.innerHeight;
+    var nx = Math.floor(w * .42 + Math.random() * (w * .58 - 118));
+    var ny = Math.floor(h * .34 + Math.random() * (h * .66 - 190));
+    place(Math.max(6, nx), Math.max(48, ny));
+    wanderTimer = setTimeout(wander, 5600 + Math.random() * 5200);
+  }
+  function idleLoop() {
+    idleTimer = setTimeout(function () {
+      if (!sleeping && !bubble.classList.contains("show") && Math.random() < .5) showBubble(pick(isHW() ? IDLE.concat(IDLE_HW) : IDLE), 3200);
+      idleLoop();
+    }, 46000 + Math.random() * 30000);
+  }
+  function pet() {
+    if (sleeping) { wake(); return; }
+    S.pets++; save();
+    el.classList.remove("petted"); void el.offsetWidth; el.classList.add("petted");
+    spawnFloat("\u{1F495}", "cat-heart"); spawnFloat("\u{1F495}", "cat-heart");
+    chirp();
+    showBubble(pick(isHW() ? PET.concat(PET_HW) : PET) + (S.pets === 1 ? " (tap me anytime \u2014 I live here now)" : ""), 3400);
+  }
+  function nap() {
+    if (sleeping) { wake(); return; }
+    sleeping = true; el.classList.add("sleeping");
+    if (wanderTimer) clearTimeout(wanderTimer);
+    showBubble("z z z\u2026 (tap me to wake)", 4200);
+    var i = 0, zt = setInterval(function () { spawnFloat("z", "cat-zzz"); if (++i > 5 || !sleeping) clearInterval(zt); }, 700);
+    setTimeout(function () { if (sleeping) wake(true); }, 20000);
+  }
+  function wake(auto) {
+    sleeping = false; el.classList.remove("sleeping");
+    showBubble(auto ? "*streeetch* \u2026I\u2019m up, I\u2019m up." : "hm? oh. hi. \u{1F43E}", 3000);
+    if (!reduced) { if (wanderTimer) clearTimeout(wanderTimer); wanderTimer = setTimeout(wander, 4200); }
+  }
+  el.addEventListener("click", pet);
+  el.querySelector(".cat-coat-btn").addEventListener("click", function (ev) {
+    ev.stopPropagation();
+    S.coat = COATS[(COATS.indexOf(S.coat) + 1) % COATS.length]; save();
+    el.setAttribute("data-coat", S.coat);
+    spawnFloat("\u2728", "cat-heart");
+    showBubble("new coat: " + COAT_NAMES[S.coat] + ". stunning, obviously.", 3200);
+  });
+  el.querySelector(".cat-nap-btn").addEventListener("click", function (ev) { ev.stopPropagation(); nap(); });
+  window.addEventListener("resize", function () {
+    var w = window.innerWidth, h = window.innerHeight;
+    place(Math.min(pos.x, Math.max(6, w - 118)), Math.min(pos.y, Math.max(48, h - 170)));
+  });
+
+  setTimeout(function () { var hp = homePos(); place(hp.x, hp.y); }, 450);
+  var greeted = false;
+  try { greeted = !!sessionStorage.getItem("ashleys-cat-greeted"); } catch (e) {}
+  setTimeout(function () {
+    if (!greeted) {
+      showBubble((S.streak > 1 ? "day " + S.streak + " of following you around. " : "") + pick(GREET), 4400);
+      try { sessionStorage.setItem("ashleys-cat-greeted", "1"); } catch (e) {}
+    } else if (Math.random() < .4) { showBubble("still here \u{1F43E}", 2200); }
+  }, 1500);
+  if (!reduced) wanderTimer = setTimeout(wander, 6000);
+  idleLoop();
 })();
 </script>
 </body>
