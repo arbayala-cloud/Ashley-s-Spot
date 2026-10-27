@@ -12,10 +12,21 @@
   body { margin: 0; background: #ece5d5; color: #2b2320; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 40px 16px 56px; -webkit-font-smoothing: antialiased; }
   .wrap { max-width: 760px; margin: 0 auto; background: #fdfaf3; border: 1px solid #d9c9a8; border-radius: 10px; box-shadow: 0 20px 44px rgba(43,35,32,.16); padding: 26px 38px 30px; }
 
-  /* ---------- Top bar ---------- */
-  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .menu-btn { font-family: Oswald, Inter, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; background: none; border: 1px solid #2b2320; color: #2b2320; border-radius: 999px; padding: 8px 22px; cursor: pointer; transition: background .15s, color .15s; }
+  /* ---------- Site header ---------- */
+  .site-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid #e3d5b8; padding-bottom: 18px; }
+  .wordmark { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 28px; letter-spacing: .3px; line-height: 1.1; color: #2b2320; margin: 0; white-space: nowrap; }
+  .main-nav { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: flex-end; }
+  .main-nav a { font-family: Inter, Arial, sans-serif; font-size: 13.5px; font-weight: 500; letter-spacing: .2px; color: #5c5347; text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; }
+  .main-nav a:hover { color: #2b2320; }
+  .main-nav a.current { color: #2b2320; font-weight: 600; border-bottom-color: #b08d57; }
+  .header-right { display: flex; align-items: center; gap: 16px; }
+  .menu-btn { display: none; font-family: Oswald, Inter, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; background: none; border: 1px solid #2b2320; color: #2b2320; border-radius: 999px; padding: 8px 22px; cursor: pointer; transition: background .15s, color .15s; }
   .menu-btn:hover { background: #2b2320; color: #fdfaf3; }
+  @media (max-width: 900px) {
+    .main-nav { display: none; }
+    .menu-btn { display: inline-block; }
+    .wordmark { font-size: 24px; }
+  }
   .theme-corner { display: flex; align-items: center; gap: 9px; font-size: 10.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #8a7a68; }
   .theme-switch { position: relative; width: 48px; height: 27px; flex: 0 0 auto; }
   .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
@@ -33,13 +44,8 @@
   .menu-panel button.install-btn { display: block; width: 100%; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 500; color: #2b2320; background: none; border: none; padding: 10px 0; cursor: pointer; transition: color .15s, background .15s; }
   .menu-panel button.install-btn:hover { color: #a15c68; background: #fbf3e4; }
 
-  /* ---------- Masthead ---------- */
-  h1.masthead { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 52px; letter-spacing: .5px; line-height: 1.1; text-align: center; margin: 30px 0 0; color: #2b2320; }
-  h1.masthead em { font-style: italic; color: #a15c68; }
-  .mast-rule { height: 1px; background: #d9c9a8; max-width: 420px; margin: 24px auto 0; }
-
   /* ---------- Section labels ---------- */
-  .sec-label { display: flex; align-items: center; justify-content: center; gap: 16px; font-family: Oswald, Inter, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #a15c68; margin: 38px 0 18px; }
+  .sec-label { display: flex; align-items: center; justify-content: center; gap: 16px; font-family: Oswald, Inter, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #a15c68; margin: 30px 0 18px; }
   .sec-label::before, .sec-label::after { content: ""; height: 1px; width: 54px; background: #d9c9a8; }
 
   /* ---------- Daily Cartoon ---------- */
@@ -74,30 +80,38 @@
   .sotd-tbtn.sotd-main { width: 58px; height: 58px; font-size: 22px; background: linear-gradient(180deg, #c9a35f, #b08d57); border-color: #8a6d3b; color: #241c10; }
   #sotdPlayer { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
-  .foot-copy { border-top: 1px solid #e3d5b8; margin: 42px 0 0; padding-top: 16px; font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 2.5px; text-transform: uppercase; text-align: center; color: #8a7a68; }
+  .site-footer { border-top: 1px solid #e3d5b8; margin: 44px 0 0; padding-top: 18px; text-align: center; }
+  .foot-nav { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: center; margin-bottom: 12px; }
+  .foot-nav a { font-family: Inter, Arial, sans-serif; font-size: 12.5px; font-weight: 500; color: #5c5347; text-decoration: none; }
+  .foot-nav a:hover { color: #2b2320; text-decoration: underline; text-underline-offset: 3px; }
+  .foot-copy { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 2.5px; text-transform: uppercase; color: #8a7a68; margin: 0; }
 
   /* ---------- Dark mode ---------- */
   body.dark { background: #14100d; color: #f4ead9; }
   body.dark .wrap { background: #211a15; border-color: #55462f; box-shadow: 0 20px 44px rgba(0,0,0,.5); }
+  body.dark .site-header { border-bottom-color: #55462f; }
+  body.dark .wordmark { color: #f4ead9; }
+  body.dark .main-nav a { color: #cbb9a6; }
+  body.dark .main-nav a:hover { color: #f4ead9; }
+  body.dark .main-nav a.current { color: #f4ead9; border-bottom-color: #b08d57; }
   body.dark .menu-btn { color: #f4ead9; border-color: #f4ead9; }
   body.dark .menu-btn:hover { background: #f4ead9; color: #211a15; }
+  body.dark .foot-nav a { color: #cbb9a6; }
+  body.dark .foot-nav a:hover { color: #f4ead9; }
+  body.dark .site-footer { border-top-color: #55462f; }
   body.dark .theme-corner { color: #cbb9a6; }
   body.dark .menu-panel { background: #2a231c; border-color: #55462f; }
   body.dark .menu-panel a { color: #f4ead9; border-bottom-color: #3d332a; }
   body.dark .menu-panel a:hover { color: #d9a7b0; background: #33291f; }
   body.dark .menu-panel button.install-btn { color: #f4ead9; }
   body.dark .menu-panel button.install-btn:hover { color: #d9a7b0; background: #33291f; }
-  body.dark h1.masthead { color: #f4ead9; }
-  body.dark h1.masthead em { color: #d9a7b0; }
-  body.dark .mast-rule { background: #55462f; }
   body.dark .sec-label { color: #d9a7b0; }
   body.dark .sec-label::before, body.dark .sec-label::after { background: #55462f; }
   body.dark .cartoon-credit { color: #cbb9a6; }
-  body.dark .foot-copy { border-top-color: #55462f; color: #cbb9a6; }
+  body.dark .foot-copy { color: #cbb9a6; }
   @media (max-width: 620px) {
     body { padding: 22px 10px 40px; }
     .wrap { padding: 20px 16px 24px; }
-    h1.masthead { font-size: 38px; }
     .sec-label::before, .sec-label::after { width: 32px; }
   }
 </style>
@@ -106,14 +120,26 @@
 </head>
 <body>
 <main class="wrap">
-  <div class="topbar">
-    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button>
-    <div class="theme-corner">
-      <span>Light</span>
-      <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
-      <span>Dark</span>
+  <header class="site-header">
+    <h1 class="wordmark">Ashley Ayala</h1>
+    <div class="header-right">
+      <nav class="main-nav" aria-label="Main">
+        <a href="index.html" class="current" aria-current="page">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="jukebox.html">Jukebox</a>
+        <a href="time-machine.html">Time Machine</a>
+        <a href="vending-machine.html">Vending Machine</a>
+        <a href="newspaper.html">Newspaper</a>
+        <a href="true-crime.html">True Crime</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button>
+      <div class="theme-corner">
+        <span>Light</span>
+        <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+        <span>Dark</span>
+      </div>
     </div>
-  </div>
+  </header>
   <nav id="menuPanel" class="menu-panel">
     <a href="index.html">Home</a>
     <a href="blog.html">Blog</a>
@@ -124,9 +150,6 @@
     <a href="true-crime.html">True Crime</a>
     <button class="install-btn" id="installBtn" type="button">Install App</button>
   </nav>
-
-  <h1 class="masthead">Ashley <em>Ayala</em></h1>
-  <div class="mast-rule" aria-hidden="true"></div>
 
   <section>
     <h2 class="sec-label">Daily Cartoon</h2>
@@ -161,7 +184,18 @@
     <div id="sotdPlayer"></div>
   </div>
 
-  <p class="foot-copy">&copy; 2026 Ashley Ayala</p>
+  <footer class="site-footer">
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="jukebox.html">Jukebox</a>
+      <a href="time-machine.html">Time Machine</a>
+      <a href="vending-machine.html">Vending Machine</a>
+      <a href="newspaper.html">Newspaper</a>
+      <a href="true-crime.html">True Crime</a>
+    </nav>
+    <p class="foot-copy">&copy; 2026 Ashley Ayala</p>
+  </footer>
 </main>
 <script>
   document.getElementById('menuBtn').addEventListener('click', function () {
