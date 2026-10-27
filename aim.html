@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIM — Ashley's Spot</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111111">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #d8d2c7; color: #26221e; font-family: Inter, Arial, sans-serif; text-align: center; padding: 32px 16px 56px; line-height: 1.5; }
+  .wrap { max-width: 1060px; margin: 0 auto; background: #f4f1ea; border: 2px solid #4a4238; border-radius: 12px; box-shadow: 0 18px 40px rgba(38,34,30,.22); padding: 30px 26px 34px; }
+  .eyebrow { display: inline-block; background: #26221e; color: #d9c9a8; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; padding: 6px 14px; border-radius: 4px; margin: 0 0 14px; }
+  h1 { font-family: Oswald, Inter, sans-serif; font-size: 40px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 6px; }
+  h1 span { color: #8a5a33; }
+  .sub { color: #575046; font-size: 15px; max-width: 640px; margin: 0 auto 18px; }
+  .menu-row { text-align: center; margin: 0 0 18px; }
+  .menu-row button { font-family: Inter, Arial, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: #fff; color: #26221e; border: 1.5px solid #26221e; border-radius: 8px; padding: 9px 20px; cursor: pointer; }
+  .menu-panel { display: none; background: #fff; border: 1.5px solid #4a4238; border-radius: 8px; padding: 8px 16px; margin: 0 auto 20px; max-width: 420px; text-align: center; box-shadow: 0 12px 28px rgba(38,34,30,.16); }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-family: Oswald, Inter, sans-serif; font-size: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #26221e; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel a:hover { background: #f4f1ea; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Oswald, Inter, sans-serif; font-size: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #26221e; background: none; border: none; border-bottom: 1px solid #eee9df; padding: 10px 0; cursor: pointer; }
+  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
+  .theme-switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
+  .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .theme-switch .slider { position: absolute; inset: 0; background: #c9c2b6; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: .25s; }
+  .theme-switch input:checked + .slider { background: #8a5a33; }
+  .theme-switch input:checked + .slider::before { transform: translateX(22px); }
+
+  /* ---------- the desktop ---------- */
+  .desktop { background: #0a7e7e radial-gradient(circle at 20% 12%, rgba(255,255,255,.14), transparent 42%); border: 2px solid #4a4238; border-radius: 10px; padding: 18px 16px 0; text-align: left; position: relative; overflow: hidden; }
+  .desk-icons { position: absolute; top: 14px; right: 14px; display: flex; flex-direction: column; gap: 16px; z-index: 0; }
+  .desk-icon { width: 74px; text-align: center; color: #fff; font-size: 11px; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,.55); cursor: pointer; background: none; border: none; font-family: Tahoma, Verdana, sans-serif; }
+  .desk-icon .ic { display: block; font-size: 26px; margin-bottom: 3px; }
+  .desk-grid { display: grid; grid-template-columns: 330px 1fr; gap: 18px; align-items: start; position: relative; z-index: 1; }
+  @media (max-width: 860px) { .desk-grid { grid-template-columns: 1fr; } .desk-icons { display: none; } }
+
+  /* ---------- win98 windows ---------- */
+  .win { background: #d4d0c8; border: 2px solid; border-color: #f4f1ea #40403c #40403c #f4f1ea; box-shadow: 4px 6px 0 rgba(0,0,0,.28); font-family: Tahoma, Verdana, sans-serif; color: #111; margin-bottom: 18px; }
+  .win-bar { background: linear-gradient(90deg, #000080, #1084d0); color: #fff; font-weight: 700; font-size: 13px; padding: 5px 8px; display: flex; align-items: center; gap: 7px; letter-spacing: .3px; }
+  .win-bar .spacer { flex: 1; }
+  .win-btns { display: flex; gap: 2px; }
+  .win-btns span { display: inline-block; width: 17px; height: 15px; background: #d4d0c8; color: #111; font-size: 10px; line-height: 15px; text-align: center; border: 1px solid; border-color: #fff #40403c #40403c #fff; font-weight: 700; }
+  .win-body { padding: 12px; }
+  .win .inset { background: #fff; border: 2px solid; border-color: #7a766e #f4f1ea #f4f1ea #7a766e; }
+  .btn98 { font-family: Tahoma, Verdana, sans-serif; font-size: 13px; font-weight: 700; background: #d4d0c8; color: #111; border: 2px solid; border-color: #fff #40403c #40403c #fff; padding: 6px 16px; cursor: pointer; }
+  .btn98:active { border-color: #40403c #fff #fff #40403c; }
+  .btn98.primary { background: #000080; color: #fff; border-color: #4d4db0 #000040 #000040 #4d4db0; }
+  .btn98.primary:active { border-color: #000040 #4d4db0 #4d4db0 #000040; }
+  .btn98.small { font-size: 12px; padding: 4px 10px; }
+  .fld { width: 100%; font-family: Tahoma, Verdana, sans-serif; font-size: 14px; padding: 7px 8px; border: 2px solid; border-color: #7a766e #f4f1ea #f4f1ea #7a766e; background: #fff; color: #111; margin: 3px 0 10px; }
+  label.lab { font-size: 12px; font-weight: 700; letter-spacing: .4px; display: block; text-align: left; }
+  .tiny { font-size: 11.5px; color: #44423e; }
+
+  /* sign-on */
+  .runman { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: #ffcc00; border: 2px solid #111; border-radius: 8px; font-family: Oswald, Inter, sans-serif; font-weight: 700; font-size: 15px; color: #111; transform: rotate(-4deg); box-shadow: 2px 3px 0 rgba(0,0,0,.3); }
+  .signon-head { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+  .signon-head .big { font-family: Oswald, Inter, sans-serif; font-size: 21px; letter-spacing: 1px; text-transform: uppercase; line-height: 1.1; }
+  .dial { display: none; margin-top: 6px; }
+  .dial-track { height: 16px; background: #fff; border: 2px solid; border-color: #7a766e #f4f1ea #f4f1ea #7a766e; }
+  .dial-fill { height: 100%; width: 0%; background: repeating-linear-gradient(90deg, #000080 0 10px, #1084d0 10px 20px); transition: width .3s; }
+  .dial-status { font-size: 12px; margin-top: 6px; min-height: 17px; font-style: italic; }
+
+  /* buddy list */
+  .my-row { display: flex; align-items: center; gap: 9px; padding: 9px 10px; margin-bottom: 10px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; flex: 0 0 auto; border: 1px solid rgba(0,0,0,.35); }
+  .dot.on { background: #2fbf2f; }
+  .dot.away { background: #ffb300; }
+  .dot.idle { background: #c9c2b6; }
+  .dot.off { background: #fff; }
+  .my-name { font-weight: 700; font-size: 15px; word-break: break-all; }
+  .my-status { font-size: 12px; color: #44423e; }
+  .group-head98 { font-size: 12px; font-weight: 700; letter-spacing: .6px; background: #000080; color: #fff; padding: 3px 8px; margin: 12px 0 0; text-transform: uppercase; }
+  .buddy { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px dotted #a49e92; padding: 7px 8px; cursor: pointer; font-family: Tahoma, Verdana, sans-serif; }
+  .buddy:hover { background: #e9e5da; }
+  .buddy.active { background: #fff8d6; }
+  .buddy .bname { font-size: 14px; font-weight: 700; color: #000080; }
+  .buddy.offline .bname { color: #7a766e; font-weight: 400; }
+  .buddy .bstat { font-size: 11.5px; color: #55524c; margin-left: auto; text-align: right; max-width: 46%; }
+  .buddy .unread { background: #c00000; color: #fff; font-size: 10.5px; font-weight: 700; border-radius: 8px; padding: 1px 6px; }
+  .buddy-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .status-editor { display: none; margin-top: 10px; padding: 10px; }
+  .status-editor.open { display: block; }
+
+  /* chat */
+  .chat-log { height: 340px; overflow-y: auto; padding: 10px 12px; font-size: 14.5px; line-height: 1.45; text-align: left; }
+  .chat-log .who { font-weight: 700; }
+  .chat-log .time { color: #8a857e; font-size: 11px; font-weight: 400; }
+  .chat-log .sys { color: #7a766e; font-style: italic; font-size: 13px; text-align: center; margin: 7px 0; }
+  .chat-log .auto { color: #55524c; font-style: italic; }
+  .chat-log p { margin: 0 0 7px; }
+  .typing { font-size: 12px; font-style: italic; color: #55524c; min-height: 18px; padding: 3px 2px 0; }
+  .toolbar { display: flex; align-items: center; gap: 5px; padding: 7px 2px; flex-wrap: wrap; }
+  .toolbar .tbtn { font-family: Tahoma, Verdana, sans-serif; font-size: 13px; min-width: 30px; padding: 3px 7px; background: #d4d0c8; border: 2px solid; border-color: #fff #40403c #40403c #fff; cursor: pointer; }
+  .toolbar .tbtn.on { border-color: #40403c #fff #fff #40403c; background: #bdb8ac; }
+  .swatch { width: 18px; height: 18px; border: 2px solid; border-color: #fff #40403c #40403c #fff; cursor: pointer; padding: 0; }
+  .swatch.on { outline: 2px solid #000080; outline-offset: 1px; }
+  .smiley-panel { display: none; padding: 7px; margin: 0 0 8px; }
+  .smiley-panel.open { display: block; }
+  .smiley-panel button { font-family: Tahoma, Verdana, sans-serif; font-size: 13px; background: #fff; border: 1px solid #a49e92; margin: 2px; padding: 3px 8px; cursor: pointer; }
+  .chat-input-row { display: flex; gap: 8px; }
+  .chat-input-row textarea { flex: 1; height: 58px; resize: none; font-family: Tahoma, Verdana, sans-serif; font-size: 14.5px; padding: 8px; border: 2px solid; border-color: #7a766e #f4f1ea #f4f1ea #7a766e; background: #fff; color: #111; }
+  .away-banner { display: none; background: #fff8d6; border: 1.5px dashed #b9975b; font-size: 12.5px; padding: 7px 10px; margin-bottom: 9px; text-align: left; }
+  .away-banner.show { display: block; }
+
+  /* taskbar */
+  .taskbar { display: flex; align-items: center; gap: 10px; background: #d4d0c8; border-top: 2px solid #f4f1ea; margin: 18px -16px 0; padding: 6px 12px; font-family: Tahoma, Verdana, sans-serif; }
+  .start-btn { font-weight: 700; font-size: 13px; background: #d4d0c8; border: 2px solid; border-color: #fff #40403c #40403c #fff; padding: 4px 14px; cursor: pointer; }
+  .task-item { font-size: 12.5px; background: #bdb8ac; border: 2px solid; border-color: #40403c #fff #fff #40403c; padding: 4px 12px; max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .task-clock { margin-left: auto; font-size: 12.5px; border: 1.5px solid; border-color: #7a766e #f4f1ea #f4f1ea #7a766e; padding: 4px 12px; background: #d4d0c8; }
+
+  .toast { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px); background: #26221e; color: #f4f1ea; font-size: 14px; padding: 11px 20px; border-radius: 8px; opacity: 0; pointer-events: none; transition: .3s; z-index: 60; max-width: 88vw; text-align: center; box-shadow: 0 12px 30px rgba(0,0,0,.35); }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .hidden { display: none !important; }
+  .footer-note { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #6e6252; margin: 20px 0 0; }
+
+  body.dark { background: #141210; color: #f4f1ea; }
+  body.dark .wrap { background: #1e1b17; border-color: #57503f; }
+  body.dark h1 { color: #f2ead6; }
+  body.dark .sub { color: #b8b0a3; }
+  body.dark .menu-row button { background: #2a2723; color: #f4f1ea; border-color: #f4f1ea; }
+  body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
+  body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .menu-panel a:hover { background: #33302b; }
+  body.dark .menu-panel button.install-btn { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .theme-toggle { color: #b8b0a3; }
+  body.dark .desktop { background: #075a63 radial-gradient(circle at 20% 12%, rgba(255,255,255,.10), transparent 42%); border-color: #57503f; }
+  body.dark .footer-note { color: #9a948c; }
+  @media (max-width: 520px) { body { padding: 20px 8px 44px; } .wrap { padding: 22px 12px 26px; } h1 { font-size: 31px; } .chat-log { height: 300px; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="eyebrow">&#9733; Ashley's Spot &#9733;</p>
+  <h1>Instant <span>Messenger</span></h1>
+  <p class="sub">Your very own AIM, just like the old days. Pick a screen name, set your status, and chat back and forth — Sophie's already on your buddy list.</p>
+  <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
+  <nav id="menuPanel" class="menu-panel">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="jukebox.html">Jukebox</a>
+    <a href="time-machine.html">Time Machine</a>
+    <a href="lite-brite.html">Lite-Brite</a>
+    <a href="shelf.html">CD Shelf</a>
+    <a href="aim.html">AIM</a>
+      <button class="install-btn" id="installBtn" type="button">Install App</button>
+    <div class="theme-toggle">
+      <span>Light</span>
+      <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+      <span>Dark</span>
+    </div>
+  </nav>
+
+  <section class="desktop" aria-label="Instant messenger desktop">
+    <div class="desk-icons" aria-hidden="true">
+      <button class="desk-icon" type="button" data-desk="computer"><span class="ic">&#128421;</span>My Computer</button>
+      <button class="desk-icon" type="button" data-desk="docs"><span class="ic">&#128193;</span>My Documents</button>
+      <button class="desk-icon" type="button" data-desk="bin"><span class="ic">&#128465;</span>Recycle Bin</button>
+    </div>
+
+    <div class="desk-grid">
+      <div>
+        <!-- SIGN ON -->
+        <div class="win" id="signonWin">
+          <div class="win-bar"><span>&#9993;</span> Sign On<span class="spacer"></span><span class="win-btns"><span>_</span><span>&#9634;</span><span>&times;</span></span></div>
+          <div class="win-body">
+            <div class="signon-head">
+              <span class="runman">AIM</span>
+              <div><div class="big">Ashley Instant<br>Messenger</div><div class="tiny">Version 5.9-ish &middot; dial-up sold separately</div></div>
+            </div>
+            <label class="lab" for="screenName">Screen Name</label>
+            <input class="fld" id="screenName" type="text" maxlength="24" placeholder="xX YourName Xx" autocomplete="off">
+            <label class="lab" for="fakePass">Password</label>
+            <input class="fld" id="fakePass" type="password" maxlength="24" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="off">
+            <label class="lab" for="signonStatus">I am...</label>
+            <select class="fld" id="signonStatus">
+              <option value="Available">Available</option>
+              <option value="BRB">BRB</option>
+              <option value="Away">Away</option>
+              <option value="On the Phone">On the Phone</option>
+              <option value="Busy">Busy — Do Not Disturb</option>
+            </select>
+            <label class="lab" for="signonAway">Away message (shows when you're away)</label>
+            <input class="fld" id="signonAway" type="text" maxlength="80" placeholder="~*~ brb, getting a snack ~*~">
+            <button class="btn98 primary" id="signOnBtn" type="button" style="width:100%;">Sign On</button>
+            <p class="tiny" style="margin:9px 0 0;">Pretend password — this is your own toy page. Nothing is sent anywhere; your screen name and chats save only in this browser.</p>
+            <div class="dial" id="dialBox">
+              <div class="dial-track"><div class="dial-fill" id="dialFill"></div></div>
+              <p class="dial-status" id="dialStatus">Dialing...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BUDDY LIST -->
+        <div class="win hidden" id="buddyWin">
+          <div class="win-bar"><span>&#9993;</span> Buddy List<span class="spacer"></span><span class="win-btns"><span>_</span><span>&#9634;</span><span>&times;</span></span></div>
+          <div class="win-body">
+            <div class="inset my-row">
+              <span class="dot on" id="myDot"></span>
+              <div>
+                <div class="my-name" id="myName">You</div>
+                <div class="my-status" id="myStatusText">Available</div>
+              </div>
+            </div>
+            <div class="buddy-actions" style="margin:0 0 4px;">
+              <button class="btn98 small" id="editStatusBtn" type="button">Set Status / Away</button>
+              <button class="btn98 small" id="signOffBtn" type="button">Sign Off</button>
+            </div>
+            <div class="inset status-editor" id="statusEditor">
+              <label class="lab" for="statusSelect">My status</label>
+              <select class="fld" id="statusSelect">
+                <option value="Available">Available</option>
+                <option value="BRB">BRB</option>
+                <option value="Away">Away</option>
+                <option value="On the Phone">On the Phone</option>
+                <option value="Busy">Busy — Do Not Disturb</option>
+              </select>
+              <label class="lab" for="awayMsg">Away message</label>
+              <input class="fld" id="awayMsg" type="text" maxlength="80" placeholder="~*~ away ~*~">
+              <button class="btn98 small primary" id="saveStatusBtn" type="button">Save Status</button>
+            </div>
+            <div id="buddyGroups"></div>
+            <div class="buddy-actions">
+              <button class="btn98 small" id="infoBtn" type="button">Buddy Info</button>
+              <button class="btn98 small" id="warnBtn" type="button">Warn</button>
+              <button class="btn98 small" id="blockBtn" type="button">Block</button>
+            </div>
+            <label class="tiny" style="display:flex;align-items:center;gap:6px;margin-top:10px;"><input type="checkbox" id="soundToggle" checked> Sounds (door creaks &amp; IM dings, homemade)</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAT -->
+      <div class="win hidden" id="chatWin">
+        <div class="win-bar"><span>&#9998;</span> <span id="chatTitle">Instant Message</span><span class="spacer"></span><span class="win-btns"><span>_</span><span>&#9634;</span><span>&times;</span></span></div>
+        <div class="win-body">
+          <div class="away-banner" id="awayBanner"></div>
+          <div class="inset chat-log" id="chatLog"></div>
+          <p class="typing" id="typingLine"></p>
+          <div class="toolbar">
+            <button class="tbtn" id="boldBtn" type="button" title="Bold" style="font-weight:700;">B</button>
+            <button class="tbtn" id="italBtn" type="button" title="Italic" style="font-style:italic;">I</button>
+            <button class="tbtn" id="underBtn" type="button" title="Underline" style="text-decoration:underline;">U</button>
+            <span style="width:6px;"></span>
+            <button class="swatch on" type="button" data-color="#0000cc" style="background:#0000cc;" title="Blue"></button>
+            <button class="swatch" type="button" data-color="#c00000" style="background:#c00000;" title="Red"></button>
+            <button class="swatch" type="button" data-color="#7b1fa2" style="background:#7b1fa2;" title="Purple"></button>
+            <button class="swatch" type="button" data-color="#1b7a1b" style="background:#1b7a1b;" title="Green"></button>
+            <button class="swatch" type="button" data-color="#111111" style="background:#111111;" title="Black"></button>
+            <span style="width:6px;"></span>
+            <button class="tbtn" id="smileyBtn" type="button" title="Smileys">:-)</button>
+            <button class="tbtn" id="clearBtn" type="button" title="Clear this chat">Clear</button>
+          </div>
+          <div class="inset smiley-panel" id="smileyPanel"></div>
+          <div class="chat-input-row">
+            <textarea id="msgInput" maxlength="500" placeholder="Type your message... (Enter sends)"></textarea>
+            <button class="btn98 primary" id="sendBtn" type="button">Send</button>
+          </div>
+          <p class="tiny" style="margin:8px 0 0;">Your buddies are pretend, but the nostalgia is real. Chats save in this browser only.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="taskbar">
+      <button class="start-btn" id="startBtn" type="button">&#9733; Start</button>
+      <span class="task-item" id="taskItem">AIM — not signed on</span>
+      <span class="task-clock" id="taskClock">--:--</span>
+    </div>
+  </section>
+
+  <p class="footer-note">Ashley's Spot &middot; Est. 2026 &middot; *door creak*</p>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  var PROFILE_KEY = 'ashleys-aim-profile-v1';
+  var CHAT_KEY = 'ashleys-aim-chats-v1';
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function nowTime() { var d = new Date(), h = d.getHours(), m = d.getMinutes(); var ap = h >= 12 ? 'PM' : 'AM'; h = h % 12; if (h === 0) h = 12; return h + ':' + (m < 10 ? '0' : '') + m + ' ' + ap; }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+  var BUDDIES = [
+    { name: 'SophieParker', group: 'Besties', state: 'on', note: 'coding queen era', color: '#7b1fa2', away: 'brb — making something cute, leave a message!', info: 'Your bestie. Codes websites, loves a theme, always answers.' },
+    { name: 'TruckYeah99', group: 'Buddies', state: 'on', note: 'windows down', color: '#1b7a1b', away: 'out in the truck, leave a message after the beep', info: 'If it has a HEMI, he has opinions about it.' },
+    { name: 'GlitterGal2001', group: 'Buddies', state: 'away', note: '~*~ nails drying ~*~', color: '#c2187a', away: '~*~ doing my nails, do NOT make me mess them up ~*~', info: 'Glitter is not a phase. It is a lifestyle.' },
+    { name: 'Sk8rBoiTyler', group: 'Buddies', state: 'on', note: 'at the skate park', color: '#0000cc', away: 'sk8 or die (brb)', info: 'He was a skater boy. She said see you later boy.' },
+    { name: 'MilaStar', group: 'Buddies', state: 'idle', note: 'idle — probably snacking', color: '#b3540a', away: 'snack break!!', info: 'Star by name, star by nature.' },
+    { name: 'DialUpDiva', group: 'Buddies', state: 'on', note: 'do NOT pick up the phone', color: '#006064', away: 'mom is on the phone, internet is DEAD', info: 'Survived the dial-up wars of 1999.' },
+    { name: 'BassFisherBen', group: 'Buddies', state: 'away', note: 'gone fishin', color: '#4e342e', away: 'gone fishin. back by dark', info: 'The fish fear him. The fish are right.' },
+    { name: 'CowgirlJess', group: 'Buddies', state: 'off', note: 'offline', color: '#8a5a33', away: 'at the fair!', info: 'County fair royalty, unofficial.' }
+  ];
+  function buddy(name) { for (var i = 0; i < BUDDIES.length; i++) if (BUDDIES[i].name === name) return BUDDIES[i]; return null; }
+
+  var SOPHIE_RULES = [
+    [/^(hi+|hey+|hello|hiya|yo)\b/, ['HIIII', 'omg hey!!', 'heyy! perfect timing, I was just thinking about you', 'hey queen!! ok tell me everything']],
+    [/truck/, ['ok wait. TELL me about the truck situation immediately', 'you had me at truck, honestly', 'a truck conversation?? say less. what year, what color']],
+    [/song|music|jukebox|listen/, ['put it on the jukebox page!!', 'that is a jukebox playlist song if I have ever heard one', 'ooh add it to the song vault list too, that one matters']],
+    [/lol|lmao|haha/, ['LOL stop', 'no because why is that actually so funny', 'LOLLL not the laugh out loud in the year of our lord 2003']],
+    [/bye|gtg|gotta go/, ['nooo stayyy. ok fine. text me later!! <3', 'bye!! *door slam* (affectionate)', 'ok bye queen, I will simply be here. online. forever.']],
+    [/brb/, ['kk I will wait right here like a loyal away message', 'brb noted. I am timing you (lovingly)']],
+    [/food|hungry|snack|eat/, ['gas station snack run?? say less', 'this is a snack emergency and I respect it', 'fair food would fix everything right now, just saying']],
+    [/tired|sleep/, ['go to sleep at a reasonable hour challenge: impossible for us', 'same. 2am brain is not to be trusted, write it in the blog instead']],
+    [/love (you|u)|ily/, ['I love you MORE and that is a fact, not a debate', '<3 <3 <3 my whole heart']],
+    [/thank|thx/, ['always!! that is literally what besties are for', 'anytime queen, anytime']],
+    [/asl|a\/s\/l/, ['LOL absolutely not, this is a respectable buddy list', '20/f/your heart. NEXT question']],
+    [/\?$/, ['ooh good question. my official answer: yes, and we should make it cute', 'hmm. yes. final answer. no I will not be explaining', 'ask me again after a snack, my wisdom improves with snacks']]
+  ];
+  var SOPHIE_POOL = ['ok that is SO real', 'tell me more, I am fully seated', 'wait that reminds me — the Time Machine page needs your opinion later', 'and THEN what happened??', 'I am putting that in the group chat (this chat, it is just us)', 'no thoughts, just vibes and dial-up noises', 'you are my favorite person on this entire buddy list and it is not close', 'brb updating my away message about this (jk, keep going)'];
+  var POOLS = {
+    TruckYeah99: ['lol yeah', 'did an oil change today, feeling unstoppable', 'windows down is a personality trait at this point', 'you ever just sit in the driveway and listen to it idle? art.', 'gas prices though?? criminal'],
+    GlitterGal2001: ['omg hi!!', 'guess who just did the BEST nails', 'glitter is a food group in this house', 'tell me everything and do not skip the boring parts, they are never boring', '~*~ sparkle sparkle ~*~'],
+    Sk8rBoiTyler: ['lol nice', 'just ate it at the skate park. dignity: gone', 'she said see u later boi (she did not)', 'new shoes day is the best day', 'brb, mom says dinner'],
+    MilaStar: ['hi hi hi', 'snack update: excellent choices were made', 'that is the best idea I have heard all day and I heard several', 'tell me a story, I am cozy', 'star behavior honestly'],
+    DialUpDiva: ['DO NOT let anyone pick up the phone rn', 'my page loaded in 4 minutes and I have never known peace since', 'the modem sound is my lullaby at this point', 'someone printed a map today. a MAP. on PAPER', 'iconic behavior, tell me more'],
+    BassFisherBen: ['caught nothin. told everyone it was huge', 'the lake was perfect today', 'early morning is the only correct morning', 'lol fair enough', 'you coming out on the boat saturday or what'],
+    CowgirlJess: ['hey!! finally on, the fair wifi was a lie', 'rodeo this weekend, I can feel it in my bones', 'my boots have seen things', 'lol stop it, tell me more', 'county fair food rankings coming soon, prepare yourself']
+  };
+  var SHARED_RULES = [
+    [/^(hi+|hey+|hello)\b/, ['heyy!', 'hi!! whats up', 'omg hi, finally']],
+    [/bye|gtg/, ['bye!!', 'later!! *door slam*', 'kk bye, dont be a stranger']],
+    [/lol|lmao|haha/, ['LOL', 'stoppp lol', 'noo that is too funny']],
+    [/truck/, ['truck talk?? im listening', 'love a truck conversation', 'year? color? tell me everything']],
+    [/song|music/, ['thats a good one', 'put that on repeat honestly', 'music taste: elite']],
+    [/thank|thx/, ['anytime!', 'of course!!', 'np np']]
+  ];
+  function replyFor(b, text) {
+    var t = ' ' + String(text).toLowerCase() + ' ';
+    var rules = (b.name === 'SophieParker') ? SOPHIE_RULES : SHARED_RULES;
+    for (var i = 0; i < rules.length; i++) { if (rules[i][0].test(t)) return pick(rules[i][1]); }
+    if (b.name === 'SophieParker') return pick(SOPHIE_POOL);
+    return pick(POOLS[b.name] || ['lol yeah', 'tell me more']);
+  }
+
+  var profile = { name: '', status: 'Available', away: '' };
+  try { var savedP = JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null'); if (savedP && savedP.name) profile = savedP; } catch (e) {}
+  var chats = {};
+  try { chats = JSON.parse(localStorage.getItem(CHAT_KEY) || '{}') || {}; } catch (e) { chats = {}; }
+  var unread = {}, awayReplied = {}, warnLevel = {};
+  var signedOn = false, activeBuddy = 'SophieParker';
+  var fmt = { b: false, i: false, u: false, c: '#0000cc' };
+  var soundOn = true, actx = null;
+
+  function saveProfile() { try { localStorage.setItem(PROFILE_KEY, JSON.stringify(profile)); } catch (e) {} }
+  function saveChats() { try { localStorage.setItem(CHAT_KEY, JSON.stringify(chats)); } catch (e) {} }
+  var toastTimer = null;
+  function toast(msg) { var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.classList.remove('show'); }, 3400); }
+
+  /* sounds — tiny homemade beeps, no audio files */
+  function tone(f, d, type, delay) {
+    if (!soundOn) return;
+    try {
+      if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+      var o = actx.createOscillator(), g = actx.createGain(), t0 = actx.currentTime + (delay || 0);
+      o.type = type || 'sine'; o.frequency.setValueAtTime(f, t0);
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.06, t0 + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+      o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0 + d + 0.05);
+    } catch (e) {}
+  }
+  function sndSend() { tone(740, 0.09, 'sine', 0); tone(990, 0.1, 'sine', 0.08); }
+  function sndReceive() { tone(990, 0.09, 'sine', 0); tone(740, 0.12, 'sine', 0.08); }
+  function sndDoor(open) {
+    if (!soundOn) return;
+    try {
+      if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+      var o = actx.createOscillator(), g = actx.createGain(), t0 = actx.currentTime;
+      o.type = 'triangle'; o.frequency.setValueAtTime(open ? 280 : 640, t0);
+      o.frequency.exponentialRampToValueAtTime(open ? 660 : 240, t0 + 0.28);
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.05, t0 + 0.03); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.32);
+      o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0 + 0.36);
+    } catch (e) {}
+  }
+
+  function stateDot(st) { return st === 'on' ? 'on' : (st === 'away' ? 'away' : (st === 'idle' ? 'idle' : 'off')); }
+  function renderMe() {
+    $('myName').textContent = profile.name || 'You';
+    var d = $('myDot');
+    d.className = 'dot ' + (profile.status === 'Available' ? 'on' : 'away');
+    var txt = profile.status;
+    if (profile.status !== 'Available' && profile.away) txt += ' — ' + profile.away;
+    $('myStatusText').textContent = txt;
+    $('taskItem').textContent = signedOn ? ('AIM — ' + profile.name) : 'AIM — not signed on';
+  }
+  function renderBuddies() {
+    var groups = {}, order = [];
+    BUDDIES.forEach(function (b) { if (!groups[b.group]) { groups[b.group] = []; order.push(b.group); } groups[b.group].push(b); });
+    var html = '';
+    order.forEach(function (g) {
+      html += '<div class="group-head98">' + esc(g) + '</div><div class="inset" style="border-top:none;">';
+      groups[g].sort(function (a, b2) { return (a.state === 'off') - (b2.state === 'off'); }).forEach(function (b) {
+        var stat = b.state === 'off' ? 'Offline' : (b.state === 'away' ? 'Away: ' + b.note : (b.state === 'idle' ? 'Idle: ' + b.note : b.note));
+        html += '<button type="button" class="buddy' + (b.state === 'off' ? ' offline' : '') + (b.name === activeBuddy ? ' active' : '') + '" data-buddy="' + esc(b.name) + '">'
+          + '<span class="dot ' + stateDot(b.state) + '"></span><span class="bname">' + esc(b.name) + '</span>'
+          + (unread[b.name] ? '<span class="unread">' + unread[b.name] + '</span>' : '')
+          + '<span class="bstat">' + esc(stat) + '</span></button>';
+      });
+      html += '</div>';
+    });
+    $('buddyGroups').innerHTML = html;
+    var btns = $('buddyGroups').querySelectorAll('[data-buddy]');
+    for (var i = 0; i < btns.length; i++) btns[i].addEventListener('click', function () { openChat(this.getAttribute('data-buddy')); });
+  }
+  function renderAwayBanner() {
+    var b = buddy(activeBuddy), el = $('awayBanner');
+    if (b.state === 'away') { el.textContent = b.name + ' is away: ' + b.away; el.classList.add('show'); }
+    else if (b.state === 'off') { el.textContent = b.name + ' is not signed on right now.'; el.classList.add('show'); }
+    else el.classList.remove('show');
+  }
+  function fmtStyle(f) {
+    if (!f) return '';
+    var s = '';
+    if (f.b) s += 'font-weight:700;'; if (f.i) s += 'font-style:italic;'; if (f.u) s += 'text-decoration:underline;'; if (f.c) s += 'color:' + f.c + ';';
+    return s;
+  }
+  function renderLog() {
+    var b = buddy(activeBuddy), list = chats[activeBuddy] || [], html = '';
+    if (!list.length) html = '<p class="sys">This is the beginning of your conversation with ' + esc(activeBuddy) + '. Say hi like it is 2001.</p>';
+    list.forEach(function (m) {
+      if (m.f === 'sys') html += '<p class="sys">' + esc(m.t) + '</p>';
+      else if (m.f === 'auto') html += '<p><span class="who" style="color:' + b.color + ';">' + esc(activeBuddy) + ':</span> <span class="auto">Auto response: ' + esc(m.t) + '</span> <span class="time">' + esc(m.time || '') + '</span></p>';
+      else if (m.f === 'me') html += '<p><span class="who" style="color:#0000cc;">' + esc(profile.name || 'You') + ':</span> <span style="' + fmtStyle(m.fmt) + '">' + esc(m.t) + '</span> <span class="time">' + esc(m.time || '') + '</span></p>';
+      else html += '<p><span class="who" style="color:' + b.color + ';">' + esc(activeBuddy) + ':</span> ' + esc(m.t) + ' <span class="time">' + esc(m.time || '') + '</span></p>';
+    });
+    $('chatLog').innerHTML = html;
+    $('chatLog').scrollTop = $('chatLog').scrollHeight;
+  }
+  function addMsg(name, msg) {
+    if (!chats[name]) chats[name] = [];
+    chats[name].push(msg); saveChats();
+    if (name === activeBuddy && signedOn) renderLog();
+  }
+  function openChat(name) {
+    activeBuddy = name; unread[name] = 0;
+    $('chatWin').classList.remove('hidden');
+    $('chatTitle').textContent = 'Instant Message — ' + name;
+    renderBuddies(); renderAwayBanner(); renderLog();
+    $('msgInput').focus();
+  }
+  function deliverReply(b, text) {
+    var reply = replyFor(b, text);
+    $('typingLine').textContent = b.name + ' is typing...';
+    var delay = 1000 + Math.min(reply.length * 22, 1600) + Math.random() * 500;
+    setTimeout(function () {
+      $('typingLine').textContent = '';
+      addMsg(b.name, { f: 'them', t: reply, time: nowTime() });
+      if (b.name !== activeBuddy) { unread[b.name] = (unread[b.name] || 0) + 1; }
+      sndReceive(); renderBuddies();
+    }, delay);
+  }
+  function sendMessage() {
+    if (!signedOn) return;
+    var input = $('msgInput'), text = input.value.trim();
+    if (!text) return;
+    var b = buddy(activeBuddy);
+    input.value = '';
+    if (b.state === 'off') { addMsg(b.name, { f: 'sys', t: b.name + ' is not signed on. Your message sits here, undelivered and dramatic.' }); return; }
+    addMsg(b.name, { f: 'me', t: text, fmt: { b: fmt.b, i: fmt.i, u: fmt.u, c: fmt.c }, time: nowTime() });
+    sndSend();
+    if (b.state === 'away' && !awayReplied[b.name]) {
+      awayReplied[b.name] = true;
+      setTimeout(function () {
+        addMsg(b.name, { f: 'auto', t: b.away, time: nowTime() }); sndReceive();
+        setTimeout(function () {
+          b.state = 'on'; addMsg(b.name, { f: 'sys', t: b.name + ' is no longer away.' }); renderBuddies(); renderAwayBanner();
+          deliverReply(b, text);
+        }, 1600);
+      }, 650);
+      return;
+    }
+    if (b.state === 'idle') b.state = 'on';
+    deliverReply(b, text);
+  }
+
+  /* sign on / off */
+  var dialSteps = ['Dialing 555-0199...', '* screech * beep * modem noises *', 'Verifying screen name...', 'Loading buddy list...', "You're in!"];
+  $('signOnBtn').addEventListener('click', function () {
+    var name = $('screenName').value.trim();
+    if (!name) { name = 'AshleysAngel'; toast('No screen name? I gave you a classic: AshleysAngel'); }
+    profile.name = name;
+    profile.status = $('signonStatus').value;
+    profile.away = $('signonAway').value.trim();
+    saveProfile();
+    $('dialBox').style.display = 'block';
+    var i = 0;
+    $('signOnBtn').disabled = true;
+    var iv = setInterval(function () {
+      $('dialStatus').textContent = dialSteps[i];
+      $('dialFill').style.width = Math.round(((i + 1) / dialSteps.length) * 100) + '%';
+      tone(900 + Math.random() * 500, 0.07, 'square', 0);
+      i++;
+      if (i >= dialSteps.length) {
+        clearInterval(iv);
+        setTimeout(function () {
+          signedOn = true;
+          $('signonWin').classList.add('hidden');
+          $('buddyWin').classList.remove('hidden');
+          $('statusSelect').value = profile.status; $('awayMsg').value = profile.away;
+          renderMe(); renderBuddies(); openChat('SophieParker');
+          sndDoor(true);
+          toast("Welcome, " + profile.name + "! You've got mail. (Not really — but Sophie says hi.)");
+          $('signOnBtn').disabled = false;
+          var soph = chats['SophieParker'];
+          if (!soph || !soph.length) {
+            setTimeout(function () {
+              $('typingLine').textContent = 'SophieParker is typing...';
+              setTimeout(function () { $('typingLine').textContent = ''; addMsg('SophieParker', { f: 'them', t: 'omg HIIII you actually got on!! ok this is the best day. what is the vibe tonight', time: nowTime() }); sndReceive(); }, 900);
+            }, 1100);
+          } else {
+            addMsg('SophieParker', { f: 'sys', t: 'You signed on at ' + nowTime() + '.' });
+          }
+        }, 350);
+      }
+    }, 560);
+  });
+  $('signOffBtn').addEventListener('click', function () {
+    signedOn = false; sndDoor(false);
+    $('buddyWin').classList.add('hidden'); $('chatWin').classList.add('hidden'); $('signonWin').classList.remove('hidden');
+    $('dialBox').style.display = 'none'; $('dialFill').style.width = '0%';
+    renderMe(); toast('Signed off. *door slam*');
+  });
+
+  /* status */
+  $('editStatusBtn').addEventListener('click', function () { $('statusEditor').classList.toggle('open'); });
+  $('saveStatusBtn').addEventListener('click', function () {
+    profile.status = $('statusSelect').value;
+    profile.away = $('awayMsg').value.trim();
+    saveProfile(); renderMe(); $('statusEditor').classList.remove('open');
+    toast('Status saved: ' + profile.status + (profile.away && profile.status !== 'Available' ? ' — ' + profile.away : ''));
+  });
+
+  /* buddy actions */
+  $('infoBtn').addEventListener('click', function () {
+    var b = buddy(activeBuddy);
+    addMsg(b.name, { f: 'sys', t: 'Buddy Info — ' + b.name + ' | ' + (b.state === 'off' ? 'Offline' : b.state === 'away' ? 'Away' : 'Online') + ' | Warning level: ' + (warnLevel[b.name] || 0) + '% | ' + b.info });
+    toast('Buddy Info added to the chat window.');
+  });
+  $('warnBtn').addEventListener('click', function () {
+    warnLevel[activeBuddy] = (warnLevel[activeBuddy] || 0) + 11;
+    toast('You warned ' + activeBuddy + '. Warning level: ' + warnLevel[activeBuddy] + '%. They have been notified and are devastated.');
+  });
+  $('blockBtn').addEventListener('click', function () {
+    toast('You blocked ' + activeBuddy + '. (Not really — they would be so sad. Block undone.)');
+  });
+
+  /* composer */
+  $('sendBtn').addEventListener('click', sendMessage);
+  $('msgInput').addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+  function wireFmt(btn, key) { $(btn).addEventListener('click', function () { fmt[key] = !fmt[key]; this.classList.toggle('on', fmt[key]); $('msgInput').focus(); }); }
+  wireFmt('boldBtn', 'b'); wireFmt('italBtn', 'i'); wireFmt('underBtn', 'u');
+  var swatches = document.querySelectorAll('.swatch');
+  for (var si = 0; si < swatches.length; si++) swatches[si].addEventListener('click', function () {
+    for (var j = 0; j < swatches.length; j++) swatches[j].classList.remove('on');
+    this.classList.add('on'); fmt.c = this.getAttribute('data-color'); $('msgInput').focus();
+  });
+  var SMILEYS = [':)', ':(', ':D', ';)', ':P', ':O', '<3', 'B)', ':-*', '>:(', ':-/', 'O:-)'];
+  $('smileyPanel').innerHTML = SMILEYS.map(function (s) { return '<button type="button" data-sm="' + s + '">' + s + '</button>'; }).join('');
+  $('smileyBtn').addEventListener('click', function () { $('smileyPanel').classList.toggle('open'); });
+  $('smileyPanel').addEventListener('click', function (e) {
+    var s = e.target.getAttribute && e.target.getAttribute('data-sm');
+    if (s) { $('msgInput').value += ($('msgInput').value ? ' ' : '') + s + ' '; $('msgInput').focus(); }
+  });
+  $('clearBtn').addEventListener('click', function () { chats[activeBuddy] = []; saveChats(); renderLog(); toast('Chat cleared. The memories remain.'); });
+  $('soundToggle').addEventListener('change', function () { soundOn = this.checked; if (soundOn) sndReceive(); });
+
+  /* desktop bits */
+  var deskJokes = { computer: 'My Computer says hi. It has 64MB of RAM and unlimited confidence.', docs: 'My Documents contains: homework (unfinished), lyrics (printed), and one (1) masterpiece.', bin: 'The Recycle Bin is empty. Your old away messages send their regards.' };
+  var icons = document.querySelectorAll('.desk-icon');
+  for (var di = 0; di < icons.length; di++) icons[di].addEventListener('click', function () { toast(deskJokes[this.getAttribute('data-desk')] || ''); });
+  $('startBtn').addEventListener('click', function () {
+    var panel = $('menuPanel'); var open = panel.classList.toggle('open');
+    $('menuBtn').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  function tickClock() { $('taskClock').textContent = nowTime(); }
+  tickClock(); setInterval(tickClock, 15000);
+
+  /* random buddy comings and goings */
+  setInterval(function () {
+    if (!signedOn) return;
+    var pool = BUDDIES.filter(function (b) { return b.name !== 'SophieParker'; });
+    var b = pick(pool), old = b.state;
+    if (old === 'on' && Math.random() < 0.6) { b.state = 'away'; }
+    else if (old === 'away') { b.state = 'on'; }
+    else if (old === 'off') { b.state = 'on'; }
+    else if (old === 'idle') { b.state = 'on'; }
+    else { b.state = Math.random() < 0.4 ? 'off' : 'away'; }
+    if (b.state === old) return;
+    var msg = b.state === 'on' && old === 'off' ? b.name + ' has signed on.' : b.state === 'off' ? b.name + ' has signed off.' : b.state === 'away' ? b.name + ' is away.' : b.name + ' is back.';
+    if (b.state === 'on' && old === 'off') sndDoor(true);
+    if (b.state === 'off') sndDoor(false);
+    if (chats[b.name]) addMsg(b.name, { f: 'sys', t: msg });
+    if (b.name === activeBuddy) renderAwayBanner();
+    renderBuddies();
+  }, 55000);
+
+  /* prefill from saved profile */
+  if (profile.name) {
+    $('screenName').value = profile.name;
+    $('signonStatus').value = profile.status || 'Available';
+    $('signonAway').value = profile.away || '';
+  }
+  renderMe();
+})();
+</script>
+
+<script>
+  document.getElementById('menuBtn').addEventListener('click', function () {
+    var panel = document.getElementById('menuPanel');
+    var open = panel.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  (function () {
+    var toggle = document.getElementById('themeToggle');
+    function applyTheme(dark) {
+      document.body.classList.toggle('dark', dark);
+      if (toggle) toggle.checked = dark;
+      try { localStorage.setItem('ashleys-theme', dark ? 'dark' : 'light'); } catch (e) {}
+    }
+    try { if (localStorage.getItem('ashleys-theme') === 'dark') applyTheme(true); } catch (e) {}
+    if (toggle) toggle.addEventListener('change', function () { applyTheme(this.checked); });
+  })();
+</script>
+<script>
+  (function() {
+    var installBtn = document.getElementById('installBtn');
+    var deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+    if (installBtn) {
+      installBtn.addEventListener('click', function() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then(function() { deferredPrompt = null; });
+        } else {
+          alert("To install Ashley's Spot on your phone: open this page in Chrome, tap the three dots menu, then tap Add to Home Screen.");
+        }
+      });
+    }
+  })();
+</script>
+</body>
+</html>
