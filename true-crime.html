@@ -528,7 +528,7 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
       "<p class='file-story'>" + esc(c.story) + "</p>" +
       "<div class='file-h'>Case Notes</div><ul class='file-facts'>" +
       c.facts.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
-      "<div class='file-h'>The Juicy Detail</div><div class='juicy'><b>' + esc(c.juicyLabel || 'Handle with care — highly satisfying') + '</b>" + esc(c.juicy) + "</div>" +
+      "<div class='file-h'>The Juicy Detail</div><div class='juicy'><b>" + esc(c.juicyLabel || 'Handle with care — highly satisfying') + "</b>" + esc(c.juicy) + "</div>" +
       "<div style='margin-top:24px;text-align:right'><button class='btn red' type='button' id='fileDone'>Back to the Board</button></div>";
     document.getElementById("fileInner").innerHTML = html;
     document.getElementById("fileModal").classList.add("open");
