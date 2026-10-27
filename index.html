@@ -31,8 +31,7 @@
   .menu-panel.open { display: block; }
   .menu-panel a { display: block; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 500; color: #2b2320; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #f0e7d3; transition: color .15s, background .15s; }
   .menu-panel a:hover { color: #a15c68; background: #fbf3e4; }
-  .menu-panel a:last-of-type { border-bottom: none; }
-  .menu-panel button.install-btn { display: block; width: 100%; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 500; color: #2b2320; background: none; border: none; border-top: 1px solid #f0e7d3; padding: 10px 0; cursor: pointer; transition: color .15s, background .15s; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 500; color: #2b2320; background: none; border: none; padding: 10px 0; cursor: pointer; transition: color .15s, background .15s; }
   .menu-panel button.install-btn:hover { color: #a15c68; background: #fbf3e4; }
 
   /* ---------- Section labels ---------- */
@@ -72,10 +71,7 @@
   .sotd-tbtn.sotd-main { width: 58px; height: 58px; font-size: 22px; background: linear-gradient(180deg, #c9a35f, #b08d57); border-color: #8a6d3b; color: #241c10; }
   #sotdPlayer { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
-  .site-footer { border-top: 1px solid #e3d5b8; margin: 36px 0 0; padding-top: 18px; display: flex; align-items: center; justify-content: space-between; gap: 10px 20px; flex-wrap: nowrap; }
-  .foot-nav { display: flex; flex-wrap: nowrap; gap: 4px 13px; justify-content: flex-end; }
-  .foot-nav a { font-family: Inter, Arial, sans-serif; font-size: 12px; font-weight: 500; color: #5c5347; text-decoration: none; white-space: nowrap; }
-  .foot-nav a:hover { color: #2b2320; text-decoration: underline; text-underline-offset: 3px; }
+  .site-footer { border-top: 1px solid #e3d5b8; margin: 36px 0 0; padding-top: 18px; text-align: center; }
   .foot-copy { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: #8a7a68; margin: 0; white-space: nowrap; }
 
   /* ---------- Dark mode ---------- */
@@ -85,14 +81,12 @@
   body.dark .wordmark { color: #f4ead9; }
   body.dark .menu-btn { color: #f4ead9; border-color: #f4ead9; }
   body.dark .menu-btn:hover { background: #f4ead9; color: #211a15; }
-  body.dark .foot-nav a { color: #cbb9a6; }
-  body.dark .foot-nav a:hover { color: #f4ead9; }
   body.dark .site-footer { border-top-color: #55462f; }
   body.dark .theme-corner { color: #cbb9a6; }
   body.dark .menu-panel { background: #2a231c; border-color: #55462f; }
   body.dark .menu-panel a { color: #f4ead9; border-bottom-color: #3d332a; }
   body.dark .menu-panel a:hover { color: #d9a7b0; background: #33291f; }
-  body.dark .menu-panel button.install-btn { color: #f4ead9; border-top-color: #3d332a; }
+  body.dark .menu-panel button.install-btn { color: #f4ead9; }
   body.dark .menu-panel button.install-btn:hover { color: #d9a7b0; background: #33291f; }
   body.dark .sec-label { color: #d9a7b0; }
   body.dark .sec-label::after { background: #b08d57; }
@@ -103,8 +97,6 @@
     body { padding: 22px 10px 40px; }
     .wrap { padding: 20px 16px 24px; }
     .wordmark { font-size: 23px; }
-    .site-footer { flex-direction: column; justify-content: center; text-align: center; }
-    .foot-nav { justify-content: center; }
     .feature-card, .sotd { padding-left: 18px; padding-right: 18px; }
   }
 </style>
@@ -133,6 +125,10 @@
     <a href="newspaper.html">Newspaper</a>
     <a href="true-crime.html">True Crime</a>
     <button class="install-btn" id="installBtn" type="button">Install App</button>
+    <button class="install-btn" id="backupBtn" type="button">Back Up My Data</button>
+    <button class="install-btn" id="restoreBtn" type="button">Restore a Backup</button>
+    <button class="install-btn" id="updateBtn" type="button">Update App</button>
+    <input type="file" id="restoreFile" accept="application/json,.json" hidden>
   </nav>
 
   <section class="feature-card">
@@ -170,15 +166,6 @@
 
   <footer class="site-footer">
     <p class="foot-copy">&copy; 2026 Ashley Ayala</p>
-    <nav class="foot-nav" aria-label="Footer">
-      <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="jukebox.html">Jukebox</a>
-      <a href="time-machine.html">Time Machine</a>
-      <a href="vending-machine.html">Vending Machine</a>
-      <a href="newspaper.html">Newspaper</a>
-      <a href="true-crime.html">True Crime</a>
-    </nav>
   </footer>
 </main>
 <script>
@@ -536,6 +523,85 @@ var CARTOONS = [{"name": "Hey Arnold", "year": 1996, "img": "https://artworks.th
   document.getElementById('cartoonPrev').addEventListener('click', function () { card.classList.remove('flipped'); tries = 0; show(cur - 1); });
   document.getElementById('cartoonNext').addEventListener('click', function () { card.classList.remove('flipped'); tries = 0; show(cur + 1); });
 })();
+</script>
+
+<script>
+  (function () {
+    // Back up everything this site has saved on this device (blog posts,
+    // keepsakes, settings) into one JSON file she keeps.
+    var backupBtn = document.getElementById('backupBtn');
+    if (backupBtn) backupBtn.addEventListener('click', function () {
+      var data = {};
+      try {
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          data[k] = localStorage.getItem(k);
+        }
+      } catch (e) {}
+      var payload = { app: "Ashley's Spot", backedUp: new Date().toISOString(), data: data };
+      var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ashleys-spot-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    });
+
+    // Restore a backup file made by the button above.
+    var restoreBtn = document.getElementById('restoreBtn');
+    var restoreFile = document.getElementById('restoreFile');
+    if (restoreBtn && restoreFile) {
+      restoreBtn.addEventListener('click', function () { restoreFile.click(); });
+      restoreFile.addEventListener('change', function () {
+        var f = restoreFile.files && restoreFile.files[0];
+        if (!f) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var parsed = JSON.parse(String(reader.result));
+            var data = parsed && parsed.data ? parsed.data : parsed;
+            if (!data || typeof data !== 'object') throw new Error('bad file');
+            if (!window.confirm('Restore this backup? It replaces the data saved on this device.')) return;
+            Object.keys(data).forEach(function (k) {
+              try { localStorage.setItem(k, data[k]); } catch (e) {}
+            });
+            window.alert('Backup restored. The page will reload.');
+            location.reload();
+          } catch (e) {
+            window.alert('That file does not look like an Ashley\'s Spot backup.');
+          }
+        };
+        reader.readAsText(f);
+      });
+    }
+
+    // Update App: check for the newest service worker, clear stored caches,
+    // then reload from the server so she is always on the latest version.
+    var updateBtn = document.getElementById('updateBtn');
+    if (updateBtn) updateBtn.addEventListener('click', function () {
+      updateBtn.textContent = 'Updating\u2026';
+      var done = function () {
+        location.replace(location.pathname + '?updated=' + Date.now());
+      };
+      var jobs = [];
+      try {
+        if ('serviceWorker' in navigator) {
+          jobs.push(navigator.serviceWorker.getRegistrations().then(function (regs) {
+            return Promise.all(regs.map(function (r) { return r.update(); }));
+          }));
+        }
+        if (window.caches && caches.keys) {
+          jobs.push(caches.keys().then(function (keys) {
+            return Promise.all(keys.map(function (k) { return caches.delete(k); }));
+          }));
+        }
+      } catch (e) {}
+      Promise.all(jobs).then(done, done);
+      setTimeout(done, 3500); // never leave her hanging
+    });
+  })();
 </script>
 </body>
 </html>
