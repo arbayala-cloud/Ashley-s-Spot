@@ -459,7 +459,7 @@
     if (!text) return;
     var b = buddy(activeBuddy);
     input.value = '';
-    if (b.state === 'off') { addMsg(b.name, { f: 'sys', t: b.name + ' is not signed on. Your message sits here, undelivered and dramatic.' }); return; }
+    if (b.state === 'off') { addMsg(b.name, { f: 'me', t: text, fmt: { b: fmt.b, i: fmt.i, u: fmt.u, c: fmt.c }, time: nowTime() }); sndSend(); addMsg(b.name, { f: 'sys', t: b.name + ' is not signed on. Your message sits here, undelivered and dramatic.' }); return; }
     addMsg(b.name, { f: 'me', t: text, fmt: { b: fmt.b, i: fmt.i, u: fmt.u, c: fmt.c }, time: nowTime() });
     sndSend();
     if (b.state === 'away' && !awayReplied[b.name]) {
@@ -585,11 +585,11 @@
     if (!signedOn) return;
     var pool = BUDDIES.filter(function (b) { return b.name !== 'SophieParker'; });
     var b = pick(pool), old = b.state;
-    if (old === 'on' && Math.random() < 0.6) { b.state = 'away'; }
+    if (old === 'on') { b.state = (b.name === activeBuddy || Math.random() < 0.7) ? 'away' : 'off'; }
     else if (old === 'away') { b.state = 'on'; }
     else if (old === 'off') { b.state = 'on'; }
     else if (old === 'idle') { b.state = 'on'; }
-    else { b.state = Math.random() < 0.4 ? 'off' : 'away'; }
+    else { b.state = 'away'; }
     if (b.state === old) return;
     var msg = b.state === 'on' && old === 'off' ? b.name + ' has signed on.' : b.state === 'off' ? b.name + ' has signed off.' : b.state === 'away' ? b.name + ' is away.' : b.name + ' is back.';
     if (b.state === 'on' && old === 'off') sndDoor(true);
