@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vending Machine — Ashley's Spot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #d8d2c7; color: #26221e; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 32px 16px 48px; }
+  .wrap { max-width: 760px; margin: 0 auto; background: #f4f1ea; border: 2px solid #4a4238; border-radius: 12px; box-shadow: 0 18px 40px rgba(38,34,30,.22); padding: 30px 26px 26px; text-align: center; }
+  .backlink { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 18px; }
+  .backlink a { color: #8a5a33; text-decoration: none; font-weight: 600; }
+  .eyebrow { display: inline-block; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #d9c9a8; background: #26221e; border-radius: 6px; padding: 6px 14px; font-weight: 600; margin: 0 auto 12px; }
+  h1 { font-family: Oswald, Inter, sans-serif; font-size: 42px; line-height: 1.1; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin: 0 0 8px; color: #26221e; }
+  .sub { color: #6f6a62; font-size: 15px; margin: 0 0 14px; }
+  .divider { width: 64px; height: 3px; background: #8a5a33; margin: 0 auto 24px; border: none; border-radius: 2px; }
+  h2 { font-family: Oswald, Inter, sans-serif; font-size: 19px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #26221e; margin: 34px 0 14px; padding-bottom: 9px; border-bottom: 2px solid #e3d9c3; text-align: left; }
+  .btn { font-family: Oswald, Inter, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: #26221e; color: #f5f2ec; border: 1.5px solid #26221e; border-radius: 8px; padding: 12px 24px; cursor: pointer; transition: background .15s, border-color .15s; }
+  .btn:hover { background: #8a5a33; border-color: #8a5a33; }
+  .btn.secondary { background: #fff; color: #26221e; }
+  .btn.secondary:hover { background: #26221e; color: #f5f2ec; }
+  .btn:disabled { opacity: .55; cursor: default; }
+  .btn:disabled:hover { background: #26221e; border-color: #26221e; }
+  .menu-row { text-align: center; margin: 0 0 18px; }
+  .menu-row button { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #26221e; border: 1.5px solid #26221e; border-radius: 8px; padding: 9px 22px; cursor: pointer; }
+  .menu-panel { display: none; background: #fff; border: 1px solid #cfc8b8; border-radius: 10px; padding: 6px 0; margin: 10px auto 18px; max-width: 420px; text-align: center; box-shadow: 0 14px 30px rgba(38,34,30,.12); }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; text-decoration: none; padding: 11px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel a:last-of-type { border-bottom: none; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; background: none; border: none; border-bottom: 1px solid #eee9df; padding: 11px 0; cursor: pointer; }
+  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
+  .theme-switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
+  .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .theme-switch .slider { position: absolute; inset: 0; background: #c9c2b6; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: .25s; }
+  .theme-switch input:checked + .slider { background: #b9975b; }
+  .theme-switch input:checked + .slider::before { transform: translateX(22px); }
+
+  /* ---------- The Machine ---------- */
+  .machine { position: relative; width: min(440px, 100%); margin: 6px auto 0; background: linear-gradient(160deg, #17655a 0%, #0f4a41 55%, #0b3831 100%); border: 3px solid #07231f; border-radius: 26px; box-shadow: 0 24px 44px rgba(20,30,25,.35), inset 0 2px 0 rgba(255,255,255,.25), inset 0 -10px 24px rgba(0,0,0,.25); padding: 20px 20px 22px; }
+  .machine::after { content: ""; position: absolute; left: 34px; right: 34px; bottom: -13px; height: 12px; background: #07231f; border-radius: 0 0 12px 12px; }
+  .machine-sign { background: #f7efdb; border: 2px solid #c8a165; border-radius: 12px; padding: 9px 10px 7px; box-shadow: inset 0 0 0 3px #f7efdb, inset 0 0 0 4.5px rgba(200,161,101,.55), 0 3px 8px rgba(0,0,0,.25); }
+  .machine-sign .sign-name { font-family: Oswald, Inter, sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 2.5px; color: #173f38; text-transform: uppercase; line-height: 1.15; }
+  .machine-sign .sign-sub { font-size: 10px; letter-spacing: 3.5px; text-transform: uppercase; color: #8a5a33; font-weight: 600; margin-top: 2px; }
+  .machine-lights { display: flex; justify-content: center; gap: 9px; margin: 11px 0 3px; }
+  .machine-lights i { width: 9px; height: 9px; border-radius: 50%; background: #ffd98a; box-shadow: 0 0 9px 2px rgba(255,205,110,.75); animation: vmGlow 2.6s ease-in-out infinite; }
+  .machine-lights i:nth-child(2) { background: #f2a7bf; box-shadow: 0 0 9px 2px rgba(242,167,191,.7); animation-delay: .5s; }
+  .machine-lights i:nth-child(3) { background: #a9dcc9; box-shadow: 0 0 9px 2px rgba(169,220,201,.7); animation-delay: 1s; }
+  @keyframes vmGlow { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+  .machine-glass { position: relative; margin-top: 10px; background: linear-gradient(180deg, rgba(190,225,235,.28), rgba(140,185,200,.14)); border: 2px solid rgba(6,30,26,.85); border-radius: 14px; padding: 13px 12px 11px; overflow: hidden; box-shadow: inset 0 0 26px rgba(0,0,0,.28); }
+  .machine-glass::after { content: ""; position: absolute; top: -30%; left: -12%; width: 42%; height: 170%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.20), transparent); transform: rotate(8deg); pointer-events: none; }
+  .vm-shelf { display: flex; justify-content: space-between; align-items: flex-end; padding: 5px 4px 7px; border-bottom: 3px solid rgba(247,239,219,.85); margin-bottom: 9px; }
+  .vm-shelf:last-child { margin-bottom: 1px; }
+  .mini-cap { width: 36px; height: 21px; border-radius: 999px; border: 1.5px solid rgba(10,25,22,.35); position: relative; flex: 0 0 auto; box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+  .mini-cap::after { content: ""; position: absolute; top: 2px; bottom: 2px; left: 50%; width: 1.5px; background: rgba(10,25,22,.28); }
+  .machine-mid { display: flex; align-items: center; gap: 13px; margin-top: 15px; }
+  .coin-slot { flex: 0 0 auto; width: 56px; background: linear-gradient(180deg, #e9e2d0, #cfc4a6); border: 2px solid #8a5a33; border-radius: 10px; padding: 7px 0 5px; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,.3), inset 0 1px 0 #fff; }
+  .coin-slot .slot-line { width: 5px; height: 22px; background: #26221e; border-radius: 3px; margin: 0 auto 3px; box-shadow: inset 0 0 3px #000; }
+  .coin-slot .slot-txt { font-family: Oswald, Inter, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #6d4c26; }
+  .coin-slot:active { transform: scale(.95); }
+  .vend-btn { flex: 1 1 auto; font-family: Oswald, Inter, sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #26221e; background: linear-gradient(180deg, #ecd096, #c8a165); border: 2px solid #8a5a33; border-radius: 999px; padding: 14px 10px; cursor: pointer; box-shadow: 0 5px 0 #8a5a33, 0 9px 16px rgba(0,0,0,.3); transition: transform .08s, box-shadow .08s; }
+  .vend-btn:hover { filter: brightness(1.05); }
+  .vend-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #8a5a33, 0 4px 8px rgba(0,0,0,.3); }
+  .vend-btn:disabled { opacity: .65; cursor: default; }
+  .machine-status { min-height: 24px; margin-top: 12px; font-family: Fraunces, Georgia, serif; font-style: italic; font-size: 15.5px; color: #f2e7c9; text-shadow: 0 1px 3px rgba(0,0,0,.4); }
+  .machine-tray { margin-top: 8px; background: linear-gradient(180deg, #0a2e29, #06231f); border: 2px solid rgba(6,30,26,.9); border-radius: 13px; min-height: 96px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 12px 10px 10px; box-shadow: inset 0 8px 18px rgba(0,0,0,.55); position: relative; overflow: hidden; }
+  .tray-hint { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(242,231,201,.5); font-weight: 600; }
+  .big-cap { width: 92px; height: 56px; position: relative; cursor: pointer; flex: 0 0 auto; }
+  .big-cap .cap-half { position: absolute; left: 0; width: 100%; height: 50%; transition: transform .45s cubic-bezier(.5,-0.2,.3,1.3), opacity .3s; }
+  .big-cap .cap-top { top: 0; border-radius: 999px 999px 6px 6px; border: 2px solid rgba(10,25,22,.4); border-bottom-width: 1px; }
+  .big-cap .cap-bot { bottom: 0; border-radius: 6px 6px 999px 999px; border: 2px solid rgba(10,25,22,.4); border-top-width: 1px; }
+  .big-cap.drop { animation: capDrop .65s cubic-bezier(.3,1.4,.5,1); }
+  @keyframes capDrop { 0% { transform: translateY(-58px) rotate(-24deg); opacity: 0; } 55% { opacity: 1; } 70% { transform: translateY(3px) rotate(3deg); } 100% { transform: translateY(0) rotate(-3deg); } }
+  .big-cap.opened .cap-top { transform: translate(-16px,-17px) rotate(-32deg); }
+  .big-cap.opened .cap-bot { transform: translate(15px,9px) rotate(14deg); }
+  .machine.vending { animation: vmShake .45s ease; }
+  @keyframes vmShake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-3px) rotate(-.3deg); } 45% { transform: translateX(3px); } 70% { transform: translateX(-2px); } }
+  .machine-count { margin-top: 14px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #6f6a62; font-weight: 600; }
+  .machine-count b { color: #8a5a33; }
+
+  /* ---------- Prize card + keepsakes ---------- */
+  .prize-card { text-align: left; background: #fff; border: 1.5px solid #ddd5c3; border-top: 4px solid #26221e; border-radius: 12px; padding: 20px; margin: 22px auto 0; max-width: 560px; box-shadow: 0 10px 24px rgba(38,34,30,.09); animation: prizeIn .45s ease; }
+  @keyframes prizeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .cat-chip { display: inline-block; font-family: Oswald, Inter, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #26221e; border-radius: 999px; padding: 5px 12px; margin-bottom: 11px; }
+  .prize-text { font-size: 17.5px; line-height: 1.65; color: #33302a; margin: 0 0 16px; font-family: Fraunces, Georgia, serif; }
+  .prize-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .keep-card { text-align: left; background: #fff; border: 1.5px solid #ddd5c3; border-left: 5px solid #c8a165; border-radius: 10px; padding: 13px 15px; margin: 0 0 10px; box-shadow: 0 6px 14px rgba(38,34,30,.05); }
+  .keep-card .keep-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 4px; }
+  .keep-card .cat-chip { margin-bottom: 0; font-size: 10px; padding: 3.5px 10px; }
+  .keep-card p { margin: 0; font-size: 15px; line-height: 1.6; color: #3c3830; }
+  .icon-btn { background: #f4f1ea; border: 1px solid #ddd5c3; border-radius: 7px; color: #6f6a62; font-family: Oswald, Inter, sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; cursor: pointer; padding: 5px 9px; line-height: 1; flex: 0 0 auto; }
+  .icon-btn:hover { color: #c62828; }
+  .empty { color: #6f6a62; font-size: 15px; line-height: 1.6; margin: 0; text-align: center; background: #fbf9f4; border: 1.5px dashed #c9c2b6; border-radius: 12px; padding: 20px 16px; }
+  .hint { font-size: 12.5px; color: #6f6a62; margin-top: 18px; text-align: center; }
+  body.dark { background: #141210; color: #f4f1ea; }
+  body.dark .wrap { background: #1e1b17; border-color: #57503f; box-shadow: 0 18px 40px rgba(0,0,0,.5); }
+  body.dark h1, body.dark h2 { color: #f2ead6; }
+  body.dark h2 { border-bottom-color: #3a3631; }
+  body.dark .sub, body.dark .hint, body.dark .empty { color: #b8b0a3; }
+  body.dark .backlink a { color: #d4b978; }
+  body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
+  body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
+  body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .menu-panel button.install-btn { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
+  body.dark .prize-card, body.dark .keep-card { background: #26221d; border-color: #44403a; box-shadow: none; }
+  body.dark .prize-card { border-top-color: #c8a165; }
+  body.dark .prize-text, body.dark .keep-card p { color: #e8e2d4; }
+  body.dark .empty { background: #26221d; border-color: #55504a; }
+  body.dark .icon-btn { background: #1e1b17; border-color: #44403a; color: #b8b0a3; }
+  body.dark .machine-count { color: #b8b0a3; }
+  body.dark .machine-count b { color: #d4b978; }
+  body.dark .btn.secondary { background: #26221d; color: #f4f1ea; border-color: #8a857e; }
+  @media (max-width: 520px) {
+    body { padding: 24px 10px 40px; }
+    h1 { font-size: 31px; }
+    .machine { padding: 16px 14px 18px; }
+    .mini-cap { width: 31px; height: 19px; }
+    .vend-btn { font-size: 15px; }
+    .prize-text { font-size: 16.5px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .machine-lights i, .big-cap.drop, .machine.vending, .prize-card { animation: none; }
+  }
+</style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#111111">
+<style id="hw-style">
+/* === Halloween mode (seasonal, auto Oct 24-Nov 1, toggle in Menu) === */
+body.halloween{background-color:#14101f;background-image:radial-gradient(1.5px 1.5px at 22px 34px,rgba(255,255,255,.8) 50%,transparent 51%),radial-gradient(1px 1px at 130px 90px,rgba(255,255,255,.6) 50%,transparent 51%),radial-gradient(1.2px 1.2px at 240px 30px,rgba(255,255,255,.7) 50%,transparent 51%),linear-gradient(180deg,#1b1430,#120e20 60%,#0f0b1a);background-size:280px 180px,280px 180px,280px 180px,100% 100%;}
+body.dark.halloween{background-color:#0c0916;}
+body.halloween .wrap{box-shadow:0 0 0 2px rgba(232,118,44,.28),0 26px 70px rgba(0,0,0,.55);}
+body.halloween h1{color:#cf6516;text-shadow:0 2px 14px rgba(232,118,44,.25);}
+body.dark.halloween h1{color:#ff9a3c;}
+body.halloween .eyebrow{background:#e8762c;color:#1d130a;}
+body.halloween #menuPanel{border-color:#e8762c;}
+body.halloween #menuPanel a:hover{color:#e8762c;}
+body.halloween .receiver{box-shadow:0 0 0 2px rgba(232,118,44,.65),0 0 55px rgba(232,118,44,.32);}
+body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232,118,44,.25);}
+.hw-banner{display:block;text-align:center;margin:0 auto 16px;background:#211a2e;color:#f6e8d8;border:1.5px solid #e8762c;border-radius:10px;padding:10px 14px;font-family:Oswald,Inter,sans-serif;font-size:19px;letter-spacing:.08em;text-transform:uppercase;}
+.hw-banner .hw-sub{display:block;margin-top:3px;font-family:Inter,sans-serif;font-size:12px;letter-spacing:.02em;text-transform:none;color:#d9c6ac;}
+.hw-layer{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden;}
+.hw-layer span{position:absolute;animation-name:hwFloat;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));}
+@keyframes hwFloat{from{transform:translateY(-10px) rotate(-6deg);}to{transform:translateY(14px) rotate(7deg);}}
+@media (prefers-reduced-motion: reduce){.hw-layer span{animation:none;}}
+.hw-toggle-btn{display:block;width:100%;margin-top:10px;padding:10px 12px;background:#26221e;color:#f4f1ea;border:1.5px solid #4a4238;border-radius:8px;font-family:Oswald,Inter,sans-serif;font-size:15px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
+.hw-toggle-btn:hover{border-color:#e8762c;color:#ffb066;}
+</style>
+<style id="cat-style">
+/* The Cat: a fluffy little resident who floats around Ashley's Spot with her.
+   Original hand-coded SVG art. Coat colors live in the data-coat rules below. */
+#catPal { position: fixed; left: -200px; top: 110vh; width: 104px; z-index: 99990; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: left 4.4s ease-in-out, top 4.4s ease-in-out; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+#catPal .cat-bob { animation: catBob 3.6s ease-in-out infinite; }
+#catPal svg { display: block; width: 100%; height: auto; overflow: visible; }
+#catPal .cat-flip { transition: transform .45s ease; }
+#catPal .cat-flip.flip { transform: scaleX(-1); }
+#catPal .cf { fill: var(--fur); } #catPal .cfd { fill: var(--furd); } #catPal .cb { fill: var(--bib); }
+#catPal .ce { fill: var(--eye); } #catPal .cer { fill: var(--ear); } #catPal .sf { stroke: var(--furd); }
+#catPal[data-coat="midnight"] { --fur: #2e2a36; --furd: #1d1a24; --bib: #47405a; --eye: #ffb347; --ear: #c97b8a; }
+#catPal[data-coat="pumpkin"] { --fur: #df8433; --furd: #b9661f; --bib: #f7c873; --eye: #4f9e57; --ear: #e59a8f; }
+#catPal[data-coat="storm"] { --fur: #8d99ae; --furd: #68738a; --bib: #ccd6e4; --eye: #ffcf5c; --ear: #d99aa6; }
+#catPal[data-coat="snowball"] { --fur: #f3ecdc; --furd: #d9cbae; --bib: #fffaf0; --eye: #5b9bd5; --ear: #e59aab; }
+#catPal[data-coat="calico"] { --fur: #f3ecdc; --furd: #d9cbae; --bib: #fffaf0; --eye: #4f9e57; --ear: #e59aab; }
+#catPal .cat-stripes, #catPal .cat-patches, #catPal .cat-hat { display: none; }
+#catPal[data-coat="pumpkin"] .cat-stripes { display: block; }
+#catPal[data-coat="calico"] .cat-patches { display: block; }
+#catPal.hat-on .cat-hat { display: block; }
+#catPal .cat-tail { transform-box: fill-box; transform-origin: 15% 85%; animation: catTail 2.9s ease-in-out infinite alternate; }
+#catPal .cat-eyes { transform-box: fill-box; transform-origin: center; animation: catBlink 5.4s infinite; }
+#catPal.sleeping .cat-eyes { animation: none; transform: scaleY(.12); }
+#catPal .cat-shadow { transform-box: fill-box; transform-origin: center; animation: catShadow 3.6s ease-in-out infinite; }
+#catPal.petted svg { animation: catSquish .38s ease; }
+#catPal .cat-bubble { position: absolute; left: 50%; bottom: 96%; transform: translate(-50%, 6px) scale(.92); min-width: 128px; max-width: 190px; background: #fffdf6; color: #33302a; border: 2px solid #4a4238; border-radius: 12px; padding: 7px 9px 6px; font: 600 12px/1.35 Inter, system-ui, sans-serif; text-align: center; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; box-shadow: 0 6px 18px rgba(20, 15, 5, .22); }
+#catPal .cat-bubble:after { content: ""; position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%); border: 4px solid transparent; border-top: 6px solid #4a4238; }
+#catPal .cat-bubble.show { opacity: 1; transform: translate(-50%, 0) scale(1); pointer-events: auto; }
+#catPal .cat-name { font: 800 9.5px Oswald, Inter, system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a5a33; margin-bottom: 2px; }
+#catPal .cat-btns { display: flex; gap: 5px; justify-content: center; margin-top: 6px; }
+#catPal .cat-btns button { font: 700 10.5px Inter, system-ui, sans-serif; letter-spacing: .02em; border: 1.5px solid #4a4238; background: #f4ead2; color: #4a3625; border-radius: 999px; padding: 3px 8px; cursor: pointer; }
+#catPal .cat-btns button:active { transform: scale(.94); }
+#catPal .cat-heart, #catPal .cat-zzz { position: absolute; left: 50%; top: 6px; font-size: 15px; pointer-events: none; animation: catRise 1.15s ease-out forwards; }
+#catPal .cat-zzz { font: italic 700 13px Georgia, serif; color: #6b6390; }
+@keyframes catBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes catShadow { 0%, 100% { transform: scaleX(1); opacity: .16; } 50% { transform: scaleX(.88); opacity: .11; } }
+@keyframes catTail { from { transform: rotate(-3.5deg); } to { transform: rotate(5deg); } }
+@keyframes catBlink { 0%, 91%, 100% { transform: scaleY(1); } 94.5% { transform: scaleY(.08); } 97.5% { transform: scaleY(1); } }
+@keyframes catSquish { 0% { transform: scale(1, 1); } 35% { transform: scale(1.07, .93); } 70% { transform: scale(.97, 1.04); } 100% { transform: scale(1, 1); } }
+@keyframes catRise { 0% { transform: translate(-50%, 0) scale(.7); opacity: 0; } 18% { opacity: 1; } 100% { transform: translate(calc(-50% + var(--drift, 0px)), -52px) scale(1.15); opacity: 0; } }
+@media (max-width: 560px) { #catPal { width: 88px; } #catPal .cat-bubble { max-width: 168px; } }
+@media (prefers-reduced-motion: reduce) { #catPal { transition: none; } #catPal .cat-bob, #catPal .cat-tail, #catPal .cat-shadow { animation: none; } #catPal .cat-eyes { animation-duration: 9s; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="backlink"><a href="index.html">&larr; Ashley's Spot</a> &nbsp;·&nbsp; <a href="jukebox.html">Jukebox</a></p>
+  <p class="eyebrow">Ashley's Spot</p>
+  <h1>Vending Machine</h1>
+  <p class="sub">Three hundred sixteen little capsules of scripture, encouragement, song prompts, and tiny joys — one twist at a time. No quarters required, darlin'.</p>
+  <hr class="divider">
+  <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
+  <nav id="menuPanel" class="menu-panel">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="jukebox.html">Jukebox</a>
+    <a href="time-machine.html">Time Machine</a>
+    <a href="lite-brite.html">Lite-Brite</a>
+    <a href="aim.html">AIM</a>
+    <a href="vending-machine.html">Vending Machine</a>
+      <button class="install-btn" id="installBtn" type="button">Install App</button>
+      <div class="theme-toggle">
+        <span>Light</span>
+        <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+        <span>Dark</span>
+      </div>
+  </nav>
+
+  <div class="machine" id="machine">
+    <div class="machine-sign">
+      <div class="sign-name">Ashley's Capsule Co.</div>
+      <div class="sign-sub">Est. 2026 · Fresh Grace Daily</div>
+    </div>
+    <div class="machine-lights"><i></i><i></i><i></i></div>
+    <div class="machine-glass" id="glass">
+      <div class="vm-shelf"></div>
+      <div class="vm-shelf"></div>
+      <div class="vm-shelf"></div>
+    </div>
+    <div class="machine-mid">
+      <div class="coin-slot" id="coinSlot" role="button" tabindex="0" aria-label="Drop a coin and vend a capsule">
+        <div class="slot-line"></div>
+        <div class="slot-txt">25&cent;</div>
+      </div>
+      <button class="vend-btn" id="vendBtn" type="button">Vend a Capsule</button>
+    </div>
+    <div class="machine-status" id="vmStatus">316 capsules inside. One of them has your name on it.</div>
+    <div class="machine-tray" id="tray">
+      <span class="tray-hint" id="trayHint">Thank you · Come back now</span>
+    </div>
+  </div>
+  <p class="machine-count" id="machineCount"></p>
+
+  <div class="prize-card" id="prizeCard" hidden>
+    <span class="cat-chip" id="prizeChip"></span>
+    <p class="prize-text" id="prizeText"></p>
+    <div class="prize-actions">
+      <button class="btn" id="keepBtn" type="button">&#9825; Keep this one</button>
+      <button class="btn secondary" id="againBtn" type="button">Vend another</button>
+    </div>
+  </div>
+
+  <h2>Your Keepsakes</h2>
+  <div id="keepsakes"></div>
+  <p class="hint">Verses are from the King James Bible. Everything else was written for you, one capsule at a time. Kept capsules and your collection count save on this device.</p>
+</main>
+
+<script>
+  document.getElementById('menuBtn').addEventListener('click', function () {
+    var panel = document.getElementById('menuPanel');
+    var open = panel.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  (function () {
+    var toggle = document.getElementById('themeToggle');
+    function applyTheme(dark) {
+      document.body.classList.toggle('dark', dark);
+      if (toggle) toggle.checked = dark;
+      try { localStorage.setItem('ashleys-theme', dark ? 'dark' : 'light'); } catch (e) {}
+    }
+    try { if (localStorage.getItem('ashleys-theme') === 'dark') applyTheme(true); } catch (e) {}
+    if (toggle) toggle.addEventListener('change', function () { applyTheme(this.checked); });
+  })();
+</script>
+
+<script>
+  (function() {
+    var installBtn = document.getElementById('installBtn');
+    var deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+    if (installBtn) {
+      installBtn.addEventListener('click', function() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then(function() { deferredPrompt = null; });
+        } else {
+          alert("To install Ashley's Spot on your phone: open this page in Chrome, tap the three dots menu, then tap Add to Home Screen.");
+        }
+      });
+    }
+  })();
+</script>
+
+<script>
+var CAPSULES = [
+["verse","I can do all things through Christ which strengtheneth me. — Philippians 4:13"],
+["verse","Be strong and of a good courage; be not afraid, neither be thou dismayed: for the Lord thy God is with thee whithersoever thou goest. — Joshua 1:9"],
+["verse","For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end. — Jeremiah 29:11"],
+["verse","But they that wait upon the Lord shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary. — Isaiah 40:31"],
+["verse","The Lord is my shepherd; I shall not want. — Psalm 23:1"],
+["verse","God is our refuge and strength, a very present help in trouble. — Psalm 46:1"],
+["verse","Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths. — Proverbs 3:5-6"],
+["verse","And we know that all things work together for good to them that love God. — Romans 8:28"],
+["verse","This is the day which the Lord hath made; we will rejoice and be glad in it. — Psalm 118:24"],
+["verse","Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee. — Isaiah 41:10"],
+["verse","What time I am afraid, I will trust in thee. — Psalm 56:3"],
+["verse","It is of the Lord's mercies that we are not consumed... They are new every morning: great is thy faithfulness. — Lamentations 3:22-23"],
+["verse","Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. — Philippians 4:6"],
+["verse","Come unto me, all ye that labour and are heavy laden, and I will give you rest. — Matthew 11:28"],
+["verse","I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works. — Psalm 139:14"],
+["verse","The Lord thy God in the midst of thee is mighty; he will save, he will rejoice over thee with joy; he will rest in his love. — Zephaniah 3:17"],
+["verse","For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind. — 2 Timothy 1:7"],
+["verse","The Lord is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit. — Psalm 34:18"],
+["verse","Now faith is the substance of things hoped for, the evidence of things not seen. — Hebrews 11:1"],
+["verse","For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life. — John 3:16"],
+["verse","I will lift up mine eyes unto the hills, from whence cometh my help. My help cometh from the Lord, which made heaven and earth. — Psalm 121:1-2"],
+["verse","When thou passest through the waters, I will be with thee; and through the rivers, they shall not overflow thee. — Isaiah 43:2"],
+["verse","The Lord, he it is that doth go before thee; he will be with thee, he will not fail thee, neither forsake thee: fear not, neither be dismayed. — Deuteronomy 31:8"],
+["verse","Delight thyself also in the Lord; and he shall give thee the desires of thine heart. — Psalm 37:4"],
+["verse","Now the God of hope fill you with all joy and peace in believing, that ye may abound in hope. — Romans 15:13"],
+["verse","He hath shewed thee, O man, what is good; and what doth the Lord require of thee, but to do justly, and to love mercy, and to walk humbly with thy God? — Micah 6:8"],
+["verse","And let us not be weary in well doing: for in due season we shall reap, if we faint not. — Galatians 6:9"],
+["verse","For by grace are ye saved through faith; and that not of yourselves: it is the gift of God. — Ephesians 2:8"],
+["verse","Let the words of my mouth, and the meditation of my heart, be acceptable in thy sight, O Lord, my strength, and my redeemer. — Psalm 19:14"],
+["verse","And whatsoever ye do, do it heartily, as to the Lord, and not unto men. — Colossians 3:23"],
+["verse","Let all your things be done with charity. — 1 Corinthians 16:14"],
+["verse","Cause me to hear thy lovingkindness in the morning; for in thee do I trust: cause me to know the way wherein I should walk. — Psalm 143:8"],
+["verse","Thou wilt keep him in perfect peace, whose mind is stayed on thee: because he trusteth in thee. — Isaiah 26:3"],
+["verse","But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you. — Matthew 6:33"],
+["verse","Be of good courage, and he shall strengthen your heart, all ye that hope in the Lord. — Psalm 31:24"],
+["verse","Peace I leave with you, my peace I give unto you... Let not your heart be troubled, neither let it be afraid. — John 14:27"],
+["verse","Rejoicing in hope; patient in tribulation; continuing instant in prayer. — Romans 12:12"],
+["verse","Why art thou cast down, O my soul? hope thou in God: for I shall yet praise him, who is the health of my countenance, and my God. — Psalm 42:11"],
+["verse","Casting all your care upon him; for he careth for you. — 1 Peter 5:7"],
+["verse","The Lord is good, a strong hold in the day of trouble; and he knoweth them that trust in him. — Nahum 1:7"],
+["verse","I will say of the Lord, He is my refuge and my fortress: my God; in him will I trust. — Psalm 91:2"],
+["verse","Every good gift and every perfect gift is from above, and cometh down from the Father of lights. — James 1:17"],
+["verse","Enter into his gates with thanksgiving, and into his courts with praise: be thankful unto him, and bless his name. — Psalm 100:4"],
+["verse","He giveth power to the faint; and to them that have no might he increaseth strength. — Isaiah 40:29"],
+["verse","Jesus Christ the same yesterday, and to day, and for ever. — Hebrews 13:8"],
+["verse","For his anger endureth but a moment; in his favour is life: weeping may endure for a night, but joy cometh in the morning. — Psalm 30:5"],
+["verse","Ye are the light of the world. A city that is set on an hill cannot be hid. — Matthew 5:14"],
+["verse","Thou wilt shew me the path of life: in thy presence is fulness of joy; at thy right hand there are pleasures for evermore. — Psalm 16:11"],
+["verse","For we walk by faith, not by sight. — 2 Corinthians 5:7"],
+["verse","For the Lord God is a sun and shield: the Lord will give grace and glory: no good thing will he withhold from them that walk uprightly. — Psalm 84:11"],
+["verse","Commit thy works unto the Lord, and thy thoughts shall be established. — Proverbs 16:3"],
+["verse","Then spake Jesus again unto them, saying, I am the light of the world: he that followeth me shall not walk in darkness, but shall have the light of life. — John 8:12"],
+["verse","What shall we then say to these things? If God be for us, who can be against us? — Romans 8:31"],
+["verse","The Lord is nigh unto all them that call upon him, to all that call upon him in truth. — Psalm 145:18"],
+["verse","And thine ears shall hear a word behind thee, saying, This is the way, walk ye in it. — Isaiah 30:21"],
+["verse","Create in me a clean heart, O God; and renew a right spirit within me. — Psalm 51:10"],
+["verse","But Jesus beheld them, and said unto them, With men this is impossible; but with God all things are possible. — Matthew 19:26"],
+["verse","Because thy lovingkindness is better than life, my lips shall praise thee. — Psalm 63:3"],
+["verse","We love him, because he first loved us. — 1 John 4:19"],
+["verse","The Lord hath done great things for us; whereof we are glad. — Psalm 126:3"],
+["verse","Blessed is the man that trusteth in the Lord, and whose hope the Lord is. — Jeremiah 17:7"],
+["verse","The Lord is my strength and my shield; my heart trusted in him, and I am helped: therefore my heart greatly rejoiceth. — Psalm 28:7"],
+["verse","I am the good shepherd: the good shepherd giveth his life for the sheep. — John 10:11"],
+["verse","I will both lay me down in peace, and sleep: for thou, Lord, only makest me dwell in safety. — Psalm 4:8"],
+["verse","Now unto him that is able to do exceeding abundantly above all that we ask or think, according to the power that worketh in us. — Ephesians 3:20"],
+["verse","I will praise thee, O Lord, with my whole heart; I will shew forth all thy marvellous works. — Psalm 9:1"],
+["verse","Behold, God is my salvation; I will trust, and not be afraid: for the Lord Jehovah is my strength and my song. — Isaiah 12:2"],
+["verse","Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need. — Hebrews 4:16"],
+["verse","Bless the Lord, O my soul, and forget not all his benefits. — Psalm 103:2"],
+["verse","For with God nothing shall be impossible. — Luke 1:37"],
+["verse","My flesh and my heart faileth: but God is the strength of my heart, and my portion for ever. — Psalm 73:26"],
+["verse","My grace is sufficient for thee: for my strength is made perfect in weakness. — 2 Corinthians 12:9"],
+["verse","My voice shalt thou hear in the morning, O Lord; in the morning will I direct my prayer unto thee, and will look up. — Psalm 5:3"],
+["verse","For I am persuaded, that neither death, nor life... nor any other creature, shall be able to separate us from the love of God. — Romans 8:38-39"],
+["verse","For the mountains shall depart, and the hills be removed; but my kindness shall not depart from thee, saith the Lord. — Isaiah 54:10"],
+["verse","The Lord will perfect that which concerneth me: thy mercy, O Lord, endureth for ever. — Psalm 138:8"],
+["verse","Behold, I am with thee, and will keep thee in all places whither thou goest. — Genesis 28:15"],
+["verse","Thy word is a lamp unto my feet, and a light unto my path. — Psalm 119:105"],
+["verse","Not by might, nor by power, but by my spirit, saith the Lord of hosts. — Zechariah 4:6"],
+["verse","Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you. — Matthew 7:7"],
+["verse","Cast thy burden upon the Lord, and he shall sustain thee: he shall never suffer the righteous to be moved. — Psalm 55:22"],
+["verse","These things have I spoken unto you, that my joy might remain in you, and that your joy might be full. — John 15:11"],
+["verse","Commit thy way unto the Lord; trust also in him; and he shall bring it to pass. — Psalm 37:5"],
+["verse","And the Lord shall guide thee continually, and satisfy thy soul in drought, and make fat thy bones. — Isaiah 58:11"],
+["verse","Return unto thy rest, O my soul; for the Lord hath dealt bountifully with thee. — Psalm 116:7"],
+["verse","Rejoice evermore. Pray without ceasing. In every thing give thanks. — 1 Thessalonians 5:16-18"],
+["verse","Let every thing that hath breath praise the Lord. Praise ye the Lord. — Psalm 150:6"],
+["verse","The Lord bless thee, and keep thee: The Lord make his face shine upon thee, and be gracious unto thee. — Numbers 6:24-25"],
+["verse","Wait on the Lord: be of good courage, and he shall strengthen thine heart: wait, I say, on the Lord. — Psalm 27:14"],
+["verse","He healeth the broken in heart, and bindeth up their wounds. — Psalm 147:3"],
+["verse","In the day when I cried thou answeredst me, and strengthenedst me with strength in my soul. — Psalm 138:3"],
+["shine","You have survived every single one of your worst days so far. Your record is perfect."],
+["shine","You do not have to be the strongest person in the room. You just have to still be in the room."],
+["shine","Somebody is going to be glad you exist today, and you may never even know it."],
+["shine","Growing slow is still growing. Oak trees are in no hurry, and look at them."],
+["shine","You are allowed to be a work in progress and a masterpiece on the very same day."],
+["shine","The version of you from five years ago would be so proud she could bust."],
+["shine","Rest is not quitting. Rest is how you stay in the game."],
+["shine","Your softness is not a weakness. It is the whole point of you."],
+["shine","Not every season is harvest. Some seasons are just roots doing quiet work."],
+["shine","You are somebody's answered prayer, whether you feel like it today or not."],
+["shine","A bad hour is not a bad day. A bad day is not a bad life."],
+["shine","You can start again at 7 a.m., at noon, at 11:58 p.m. The clock does not get a vote."],
+["shine","Let today be ordinary and let ordinary be enough."],
+["shine","You have a laugh that fixes rooms. Use it on yourself first."],
+["shine","Courage looks quiet on most people. It looks like getting up anyway."],
+["shine","You are not behind. You are on your own road, and it is a pretty one."],
+["shine","The light you are looking for has a habit of finding girls who keep walking."],
+["shine","You do not need permission to become who you already are."],
+["shine","Hold your head up. Crowns slip when you look down too long."],
+["shine","Your story is not over. It is not even close to the good part yet."],
+["shine","Be the kind of friend to yourself that you are to everybody else."],
+["shine","Small steps every day beat one giant leap you never take."],
+["shine","You were made on purpose, for a purpose, by a God who does not make mistakes."],
+["shine","Storms do not ask permission, but neither does the sunrise."],
+["shine","You can be grateful and still want more. Both things fit in one heart."],
+["shine","Nobody else can do the job of being you. The position is yours for life."],
+["shine","Your kindness has landed in places you will never see. It still landed."],
+["shine","Dream bigger, darlin'. The God who made the stars is not intimidated by your wishlist."],
+["shine","Even flowers have to push through dirt to get to the sun. You are doing fine."],
+["shine","You are tougher than the thing that is trying you right now."],
+["shine","There is no expiration date on becoming."],
+["shine","Keep your face to the light and your heart soft. That combination is rare and it is yours."],
+["shine","One day you will tell this story and it will help somebody breathe easier."],
+["shine","You do not have to earn rest, love, or good days. They are gifts, not wages."],
+["shine","The middle of the story is always the messiest. That means you are mid-miracle."],
+["shine","Your pace is not a problem. Your direction is what matters, and yours is good."],
+["shine","Joy is a discipline some days. Practice it like piano."],
+["shine","You bring a warmth into rooms that people remember on their drive home."],
+["shine","Do not compare your chapter 3 to somebody else's chapter 20."],
+["shine","The dreams in your heart were put there on purpose. They are not random."],
+["shine","You are braver than you were last year, even if it does not feel dramatic."],
+["shine","Let grace be the loudest voice in your head today."],
+["shine","Some doors close because God loves you too much to let you settle."],
+["shine","You are allowed to outgrow places, people, and old versions of yourself."],
+["shine","There is room at the table for your whole laugh, your whole heart, your whole self."],
+["shine","A candle loses nothing by lighting another candle. Shine on somebody today."],
+["shine","You are not too much. You are not too little. You are His, and that settles it."],
+["shine","Hope is not pretending. Hope is planting something and trusting the rain."],
+["shine","You have been carried through every hard thing so far. That is not luck, that is love."],
+["shine","Today is a fresh page and you are holding the pen."],
+["shine","You are stronger than the story your fear is telling you."],
+["shine","Bloom where you are planted, then keep blooming right out of that pot."],
+["shine","Your future self is already grateful you did not quit today."],
+["shine","God is not in a hurry, and He is never late. You can breathe."],
+["shine","You are the kind of woman little girls will want to be like. Act like you know it."],
+["shine","Hard days make soft hearts sweeter, not smaller."],
+["shine","You do not need the whole staircase. Just take the next step in the light you have."],
+["shine","Some of your best days have not happened yet. They are already on the calendar of heaven."],
+["shine","Keep your chin up and your standards higher."],
+["shine","You can miss how far you have come if you only stare at how far is left. Look back. Be proud."],
+["shine","There is beauty in your becoming, even on the days it feels like unbecoming."],
+["shine","You are a daughter of the King. Walk like the palace is home."],
+["shine","Let your faith be bigger than your fear and louder than your doubt."],
+["shine","You have a 100 percent success rate at making it through. Keep the streak."],
+["shine","Plant kindness everywhere. You never know who is standing in hard ground."],
+["shine","The girl who prayed for what you have now would be thrilled. Honor her."],
+["shine","You do not have to hold it all together. You are held."],
+["shine","Sunshine mixed with a little hurricane — that is not a flaw, that is a forecast worth watching."],
+["shine","Your dreams are not too big. Your God is not too small. Proceed."],
+["shine","You are becoming exactly who you prayed to be, one ordinary Tuesday at a time."],
+["shine","Grace upon grace. That is the weather report over your whole life."],
+["shine","You are loved on your best day and your worst day by the exact same amount."],
+["shine","Strong roots, soft heart, stubborn hope. That is a hard combination to beat."],
+["shine","You were not made to shrink. Take up your space, sweetheart."],
+["shine","Every sunrise is God saying: again. I am giving you again."],
+["shine","You are allowed to change your mind, your plans, and your whole direction. Rivers do."],
+["shine","Your testimony is being written in ordinary ink on ordinary days. It will not be an ordinary story."],
+["shine","Be where your feet are. The present is a present."],
+["shine","You can do hard things, and you have the history to prove it."],
+["shine","Nothing about you is an accident, including the parts still healing."],
+["shine","Keep a soft heart in a hard world. That is not naive, that is warfare."],
+["shine","You are one prayer away from a completely different feeling about today."],
+["shine","The woman you are becoming is worth every bit of the work."],
+["shine","Your smile is somebody's favorite view. Do not hide the scenery."],
+["shine","Faith means trusting the bridge while you are still crossing it."],
+["shine","You are rich in the ways that matter most. Count that kind of wealth today."],
+["shine","Do the next right thing, then the next. That is how whole lives turn around."],
+["shine","You carry heaven's signature. There is no other one like you, and there never will be."],
+["shine","When you cannot trace His hand, trust His heart. It has never failed you."],
+["shine","Shine anyway. Especially anyway."],
+["dare","Step outside barefoot in the grass for one full minute. Just stand there and breathe."],
+["dare","Make the fancy coffee today. The good kind. On a regular weekday, for no reason."],
+["dare","Text a friend one true, specific compliment. Not 'you are great' — the real reason why."],
+["dare","Put on the outfit that makes you feel like the main character. Errands count."],
+["dare","Drive the long way home today, windows down, favorite song loud."],
+["dare","Write yourself a note and hide it somewhere you will find it next month."],
+["dare","Sing one whole song at the top of your lungs today. Truck, shower, kitchen — dealer's choice."],
+["dare","Pick one small thing you have been putting off and do it in the next ten minutes."],
+["dare","Leave a kind note on a stranger's windshield or a cart at the store."],
+["dare","Watch the sunset on purpose tonight. Whole thing. Phone face-down."],
+["dare","Dance to one song in your kitchen like nobody's business."],
+["dare","Drink a whole glass of water and eat something green. Your body is a temple, not a tent."],
+["dare","Say one prayer out loud today, the way you'd talk to your best friend."],
+["dare","Forgive one small thing today — somebody else's, or your own. Set it down."],
+["dare","Take a picture of something beautiful within ten feet of you right now. It is there."],
+["dare","Do one kind thing today that nobody will ever find out about."],
+["dare","Read one chapter of your Bible somewhere that is not your bed. Porch counts double."],
+["dare","Clean out one drawer. Just one. Small order is still order."],
+["dare","Tell God thank you for three specific things before you ask Him for anything."],
+["dare","Wear red lipstick or your favorite boots today — whichever feels like armor."],
+["dare","Go to bed thirty minutes early tonight. Treat sleep like an appointment with royalty."],
+["dare","Wave at a stranger today. Small-town manners are a ministry."],
+["dare","Eat dessert first today. Once. Life is short and pie is good."],
+["dare","Write a prayer in your blog like a letter and date it. Future you will treasure it."],
+["dare","Sit on the porch for five full minutes doing absolutely nothing. It is harder than it sounds and better than it sounds."],
+["dare","Play a song from your childhood and let yourself feel twelve again for three minutes."],
+["dare","Give something away today — a book, a plant cutting, a kind word counts twice."],
+["dare","Make your bed like a hotel bed. Corners and everything. Sleep fancy."],
+["dare","Call somebody just to hear their voice. No agenda. Just because."],
+["dare","Light the good candle. The one you have been saving. Today is the occasion."],
+["dare","Write down one dream so big it scares you a little. Then pray over it."],
+["dare","Take yourself on a tiny date: a drive, a Sonic drink, a thrift store wander."],
+["dare","Smile at yourself in the mirror and say one true kind thing out loud."],
+["dare","Try praying for somebody who is hard to pray for. Even a short one counts."],
+["dare","Put your phone in another room for one full hour. Notice what your brain does with quiet."],
+["dare","Rearrange one small corner so it makes you happy to look at."],
+["dare","Write 'it is well' on a sticky note and put it where you will see it at your hardest hour."],
+["dare","Thank God out loud for your body — specifically the parts you usually criticize."],
+["dare","Bake or make one thing from scratch today, even if it is just biscuits or sweet tea."],
+["dare","Sit in your truck for one extra minute before going inside. Let the quiet finish its sentence."],
+["dare","Memorize one short verse this week. Psalm 56:3 is four seconds long and worth a fortune."],
+["dare","Leave your porch light on tonight for somebody who might need to see a friendly house."],
+["dare","Unfollow or mute one account that makes you feel less-than. Peace is worth more."],
+["dare","Do a cannonball of joy into an ordinary moment: windows down, worship up."],
+["dare","Write a thank-you note — paper, pen, real words — to somebody who showed you kindness."],
+["dare","Pick a verse and make it your phone wallpaper for the week."],
+["dare","Take a different route somewhere today, just to see a road you do not usually see."],
+["dare","Compliment a stranger's boots, hat, or truck. You know you'd mean it."],
+["dare","Set a timer for fifteen minutes and tidy like a game show contestant. Music on."],
+["dare","Read the first page of a book you already own but never opened."],
+["dare","Stand in the rain for ten seconds on purpose, if the sky provides. If not, splash your face with cold water and call it a reset."],
+["dare","Say no to one thing today that drains you, kindly and without a five-minute apology."],
+["dare","Plant something, even just a seed in a cup on the windowsill. Hope likes a project."],
+["dare","Watch for one specific way God shows up today. He will. Write it down tonight."],
+["dare","Put on worship music while you do the most boring chore on your list. Watch what changes."],
+["dare","Forgive the version of you from last year. She was doing her best with what she knew."],
+["dare","Eat lunch outside today, even if it is just the tailgate or the front step."],
+["dare","Ask God one honest question today and sit still for two minutes listening."],
+["dare","Send one encouraging text to somebody who would never expect it from you today."],
+["dare","End the day naming the best minute of it out loud. Train your eyes for gold."],
+["song","Play the first country song you ever memorized word for word. Sing every line like it is 1999."],
+["song","Pick a year in your jukebox and play its playlist straight through — no skips, no shuffles. Trust the track list."],
+["song","Find the song in your jukebox you always skip. Today it gets its one honest chance."],
+["song","Play a worship song first thing, before any other sound gets a vote on your day."],
+["song","Queue up a song that reminds you of summer and let it play twice. Twice is the rule today."],
+["song","Play the saddest song you love and let it be sad all the way through. Some songs are medicine."],
+["song","Find a 2007 song in the jukebox and remember exactly who you were that year."],
+["song","Play something with a fiddle in it and let your shoulders drop two inches."],
+["song","Make today a one-artist day in the jukebox. Pick a lane and ride it."],
+["song","Play the song you'd want played at the best party of your life. Start the party early."],
+["song","Find a song about faith in your playlists and really listen to the words this time."],
+["song","Play a 1990 song and imagine it brand new on the radio, windows down, nowhere to be."],
+["song","Pick the longest song in your jukebox and give it your whole attention, start to finish."],
+["song","Play a song that makes you want to drive somewhere with trees on both sides of the road."],
+["song","Let Sammie's attitude pick: play the boldest song in the 2001 playlist."],
+["song","Play a duet and sing both parts. Commit to it."],
+["song","Find a song in the Halloween playlist that works in broad daylight. Play it at noon. Defy the season."],
+["song","Play the very last song of the 2009 playlist — the one at the bottom of the list — and give it the headline spot."],
+["song","Pick a song that sounds like a front porch and a glass of sweet tea feels."],
+["song","Play something from 1995 and dance in the kitchen for exactly one chorus."],
+["song","Find a song you loved before you could drive. Remember who you were trying to become."],
+["song","Play a song with 'grace', 'river', or 'home' in the title. Your jukebox has one."],
+["song","Queue three songs: one for your past, one for right now, one for the woman you are becoming."],
+["song","Play a song and send it to a friend with no explanation except 'this made me think of you'."],
+["song","Find the fastest, loudest song in your playlists and let it shake the dust off your mood."],
+["song","Play a quiet acoustic song and do nothing else while it plays. Just receive it."],
+["song","Play a 2003 song and picture the CD it lived on. Jewel case, booklet, the whole thing."],
+["song","Pick a song title that could be the title of your life right now. Play it like a theme song."],
+["song","Play something brand new to you from a year you have not explored in the Time Machine yet."],
+["song","End your day with one song on purpose — a closing hymn for an ordinary day."],
+["song","Play the song you'd sing if somebody handed you a microphone and a thousand people went quiet."],
+["song","Find a love song and aim it at your own heart today. You are allowed."],
+["song","Play a song from the year you were happiest. Borrow its weather for an afternoon."],
+["song","Shuffle the 2006 playlist and take whatever comes first as today's assignment. No re-rolls."],
+["song","Play a song that mentions a truck and rate it like a judge. Sammie is co-judge."],
+["ponder","Name one prayer God has already answered that you once begged Him for. Sit with that a second."],
+["ponder","What would you do this year if you knew for certain God was in it with you?"],
+["ponder","What is one thing you believe now that you did not believe five years ago?"],
+["ponder","Who taught you the most about kindness just by how they live? Thank God for them by name."],
+["ponder","What is the bravest thing you have ever done that nobody clapped for?"],
+["ponder","If your life had a theme verse right now, what would it be?"],
+["ponder","What is one small thing that always makes your whole day better within five minutes?"],
+["ponder","What are you carrying today that you could hand to God before bed?"],
+["ponder","What did twelve-year-old you dream about that you are actually living now?"],
+["ponder","Where have you seen God's fingerprints in the last seven days? Be specific."],
+["ponder","What is the nicest thing anyone has ever said to you? Why did it stay?"],
+["ponder","If fear was not part of the equation, what is the first thing you would try?"],
+["ponder","What does your perfect ordinary day look like — hour by hour, nothing fancy?"],
+["ponder","Which Bible character do you understand a little too well? What is God teaching you through them?"],
+["ponder","What is one thing you want to be known for by the people who know you best?"],
+["ponder","What has been the hardest-won lesson of your life so far? Was it worth the tuition?"],
+["ponder","Name three things in your kitchen right now that you are genuinely grateful for."],
+["ponder","What is a sound that feels like home to you?"],
+["ponder","If you could give your younger self one sentence, what would it be?"],
+["ponder","What is something good that came from a season you would never want to repeat?"],
+["ponder","Who in your life makes you want to be a better person just by being themselves?"],
+["ponder","What is one question you want to ask God someday, across a table, face to face?"],
+["ponder","What part of your life feels like it is still 'under construction' in a hopeful way?"],
+["ponder","When did you last feel completely at peace? What was true about that moment?"],
+["ponder","What would you keep doing even if nobody ever praised you for it? That is a clue about your calling."],
+["ponder","What is a compliment you need to stop deflecting and start believing?"],
+["ponder","If your truck could talk about your life, what chapter would it say you are in?"],
+["ponder","What does 'enough' honestly look like for you — not the world's version, yours?"],
+["ponder","Which of your scars has become the most useful part of your story?"],
+["ponder","What is one tradition, recipe, or saying you want to carry forward and pass along someday?"],
+["ponder","What is God teaching you in the waiting right now — not after, during?"],
+["ponder","Name one thing about your life that past-you prayed for exactly as it is."],
+["ponder","What is the most beautiful thing you have ever seen with your own two eyes?"],
+["ponder","If this season of your life had a title like a country song, what would it be?"],
+["ponder","What is one brave sentence you need to say out loud this week?"],
+["ponder","Who do you want to be in ten years, and what is one tiny thing she would thank you for starting now?"],
+["ponder","What has God been gently repeating to you lately that you keep almost-hearing?"],
+["ponder","What is a small, ordinary miracle you have gotten too used to?"],
+["ponder","If you could relive one perfect ordinary day, which would it be — and what made it golden?"],
+["ponder","What do you want your life to say about God when all the chapters are in?"]
+];
+
+  var CATS = {
+    verse:  { label: "\u271D Verse",          a: "#c8a165", b: "#f2e3bb" },
+    shine:  { label: "\u2600 Encouragement",  a: "#d983a6", b: "#f6cfdd" },
+    dare:   { label: "\u273F Tiny Joy Mission", a: "#4f9e94", b: "#bfe3dd" },
+    song:   { label: "\u266A Song Prompt",    a: "#7a6fb0", b: "#cfc8ec" },
+    ponder: { label: "\u270E Think It Over",  a: "#5b84ae", b: "#c3d7ec" }
+  };
+  var KEY = "ashleys-vending-v1";
+  function loadState() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+  var S = loadState();
+  if (typeof S.opened !== "number") S.opened = 0;
+  if (!Array.isArray(S.found)) S.found = [];
+  if (!Array.isArray(S.kept)) S.kept = [];
+  function saveState() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  var machine = document.getElementById("machine");
+  var tray = document.getElementById("tray");
+  var trayHint = document.getElementById("trayHint");
+  var statusEl = document.getElementById("vmStatus");
+  var vendBtn = document.getElementById("vendBtn");
+  var coinSlot = document.getElementById("coinSlot");
+  var prizeCard = document.getElementById("prizeCard");
+  var prizeChip = document.getElementById("prizeChip");
+  var prizeText = document.getElementById("prizeText");
+  var keepBtn = document.getElementById("keepBtn");
+  var againBtn = document.getElementById("againBtn");
+  var countEl = document.getElementById("machineCount");
+  var keepsEl = document.getElementById("keepsakes");
+
+  // Decorative capsules behind the glass
+  (function fillGlass() {
+    var keys = Object.keys(CATS);
+    var shelves = document.querySelectorAll(".vm-shelf");
+    for (var s = 0; s < shelves.length; s++) {
+      for (var i = 0; i < 7; i++) {
+        var c = CATS[keys[Math.floor(Math.random() * keys.length)]];
+        var m = document.createElement("span");
+        m.className = "mini-cap";
+        m.style.background = "linear-gradient(180deg," + c.a + " 0 50%," + c.b + " 50% 100%)";
+        shelves[s].appendChild(m);
+      }
+    }
+  })();
+
+  var AC = null;
+  function tone(freq, t0, dur, gain, type) {
+    var o = AC.createOscillator(), g = AC.createGain(), t = AC.currentTime + t0;
+    o.type = type || "sine"; o.frequency.setValueAtTime(freq, t);
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + .015); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + dur + .05);
+  }
+  function sound(kind) {
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+      if (!AC) AC = new Ctx();
+      if (AC.state === "suspended") AC.resume();
+      if (kind === "coin") { tone(1568, 0, .09, .045); tone(2093, .07, .14, .045); }
+      if (kind === "clunk") { tone(150, 0, .16, .09, "triangle"); tone(82, .02, .2, .08, "sine"); }
+      if (kind === "pop") { tone(520, 0, .07, .05); tone(880, .05, .1, .05); }
+    } catch (e) {}
+  }
+
+  var current = null, currentIdx = -1, busy = false, recent = [];
+  function pickIdx() {
+    var idx, tries = 0;
+    do { idx = Math.floor(Math.random() * CAPSULES.length); tries++; } while (recent.indexOf(idx) >= 0 && tries < 12);
+    recent.push(idx); if (recent.length > 10) recent.shift();
+    return idx;
+  }
+  function renderCount() {
+    countEl.innerHTML = "Opened <b>" + S.opened + "</b> · Collected <b>" + S.found.length + " of " + CAPSULES.length + "</b> · Kept <b>" + S.kept.length + "</b>";
+  }
+  function renderKeeps() {
+    keepsEl.innerHTML = "";
+    if (!S.kept.length) {
+      var d = document.createElement("p"); d.className = "empty";
+      d.textContent = "Nothing kept yet. When a capsule feels like it was written just for you, tap \u201CKeep this one\u201D and it will live here.";
+      keepsEl.appendChild(d); return;
+    }
+    S.kept.forEach(function (k, i) {
+      var card = document.createElement("div"); card.className = "keep-card";
+      card.style.borderLeftColor = CATS[k.c].a;
+      var head = document.createElement("div"); head.className = "keep-head";
+      var chip = document.createElement("span"); chip.className = "cat-chip";
+      chip.textContent = CATS[k.c].label; chip.style.background = CATS[k.c].b;
+      var rm = document.createElement("button"); rm.className = "icon-btn"; rm.type = "button"; rm.textContent = "Remove";
+      rm.addEventListener("click", function () { S.kept.splice(i, 1); saveState(); renderKeeps(); renderCount(); });
+      head.appendChild(chip); head.appendChild(rm);
+      var p = document.createElement("p"); p.textContent = k.t;
+      card.appendChild(head); card.appendChild(p);
+      keepsEl.appendChild(card);
+    });
+  }
+  function vend() {
+    if (busy) return;
+    busy = true; vendBtn.disabled = true;
+    prizeCard.hidden = true;
+    var old = tray.querySelector(".big-cap"); if (old) old.remove();
+    sound("coin");
+    statusEl.textContent = "Clink! Rolling down...";
+    machine.classList.remove("vending"); void machine.offsetWidth; machine.classList.add("vending");
+    currentIdx = pickIdx();
+    current = { c: CAPSULES[currentIdx][0], t: CAPSULES[currentIdx][1] };
+    setTimeout(function () {
+      sound("clunk");
+      var cap = document.createElement("div");
+      cap.className = "big-cap drop";
+      cap.setAttribute("role", "button");
+      cap.setAttribute("aria-label", "A capsule. Tap to open it.");
+      var top = document.createElement("div"); top.className = "cap-half cap-top"; top.style.background = CATS[current.c].a;
+      var bot = document.createElement("div"); bot.className = "cap-half cap-bot"; bot.style.background = CATS[current.c].b;
+      cap.appendChild(top); cap.appendChild(bot);
+      cap.addEventListener("click", openCapsule);
+      tray.insertBefore(cap, trayHint);
+      statusEl.textContent = "Tap your capsule to pop it open.";
+      busy = false; vendBtn.disabled = false;
+    }, 620);
+  }
+  function openCapsule() {
+    var cap = tray.querySelector(".big-cap");
+    if (!cap || cap.classList.contains("opened")) return;
+    cap.classList.add("opened");
+    sound("pop");
+    S.opened++;
+    if (S.found.indexOf(currentIdx) < 0) S.found.push(currentIdx);
+    saveState(); renderCount();
+    prizeChip.textContent = CATS[current.c].label;
+    prizeChip.style.background = CATS[current.c].b;
+    prizeText.textContent = current.t;
+    var already = S.kept.some(function (k) { return k.t === current.t; });
+    keepBtn.disabled = already;
+    keepBtn.innerHTML = already ? "\u2713 Kept" : "\u2661 Keep this one";
+    prizeCard.hidden = false;
+    statusEl.textContent = "There it is. That one was loaded just for you.";
+    setTimeout(function () { prizeCard.scrollIntoView({ behavior: "smooth", block: "nearest" }); }, 80);
+  }
+  vendBtn.addEventListener("click", vend);
+  coinSlot.addEventListener("click", vend);
+  coinSlot.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); vend(); } });
+  keepBtn.addEventListener("click", function () {
+    if (!current) return;
+    if (!S.kept.some(function (k) { return k.t === current.t; })) {
+      S.kept.unshift({ c: current.c, t: current.t });
+      saveState(); renderKeeps(); renderCount();
+    }
+    keepBtn.disabled = true; keepBtn.innerHTML = "\u2713 Kept";
+    statusEl.textContent = "Kept safe in your keepsakes, below.";
+  });
+  againBtn.addEventListener("click", function () {
+    machine.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(vend, 350);
+  });
+  renderCount(); renderKeeps();
+</script>
+
+<script id="hw-script">
+(function () {
+  var KEY = 'ashleys-halloween';
+  function pref() { try { return localStorage.getItem(KEY) || 'auto'; } catch (e) { return 'auto'; } }
+  function setPref(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function inSeason() { var n = new Date(), m = n.getMonth(), d = n.getDate(); return (m === 9 && d >= 24) || (m === 10 && d <= 1); }
+  function isOn() { var p = pref(); return p === 'on' || (p === 'auto' && inSeason()); }
+  var GLYPHS = [['1f383','\u{1F383}','6%','12%',34,7],['1f47b','\u{1F47B}','88%','16%',30,8],['1f987','\u{1F987}','14%','68%',26,6],['1f315','\u{1F315}','92%','64%',30,9],['1f578','\u{1F578}\u{FE0F}','3%','38%',28,10],['1f987','\u{1F987}','78%','84%',22,7],['1f383','\u{1F383}','94%','40%',24,8],['1f47b','\u{1F47B}','10%','88%',24,9]];
+  function apply() {
+    var on = isOn();
+    document.body.classList.toggle('halloween', on);
+    var b = document.getElementById('hwBanner'); if (b) b.style.display = on ? 'block' : 'none';
+    var l = document.getElementById('hwLayer'); if (l) l.style.display = on ? 'block' : 'none';
+    var t = document.getElementById('hwToggle'); if (t) t.textContent = '\u{1F383} Halloween: ' + (pref() === 'auto' ? 'Auto' : (pref() === 'on' ? 'On' : 'Off'));
+  }
+  function build() {
+    var wrap = document.querySelector('.wrap');
+    if (wrap && !document.getElementById('hwBanner')) {
+      var b = document.createElement('div'); b.id = 'hwBanner'; b.className = 'hw-banner';
+      b.innerHTML = '\u{1F383} Halloween at Ashley\u2019s Spot \u{1F47B}<span class="hw-sub">Spooky season: now through Nov 1 \u2014 or whenever you say so, queen \u{1F987} \u00B7 Emoji art: Twemoji (CC BY 4.0)</span>';
+      wrap.insertBefore(b, wrap.firstChild);
+    }
+    if (!document.getElementById('hwLayer')) {
+      var l = document.createElement('div'); l.id = 'hwLayer'; l.className = 'hw-layer'; l.setAttribute('aria-hidden', 'true');
+      GLYPHS.forEach(function (g) { var s = document.createElement('span'); var img = document.createElement('img'); img.src = 'hw-emoji/' + g[0] + '.svg'; img.alt = ''; img.draggable = false; img.style.width = g[4] + 'px'; img.style.height = g[4] + 'px'; img.style.display = 'block'; img.onerror = function () { s.textContent = g[1]; s.style.fontSize = g[4] + 'px'; }; s.appendChild(img); s.style.left = g[2]; s.style.top = g[3]; s.style.animationDuration = g[5] + 's'; l.appendChild(s); });
+      document.body.appendChild(l);
+    }
+    if (!document.getElementById('hwToggle')) {
+      var btn = document.createElement('button'); btn.id = 'hwToggle'; btn.type = 'button';
+      btn.addEventListener('click', function () { var order = ['auto', 'on', 'off']; setPref(order[(order.indexOf(pref()) + 1) % 3]); apply(); });
+      btn.className = 'hw-toggle-btn';
+      var panel = document.getElementById('menuPanel'), theme = document.getElementById('themeToggle');
+      if (panel) {
+        var anchor = theme;
+        while (anchor && anchor.parentNode !== panel) anchor = anchor.parentNode;
+        if (anchor) panel.insertBefore(btn, anchor.nextSibling); else panel.appendChild(btn);
+      } else { btn.setAttribute('style', 'position:fixed;right:14px;bottom:14px;z-index:80;width:auto;margin-top:0;border-radius:999px;'); document.body.appendChild(btn); }
+    }
+    apply();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
+})();
+</script>
+<script id="cat-script">
+(function () {
+  var KEY = "ashleys-cat-v1";
+  var COATS = ["midnight", "pumpkin", "storm", "snowball", "calico"];
+  var COAT_NAMES = { midnight: "Midnight", pumpkin: "Pumpkin", storm: "Storm Cloud", snowball: "Snowball", calico: "Calico" };
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function todayStr() { var n = new Date(); return n.getFullYear() + "-" + (n.getMonth() + 1) + "-" + n.getDate(); }
+  function ydayStr() { var n = new Date(Date.now() - 864e5); return n.getFullYear() + "-" + (n.getMonth() + 1) + "-" + n.getDate(); }
+  var S = load();
+  if (COATS.indexOf(S.coat) < 0) S.coat = "midnight";
+  if (typeof S.pets !== "number") S.pets = 0;
+  var T = todayStr();
+  if (S.lastDay !== T) { S.streak = (S.lastDay === ydayStr()) ? (S.streak || 0) + 1 : 1; S.lastDay = T; }
+  if (typeof S.visits !== "number") S.visits = 0;
+  S.visits++; save();
+
+  var SVG =
+  "<svg viewBox=\"0 0 220 200\" aria-hidden=\"true\">" +
+  "<ellipse class=\"cat-shadow\" cx=\"110\" cy=\"189\" rx=\"56\" ry=\"8\" fill=\"#140f08\" opacity=\".16\"/>" +
+  "<g class=\"cat-tail\"><path class=\"cf\" d=\"M158,148 C190,138 208,156 202,176 C197,191 178,196 158,191 C175,183 181,168 171,157 C167,152 162,148 158,148 Z\"/><circle class=\"cf\" cx=\"196\" cy=\"156\" r=\"10\"/><circle class=\"cf\" cx=\"201\" cy=\"171\" r=\"9\"/><circle class=\"cb\" cx=\"197\" cy=\"182\" r=\"8\"/></g>" +
+  "<path class=\"cf\" d=\"M110,84 C146,84 166,114 166,144 C166,172 142,188 110,188 C78,188 54,172 54,144 C54,114 74,84 110,84 Z\"/>" +
+  "<circle class=\"cf\" cx=\"58\" cy=\"126\" r=\"9\"/><circle class=\"cf\" cx=\"56\" cy=\"148\" r=\"10\"/><circle class=\"cf\" cx=\"64\" cy=\"168\" r=\"9\"/><circle class=\"cf\" cx=\"162\" cy=\"126\" r=\"9\"/><circle class=\"cf\" cx=\"164\" cy=\"148\" r=\"10\"/><circle class=\"cf\" cx=\"156\" cy=\"168\" r=\"9\"/><circle class=\"cf\" cx=\"84\" cy=\"185\" r=\"8\"/><circle class=\"cf\" cx=\"136\" cy=\"185\" r=\"8\"/>" +
+  "<circle class=\"cb\" cx=\"110\" cy=\"114\" r=\"12\"/><circle class=\"cb\" cx=\"98\" cy=\"127\" r=\"10\"/><circle class=\"cb\" cx=\"122\" cy=\"127\" r=\"10\"/><circle class=\"cb\" cx=\"110\" cy=\"140\" r=\"11\"/>" +
+  "<g class=\"cat-stripes\"><path class=\"sf\" d=\"M60,120 q-5,10 -2,20 M166,120 q5,10 2,20\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".4\"/></g>" +
+  "<g class=\"cat-patches\"><path d=\"M148,116 Q170,124 167,150 Q149,149 143,136 Q143,123 148,116 Z\" fill=\"#2e2a36\" opacity=\".92\"/></g>" +
+  "<ellipse class=\"cf\" cx=\"84\" cy=\"183\" rx=\"15\" ry=\"8\"/><ellipse class=\"cf\" cx=\"136\" cy=\"183\" rx=\"15\" ry=\"8\"/>" +
+  "<path class=\"sf\" d=\"M79,178 v7 M89,178 v7 M131,178 v7 M141,178 v7\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".45\"/>" +
+  "<path class=\"cf\" d=\"M76,32 L64,3 Q62,-3 69,-1 L103,17 Q88,28 76,32 Z\"/><path class=\"cf\" d=\"M144,32 L156,3 Q158,-3 151,-1 L117,17 Q132,28 144,32 Z\"/>" +
+  "<path class=\"cer\" d=\"M78,25 L71,8 L95,17 Q86,23 78,25 Z\"/><path class=\"cer\" d=\"M142,25 L149,8 L125,17 Q134,23 142,25 Z\"/>" +
+  "<circle class=\"cf\" cx=\"110\" cy=\"58\" r=\"42\"/>" +
+  "<circle class=\"cf\" cx=\"71\" cy=\"65\" r=\"10\"/><circle class=\"cf\" cx=\"69\" cy=\"79\" r=\"9\"/><circle class=\"cf\" cx=\"149\" cy=\"65\" r=\"10\"/><circle class=\"cf\" cx=\"151\" cy=\"79\" r=\"9\"/><circle class=\"cf\" cx=\"110\" cy=\"95\" r=\"10\"/>" +
+  "<g class=\"cat-stripes\"><path class=\"sf\" d=\"M96,21 q3,7 0,13 M110,17 q2,8 0,15 M124,21 q-3,7 0,13\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".45\"/></g>" +
+  "<g class=\"cat-patches\"><path d=\"M63,36 Q58,8 84,3 Q97,1 101,14 Q84,15 75,26 Q67,34 63,36 Z\" fill=\"#df8433\" opacity=\".95\"/></g>" +
+  "<g class=\"cat-eyes\"><ellipse class=\"ce\" cx=\"93\" cy=\"58\" rx=\"7\" ry=\"9\"/><ellipse cx=\"93\" cy=\"59\" rx=\"3.2\" ry=\"5.5\" fill=\"#191521\"/><circle cx=\"95.5\" cy=\"54\" r=\"1.8\" fill=\"#fff\" opacity=\".9\"/><ellipse class=\"ce\" cx=\"127\" cy=\"58\" rx=\"7\" ry=\"9\"/><ellipse cx=\"127\" cy=\"59\" rx=\"3.2\" ry=\"5.5\" fill=\"#191521\"/><circle cx=\"129.5\" cy=\"54\" r=\"1.8\" fill=\"#fff\" opacity=\".9\"/></g>" +
+  "<path d=\"M104,72 Q110,69 116,72 Q115,79 110,80 Q105,79 104,72 Z\" fill=\"#e58aa0\"/>" +
+  "<path class=\"sf\" d=\"M110,80 Q110,86 103,85 M110,80 Q110,86 117,85\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\"/>" +
+  "<path class=\"sf\" d=\"M61,73 L35,68 M61,81 L36,83 M63,89 L41,98 M159,73 L185,68 M159,81 L184,83 M157,89 L179,98\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".4\"/>" +
+  "<g class=\"cat-hat\"><g transform=\"rotate(-8 118 20)\"><path d=\"M92,20 Q104,-28 120,-34 Q138,-30 146,17 Q118,8 92,20 Z\" fill=\"#3a2b52\"/><path d=\"M95,13 Q118,4 143,11 L144,18 Q118,10 94,20 Z\" fill=\"#e8762c\"/><rect x=\"112\" y=\"3\" width=\"11\" height=\"9\" rx=\"2\" fill=\"none\" stroke=\"#f4c542\" stroke-width=\"2.5\"/><ellipse cx=\"118\" cy=\"22\" rx=\"34\" ry=\"8.5\" fill=\"#2e2140\"/></g></g>" +
+  "</svg>";
+
+  var GREET = ["mrrrow! there you are \u{1F43E}", "I followed you here. obviously.", "you came back. good human.", "*happy slow blink* hi."];
+  var PET = ["purr purr purr\u2026", "that\u2019s the spot. THE spot.", "five more minutes of this.", "mrrp! \u{1F495}", "*max purr achieved*", "yes. continue.", "I allow this. \u{1F451}"];
+  var PET_HW = ["fear me. also pet me.", "I am the night. \u{1F987}", "trick or treat? (treat. give treat.)", "spooky AND soft. that\u2019s me."];
+  var IDLE = ["*stares at nothing*", "*judges the room, silently*", "nap first. questions later.", "*sits on the important thing*", "I knocked nothing over today. yet."];
+  var IDLE_HW = ["I saw a ghost. or a dust bunny.", "*counts the pumpkins*", "the veil is thin. so is my patience."];
+
+  var reduced = false;
+  try { reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+  function isHW() { return document.body && document.body.classList.contains("halloween"); }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+  var el = document.createElement("div");
+  el.id = "catPal"; el.setAttribute("data-coat", S.coat);
+  el.setAttribute("role", "img"); el.setAttribute("aria-label", "Sammie, a fluffy cat who lives on this website. Tap to pet her.");
+  el.innerHTML = "<div class=\"cat-bubble\"><div class=\"cat-name\">\u{1F43E} Sammie</div><span class=\"cat-say\"></span><div class=\"cat-btns\"><button type=\"button\" class=\"cat-coat-btn\">\u{1F9E5} coat</button><button type=\"button\" class=\"cat-nap-btn\">\u{1F4A4} nap</button></div></div>" +
+    "<div class=\"cat-bob\"><div class=\"cat-flip\">" + SVG + "</div></div>";
+  document.body.appendChild(el);
+  var say = el.querySelector(".cat-say"), bubble = el.querySelector(".cat-bubble"), flip = el.querySelector(".cat-flip");
+  var bubbleTimer = null, wanderTimer = null, idleTimer = null, sleeping = false;
+  var pos = { x: Math.max(8, window.innerWidth - 140), y: window.innerHeight + 40 };
+  el.style.left = pos.x + "px"; el.style.top = pos.y + "px";
+
+  function applyHat() { el.classList.toggle("hat-on", isHW()); }
+  applyHat();
+  if (typeof MutationObserver !== "undefined" && document.body) {
+    new MutationObserver(applyHat).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  }
+
+  function showBubble(text, ms) {
+    say.textContent = text; bubble.classList.add("show");
+    if (bubbleTimer) clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(function () { bubble.classList.remove("show"); }, ms || 3600);
+  }
+  function spawnFloat(txt, cls) {
+    var s = document.createElement("span"); s.className = cls; s.textContent = txt;
+    s.style.setProperty("--drift", (Math.floor(Math.random() * 36) - 18) + "px");
+    s.style.marginLeft = (Math.floor(Math.random() * 30) - 15) + "px";
+    el.appendChild(s); setTimeout(function () { s.remove(); }, 1250);
+  }
+  var AC = null;
+  function chirp() {
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+      if (!AC) AC = new Ctx();
+      var o = AC.createOscillator(), g = AC.createGain(), t = AC.currentTime;
+      o.type = "sine"; o.frequency.setValueAtTime(620, t); o.frequency.exponentialRampToValueAtTime(940, t + .09);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.045, t + .03); g.gain.exponentialRampToValueAtTime(.0001, t + .16);
+      o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + .18);
+    } catch (e) {}
+  }
+  function place(nx, ny) {
+    if (nx < pos.x - 4) flip.classList.add("flip"); else if (nx > pos.x + 4) flip.classList.remove("flip");
+    pos = { x: nx, y: ny }; el.style.left = nx + "px"; el.style.top = ny + "px";
+  }
+  function homePos() {
+    var w = window.innerWidth, h = window.innerHeight;
+    return { x: Math.max(8, w - 132 - Math.floor(Math.random() * w * .18)), y: Math.max(60, h - 210 - Math.floor(Math.random() * h * .14)) };
+  }
+  function wander() {
+    if (sleeping || reduced) return;
+    var w = window.innerWidth, h = window.innerHeight;
+    var nx = Math.floor(w * .42 + Math.random() * (w * .58 - 118));
+    var ny = Math.floor(h * .34 + Math.random() * (h * .66 - 190));
+    place(Math.max(6, nx), Math.max(48, ny));
+    wanderTimer = setTimeout(wander, 5600 + Math.random() * 5200);
+  }
+  function idleLoop() {
+    idleTimer = setTimeout(function () {
+      if (!sleeping && !bubble.classList.contains("show") && Math.random() < .5) showBubble(pick(isHW() ? IDLE.concat(IDLE_HW) : IDLE), 3200);
+      idleLoop();
+    }, 46000 + Math.random() * 30000);
+  }
+  function pet() {
+    if (sleeping) { wake(); return; }
+    S.pets++; save();
+    el.classList.remove("petted"); void el.offsetWidth; el.classList.add("petted");
+    spawnFloat("\u{1F495}", "cat-heart"); spawnFloat("\u{1F495}", "cat-heart");
+    chirp();
+    showBubble(pick(isHW() ? PET.concat(PET_HW) : PET) + (S.pets === 1 ? " (tap me anytime \u2014 I live here now)" : ""), 3400);
+  }
+  function nap() {
+    if (sleeping) { wake(); return; }
+    sleeping = true; el.classList.add("sleeping");
+    if (wanderTimer) clearTimeout(wanderTimer);
+    showBubble("z z z\u2026 (tap me to wake)", 4200);
+    var i = 0, zt = setInterval(function () { spawnFloat("z", "cat-zzz"); if (++i > 5 || !sleeping) clearInterval(zt); }, 700);
+    setTimeout(function () { if (sleeping) wake(true); }, 20000);
+  }
+  function wake(auto) {
+    sleeping = false; el.classList.remove("sleeping");
+    showBubble(auto ? "*streeetch* \u2026I\u2019m up, I\u2019m up." : "hm? oh. hi. \u{1F43E}", 3000);
+    if (!reduced) { if (wanderTimer) clearTimeout(wanderTimer); wanderTimer = setTimeout(wander, 4200); }
+  }
+  el.addEventListener("click", pet);
+  el.querySelector(".cat-coat-btn").addEventListener("click", function (ev) {
+    ev.stopPropagation();
+    S.coat = COATS[(COATS.indexOf(S.coat) + 1) % COATS.length]; save();
+    el.setAttribute("data-coat", S.coat);
+    spawnFloat("\u2728", "cat-heart");
+    showBubble("new coat: " + COAT_NAMES[S.coat] + ". stunning, obviously.", 3200);
+  });
+  el.querySelector(".cat-nap-btn").addEventListener("click", function (ev) { ev.stopPropagation(); nap(); });
+  window.addEventListener("resize", function () {
+    var w = window.innerWidth, h = window.innerHeight;
+    place(Math.min(pos.x, Math.max(6, w - 118)), Math.min(pos.y, Math.max(48, h - 170)));
+  });
+
+  setTimeout(function () { var hp = homePos(); place(hp.x, hp.y); }, 450);
+  var greeted = false;
+  try { greeted = !!sessionStorage.getItem("ashleys-cat-greeted"); } catch (e) {}
+  setTimeout(function () {
+    if (!greeted) {
+      showBubble((S.streak > 1 ? "day " + S.streak + " of following you around. " : "") + pick(GREET), 4400);
+      try { sessionStorage.setItem("ashleys-cat-greeted", "1"); } catch (e) {}
+    } else if (Math.random() < .4) { showBubble("still here \u{1F43E}", 2200); }
+  }, 1500);
+  if (!reduced) wanderTimer = setTimeout(wander, 6000);
+  idleLoop();
+})();
+</script>
+</body>
+</html>
