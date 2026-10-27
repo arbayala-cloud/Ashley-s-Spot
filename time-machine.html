@@ -63,8 +63,8 @@
   .capsule .shuffle-row { text-align: center; }
 
   /* ---------- Cards ---------- */
-  .card-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 720px; margin: 0 auto; }
-  @media (min-width: 720px) { .card-grid { grid-template-columns: 1fr 1fr; } }
+  .card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 720px; margin: 0 auto; align-items: stretch; }
+  @media (min-width: 720px) { .card-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
   .group-head { grid-column: 1 / -1; justify-self: start; font-family: Oswald, Inter, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #e8ddcb; background: #26221e; margin: 10px 0 2px; padding: 9px 18px; border-radius: 6px; text-align: left; }
   .card-grid > .group-head:first-child { margin-top: 0; }
   .card { background: #fbf9f4; border: 1.5px solid #8d8271; border-top: 5px solid #26221e; border-radius: 8px; padding: 22px; margin: 0; text-align: left; box-shadow: 0 6px 16px rgba(38,34,30,.10); }
@@ -141,7 +141,13 @@
     .wordmark { font-size: 19px; letter-spacing: 1.5px; }
     h1 { font-size: 32px; }
     .year-title { font-size: 36px; }
-    .card { padding: 16px; }
+    .card { padding: 14px; }
+    .card h2 { font-size: 16px; letter-spacing: 1px; }
+    .card h2 .hicon { width: 24px; height: 24px; vertical-align: -6px; margin-right: 7px; }
+    .item-list li { font-size: 14px; }
+    .toy { font-size: 14px; }
+    .group-head { font-size: 12.5px; letter-spacing: 2px; padding: 7px 13px; }
+    .toon-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
   }
 </style>
 
