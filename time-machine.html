@@ -316,6 +316,7 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
 #catPal .cat-bubble { position: absolute; left: 50%; bottom: 96%; transform: translate(-50%, 6px) scale(.92); min-width: 128px; max-width: 190px; background: #fffdf6; color: #33302a; border: 2px solid #4a4238; border-radius: 12px; padding: 7px 9px 6px; font: 600 12px/1.35 Inter, system-ui, sans-serif; text-align: center; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; box-shadow: 0 6px 18px rgba(20, 15, 5, .22); }
 #catPal .cat-bubble:after { content: ""; position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%); border: 4px solid transparent; border-top: 6px solid #4a4238; }
 #catPal .cat-bubble.show { opacity: 1; transform: translate(-50%, 0) scale(1); pointer-events: auto; }
+#catPal .cat-name { font: 800 9.5px Oswald, Inter, system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a5a33; margin-bottom: 2px; }
 #catPal .cat-btns { display: flex; gap: 5px; justify-content: center; margin-top: 6px; }
 #catPal .cat-btns button { font: 700 10.5px Inter, system-ui, sans-serif; letter-spacing: .02em; border: 1.5px solid #4a4238; background: #f4ead2; color: #4a3625; border-radius: 999px; padding: 3px 8px; cursor: pointer; }
 #catPal .cat-btns button:active { transform: scale(.94); }
@@ -866,8 +867,8 @@ if ("serviceWorker" in navigator) {
 
   var el = document.createElement("div");
   el.id = "catPal"; el.setAttribute("data-coat", S.coat);
-  el.setAttribute("role", "img"); el.setAttribute("aria-label", "A fluffy cat who lives on this website. Tap to pet her.");
-  el.innerHTML = "<div class=\"cat-bubble\"><span class=\"cat-say\"></span><div class=\"cat-btns\"><button type=\"button\" class=\"cat-coat-btn\">\u{1F9E5} coat</button><button type=\"button\" class=\"cat-nap-btn\">\u{1F4A4} nap</button></div></div>" +
+  el.setAttribute("role", "img"); el.setAttribute("aria-label", "Sammie, a fluffy cat who lives on this website. Tap to pet her.");
+  el.innerHTML = "<div class=\"cat-bubble\"><div class=\"cat-name\">\u{1F43E} Sammie</div><span class=\"cat-say\"></span><div class=\"cat-btns\"><button type=\"button\" class=\"cat-coat-btn\">\u{1F9E5} coat</button><button type=\"button\" class=\"cat-nap-btn\">\u{1F4A4} nap</button></div></div>" +
     "<div class=\"cat-bob\"><div class=\"cat-flip\">" + SVG + "</div></div>";
   document.body.appendChild(el);
   var say = el.querySelector(".cat-say"), bubble = el.querySelector(".cat-bubble"), flip = el.querySelector(".cat-flip");
