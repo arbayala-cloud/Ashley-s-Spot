@@ -99,6 +99,26 @@
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#111111">
+
+<style id="hw-style">
+/* === Halloween mode (seasonal, auto Oct 24-Nov 1, toggle in Menu) === */
+body.halloween{background-color:#14101f;background-image:radial-gradient(1.5px 1.5px at 22px 34px,rgba(255,255,255,.8) 50%,transparent 51%),radial-gradient(1px 1px at 130px 90px,rgba(255,255,255,.6) 50%,transparent 51%),radial-gradient(1.2px 1.2px at 240px 30px,rgba(255,255,255,.7) 50%,transparent 51%),linear-gradient(180deg,#1b1430,#120e20 60%,#0f0b1a);background-size:280px 180px,280px 180px,280px 180px,100% 100%;}
+body.dark.halloween{background-color:#0c0916;}
+body.halloween .wrap{box-shadow:0 0 0 2px rgba(232,118,44,.28),0 26px 70px rgba(0,0,0,.55);}
+body.halloween h1{color:#cf6516;text-shadow:0 2px 14px rgba(232,118,44,.25);}
+body.dark.halloween h1{color:#ff9a3c;}
+body.halloween .eyebrow{background:#e8762c;color:#1d130a;}
+body.halloween #menuPanel{border-color:#e8762c;}
+body.halloween #menuPanel a:hover{color:#e8762c;}
+body.halloween .receiver{box-shadow:0 0 0 2px rgba(232,118,44,.45),0 0 44px rgba(232,118,44,.22);}
+body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232,118,44,.25);}
+.hw-banner{display:block;text-align:center;margin:0 auto 16px;background:#211a2e;color:#f6e8d8;border:1.5px solid #e8762c;border-radius:10px;padding:10px 14px;font-family:Oswald,Inter,sans-serif;font-size:19px;letter-spacing:.08em;text-transform:uppercase;}
+.hw-banner .hw-sub{display:block;margin-top:3px;font-family:Inter,sans-serif;font-size:12px;letter-spacing:.02em;text-transform:none;color:#d9c6ac;}
+.hw-layer{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden;}
+.hw-layer span{position:absolute;animation-name:hwFloat;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));}
+@keyframes hwFloat{from{transform:translateY(-10px) rotate(-6deg);}to{transform:translateY(14px) rotate(7deg);}}
+@media (prefers-reduced-motion: reduce){.hw-layer span{animation:none;}}
+</style>
 </head>
 <body>
 <div class="screen">
@@ -414,6 +434,47 @@ var CARTOONS = [{"name": "Hey Arnold", "year": 1996, "img": "https://artworks.th
     spawn(e.clientX, e.clientY, 1);
   }, { passive: true });
   document.addEventListener('pointerdown', function (e) { spawn(e.clientX, e.clientY, 5); }, { passive: true });
+})();
+</script>
+
+<script id="hw-script">
+(function () {
+  var KEY = 'ashleys-halloween';
+  function pref() { try { return localStorage.getItem(KEY) || 'auto'; } catch (e) { return 'auto'; } }
+  function setPref(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function inSeason() { var n = new Date(), m = n.getMonth(), d = n.getDate(); return (m === 9 && d >= 24) || (m === 10 && d <= 1); }
+  function isOn() { var p = pref(); return p === 'on' || (p === 'auto' && inSeason()); }
+  var GLYPHS = [['\u{1F383}','6%','12%',34,7],['\u{1F47B}','88%','16%',30,8],['\u{1F987}','14%','68%',26,6],['\u{1F315}','92%','64%',30,9],['\u{1F578}\u{FE0F}','3%','38%',28,10],['\u{1F987}','78%','84%',22,7],['\u{1F383}','94%','40%',24,8],['\u{1F47B}','10%','88%',24,9]];
+  function apply() {
+    var on = isOn();
+    document.body.classList.toggle('halloween', on);
+    var b = document.getElementById('hwBanner'); if (b) b.style.display = on ? 'block' : 'none';
+    var l = document.getElementById('hwLayer'); if (l) l.style.display = on ? 'block' : 'none';
+    var t = document.getElementById('hwToggle'); if (t) t.textContent = '\u{1F383} Halloween: ' + (pref() === 'auto' ? 'Auto' : (pref() === 'on' ? 'On' : 'Off'));
+  }
+  function build() {
+    var wrap = document.querySelector('.wrap');
+    if (wrap && !document.getElementById('hwBanner')) {
+      var b = document.createElement('div'); b.id = 'hwBanner'; b.className = 'hw-banner';
+      b.innerHTML = '\u{1F383} Halloween at Ashley\u2019s Spot \u{1F47B}<span class="hw-sub">Spooky season: now through Nov 1 \u2014 or whenever you say so, queen \u{1F987}</span>';
+      wrap.insertBefore(b, wrap.firstChild);
+    }
+    if (!document.getElementById('hwLayer')) {
+      var l = document.createElement('div'); l.id = 'hwLayer'; l.className = 'hw-layer'; l.setAttribute('aria-hidden', 'true');
+      GLYPHS.forEach(function (g) { var s = document.createElement('span'); s.textContent = g[0]; s.style.left = g[1]; s.style.top = g[2]; s.style.fontSize = g[3] + 'px'; s.style.animationDuration = g[4] + 's'; l.appendChild(s); });
+      document.body.appendChild(l);
+    }
+    if (!document.getElementById('hwToggle')) {
+      var btn = document.createElement('button'); btn.id = 'hwToggle'; btn.type = 'button';
+      btn.addEventListener('click', function () { var order = ['auto', 'on', 'off']; setPref(order[(order.indexOf(pref()) + 1) % 3]); apply(); });
+      var panel = document.getElementById('menuPanel'), theme = document.getElementById('themeToggle');
+      if (theme && theme.parentNode) { if (theme.className) btn.className = theme.className; theme.parentNode.insertBefore(btn, theme.nextSibling); }
+      else if (panel) { panel.appendChild(btn); }
+      else { btn.setAttribute('style', 'position:fixed;right:14px;bottom:14px;z-index:80;background:#211a2e;color:#f6e8d8;border:1.5px solid #e8762c;border-radius:999px;padding:8px 14px;font-family:Oswald,sans-serif;letter-spacing:.06em;cursor:pointer;'); document.body.appendChild(btn); }
+    }
+    apply();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
 })();
 </script>
 </body>
