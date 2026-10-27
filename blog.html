@@ -32,7 +32,10 @@
   .btn.secondary { background: #fff; color: #26221e; border: 1.5px solid #26221e; }
   .btn.secondary:hover { background: #26221e; color: #f5f2ec; }
   .btn:focus-visible, .blog-form input:focus-visible, .blog-form textarea:focus-visible { outline: 2px solid #8a5a33; outline-offset: 2px; }
-  .privacy-note { font-size: 12.5px; color: #8a857e; margin: 0; }
+  .privacy-note { font-size: 12.5px; color: #6f6a62; margin: 0; }
+  .blog-form input::placeholder, .blog-form textarea::placeholder { color: #7a756c; }
+  body.dark .blog-form input::placeholder, body.dark .blog-form textarea::placeholder { color: #a89e88; }
+  body.dark .privacy-note, body.dark .hint { color: #c9c2b4; }
   .post { background: #fff; border: 1.5px solid #ddd5c3; border-top: 4px solid #26221e; padding: 18px; margin: 0 0 14px; cursor: pointer; border-radius: 12px; box-shadow: 0 8px 20px rgba(38,34,30,.06); transition: box-shadow .15s, transform .15s; }
   .post:first-of-type { border-top: 4px solid #26221e; }
   .post-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
@@ -45,10 +48,10 @@
   .icon-btn:hover { color: #8a5a33; }
   .icon-btn.del:hover { color: #c62828; }
   @media (hover: hover) { .post:hover { box-shadow: 0 12px 26px rgba(38,34,30,.12); } .post:hover .post-title { color: #8a5a33; } }
-  .empty { font-style: italic; color: #8a857e; font-size: 15.5px; line-height: 1.6; margin: 0; text-align: center; background: #fbf9f4; border: 1.5px dashed #c9c2b6; border-radius: 12px; padding: 22px 16px; }
+  .empty { color: #6f6a62; font-size: 15.5px; line-height: 1.6; margin: 0; text-align: center; background: #fbf9f4; border: 1.5px dashed #c9c2b6; border-radius: 12px; padding: 22px 16px; }
   .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
   .tools .btn { width: 100%; text-align: center; }
-  .hint { font-size: 12.5px; color: #8a857e; margin-top: 16px; text-align: center; }
+  .hint { font-size: 12.5px; color: #6f6a62; margin-top: 16px; text-align: center; }
   .menu-row { text-align: center; margin: 0 0 18px; }
   .menu-row button { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #26221e; border: 1.5px solid #26221e; border-radius: 8px; padding: 9px 22px; cursor: pointer; }
   .menu-panel { display: none; background: #fff; border: 1px solid #cfc8b8; border-radius: 10px; padding: 6px 0; margin: 10px auto 18px; max-width: 420px; text-align: center; box-shadow: 0 14px 30px rgba(38,34,30,.12); }
