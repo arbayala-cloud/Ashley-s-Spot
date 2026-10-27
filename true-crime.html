@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>True Crime — The Case Files | Ashley's Spot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #d8d2c7; color: #26221e; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 32px 16px 48px; }
+  .wrap { max-width: 820px; margin: 0 auto; background: #f4f1ea; border: 2px solid #4a4238; border-radius: 12px; box-shadow: 0 18px 40px rgba(38,34,30,.22); padding: 30px 30px 26px; text-align: center; }
+  .backlink { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 18px; }
+  .backlink a { color: #8a5a33; text-decoration: none; font-weight: 600; }
+  .eyebrow { display: inline-block; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #d9c9a8; background: #26221e; border-radius: 6px; padding: 6px 14px; font-weight: 600; margin: 0 auto 14px; }
+  h1.masthead { font-family: Oswald, Inter, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; font-size: 42px; margin: 0; }
+  .tagline { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: 17px; color: #6f6a62; margin: 8px auto 0; max-width: 520px; line-height: 1.5; }
+  .btn { font-family: Oswald, Inter, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: #26221e; color: #f5f2ec; border: 1.5px solid #26221e; border-radius: 8px; padding: 12px 24px; cursor: pointer; transition: background .15s, border-color .15s; }
+  .btn:hover { background: #8a5a33; border-color: #8a5a33; }
+  .btn.red { background: #8e2f24; border-color: #8e2f24; }
+  .btn.red:hover { background: #6f231b; border-color: #6f231b; }
+  .btn.ghost { background: transparent; color: #f2ead6; border-color: #8a8172; }
+  .btn.ghost:hover { background: #3a352d; border-color: #8a8172; }
+  .menu-row { text-align: center; margin: 0 0 18px; }
+  .menu-row button { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #26221e; border: 1.5px solid #26221e; border-radius: 8px; padding: 9px 22px; cursor: pointer; }
+  .menu-panel { display: none; background: #fff; border: 1px solid #cfc8b8; border-radius: 10px; padding: 6px 0; margin: 10px auto 18px; max-width: 420px; text-align: center; box-shadow: 0 14px 30px rgba(38,34,30,.12); position: relative; z-index: 5; }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; text-decoration: none; padding: 11px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel a:last-of-type { border-bottom: none; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; background: none; border: none; border-bottom: 1px solid #eee9df; padding: 11px 0; cursor: pointer; }
+  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
+  .theme-switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
+  .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .theme-switch .slider { position: absolute; inset: 0; background: #c9c2b6; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: .25s; }
+  .theme-switch input:checked + .slider { background: #b9975b; }
+  .theme-switch input:checked + .slider::before { transform: translateX(22px); }
+  .tape-strip { height: 15px; border-radius: 3px; margin: 18px auto 20px; max-width: 560px; background: repeating-linear-gradient(45deg, #e3c33c 0 20px, #201c17 20px 40px); box-shadow: inset 0 -2px 3px rgba(0,0,0,.25); }
+
+  /* ---------- The Board ---------- */
+  .board { background: #2a251f; background-image: radial-gradient(#3b332a 1.2px, transparent 1.4px); background-size: 22px 22px; border: 2px solid #17140f; border-radius: 12px; padding: 22px 20px 24px; margin-top: 22px; box-shadow: inset 0 0 40px rgba(0,0,0,.55); text-align: left; }
+  .board-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .board-head h2 { font-family: "Special Elite", "Courier New", monospace; color: #efe6cc; font-size: 19px; margin: 0; letter-spacing: 1px; }
+  .board-progress { font-family: Oswald, Inter, sans-serif; font-size: 11.5px; letter-spacing: 1.6px; text-transform: uppercase; color: #c8b98d; font-weight: 600; }
+  .pin-card { background: #f7efdb; color: #2a251d; border-radius: 6px; padding: 18px 18px 16px; margin-top: 16px; box-shadow: 0 10px 22px rgba(0,0,0,.45); position: relative; transform: rotate(-.5deg); }
+  .pin-card::before { content: ""; position: absolute; top: -9px; left: 50%; margin-left: -9px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #e0665c, #8e2f24 70%); box-shadow: 0 3px 5px rgba(0,0,0,.5); }
+  .pin-flex { display: flex; gap: 18px; }
+  .pin-photo { flex: 0 0 128px; }
+  .pin-photo img { width: 128px; height: 150px; object-fit: cover; border: 5px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.3); transform: rotate(-2deg); background: #ddd; }
+  .pin-body h3 { font-family: "Special Elite", "Courier New", monospace; font-size: 22px; margin: 2px 0 4px; line-height: 1.25; }
+  .pin-meta { font-family: Oswald, Inter, sans-serif; font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; color: #8a5a33; font-weight: 600; margin-bottom: 8px; }
+  .pin-body p { font-size: 14.5px; line-height: 1.6; margin: 0 0 12px; color: #453e31; }
+  .stamp { display: inline-block; font-family: "Special Elite", "Courier New", monospace; font-size: 13px; letter-spacing: 2px; padding: 3px 10px 2px; border: 2.5px solid currentColor; border-radius: 4px; transform: rotate(-5deg); opacity: .85; text-transform: uppercase; }
+  .stamp.unsolved { color: #a33327; }
+  .stamp.solved { color: #4e7a3a; }
+  .stamp.acquitted { color: #7a6a2f; }
+  .stamp.identified { color: #3a6a8a; }
+  .board-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+  /* ---------- Filters + folders ---------- */
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 26px 0 4px; }
+  .filters button { font-family: Oswald, Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase; background: #fff; color: #26221e; border: 1.5px solid #26221e; border-radius: 999px; padding: 9px 18px; cursor: pointer; }
+  .filters button.on { background: #26221e; color: #f5f2ec; }
+  .folder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; text-align: left; }
+  .folder { background: linear-gradient(180deg, #efdfae, #e4d096); border: 1px solid #c3ac72; border-radius: 4px 12px 10px 10px; padding: 16px 16px 14px; cursor: pointer; position: relative; box-shadow: 0 6px 14px rgba(38,34,30,.16); transition: transform .15s, box-shadow .15s; color: #2a251d; }
+  .folder:hover { transform: translateY(-3px) rotate(-.3deg); box-shadow: 0 12px 22px rgba(38,34,30,.22); }
+  .folder::before { content: ""; position: absolute; top: -9px; left: 14px; width: 88px; height: 10px; background: #efdfae; border: 1px solid #c3ac72; border-bottom: none; border-radius: 6px 10px 0 0; }
+  .folder .f-top { display: flex; gap: 12px; }
+  .folder img { width: 64px; height: 76px; object-fit: cover; border: 3.5px solid #fff; box-shadow: 0 3px 7px rgba(0,0,0,.28); transform: rotate(-2.5deg); background: #ddd; flex: 0 0 auto; }
+  .folder h3 { font-family: "Special Elite", "Courier New", monospace; font-size: 17.5px; margin: 1px 0 3px; line-height: 1.3; }
+  .folder .f-meta { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: #7a5a20; font-weight: 600; }
+  .folder .f-blurb { font-size: 13.5px; line-height: 1.55; color: #4a4231; margin: 9px 0 10px; }
+  .folder .f-foot { display: flex; justify-content: space-between; align-items: center; }
+  .folder .stamp { font-size: 11px; padding: 2px 8px 1px; }
+  .folder .opened-mark { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: #8a8172; font-weight: 600; }
+  .folder.has-note .opened-mark { color: #8e2f24; }
+  .grid-empty { grid-column: 1 / -1; text-align: center; color: #6f6a62; font-family: Fraunces, Georgia, serif; font-style: italic; padding: 18px 0; }
+
+  /* ---------- Daily blotter (paper) ---------- */
+  .paper-sec { text-align: left; margin-top: 34px; border-top: 3.5px solid #26221e; padding-top: 6px; }
+  .paper-sec h2 { font-family: Oswald, Inter, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; margin: 10px 0 4px; }
+  .paper-sec .sec-note { font-size: 13.5px; color: #6f6a62; margin: 0 0 6px; line-height: 1.55; }
+  .crime-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px; }
+  .crime-item { padding: 10px 0 9px; border-bottom: 1px solid #ddd3ba; }
+  .crime-item a { text-decoration: none; color: inherit; display: block; }
+  .crime-item h4 { font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: 16.5px; line-height: 1.32; margin: 0 0 4px; }
+  .crime-item a:hover h4 { color: #8e2f24; }
+  .crime-meta { font-size: 11px; letter-spacing: 1.1px; text-transform: uppercase; color: #7a7260; font-weight: 600; }
+  .crime-meta .src { color: #8a5a33; }
+  .paper-two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 34px; }
+  .credits { font-size: 12.5px; color: #7a7260; line-height: 1.6; max-width: 600px; margin: 26px auto 0; text-align: center; }
+
+  /* ---------- Modal ---------- */
+  .modal-bk { display: none; position: fixed; inset: 0; background: rgba(18,15,11,.72); z-index: 60; padding: 20px 12px; overflow-y: auto; }
+  .modal-bk.open { display: block; }
+  .file-sheet { max-width: 640px; margin: 26px auto; background: #f7efdb; color: #2a251d; border-radius: 8px; padding: 26px 26px 22px; box-shadow: 0 24px 60px rgba(0,0,0,.5); position: relative; text-align: left; }
+  .file-sheet::before { content: ""; position: absolute; top: 0; bottom: 0; left: 34px; width: 1.5px; background: rgba(163,51,39,.35); }
+  .file-inner { padding-left: 26px; }
+  .file-head { display: flex; gap: 18px; }
+  .file-head img { width: 118px; height: 140px; object-fit: cover; border: 5px solid #fff; box-shadow: 0 5px 12px rgba(0,0,0,.3); transform: rotate(-2deg); background: #ddd; flex: 0 0 auto; }
+  .file-head h3 { font-family: "Special Elite", "Courier New", monospace; font-size: 25px; margin: 2px 0 5px; line-height: 1.25; }
+  .file-head .f-meta { font-family: Oswald, Inter, sans-serif; font-size: 11.5px; letter-spacing: 1.8px; text-transform: uppercase; color: #8a5a33; font-weight: 600; margin-bottom: 10px; }
+  .file-story { font-size: 15px; line-height: 1.7; color: #3d362a; margin: 16px 0 6px; }
+  .file-h { font-family: Oswald, Inter, sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: #8e2f24; margin: 20px 0 8px; }
+  .file-facts { margin: 0; padding-left: 20px; font-size: 14.5px; line-height: 1.65; color: #3d362a; }
+  .file-facts li { margin-bottom: 6px; }
+  .juicy { background: #fdf6da; border: 1.5px dashed #b98a2f; border-radius: 8px; padding: 12px 14px; font-size: 14.5px; line-height: 1.6; color: #55451c; margin-top: 6px; }
+  .juicy b { font-family: Oswald, Inter, sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #8e2f24; display: block; margin-bottom: 4px; }
+  .notes-area { width: 100%; min-height: 92px; border: 1.5px solid #c3ac72; border-radius: 8px; background: #fffdf4; font-family: "Special Elite", "Courier New", monospace; font-size: 14.5px; line-height: 1.6; padding: 10px 12px; color: #2a251d; resize: vertical; }
+  .notes-row { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+  .notes-saved { font-size: 12px; color: #7a7260; font-style: italic; }
+  .file-close { position: absolute; top: 12px; right: 14px; background: #26221e; color: #f5f2ec; border: none; border-radius: 50%; width: 34px; height: 34px; font-size: 16px; cursor: pointer; line-height: 1; }
+
+  body.dark { background: #141210; color: #f4f1ea; }
+  body.dark .wrap { background: #1e1b17; border-color: #57503f; box-shadow: 0 18px 40px rgba(0,0,0,.5); }
+  body.dark .backlink a { color: #d4b978; }
+  body.dark .tagline { color: #b8b0a3; }
+  body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
+  body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
+  body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .menu-panel button.install-btn { color: #f4f1ea; border-bottom-color: #3a3631; }
+  body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
+  body.dark .filters button { background: #2a2723; color: #f4f1ea; border-color: #8a857e; }
+  body.dark .filters button.on { background: #f4f1ea; color: #26221e; }
+  body.dark .folder { background: linear-gradient(180deg, #5c4e2e, #4c4023); border-color: #77683f; color: #f2e8cd; }
+  body.dark .folder::before { background: #5c4e2e; border-color: #77683f; }
+  body.dark .folder .f-meta { color: #d4b978; }
+  body.dark .folder .f-blurb { color: #e0d5b3; }
+  body.dark .paper-sec { border-top-color: #ece5d3; }
+  body.dark .paper-sec .sec-note { color: #b8ae97; }
+  body.dark .crime-item { border-bottom-color: #3e382f; }
+  body.dark .crime-meta { color: #a3987f; }
+  body.dark .credits { color: #a3987f; }
+  @media (max-width: 620px) {
+    body { padding: 24px 10px 40px; }
+    .wrap { padding: 22px 16px 20px; }
+    h1.masthead { font-size: 32px; }
+    .folder-grid, .crime-grid, .paper-two { grid-template-columns: 1fr; }
+    .pin-flex, .file-head { flex-direction: column; }
+    .pin-photo img { width: 110px; height: 128px; }
+    .file-inner { padding-left: 14px; }
+    .file-sheet::before { left: 20px; }
+  }
+</style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#111111">
+<style id="hw-style">
+/* === Halloween mode (seasonal, auto Oct 24-Nov 1, toggle in Menu) === */
+body.halloween{background-color:#14101f;background-image:radial-gradient(1.5px 1.5px at 22px 34px,rgba(255,255,255,.8) 50%,transparent 51%),radial-gradient(1px 1px at 130px 90px,rgba(255,255,255,.6) 50%,transparent 51%),radial-gradient(1.2px 1.2px at 240px 30px,rgba(255,255,255,.7) 50%,transparent 51%),linear-gradient(180deg,#1b1430,#120e20 60%,#0f0b1a);background-size:280px 180px,280px 180px,280px 180px,100% 100%;}
+body.dark.halloween{background-color:#0c0916;}
+body.halloween .wrap{box-shadow:0 0 0 2px rgba(232,118,44,.28),0 26px 70px rgba(0,0,0,.55);}
+body.halloween h1{color:#cf6516;text-shadow:0 2px 14px rgba(232,118,44,.25);}
+body.dark.halloween h1{color:#ff9a3c;}
+body.halloween .eyebrow{background:#e8762c;color:#1d130a;}
+body.halloween #menuPanel{border-color:#e8762c;}
+body.halloween #menuPanel a:hover{color:#e8762c;}
+body.halloween .receiver{box-shadow:0 0 0 2px rgba(232,118,44,.65),0 0 55px rgba(232,118,44,.32);}
+body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232,118,44,.25);}
+.hw-banner{display:block;text-align:center;margin:0 auto 16px;background:#211a2e;color:#f6e8d8;border:1.5px solid #e8762c;border-radius:10px;padding:10px 14px;font-family:Oswald,Inter,sans-serif;font-size:19px;letter-spacing:.08em;text-transform:uppercase;}
+.hw-banner .hw-sub{display:block;margin-top:3px;font-family:Inter,sans-serif;font-size:12px;letter-spacing:.02em;text-transform:none;color:#d9c6ac;}
+.hw-layer{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden;}
+.hw-layer span{position:absolute;animation-name:hwFloat;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));}
+@keyframes hwFloat{from{transform:translateY(-10px) rotate(-6deg);}to{transform:translateY(14px) rotate(7deg);}}
+@media (prefers-reduced-motion: reduce){.hw-layer span{animation:none;}}
+.hw-toggle-btn{display:block;width:100%;margin-top:10px;padding:10px 12px;background:#26221e;color:#f4f1ea;border:1.5px solid #4a4238;border-radius:8px;font-family:Oswald,Inter,sans-serif;font-size:15px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
+.hw-toggle-btn:hover{border-color:#e8762c;color:#ffb066;}
+</style>
+<style id="cat-style">
+/* The Cat: a fluffy little resident who floats around Ashley's Spot with her.
+   Original hand-coded SVG art. Coat colors live in the data-coat rules below. */
+#catPal { position: fixed; left: -200px; top: 110vh; width: 104px; z-index: 99990; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: left 4.4s ease-in-out, top 4.4s ease-in-out; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+#catPal .cat-bob { animation: catBob 3.6s ease-in-out infinite; }
+#catPal svg { display: block; width: 100%; height: auto; overflow: visible; }
+#catPal .cat-flip { transition: transform .45s ease; }
+#catPal .cat-flip.flip { transform: scaleX(-1); }
+#catPal .cf { fill: var(--fur); } #catPal .cfd { fill: var(--furd); } #catPal .cb { fill: var(--bib); }
+#catPal .ce { fill: var(--eye); } #catPal .cer { fill: var(--ear); } #catPal .sf { stroke: var(--furd); }
+#catPal[data-coat="midnight"] { --fur: #2e2a36; --furd: #1d1a24; --bib: #47405a; --eye: #ffb347; --ear: #c97b8a; }
+#catPal[data-coat="pumpkin"] { --fur: #df8433; --furd: #b9661f; --bib: #f7c873; --eye: #4f9e57; --ear: #e59a8f; }
+#catPal[data-coat="storm"] { --fur: #8d99ae; --furd: #68738a; --bib: #ccd6e4; --eye: #ffcf5c; --ear: #d99aa6; }
+#catPal[data-coat="snowball"] { --fur: #f3ecdc; --furd: #d9cbae; --bib: #fffaf0; --eye: #5b9bd5; --ear: #e59aab; }
+#catPal[data-coat="calico"] { --fur: #f3ecdc; --furd: #d9cbae; --bib: #fffaf0; --eye: #4f9e57; --ear: #e59aab; }
+#catPal .cat-stripes, #catPal .cat-patches, #catPal .cat-hat { display: none; }
+#catPal[data-coat="pumpkin"] .cat-stripes { display: block; }
+#catPal[data-coat="calico"] .cat-patches { display: block; }
+#catPal.hat-on .cat-hat { display: block; }
+#catPal .cat-tail { transform-box: fill-box; transform-origin: 15% 85%; animation: catTail 2.9s ease-in-out infinite alternate; }
+#catPal .cat-eyes { transform-box: fill-box; transform-origin: center; animation: catBlink 5.4s infinite; }
+#catPal.sleeping .cat-eyes { animation: none; transform: scaleY(.12); }
+#catPal .cat-shadow { transform-box: fill-box; transform-origin: center; animation: catShadow 3.6s ease-in-out infinite; }
+#catPal.petted svg { animation: catSquish .38s ease; }
+#catPal .cat-bubble { position: absolute; left: 50%; bottom: 96%; transform: translate(-50%, 6px) scale(.92); min-width: 128px; max-width: 190px; background: #fffdf6; color: #33302a; border: 2px solid #4a4238; border-radius: 12px; padding: 7px 9px 6px; font: 600 12px/1.35 Inter, system-ui, sans-serif; text-align: center; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; box-shadow: 0 6px 18px rgba(20, 15, 5, .22); }
+#catPal .cat-bubble:after { content: ""; position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%); border: 4px solid transparent; border-top: 6px solid #4a4238; }
+#catPal .cat-bubble.show { opacity: 1; transform: translate(-50%, 0) scale(1); pointer-events: auto; }
+#catPal .cat-name { font: 800 9.5px Oswald, Inter, system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a5a33; margin-bottom: 2px; }
+#catPal .cat-btns { display: flex; gap: 5px; justify-content: center; margin-top: 6px; }
+#catPal .cat-btns button { font: 700 10.5px Inter, system-ui, sans-serif; letter-spacing: .02em; border: 1.5px solid #4a4238; background: #f4ead2; color: #4a3625; border-radius: 999px; padding: 3px 8px; cursor: pointer; }
+#catPal .cat-btns button:active { transform: scale(.94); }
+#catPal .cat-heart, #catPal .cat-zzz { position: absolute; left: 50%; top: 6px; font-size: 15px; pointer-events: none; animation: catRise 1.15s ease-out forwards; }
+#catPal .cat-zzz { font: italic 700 13px Georgia, serif; color: #6b6390; }
+@keyframes catBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes catShadow { 0%, 100% { transform: scaleX(1); opacity: .16; } 50% { transform: scaleX(.88); opacity: .11; } }
+@keyframes catTail { from { transform: rotate(-3.5deg); } to { transform: rotate(5deg); } }
+@keyframes catBlink { 0%, 91%, 100% { transform: scaleY(1); } 94.5% { transform: scaleY(.08); } 97.5% { transform: scaleY(1); } }
+@keyframes catSquish { 0% { transform: scale(1, 1); } 35% { transform: scale(1.07, .93); } 70% { transform: scale(.97, 1.04); } 100% { transform: scale(1, 1); } }
+@keyframes catRise { 0% { transform: translate(-50%, 0) scale(.7); opacity: 0; } 18% { opacity: 1; } 100% { transform: translate(calc(-50% + var(--drift, 0px)), -52px) scale(1.15); opacity: 0; } }
+@media (max-width: 560px) { #catPal { width: 88px; } #catPal .cat-bubble { max-width: 168px; } }
+@media (prefers-reduced-motion: reduce) { #catPal { transition: none; } #catPal .cat-bob, #catPal .cat-tail, #catPal .cat-shadow { animation: none; } #catPal .cat-eyes { animation-duration: 9s; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="backlink"><a href="index.html">&larr; Ashley's Spot</a> &nbsp;·&nbsp; <a href="newspaper.html">Newspaper</a></p>
+  <p class="eyebrow">Ashley's Spot · Confidential</p>
+  <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
+  <nav id="menuPanel" class="menu-panel">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="jukebox.html">Jukebox</a>
+    <a href="time-machine.html">Time Machine</a>
+    <a href="lite-brite.html">Lite-Brite</a>
+    <a href="aim.html">AIM</a>
+    <a href="vending-machine.html">Vending Machine</a>
+    <a href="newspaper.html">Newspaper</a>
+    <a href="true-crime.html">True Crime</a>
+      <button class="install-btn" id="installBtn" type="button">Install App</button>
+      <div class="theme-toggle">
+        <span>Light</span>
+        <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+        <span>Dark</span>
+      </div>
+  </nav>
+
+  <h1 class="masthead">True Crime</h1>
+  <p class="tagline">The case files — famous mysteries, solved and unsolved, pinned up for one detective: you. Mind the red string.</p>
+  <div class="tape-strip" aria-hidden="true"></div>
+
+  <section class="board" aria-label="Case board">
+    <div class="board-head">
+      <h2>&#128204; CASE OF THE DAY</h2>
+      <span class="board-progress" id="progressLine">Files opened: 0 of 12</span>
+    </div>
+    <div id="pinCard"></div>
+    <div class="board-actions">
+      <button class="btn red" id="deepDiveBtn" type="button">&#127922; Tonight's Deep Dive</button>
+      <button class="btn ghost" id="boardAllBtn" type="button">Browse all files &darr;</button>
+    </div>
+  </section>
+
+  <div class="filters" id="filters" role="group" aria-label="Filter case files">
+    <button type="button" data-filter="all" class="on">All Files</button>
+    <button type="button" data-filter="unsolved">Unsolved</button>
+    <button type="button" data-filter="solved">Solved</button>
+    <button type="button" data-filter="vintage">Vintage</button>
+  </div>
+  <div class="folder-grid" id="caseGrid"></div>
+
+  <section class="paper-sec">
+    <h2>The Daily Blotter</h2>
+    <p class="sec-note">New crime across the U.S., gathered fresh every morning — the wire never sleeps, even when the detective does.</p>
+    <div class="crime-grid" id="list-blotter"></div>
+  </section>
+
+  <div class="paper-two">
+    <section class="paper-sec">
+      <h2>Cold Case Breakthroughs</h2>
+      <p class="sec-note">Old files, new answers — DNA keeps telling on people.</p>
+      <div id="list-cold"></div>
+    </section>
+    <section class="paper-sec">
+      <h2>The True Crime Wire</h2>
+      <p class="sec-note">Documentaries, podcasts and case news from the true crime world.</p>
+      <div id="list-world"></div>
+    </section>
+  </div>
+
+  <p class="credits">These are real cases and real people — every file here is written with respect for the victims and their families, and the juicy details are the detective-work kind, never the gory kind. Blotter headlines belong to their publishers and link to the original stories, gathered via Google News. Case photos: FBI, San Francisco Police Department, Australian Police and period photographers, via Wikimedia Commons — all public domain, shown from Wikimedia’s own servers.</p>
+</main>
+
+<div class="modal-bk" id="fileModal">
+  <div class="file-sheet" role="dialog" aria-modal="true" aria-labelledby="fileName">
+    <button class="file-close" id="fileClose" type="button" aria-label="Close case file">&times;</button>
+    <div class="file-inner" id="fileInner"></div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('menuBtn').addEventListener('click', function () {
+    var panel = document.getElementById('menuPanel');
+    var open = panel.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  (function () {
+    var toggle = document.getElementById('themeToggle');
+    function applyTheme(dark) {
+      document.body.classList.toggle('dark', dark);
+      if (toggle) toggle.checked = dark;
+      try { localStorage.setItem('ashleys-theme', dark ? 'dark' : 'light'); } catch (e) {}
+    }
+    try { if (localStorage.getItem('ashleys-theme') === 'dark') applyTheme(true); } catch (e) {}
+    if (toggle) toggle.addEventListener('change', function () { applyTheme(this.checked); });
+  })();
+</script>
+
+<script>
+  (function() {
+    var installBtn = document.getElementById('installBtn');
+    var deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+    if (installBtn) {
+      installBtn.addEventListener('click', function() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then(function() { deferredPrompt = null; });
+        } else {
+          alert("To install Ashley's Spot on your phone: open this page in Chrome, tap the three dots menu, then tap Add to Home Screen.");
+        }
+      });
+    }
+  })();
+</script>
+
+<script src="crime-data.js"></script>
+<script>
+  var CASES = [
+    { id: "zodiac", name: "The Zodiac Killer", years: "1968 – 1969", place: "San Francisco Bay Area, California",
+      stamp: "Unsolved", stampClass: "unsolved", solved: false, vintage: false,
+      photo: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Zodiac-Killer.jpg", photoCredit: "Police sketch · San Francisco PD",
+      blurb: "He murdered, then wrote letters to the newspapers to brag about it — signing them with a crossed circle and daring anyone to crack his codes.",
+      story: "In the late 1960s, a killer stalked couples in the Bay Area and then did something no one had seen before: he mailed taunting letters and coded ciphers to the newspapers, demanding they be printed on the front page. Five murders were confirmed as his. He signed his letters with a crosshair-like symbol, gave himself the name Zodiac, and then, after a final few letters in the 1970s, simply stopped. Half a century of suspects, books and investigations later, nobody has ever proven who he was.",
+      facts: [
+        "His first cipher, sent in three parts to three newspapers in 1969, was cracked within a week by a schoolteacher and his wife.",
+        "His 340-character cipher defeated experts for 51 years before finally being solved in 2020.",
+        "He claimed 37 victims in his letters; investigators have confirmed five murders and two survivors.",
+        "Detectives still hold DNA evidence, and the case remains officially open."
+      ],
+      juicy: "The 340 cipher was finally cracked in December 2020 not by the FBI, but by a three-person team of codebreakers working from home — a software developer in Virginia, a mathematician in Australia and a warehouse manager in Belgium. The decoded message mostly taunted police and insisted he was not afraid to die." },
+    { id: "cooper", name: "D.B. Cooper", years: "November 24, 1971", place: "Pacific Northwest",
+      stamp: "Unsolved", stampClass: "unsolved", solved: false, vintage: false,
+      photo: "https://upload.wikimedia.org/wikipedia/commons/a/a8/D.B._Cooper_Composite_Sketch_B.jpg", photoCredit: "Suspect sketch · FBI",
+      blurb: "A polite man in a suit hijacked a plane, collected $200,000, and parachuted into a stormy night sky. He has never been seen again.",
+      story: "On the day before Thanksgiving 1971, a calm, well-dressed man using the name Dan Cooper boarded a flight from Portland to Seattle, showed the flight attendant a briefcase he said held a bomb, and politely ordered $200,000 in cash and four parachutes. In Seattle he freed the passengers, kept the crew, ordered the plane back into the air — and somewhere over the forests of southwest Washington, in rain and darkness, he lowered the rear stairs and jumped with the money strapped to his body. Despite one of the largest manhunts in FBI history, no trace of him was ever confirmed.",
+      facts: [
+        "The press garbled his alias 'Dan Cooper' into 'D.B. Cooper' by mistake — and the wrong name is the one history kept.",
+        "In 1980, an 8-year-old boy named Brian Ingram found $5,800 of the ransom money, serial numbers matched, buried on a Columbia River beach.",
+        "Not one other bill from the ransom has ever turned up in circulation.",
+        "The FBI closed the active investigation, codenamed NORJAK, in 2016 — it remains the only unsolved air piracy in American history."
+      ],
+      juicy: "The ransom bills Brian Ingram found were in bundles still held by rotted rubber bands, arranged in an order that suggested they had not simply washed downstream — which has kept theorists arguing for 45 years about whether Cooper buried them, lost them, or landed exactly where he planned." },
+    { id: "dahlia", name: "The Black Dahlia", years: "January 1947", place: "Los Angeles, California",
+      stamp: "Unsolved", stampClass: "unsolved", solved: false, vintage: true,
+      blurb: "An aspiring actress, a vacant lot, and the most famous unsolved murder in Los Angeles history — a case so strange it swallowed the whole city.",
+      story: "Elizabeth Short was a 22-year-old from Massachusetts chasing a Hollywood dream when she was found murdered in a vacant lot in Leimert Park on January 15, 1947. The press nicknamed her the Black Dahlia — a nod to a popular film of the moment and the black dresses she favored — and the case exploded. Taunting notes signed 'Black Dahlia Avenger' arrived at newspapers, hundreds of detectives worked the case, and decade after decade, new suspects are still proposed. No one has ever been charged.",
+      facts: [
+        "More than 50 people falsely confessed to the murder over the years — some were not even in California at the time.",
+        "Police developed a list of questions only the real killer could answer, just to weed out the false confessors.",
+        "The LAPD investigated hundreds of suspects, including doctors, soldiers and Hollywood hangers-on.",
+        "Elizabeth Short's story is remembered as much for the city's obsession as for the crime itself."
+      ],
+      juicy: "The false-confession problem got so bad that detectives began treating every new confessor like a game-show contestant: answer the secret questions about the scene correctly, or go home. Almost nobody could — the details the police held back are, in part, why the case still fascinates investigators today." },
+    { id: "ramsey", name: "JonBenét Ramsey", years: "December 26, 1996", place: "Boulder, Colorado",
+      stamp: "Unsolved", stampClass: "unsolved", solved: false, vintage: false,
+      blurb: "A ransom note on the stairs, a house full of questions, and a case that has haunted America for nearly thirty years without a single charge.",
+      story: "On the morning after Christmas 1996, Patsy Ramsey reported her six-year-old daughter JonBenét missing, saying she had found a ransom note on the kitchen stairs demanding $118,000. Police searched the family's large Boulder home, and that afternoon JonBenét's father found her body in a basement room. The case that followed — with its long ransom note, its missteps and its unanswered DNA questions — became one of the most examined investigations in American history. It remains open, and unsolved.",
+      facts: [
+        "The ransom demand of $118,000 was almost exactly the amount of John Ramsey's bonus that year — a coincidence investigators have never stopped turning over.",
+        "The note was written on paper from a tablet inside the house, and at nearly three pages it is one of the longest ransom notes on record.",
+        "DNA testing in 2008 led the district attorney to formally clear the Ramsey family; the DNA profile belongs to an unknown male.",
+        "Boulder police say the case is still active, and modern genetic genealogy is the hope detectives talk about most."
+      ],
+      juicy: "Handwriting experts, linguists and amateur sleuths have spent decades on the ransom note alone — its odd phrasing ('foreign faction,' 'attache') and the practice drafts found in the same notepad make it one of the most argued-over documents in true crime." },
+    { id: "watcher", name: "The Watcher", years: "2014", place: "Westfield, New Jersey",
+      stamp: "Unsolved", stampClass: "unsolved", solved: false, vintage: false,
+      blurb: "A dream home, and letters from a stranger who claimed his family had been 'watching' the house for decades. No violence. All dread.",
+      story: "In June 2014, Derek and Maria Broaddus bought a beautiful six-bedroom home in Westfield, New Jersey. Days after closing, a letter arrived from someone calling himself The Watcher, who wrote that his grandfather and father had watched the house before him, that the house had been 'the subject of my family for decades,' and who asked about the couple's three children — the 'young blood' who would fill its rooms. More letters followed, full of details about the renovation and the family. Terrified, the Broadduses never moved in.",
+      facts: [
+        "The Watcher knew things few people could — the children's birth order, and details about work being done inside the house.",
+        "Police investigated neighbors and former residents intensely, but no one was ever charged.",
+        "The previous owners revealed they had received one Watcher letter too, shortly before selling.",
+        "The family finally sold the house in 2019 at a loss of roughly half a million dollars."
+      ],
+      juicy: "One neighbor was investigated so thoroughly that the case became a local war — lawsuits, dueling theories, and a town split down the middle. The letters' author has never been caught, which means the most unsettling theory remains on the table: someone close enough to wave at." },
+    { id: "gsk", name: "The Golden State Killer", years: "1974 – 1986 · Caught 2018", place: "California",
+      stamp: "Solved", stampClass: "solved", solved: true, vintage: false,
+      blurb: "He had three nicknames in three regions and nobody knew they were one man — until detectives family-treed him with DNA in 2018.",
+      story: "Through the 1970s and 80s, California was hunted by a predator known in different places as the Visalia Ransacker, the East Area Rapist and the Original Night Stalker. Only DNA later proved they were all the same man, responsible for at least 13 murders, more than 50 rapes and over 120 burglaries. He vanished after 1986 and lived quietly for three decades — until investigators uploaded crime-scene DNA to a public genealogy database, built a family tree from distant cousins, and arrived at the door of a former police officer named Joseph James DeAngelo.",
+      facts: [
+        "True-crime writer Michelle McNamara gave him the name 'Golden State Killer' and spent her final years hunting him; her book was published after her death.",
+        "DeAngelo had been a police officer in two California towns during part of the crime spree.",
+        "The genealogy search began with DNA matches to third cousins — relatives who had no idea they were pointing at a killer.",
+        "He pleaded guilty in 2020 and will die in prison, having admitted crimes across eleven counties."
+      ],
+      juicy: "Detectives built out family trees going back to the 1800s — hundreds of names — and pruned them person by person until only one man fit the age, the places and the timeline. The technique invented for this case has since identified hundreds of other cold-case suspects." },
+    { id: "bundy", name: "Ted Bundy", years: "1974 – 1978", place: "Washington to Florida",
+      stamp: "Solved", stampClass: "solved", solved: true, vintage: false,
+      blurb: "The case that taught America the monster could look like the boy next door — and the manhunt he made a sport of escaping, twice.",
+      story: "Between 1974 and 1978, Ted Bundy murdered young women across Washington, Oregon, Utah, Colorado and finally Florida, using ruses like a fake arm cast to appear harmless. Arrested in Utah, he escaped custody twice — once by leaping from a courthouse law-library window during his own trial proceedings, and once by cutting through his jail cell ceiling — before a final spree in Florida ended with his capture at a traffic stop in Pensacola. He confessed to 30 murders before his execution in 1989.",
+      facts: [
+        "During his first escape he was free for six days, recaptured after stealing cars and sleeping rough in the Colorado mountains.",
+        "His second escape lasted 46 days and took him all the way to Tallahassee, Florida.",
+        "Bite-mark evidence and eyewitness testimony helped secure his Florida convictions.",
+        "Even decades later, investigators continue closing his cases — DNA testing this year has linked him to yet another Utah case from 1974."
+      ],
+      juicy: "The law-library leap is pure movie scene, except it happened: a judge let Bundy — acting as his own lawyer — visit the courthouse library unsupervised. He opened a window, jumped two stories, and strolled away in the middle of his own case." },
+    { id: "btk", name: "BTK — Dennis Rader", years: "1974 – 1991 · Caught 2005", place: "Wichita, Kansas",
+      stamp: "Solved", stampClass: "solved", solved: true, vintage: false,
+      blurb: "He hid in plain sight for thirty years — church president, Scout leader, compliance officer — and then simply could not resist writing back.",
+      story: "Between 1974 and 1991, a murderer calling himself BTK — for 'Bind, Torture, Kill' — murdered ten people in the Wichita area and taunted police and media with letters, poems and packages. Then he went silent for over a decade. In 2004 he resurfaced, hungry for attention, and began a correspondence with police that would undo him: he mailed evidence on a computer floppy disk whose hidden metadata named a church and a man called Dennis. Dennis Rader — church council president and father of two — was arrested in February 2005.",
+      facts: [
+        "Rader murdered his first four victims — the Otero family — in 1974, then went on killing sporadically for 17 years.",
+        "During his quiet years he worked as a city compliance officer in Park City, Kansas, known locally as a petty stickler.",
+        "Police identified him through the disk's metadata, then confirmed with DNA from a relative's medical sample.",
+        "He confessed in extraordinary, matter-of-fact detail and received ten consecutive life sentences."
+      ],
+      juicy: "Before sending the floppy, Rader actually asked police — through a message to a TV station — whether a disk could be traced, and whether he could trust them. Police answered through a newspaper classified ad that it was safe. He believed them. It was not safe." },
+    { id: "somerton", name: "The Somerton Man", years: "December 1, 1948 · Identified 2022", place: "Adelaide, Australia",
+      stamp: "Identified", stampClass: "identified", solved: true, vintage: true,
+      photo: "https://upload.wikimedia.org/wikipedia/commons/5/5c/SomertonMan2.jpg", photoCredit: "Police photo, 1948 · South Australia Police",
+      blurb: "A dapper stranger dead on a beach, every label cut from his clothes, and two words hidden in his pocket: 'Tamám Shud' — it is ended.",
+      story: "On a summer morning in 1948, a well-dressed man was found dead, propped against a seawall on Somerton Beach in Adelaide. He carried no identification. The labels had been cut from his clothing. Weeks later, investigators found a tiny rolled scrap of paper sewn into a hidden pocket of his trousers, torn from a rare book of poetry: 'Tamám Shud,' a Persian phrase meaning 'it is ended.' The matching book was soon found, containing a possible code no one has ever deciphered. For 73 years, nobody knew his name.",
+      facts: [
+        "The scrap's book was discovered tossed into the back seat of a parked car near the beach, with a phone number penciled inside.",
+        "The penciled letters in the book look like a code; codebreakers and agencies have failed on it for over 70 years.",
+        "In 2022, University of Adelaide researchers identified him as Carl 'Charles' Webb, a Melbourne-born electrical engineer, using DNA from hairs caught in his 1949 plaster death mask.",
+        "Why Webb was in Adelaide, and exactly how he died, remains unconfirmed to this day."
+      ],
+      juicy: "The breakthrough evidence was a few strands of hair preserved in a plaster bust police made of his face in 1949 — a creepy souvenir that sat in a museum for seven decades, quietly holding the answer the whole time." },
+    { id: "borden", name: "Lizzie Borden", years: "August 4, 1892", place: "Fall River, Massachusetts",
+      stamp: "Acquitted", stampClass: "acquitted", solved: false, vintage: true,
+      photo: "https://upload.wikimedia.org/wikipedia/commons/7/71/Lizzie_Borden_1890.jpg", photoCredit: "Portrait, c. 1890",
+      blurb: "A sweltering morning, a prominent family, a hatchet — and a trial that split America before it acquitted her in about an hour.",
+      story: "On a brutally hot August morning in 1892, Andrew Borden and his wife Abby were murdered with a hatchet-like weapon inside their Fall River home. Suspicion fell almost immediately on Andrew's 32-year-old daughter Lizzie — who had tried to buy poison days before, who gave contradictory accounts of her morning, and who burned a dress in the kitchen stove shortly after. Her trial was a national sensation. The jury acquitted her after roughly ninety minutes of deliberation, and no one else was ever tried.",
+      facts: [
+        "The jury deliberated only about an hour and a half before acquitting her on June 20, 1893.",
+        "The famous schoolyard rhyme ('Lizzie Borden took an axe…') gets the weapon and the body count wrong — folk justice, not fact.",
+        "With her inheritance, Lizzie bought a grand house called Maplecroft and lived in Fall River, shunned, for 34 more years.",
+        "Modern historians still argue the case in both directions — money, resentment, and an intruder theory all have defenders."
+      ],
+      juicy: "After the acquittal, Fall River society closed ranks completely: Lizzie's own church congregation shunned her, shops refused her, and children crossed the street — a life sentence served without a conviction, in the very town that had declared her innocent." },
+    { id: "holmes", name: "H.H. Holmes", years: "1891 – 1894", place: "Chicago, Illinois",
+      stamp: "Solved", stampClass: "solved", solved: true, vintage: true,
+      photo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H._H._Holmes.jpg", photoCredit: "Portrait, c. 1895",
+      blurb: "America's first famous serial killer built a hotel during the Chicago World's Fair — and turned swindling into an art and a horror.",
+      story: "Born Herman Webster Mudgett, H.H. Holmes was a con man of bottomless energy — insurance fraud, bigamy, theft — who built a sprawling three-story building in Chicago's Englewood neighborhood just before the 1893 World's Columbian Exposition. Newspapers would later dub it the 'Murder Castle.' Holmes was arrested in Boston in 1894 on a fraud warrant, and the unraveling led investigators to the murder of his accomplice Benjamin Pitezel, for which he was hanged in 1896. How many others he killed remains genuinely unknown.",
+      facts: [
+        "Holmes sold the story of his crimes to a newspaper for $10,000, confessing to 27 murders — several of those 'victims' later turned up alive.",
+        "He was known to have sold skeletons and bones to medical schools, a common gray market of the era.",
+        "The 'Murder Castle' burned in 1895 under suspicious circumstances; a post office now stands on the site.",
+        "He was convicted of one murder — Pitezel's — though he is firmly linked to several more."
+      ],
+      juicy: "Holmes's confession was as unreliable as the man himself: he claimed victims who were demonstrably alive, then recanted, then claimed innocence. The '200 victims' figure comes from tabloid arithmetic — the truth, somewhere between a handful and dozens, went to the gallows with him." },
+    { id: "ripper", name: "Jack the Ripper", years: "Autumn 1888", place: "Whitechapel, London",
+      stamp: "Unsolved", stampClass: "unsolved", solved: false, vintage: true,
+      photo: "https://upload.wikimedia.org/wikipedia/commons/d/dd/29_Hanbury_Street%2C_1888.jpg", photoCredit: "29 Hanbury Street, 1888",
+      blurb: "Five women, one foggy autumn, and a name invented by a letter. The original unsolved case — the one that started the whole genre.",
+      story: "In the autumn of 1888, five women were murdered in the desperately poor Whitechapel district of London: Mary Ann Nichols, Annie Chapman, Elizabeth Stride, Catherine Eddowes and Mary Jane Kelly. The crimes convulsed Victorian England — mobs, vigilante committees, and hundreds of letters to police and press, including the 'Dear Boss' letter that coined the name Jack the Ripper and was likely written by a journalist. The murderer was never identified, and the autumn of terror simply ended as abruptly as it began.",
+      facts: [
+        "The victims are remembered as the 'canonical five,' murdered between August 31 and November 9, 1888.",
+        "Police received hundreds of taunting letters; most historians believe the famous ones were newspaper hoaxes.",
+        "Suspects proposed over 136 years have included a prince, a painter, a doctor, and a cotton merchant whose diary surfaced in 1992 and is widely considered a fake.",
+        "The case effectively invented modern crime reporting — and the modern serial-killer mystery."
+      ],
+      juicy: "Scotland Yard was so flooded with hoax letters and copycat claims that they printed posters of the 'Dear Boss' handwriting and plastered them around London, hoping a neighbor, a coworker — anyone — would recognize the hand. Nobody ever did." }
+  ];
+
+  var STORE_KEY = "ashleys-casefiles-v1";
+  var store = { opened: [], notes: {} };
+  try {
+    var raw = localStorage.getItem(STORE_KEY);
+    if (raw) { var p = JSON.parse(raw); if (p && p.opened) store = p; }
+  } catch (e) {}
+  function saveStore() { try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) {} }
+  function byId(id) { for (var i = 0; i < CASES.length; i++) if (CASES[i].id === id) return CASES[i]; return null; }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function stampHTML(c) { return "<span class='stamp " + c.stampClass + "'>" + esc(c.stamp) + "</span>"; }
+
+  function renderProgress() {
+    document.getElementById("progressLine").textContent =
+      "Files opened: " + store.opened.length + " of " + CASES.length;
+  }
+  function renderPin() {
+    var now = new Date();
+    var start = new Date(now.getFullYear(), 0, 0);
+    var doy = Math.floor((now - start) / 86400000);
+    var c = CASES[doy % CASES.length];
+    var html = "<div class='pin-card'><div class='pin-flex'>";
+    if (c.photo) html += "<div class='pin-photo'><img src='" + c.photo + "' alt='" + esc(c.photoCredit) + "'></div>";
+    html += "<div class='pin-body'><h3>" + esc(c.name) + "</h3>" +
+      "<div class='pin-meta'>" + esc(c.years) + " · " + esc(c.place) + "</div>" +
+      "<p>" + esc(c.blurb) + "</p>" +
+      "<div style='display:flex;gap:12px;align-items:center;flex-wrap:wrap'>" + stampHTML(c) +
+      "<button class='btn red' type='button' data-open='" + c.id + "'>Open the File</button></div>" +
+      "</div></div></div>";
+    document.getElementById("pinCard").innerHTML = html;
+  }
+  var currentFilter = "all";
+  function matches(c) {
+    if (currentFilter === "all") return true;
+    if (currentFilter === "unsolved") return !c.solved;
+    if (currentFilter === "solved") return c.solved;
+    if (currentFilter === "vintage") return c.vintage;
+    return true;
+  }
+  function renderGrid() {
+    var grid = document.getElementById("caseGrid");
+    var html = "", shown = 0;
+    CASES.forEach(function (c) {
+      if (!matches(c)) return;
+      shown++;
+      var opened = store.opened.indexOf(c.id) >= 0;
+      var hasNote = !!(store.notes[c.id] && store.notes[c.id].trim());
+      html += "<article class='folder" + (hasNote ? " has-note" : "") + "' data-open='" + c.id + "' tabindex='0' role='button' aria-label='Open case file: " + esc(c.name) + "'>" +
+        "<div class='f-top'>" +
+        (c.photo ? "<img src='" + c.photo + "' alt='" + esc(c.photoCredit) + "'>" : "") +
+        "<div><h3>" + esc(c.name) + "</h3><div class='f-meta'>" + esc(c.years) + "<br>" + esc(c.place) + "</div></div></div>" +
+        "<p class='f-blurb'>" + esc(c.blurb) + "</p>" +
+        "<div class='f-foot'>" + stampHTML(c) +
+        "<span class='opened-mark'>" + (hasNote ? "✎ Notes filed" : (opened ? "File opened ✓" : "Sealed file")) + "</span></div></article>";
+    });
+    if (!shown) html = "<p class='grid-empty'>No files in this drawer yet, detective.</p>";
+    grid.innerHTML = html;
+  }
+  var modalCase = null;
+  function openFile(id) {
+    var c = byId(id); if (!c) return;
+    modalCase = c;
+    if (store.opened.indexOf(id) < 0) { store.opened.push(id); saveStore(); }
+    var html = "<div class='file-head'>" +
+      (c.photo ? "<img src='" + c.photo + "' alt='" + esc(c.photoCredit) + "'>" : "") +
+      "<div><h3 id='fileName'>" + esc(c.name) + "</h3>" +
+      "<div class='f-meta'>" + esc(c.years) + " · " + esc(c.place) + "</div>" + stampHTML(c) +
+      (c.photo ? "<div class='f-meta' style='margin-top:8px;text-transform:none;letter-spacing:.4px'>" + esc(c.photoCredit) + "</div>" : "") +
+      "</div></div>" +
+      "<p class='file-story'>" + esc(c.story) + "</p>" +
+      "<div class='file-h'>Case Notes</div><ul class='file-facts'>" +
+      c.facts.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
+      "<div class='file-h'>The Juicy Detail</div><div class='juicy'><b>Handle with care — highly satisfying</b>" + esc(c.juicy) + "</div>" +
+      "<div class='file-h'>Detective's Notes — Yours</div>" +
+      "<textarea class='notes-area' id='notesArea' placeholder='Theories, suspects, 2 a.m. thoughts...'>" + esc(store.notes[id] || "") + "</textarea>" +
+      "<div class='notes-row'><span class='notes-saved' id='notesSaved'>Notes save to this device as you type.</span>" +
+      "<button class='btn' type='button' id='fileDone'>Back to the Board</button></div>";
+    document.getElementById("fileInner").innerHTML = html;
+    document.getElementById("fileModal").classList.add("open");
+    document.body.style.overflow = "hidden";
+    var ta = document.getElementById("notesArea");
+    ta.addEventListener("input", function () {
+      store.notes[c.id] = ta.value; saveStore();
+      document.getElementById("notesSaved").textContent = "Saved ✓ " + new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    });
+    document.getElementById("fileDone").addEventListener("click", closeFile);
+    renderProgress(); renderGrid();
+  }
+  function closeFile() {
+    document.getElementById("fileModal").classList.remove("open");
+    document.body.style.overflow = "";
+    modalCase = null;
+    renderGrid();
+  }
+  document.getElementById("fileClose").addEventListener("click", closeFile);
+  document.getElementById("fileModal").addEventListener("click", function (e) { if (e.target === this) closeFile(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeFile(); });
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest ? e.target.closest("[data-open]") : null;
+    if (t) openFile(t.getAttribute("data-open"));
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && e.target.classList && e.target.classList.contains("folder")) {
+      openFile(e.target.getAttribute("data-open"));
+    }
+  });
+  document.getElementById("filters").addEventListener("click", function (e) {
+    if (e.target.tagName !== "BUTTON") return;
+    currentFilter = e.target.getAttribute("data-filter");
+    var btns = this.querySelectorAll("button");
+    for (var i = 0; i < btns.length; i++) btns[i].classList.toggle("on", btns[i] === e.target);
+    renderGrid();
+  });
+  document.getElementById("deepDiveBtn").addEventListener("click", function () {
+    var c = CASES[Math.floor(Math.random() * CASES.length)];
+    openFile(c.id);
+  });
+  document.getElementById("boardAllBtn").addEventListener("click", function () {
+    document.getElementById("filters").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  renderPin(); renderGrid(); renderProgress();
+
+  /* ---------- Daily crime wire (snapshot + live relay chain, same as the newspaper) ---------- */
+  var CRIME_FEEDS = {
+    blotter: "https://news.google.com/rss/search?q=crime+arrested+charged+police+investigation&hl=en-US&gl=US&ceid=US:en",
+    cold: "https://news.google.com/rss/search?q=%22cold+case%22+solved+identified+DNA+arrested&hl=en-US&gl=US&ceid=US:en",
+    world: "https://news.google.com/rss/search?q=%22true+crime%22&hl=en-US&gl=US&ceid=US:en"
+  };
+  var CRIME_CAPS = { blotter: 9, cold: 5, world: 5 };
+  var PROXIES = [
+    function (u) { return "https://api.allorigins.win/raw?url=" + encodeURIComponent(u); },
+    function (u) { return "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u); },
+    function (u) { return "https://corsproxy.io/?url=" + encodeURIComponent(u); }
+  ];
+  function decodeEntitiesC(s) { var ta = document.createElement("textarea"); ta.innerHTML = s; return ta.value; }
+  function cleanTagC(block, tag) {
+    var m = block.match(new RegExp("<" + tag + "[^>]*>([\\s\\S]*?)</" + tag + ">"));
+    if (!m) return "";
+    return decodeEntitiesC(m[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1").replace(/<[^>]+>/g, "")).trim();
+  }
+  function parseRSSC(text, cap) {
+    var out = [], items = text.match(/<item>[\s\S]*?<\/item>/g) || [];
+    for (var i = 0; i < items.length && out.length < cap; i++) {
+      var b = items[i];
+      var title = cleanTagC(b, "title"), link = cleanTagC(b, "link"), date = cleanTagC(b, "pubDate");
+      var sm = b.match(/<source[^>]*>([\s\S]*?)<\/source>/);
+      var source = sm ? decodeEntitiesC(sm[1].replace(/<[^>]+>/g, "")).trim() : "";
+      if (source && title.slice(-(source.length + 3)) === " - " + source) title = title.slice(0, -(source.length + 3));
+      if (title && link) out.push({ t: title, l: link, s: source, d: date });
+    }
+    return out;
+  }
+  function timeAgoC(dateStr) {
+    var t = Date.parse(dateStr); if (!t) return "";
+    var mins = Math.max(1, Math.round((Date.now() - t) / 60000));
+    if (mins < 60) return mins + " min ago";
+    var hrs = Math.round(mins / 60);
+    if (hrs < 24) return hrs + (hrs === 1 ? " hr ago" : " hrs ago");
+    var days = Math.round(hrs / 24);
+    return days + (days === 1 ? " day ago" : " days ago");
+  }
+  function renderCrime(key, items) {
+    var list = document.getElementById("list-" + key);
+    if (!list) return;
+    list.innerHTML = "";
+    if (!items.length) {
+      list.innerHTML = "<p class='crime-meta' style='text-transform:none;letter-spacing:.3px'>The wire is quiet in this drawer right now — check back with the morning edition.</p>";
+      return;
+    }
+    items.forEach(function (it) {
+      var wrap = document.createElement("div"); wrap.className = "crime-item";
+      var a = document.createElement("a"); a.href = it.l; a.target = "_blank"; a.rel = "noopener";
+      var h = document.createElement("h4"); h.textContent = it.t;
+      var meta = document.createElement("div"); meta.className = "crime-meta";
+      var src = document.createElement("span"); src.className = "src"; src.textContent = it.s || "Wire reports";
+      meta.appendChild(src);
+      var ago = timeAgoC(it.d);
+      if (ago) meta.appendChild(document.createTextNode(" · " + ago));
+      a.appendChild(h); a.appendChild(meta); wrap.appendChild(a);
+      list.appendChild(wrap);
+    });
+  }
+  function fetchCrimeViaProxy(url) {
+    var chain = Promise.reject(new Error("start"));
+    PROXIES.forEach(function (px) {
+      chain = chain.catch(function () {
+        var ctrl = ("AbortController" in window) ? new AbortController() : null;
+        var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 7000) : null;
+        return fetch(px(url), ctrl ? { signal: ctrl.signal } : {}).then(function (r) {
+          if (timer) clearTimeout(timer);
+          if (!r.ok) throw new Error("bad status");
+          return r.text();
+        }).then(function (txt) {
+          if (txt.indexOf("<item>") < 0) throw new Error("not a feed");
+          return txt;
+        });
+      });
+    });
+    return chain;
+  }
+  (function initCrime() {
+    var snap = window.CRIME_SNAPSHOT;
+    if (snap && snap.sections) {
+      ["blotter", "cold", "world"].forEach(function (key) {
+        if (snap.sections[key]) renderCrime(key, snap.sections[key]);
+      });
+    }
+    ["blotter", "cold", "world"].forEach(function (key) {
+      fetchCrimeViaProxy(CRIME_FEEDS[key]).then(function (txt) {
+        var items = parseRSSC(txt, CRIME_CAPS[key]);
+        if (items.length >= 3) renderCrime(key, items);
+      }).catch(function () {});
+    });
+  })();
+</script>
+
+<script id="hw-script">
+(function () {
+  var KEY = 'ashleys-halloween';
+  function pref() { try { return localStorage.getItem(KEY) || 'auto'; } catch (e) { return 'auto'; } }
+  function setPref(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function inSeason() { var n = new Date(), m = n.getMonth(), d = n.getDate(); return (m === 9 && d >= 24) || (m === 10 && d <= 1); }
+  function isOn() { var p = pref(); return p === 'on' || (p === 'auto' && inSeason()); }
+  var GLYPHS = [['1f383','\u{1F383}','6%','12%',34,7],['1f47b','\u{1F47B}','88%','16%',30,8],['1f987','\u{1F987}','14%','68%',26,6],['1f315','\u{1F315}','92%','64%',30,9],['1f578','\u{1F578}\u{FE0F}','3%','38%',28,10],['1f987','\u{1F987}','78%','84%',22,7],['1f383','\u{1F383}','94%','40%',24,8],['1f47b','\u{1F47B}','10%','88%',24,9]];
+  function apply() {
+    var on = isOn();
+    document.body.classList.toggle('halloween', on);
+    var b = document.getElementById('hwBanner'); if (b) b.style.display = on ? 'block' : 'none';
+    var l = document.getElementById('hwLayer'); if (l) l.style.display = on ? 'block' : 'none';
+    var t = document.getElementById('hwToggle'); if (t) t.textContent = '\u{1F383} Halloween: ' + (pref() === 'auto' ? 'Auto' : (pref() === 'on' ? 'On' : 'Off'));
+  }
+  function build() {
+    var wrap = document.querySelector('.wrap');
+    if (wrap && !document.getElementById('hwBanner')) {
+      var b = document.createElement('div'); b.id = 'hwBanner'; b.className = 'hw-banner';
+      b.innerHTML = '\u{1F383} Halloween at Ashley\u2019s Spot \u{1F47B}<span class="hw-sub">Spooky season: now through Nov 1 \u2014 or whenever you say so, queen \u{1F987} \u00B7 Emoji art: Twemoji (CC BY 4.0)</span>';
+      wrap.insertBefore(b, wrap.firstChild);
+    }
+    if (!document.getElementById('hwLayer')) {
+      var l = document.createElement('div'); l.id = 'hwLayer'; l.className = 'hw-layer'; l.setAttribute('aria-hidden', 'true');
+      GLYPHS.forEach(function (g) { var s = document.createElement('span'); var img = document.createElement('img'); img.src = 'hw-emoji/' + g[0] + '.svg'; img.alt = ''; img.draggable = false; img.style.width = g[4] + 'px'; img.style.height = g[4] + 'px'; img.style.display = 'block'; img.onerror = function () { s.textContent = g[1]; s.style.fontSize = g[4] + 'px'; }; s.appendChild(img); s.style.left = g[2]; s.style.top = g[3]; s.style.animationDuration = g[5] + 's'; l.appendChild(s); });
+      document.body.appendChild(l);
+    }
+    if (!document.getElementById('hwToggle')) {
+      var btn = document.createElement('button'); btn.id = 'hwToggle'; btn.type = 'button';
+      btn.addEventListener('click', function () { var order = ['auto', 'on', 'off']; setPref(order[(order.indexOf(pref()) + 1) % 3]); apply(); });
+      btn.className = 'hw-toggle-btn';
+      var panel = document.getElementById('menuPanel'), theme = document.getElementById('themeToggle');
+      if (panel) {
+        var anchor = theme;
+        while (anchor && anchor.parentNode !== panel) anchor = anchor.parentNode;
+        if (anchor) panel.insertBefore(btn, anchor.nextSibling); else panel.appendChild(btn);
+      } else { btn.setAttribute('style', 'position:fixed;right:14px;bottom:14px;z-index:80;width:auto;margin-top:0;border-radius:999px;'); document.body.appendChild(btn); }
+    }
+    apply();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
+})();
+</script>
+<script id="cat-script">
+(function () {
+  var KEY = "ashleys-cat-v1";
+  var COATS = ["midnight", "pumpkin", "storm", "snowball", "calico"];
+  var COAT_NAMES = { midnight: "Midnight", pumpkin: "Pumpkin", storm: "Storm Cloud", snowball: "Snowball", calico: "Calico" };
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function todayStr() { var n = new Date(); return n.getFullYear() + "-" + (n.getMonth() + 1) + "-" + n.getDate(); }
+  function ydayStr() { var n = new Date(Date.now() - 864e5); return n.getFullYear() + "-" + (n.getMonth() + 1) + "-" + n.getDate(); }
+  var S = load();
+  if (COATS.indexOf(S.coat) < 0) S.coat = "midnight";
+  if (typeof S.pets !== "number") S.pets = 0;
+  var T = todayStr();
+  if (S.lastDay !== T) { S.streak = (S.lastDay === ydayStr()) ? (S.streak || 0) + 1 : 1; S.lastDay = T; }
+  if (typeof S.visits !== "number") S.visits = 0;
+  S.visits++; save();
+
+  var SVG =
+  "<svg viewBox=\"0 0 220 200\" aria-hidden=\"true\">" +
+  "<ellipse class=\"cat-shadow\" cx=\"110\" cy=\"189\" rx=\"56\" ry=\"8\" fill=\"#140f08\" opacity=\".16\"/>" +
+  "<g class=\"cat-tail\"><path class=\"cf\" d=\"M158,148 C190,138 208,156 202,176 C197,191 178,196 158,191 C175,183 181,168 171,157 C167,152 162,148 158,148 Z\"/><circle class=\"cf\" cx=\"196\" cy=\"156\" r=\"10\"/><circle class=\"cf\" cx=\"201\" cy=\"171\" r=\"9\"/><circle class=\"cb\" cx=\"197\" cy=\"182\" r=\"8\"/></g>" +
+  "<path class=\"cf\" d=\"M110,84 C146,84 166,114 166,144 C166,172 142,188 110,188 C78,188 54,172 54,144 C54,114 74,84 110,84 Z\"/>" +
+  "<circle class=\"cf\" cx=\"58\" cy=\"126\" r=\"9\"/><circle class=\"cf\" cx=\"56\" cy=\"148\" r=\"10\"/><circle class=\"cf\" cx=\"64\" cy=\"168\" r=\"9\"/><circle class=\"cf\" cx=\"162\" cy=\"126\" r=\"9\"/><circle class=\"cf\" cx=\"164\" cy=\"148\" r=\"10\"/><circle class=\"cf\" cx=\"156\" cy=\"168\" r=\"9\"/><circle class=\"cf\" cx=\"84\" cy=\"185\" r=\"8\"/><circle class=\"cf\" cx=\"136\" cy=\"185\" r=\"8\"/>" +
+  "<circle class=\"cb\" cx=\"110\" cy=\"114\" r=\"12\"/><circle class=\"cb\" cx=\"98\" cy=\"127\" r=\"10\"/><circle class=\"cb\" cx=\"122\" cy=\"127\" r=\"10\"/><circle class=\"cb\" cx=\"110\" cy=\"140\" r=\"11\"/>" +
+  "<g class=\"cat-stripes\"><path class=\"sf\" d=\"M60,120 q-5,10 -2,20 M166,120 q5,10 2,20\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".4\"/></g>" +
+  "<g class=\"cat-patches\"><path d=\"M148,116 Q170,124 167,150 Q149,149 143,136 Q143,123 148,116 Z\" fill=\"#2e2a36\" opacity=\".92\"/></g>" +
+  "<ellipse class=\"cf\" cx=\"84\" cy=\"183\" rx=\"15\" ry=\"8\"/><ellipse class=\"cf\" cx=\"136\" cy=\"183\" rx=\"15\" ry=\"8\"/>" +
+  "<path class=\"sf\" d=\"M79,178 v7 M89,178 v7 M131,178 v7 M141,178 v7\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".45\"/>" +
+  "<path class=\"cf\" d=\"M76,32 L64,3 Q62,-3 69,-1 L103,17 Q88,28 76,32 Z\"/><path class=\"cf\" d=\"M144,32 L156,3 Q158,-3 151,-1 L117,17 Q132,28 144,32 Z\"/>" +
+  "<path class=\"cer\" d=\"M78,25 L71,8 L95,17 Q86,23 78,25 Z\"/><path class=\"cer\" d=\"M142,25 L149,8 L125,17 Q134,23 142,25 Z\"/>" +
+  "<circle class=\"cf\" cx=\"110\" cy=\"58\" r=\"42\"/>" +
+  "<circle class=\"cf\" cx=\"71\" cy=\"65\" r=\"10\"/><circle class=\"cf\" cx=\"69\" cy=\"79\" r=\"9\"/><circle class=\"cf\" cx=\"149\" cy=\"65\" r=\"10\"/><circle class=\"cf\" cx=\"151\" cy=\"79\" r=\"9\"/><circle class=\"cf\" cx=\"110\" cy=\"95\" r=\"10\"/>" +
+  "<g class=\"cat-stripes\"><path class=\"sf\" d=\"M96,21 q3,7 0,13 M110,17 q2,8 0,15 M124,21 q-3,7 0,13\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".45\"/></g>" +
+  "<g class=\"cat-patches\"><path d=\"M63,36 Q58,8 84,3 Q97,1 101,14 Q84,15 75,26 Q67,34 63,36 Z\" fill=\"#df8433\" opacity=\".95\"/></g>" +
+  "<g class=\"cat-eyes\"><ellipse class=\"ce\" cx=\"93\" cy=\"58\" rx=\"7\" ry=\"9\"/><ellipse cx=\"93\" cy=\"59\" rx=\"3.2\" ry=\"5.5\" fill=\"#191521\"/><circle cx=\"95.5\" cy=\"54\" r=\"1.8\" fill=\"#fff\" opacity=\".9\"/><ellipse class=\"ce\" cx=\"127\" cy=\"58\" rx=\"7\" ry=\"9\"/><ellipse cx=\"127\" cy=\"59\" rx=\"3.2\" ry=\"5.5\" fill=\"#191521\"/><circle cx=\"129.5\" cy=\"54\" r=\"1.8\" fill=\"#fff\" opacity=\".9\"/></g>" +
+  "<path d=\"M104,72 Q110,69 116,72 Q115,79 110,80 Q105,79 104,72 Z\" fill=\"#e58aa0\"/>" +
+  "<path class=\"sf\" d=\"M110,80 Q110,86 103,85 M110,80 Q110,86 117,85\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\"/>" +
+  "<path class=\"sf\" d=\"M61,73 L35,68 M61,81 L36,83 M63,89 L41,98 M159,73 L185,68 M159,81 L184,83 M157,89 L179,98\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".4\"/>" +
+  "<g class=\"cat-hat\"><g transform=\"rotate(-8 118 20)\"><path d=\"M92,20 Q104,-28 120,-34 Q138,-30 146,17 Q118,8 92,20 Z\" fill=\"#3a2b52\"/><path d=\"M95,13 Q118,4 143,11 L144,18 Q118,10 94,20 Z\" fill=\"#e8762c\"/><rect x=\"112\" y=\"3\" width=\"11\" height=\"9\" rx=\"2\" fill=\"none\" stroke=\"#f4c542\" stroke-width=\"2.5\"/><ellipse cx=\"118\" cy=\"22\" rx=\"34\" ry=\"8.5\" fill=\"#2e2140\"/></g></g>" +
+  "</svg>";
+
+  var GREET = ["mrrrow! there you are \u{1F43E}", "I followed you here. obviously.", "you came back. good human.", "*happy slow blink* hi."];
+  var PET = ["purr purr purr\u2026", "that\u2019s the spot. THE spot.", "five more minutes of this.", "mrrp! \u{1F495}", "*max purr achieved*", "yes. continue.", "I allow this. \u{1F451}"];
+  var PET_HW = ["fear me. also pet me.", "I am the night. \u{1F987}", "trick or treat? (treat. give treat.)", "spooky AND soft. that\u2019s me."];
+  var IDLE = ["*stares at nothing*", "*judges the room, silently*", "nap first. questions later.", "*sits on the important thing*", "I knocked nothing over today. yet."];
+  var IDLE_HW = ["I saw a ghost. or a dust bunny.", "*counts the pumpkins*", "the veil is thin. so is my patience."];
+
+  var reduced = false;
+  try { reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+  function isHW() { return document.body && document.body.classList.contains("halloween"); }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+  var el = document.createElement("div");
+  el.id = "catPal"; el.setAttribute("data-coat", S.coat);
+  el.setAttribute("role", "img"); el.setAttribute("aria-label", "Sammie, a fluffy cat who lives on this website. Tap to pet her.");
+  el.innerHTML = "<div class=\"cat-bubble\"><div class=\"cat-name\">\u{1F43E} Sammie</div><span class=\"cat-say\"></span><div class=\"cat-btns\"><button type=\"button\" class=\"cat-coat-btn\">\u{1F9E5} coat</button><button type=\"button\" class=\"cat-nap-btn\">\u{1F4A4} nap</button></div></div>" +
+    "<div class=\"cat-bob\"><div class=\"cat-flip\">" + SVG + "</div></div>";
+  document.body.appendChild(el);
+  var say = el.querySelector(".cat-say"), bubble = el.querySelector(".cat-bubble"), flip = el.querySelector(".cat-flip");
+  var bubbleTimer = null, wanderTimer = null, idleTimer = null, sleeping = false;
+  var pos = { x: Math.max(8, window.innerWidth - 140), y: window.innerHeight + 40 };
+  el.style.left = pos.x + "px"; el.style.top = pos.y + "px";
+
+  function applyHat() { el.classList.toggle("hat-on", isHW()); }
+  applyHat();
+  if (typeof MutationObserver !== "undefined" && document.body) {
+    new MutationObserver(applyHat).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  }
+
+  function showBubble(text, ms) {
+    say.textContent = text; bubble.classList.add("show");
+    if (bubbleTimer) clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(function () { bubble.classList.remove("show"); }, ms || 3600);
+  }
+  function spawnFloat(txt, cls) {
+    var s = document.createElement("span"); s.className = cls; s.textContent = txt;
+    s.style.setProperty("--drift", (Math.floor(Math.random() * 36) - 18) + "px");
+    s.style.marginLeft = (Math.floor(Math.random() * 30) - 15) + "px";
+    el.appendChild(s); setTimeout(function () { s.remove(); }, 1250);
+  }
+  var AC = null;
+  function chirp() {
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+      if (!AC) AC = new Ctx();
+      var o = AC.createOscillator(), g = AC.createGain(), t = AC.currentTime;
+      o.type = "sine"; o.frequency.setValueAtTime(620, t); o.frequency.exponentialRampToValueAtTime(940, t + .09);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.045, t + .03); g.gain.exponentialRampToValueAtTime(.0001, t + .16);
+      o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + .18);
+    } catch (e) {}
+  }
+  function place(nx, ny) {
+    if (nx < pos.x - 4) flip.classList.add("flip"); else if (nx > pos.x + 4) flip.classList.remove("flip");
+    pos = { x: nx, y: ny }; el.style.left = nx + "px"; el.style.top = ny + "px";
+  }
+  function homePos() {
+    var w = window.innerWidth, h = window.innerHeight;
+    return { x: Math.max(8, w - 132 - Math.floor(Math.random() * w * .18)), y: Math.max(60, h - 210 - Math.floor(Math.random() * h * .14)) };
+  }
+  function wander() {
+    if (sleeping || reduced) return;
+    var w = window.innerWidth, h = window.innerHeight;
+    var nx = Math.floor(w * .42 + Math.random() * (w * .58 - 118));
+    var ny = Math.floor(h * .34 + Math.random() * (h * .66 - 190));
+    place(Math.max(6, nx), Math.max(48, ny));
+    wanderTimer = setTimeout(wander, 5600 + Math.random() * 5200);
+  }
+  function idleLoop() {
+    idleTimer = setTimeout(function () {
+      if (!sleeping && !bubble.classList.contains("show") && Math.random() < .5) showBubble(pick(isHW() ? IDLE.concat(IDLE_HW) : IDLE), 3200);
+      idleLoop();
+    }, 46000 + Math.random() * 30000);
+  }
+  function pet() {
+    if (sleeping) { wake(); return; }
+    S.pets++; save();
+    el.classList.remove("petted"); void el.offsetWidth; el.classList.add("petted");
+    spawnFloat("\u{1F495}", "cat-heart"); spawnFloat("\u{1F495}", "cat-heart");
+    chirp();
+    showBubble(pick(isHW() ? PET.concat(PET_HW) : PET) + (S.pets === 1 ? " (tap me anytime \u2014 I live here now)" : ""), 3400);
+  }
+  function nap() {
+    if (sleeping) { wake(); return; }
+    sleeping = true; el.classList.add("sleeping");
+    if (wanderTimer) clearTimeout(wanderTimer);
+    showBubble("z z z\u2026 (tap me to wake)", 4200);
+    var i = 0, zt = setInterval(function () { spawnFloat("z", "cat-zzz"); if (++i > 5 || !sleeping) clearInterval(zt); }, 700);
+    setTimeout(function () { if (sleeping) wake(true); }, 20000);
+  }
+  function wake(auto) {
+    sleeping = false; el.classList.remove("sleeping");
+    showBubble(auto ? "*streeetch* \u2026I\u2019m up, I\u2019m up." : "hm? oh. hi. \u{1F43E}", 3000);
+    if (!reduced) { if (wanderTimer) clearTimeout(wanderTimer); wanderTimer = setTimeout(wander, 4200); }
+  }
+  el.addEventListener("click", pet);
+  el.querySelector(".cat-coat-btn").addEventListener("click", function (ev) {
+    ev.stopPropagation();
+    S.coat = COATS[(COATS.indexOf(S.coat) + 1) % COATS.length]; save();
+    el.setAttribute("data-coat", S.coat);
+    spawnFloat("\u2728", "cat-heart");
+    showBubble("new coat: " + COAT_NAMES[S.coat] + ". stunning, obviously.", 3200);
+  });
+  el.querySelector(".cat-nap-btn").addEventListener("click", function (ev) { ev.stopPropagation(); nap(); });
+  window.addEventListener("resize", function () {
+    var w = window.innerWidth, h = window.innerHeight;
+    place(Math.min(pos.x, Math.max(6, w - 118)), Math.min(pos.y, Math.max(48, h - 170)));
+  });
+
+  setTimeout(function () { var hp = homePos(); place(hp.x, hp.y); }, 450);
+  var greeted = false;
+  try { greeted = !!sessionStorage.getItem("ashleys-cat-greeted"); } catch (e) {}
+  setTimeout(function () {
+    if (!greeted) {
+      showBubble((S.streak > 1 ? "day " + S.streak + " of following you around. " : "") + pick(GREET), 4400);
+      try { sessionStorage.setItem("ashleys-cat-greeted", "1"); } catch (e) {}
+    } else if (Math.random() < .4) { showBubble("still here \u{1F43E}", 2200); }
+  }, 1500);
+  if (!reduced) wanderTimer = setTimeout(wander, 6000);
+  idleLoop();
+})();
+</script>
+</body>
+</html>
