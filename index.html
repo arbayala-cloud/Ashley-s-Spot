@@ -14,6 +14,7 @@
   h1.masthead { font-family: Oswald, Inter, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; font-size: 42px; margin: 0; }
   .tagline { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: 17px; color: #6f6a62; margin: 8px auto 0; max-width: 540px; line-height: 1.5; }
   .dateline { font-family: Oswald, Inter, sans-serif; font-size: 11.5px; letter-spacing: 2.4px; text-transform: uppercase; color: #8a5a33; font-weight: 600; margin: 14px 0 0; }
+  .mast-rule { border-top: 3px solid #26221e; border-bottom: 2px solid #8a5a33; height: 4px; max-width: 560px; margin: 20px auto 0; }
   .btn { font-family: Oswald, Inter, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: #26221e; color: #f5f2ec; border: 1.5px solid #26221e; border-radius: 8px; padding: 12px 24px; cursor: pointer; transition: background .15s, border-color .15s; }
   .btn:hover { background: #8a5a33; border-color: #8a5a33; }
   .menu-row { text-align: center; margin: 0 0 18px; }
@@ -57,18 +58,13 @@
   /* ---------- Song of the Day (carried over) ---------- */
   .sotd { text-align: center; margin-top: 36px; background: linear-gradient(180deg, #2e2a24, #1b1813); border: 2px solid #4a4238; border-radius: 14px; padding: 20px 14px 18px; box-shadow: 0 16px 32px rgba(38,34,30,.28); }
   .sotd-label { font-family: Oswald, Inter, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #d8c9a3; margin-bottom: 6px; }
-  .sotd-track { font-family: Oswald, Inter, sans-serif; font-weight: 600; font-size: 19px; line-height: 1.5; letter-spacing: .5px; color: #f5f2ec; margin-bottom: 16px; }
+  .sotd-track { font-family: Oswald, Inter, sans-serif; font-weight: 600; font-size: 19px; line-height: 1.5; letter-spacing: .5px; color: #f5f2ec; margin-bottom: 4px; }
+  .sotd-year { font-family: Oswald, Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #c8a165; margin-bottom: 16px; }
   .sotd-transport { display: flex; gap: 12px; justify-content: center; align-items: center; }
   .sotd-tbtn { background: #2e2a24; color: #ece5d3; border: 2px solid #57503f; width: 48px; height: 48px; border-radius: 50%; font-size: 18px; line-height: 1; cursor: pointer; }
   .sotd-tbtn.sotd-main { width: 58px; height: 58px; font-size: 22px; background: #c8a165; border-color: #8a5a33; color: #171410; }
   #sotdPlayer { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
-  /* ---------- The Rooms ---------- */
-  .rooms { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left; }
-  .room { display: block; background: #fff; border: 1px solid #ddd3ba; border-radius: 10px; padding: 16px 18px 14px; text-decoration: none; color: inherit; box-shadow: 0 6px 14px rgba(38,34,30,.08); transition: transform .15s, box-shadow .15s, border-color .15s; }
-  .room:hover { transform: translateY(-2px); border-color: #8a5a33; box-shadow: 0 12px 22px rgba(38,34,30,.14); }
-  .room h3 { font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 5px; color: #26221e; }
-  .room p { font-size: 13.5px; line-height: 1.55; color: #6f6a62; margin: 0; }
   .foot-copy { border-top: 2px solid #c9c2b6; margin: 40px 0 0; padding-top: 16px; font-family: Oswald, Inter, sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; text-align: center; color: #6f6a62; }
 
   /* ---------- Sparkles (carried over) ---------- */
@@ -79,6 +75,7 @@
   body.dark { background: #141210; color: #f4f1ea; }
   body.dark .wrap { background: #1e1b17; border-color: #57503f; box-shadow: 0 18px 40px rgba(0,0,0,.5); }
   body.dark .tagline { color: #b8b0a3; }
+  body.dark .mast-rule { border-top-color: #f4f1ea; border-bottom-color: #c8a165; }
   body.dark .sec-label { color: #d4b978; }
   body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
   body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
@@ -86,15 +83,11 @@
   body.dark .menu-panel button.install-btn { color: #f4f1ea; border-bottom-color: #3a3631; }
   body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
   body.dark .cartoon-credit { color: #b8b0a3; }
-  body.dark .room { background: #2a2723; border-color: #44403a; }
-  body.dark .room h3 { color: #f4f1ea; }
-  body.dark .room p { color: #b8b0a3; }
   body.dark .foot-copy { border-top-color: #3a3631; color: #b8b0a3; }
   @media (max-width: 620px) {
     body { padding: 24px 10px 40px; }
     .wrap { padding: 22px 16px 20px; }
     h1.masthead { font-size: 32px; }
-    .rooms { grid-template-columns: 1fr; }
   }
 </style>
   <link rel="manifest" href="manifest.json">
@@ -187,6 +180,7 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
   <h1 class="masthead">Ashley Ayala</h1>
   <p class="tagline">Welcome home, darlin' — my songs, my stories and my case files, all in one little spot.</p>
   <p class="dateline" id="todayLine"></p>
+  <div class="mast-rule" aria-hidden="true"></div>
 
   <section>
     <h2 class="sec-label">&#128250; Daily Cartoon</h2>
@@ -214,6 +208,7 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
   <div class="sotd">
     <div class="sotd-label">&#127925; Song of the Day</div>
     <div class="sotd-track" id="sotdTrack">Loading today's song&hellip;</div>
+    <div class="sotd-year" id="sotdYear"></div>
     <div class="sotd-transport">
       <button class="sotd-tbtn" id="sotdRewBtn" type="button" aria-label="Rewind">&#9198;</button>
       <button class="sotd-tbtn sotd-main" id="sotdPlayBtn" type="button" aria-label="Play or pause">&#9654;</button>
@@ -222,17 +217,6 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
     <div id="sotdPlayer"></div>
   </div>
 
-  <section>
-    <h2 class="sec-label">The Rooms</h2>
-    <div class="rooms">
-      <a class="room" href="blog.html"><h3>&#128211; The Blog</h3><p>My private journal — write it down, keep it safe, reread it later.</p></a>
-      <a class="room" href="jukebox.html"><h3>&#127902; The Jukebox</h3><p>Ashley FM — playlists for every year and every mood, 1990 to 2009.</p></a>
-      <a class="room" href="time-machine.html"><h3>&#128368; The Time Machine</h3><p>Rewind a year — the prices, the trucks, the way it was.</p></a>
-      <a class="room" href="vending-machine.html"><h3>&#10013; The Vending Machine</h3><p>Twenty-five cents of grace — verses, encouragement and tiny missions.</p></a>
-      <a class="room" href="newspaper.html"><h3>&#128240; The Daily Ashley</h3><p>Real headlines every morning — the U.S., Texas and Vermont.</p></a>
-      <a class="room" href="true-crime.html"><h3>&#128420; True Crime</h3><p>Fourteen case files and the daily blotter. Every detail true.</p></a>
-    </div>
-  </section>
 
   <p class="foot-copy">&copy; 2026 Ashley Ayala · Ashley's Spot</p>
 </main>
@@ -287,6 +271,208 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
 </script>
 <script>
 var SOTD = [["Thriller", "Michael Jackson", "sOnqjkJTMaA"], ["Monster Mash", "Bobby \u201cBoris\u201d Pickett", "82jWhLCcxNU"], ["Ghostbusters", "Ray Parker Jr.", "TgNWyBXBC0E"], ["Time Warp", "The Rocky Horror Picture Show", "-QkJ-PqUmc4"], ["Season of the Witch", "Donovan", "KBrhL3on2yo"], ["I Put a Spell on You", "Screamin' Jay Hawkins", "Sk0c1w7IJBU"], ["Werewolves of London", "Warren Zevon", "qae25976UgA"], ["Superstition", "Stevie Wonder", "7_tmeHCO1IM"], ["Sympathy for the Devil", "The Rolling Stones", "GgnClrx8N2k"], ["Black Magic Woman", "Santana", "9wT1s96JIb0"], ["This Is Halloween", "Danny Elfman", "ntsrWX-0FE4"], ["Zombie", "The Cranberries", "6Ejga4kJUts"], ["Bad Moon Rising", "Creedence Clearwater Revival", "iwC5G6NfiPs"], ["People Are Strange", "The Doors", "lYY0P7X7oX0"], ["Highway to Hell", "AC/DC", "l482T0yNkeo"], ["Sweet Dreams (Are Made of This)", "Eurythmics", "qeMFqkcPYcg"], ["Vogue", "Madonna", "GuJQSAiODqI"], ["Vision of Love", "Mariah Carey", "tov22NtCMC4"], ["Ice Ice Baby", "Vanilla Ice", "rog8ou-ZepE"], ["U Can't Touch This", "MC Hammer", "otCpCn0l4Wo"], ["Nothing Compares 2 U", "Sin\u00e9ad O'Connor", "0-EF60neguk"], ["Hold On", "Wilson Phillips", "uIbXvaE39wM"], ["It Must Have Been Love", "Roxette", "k2C5TjS2sh4"], ["Gonna Make You Sweat", "C+C Music Factory", "LaTGrV58wec"], ["Unskinny Bop", "Poison", "Nn9cuBWPUoU"], ["Thunderstruck", "AC/DC", "v2AC41dglnM"], ["Freedom '90", "George Michael", "kDXtCEMPsEc"], ["Blaze of Glory", "Jon Bon Jovi", "MfmYCM4CS8o"], ["Enjoy the Silence", "Depeche Mode", "aGSKrC7dGcY"], ["Groove Is in the Heart", "Deee-Lite", "etviGf1uWlg"], ["Been Caught Stealing", "Jane's Addiction", "jrwjiO1MCVs"], ["Joey", "Concrete Blonde", "OdpTcvSn8HQ"], ["Friends in Low Places", "Garth Brooks", "4w8wcmZQ-pc"], ["The Dance", "Garth Brooks", "MidNVTMGggI"], ["Rumor Has It", "Reba McEntire", "SlsRzSU9Emo"], ["Love Without End, Amen", "George Strait", "rkscNqCCDl0"], ["When I Call Your Name", "Vince Gill", "uwmGWCJOxnw"], ["Wonderwall", "Oasis", "bx1Bh8ZvH84"], ["Fake Plastic Trees", "Radiohead", "n5h0qHwNrHk"], ["This Is a Call", "Foo Fighters", "86Juolmcqdw"], ["Bullet with Butterfly Wings", "Smashing Pumpkins", "8-r-V0uK4u0"], ["Geek Stink Breath", "Green Day", "fr2T-Rcgq1c"], ["This Ain't a Love Song", "Bon Jovi", "-nlDy6h-v9c"], ["Hold Me, Thrill Me, Kiss Me, Kill Me", "U2", "eIdTNyJp38A"], ["Name", "Goo Goo Dolls", "yQOBUrRaPU0"], ["Glycerine", "Bush", "hOllF3TgAsM"], ["December", "Collective Soul", "6exsatE-DUk"], ["Only Wanna Be with You", "Hootie & the Blowfish", "Ln6WQqRDrCo"], ["Country House", "Blur", "gpuh1WE-RVw"], ["Common People", "Pulp", "yuTMWgOduFM"], ["Just a Girl", "No Doubt", "PHzOOQfhPFg"], ["Strange Currencies", "R.E.M.", "j4iuG7StmPc"], ["Say It Ain't So", "Weezer", "ENXvZ9YRjbo"], ["Everlong", "Foo Fighters", "eBG7P-K-r1Y"], ["Karma Police", "Radiohead", "1uYWYWPc9HU"], ["Song 2", "Blur", "SSbBvKaM6sk"], ["Bitter Sweet Symphony", "The Verve", "1lyu1KKwC74"], ["Tubthumping", "Chumbawamba", "2H5uWRjFsGc"], ["Semi-Charmed Life", "Third Eye Blind", "beINamVRGy4"], ["Good Riddance (Time of Your Life)", "Green Day", "CnQ8N1KacJc"], ["The Impression That I Get", "The Mighty Mighty Bosstones", "NIGMUAMevH0"], ["Brick", "Ben Folds Five", "Wt5EHAqhR1c"], ["Push", "Matchbox Twenty", "HAkHqYlqops"], ["If You Could Only See", "Tonic", "Sfg6-4mBs6Y"], ["The Freshmen", "The Verve Pipe", "1umEXpGHc0E"], ["Walkin' on the Sun", "Smash Mouth", "LQj--Kjn0z8"], ["My Own Prison", "Creed", "iBBqjGd3fHQ"], ["Fly", "Sugar Ray", "zUtnwcv-quE"], ["One Headlight", "The Wallflowers", "Zzyfcys1aLM"], ["Fallin'", "Alicia Keys", "Urdlvw0SSEc"], ["Lady Marmalade", "Christina Aguilera, Lil' Kim, Mya, Pink", "RQa7SvVCdZk"], ["Survivor", "Destiny's Child", "Wmc8bQoL-J0"], ["Bootylicious", "Destiny's Child", "IyYnnUcgeMc"], ["Can't Get You Out of My Head", "Kylie Minogue", "c18441Eh_WE"], ["All for You", "Janet Jackson", "J551f-TyqjY"], ["Hero", "Enrique Iglesias", "koJlIGDImiU"], ["Family Affair", "Mary J. Blige", "znlFu_lemsU"], ["U Remind Me", "Usher", "Bxau9B3jOHM"], ["Let Me Blow Ya Mind", "Eve feat. Gwen Stefani", "Wt88GMJmVk0"], ["Drops of Jupiter", "Train", "7Xf-Lesrkuc"], ["I'm Real", "Jennifer Lopez", "zD2D6phvRRk"], ["I'm a Slave 4 U", "Britney Spears", "Mzybwwf2HoQ"], ["Pop", "NSYNC", "TWZKw_MgUPI"], ["The Call", "Backstreet Boys", "wMOkm57vu0k"], ["How You Remind Me", "Nickelback", "1cQh1ccqu8M"], ["My Sacrifice", "Creed", "O-fyNgHdmLI"], ["Blurry", "Puddle of Mudd", "xJJsoquu70o"], ["It's Been Awhile", "Staind", "K2NGe9mLAEc"], ["Wish You Were Here", "Incubus", "8295rOMvtQI"], ["Hash Pipe", "Weezer", "_9BGLtqqkVI"], ["Thank You", "Dido", "Pacb9MPlyvc"], ["In the End", "Linkin Park", "eVTXPUF4Oz4"], ["The Rock Show", "Blink-182", "z7hhDINyBP0"], ["My Way", "Limp Bizkit", "Dn8vzTsnPps"], ["Loser", "3 Doors Down", "2Ui_Q4qBDJY"], ["Fat Lip", "Sum 41", "CMX2lPum_pg"], ["Elevation", "U2", "19KstSgU-c0"], ["Clint Eastwood", "Gorillaz", "1fOc3rATNfI"], ["Last Nite", "The Strokes", "TOypSnKFHrE"], ["Fell in Love with a Girl", "The White Stripes", "fTH71AAxXmM"], ["Crystal", "New Order", "KVMyXDsadLQ"], ["Hit 'Em Up Style (Oops!)", "Blu Cantrell", "LMOKlXfXn50"], ["Pyramid Song", "Radiohead", "3M_Gg1xAHE4"], ["Imitation of Life", "R.E.M.", "0vqgdSsfqPs"], ["Plug In Baby", "Muse", "dbB-mICjkQM"], ["New Slang", "The Shins", "zYwCmcB0XMw"], ["Ain't Nothing 'bout You", "Brooks & Dunn", "SpJdhC5E8Vg"], ["Only in America", "Brooks & Dunn", "GN1iI-DaJNw"], ["Where Were You (When the World Stopped Turning)", "Alan Jackson", "mwcWVs4Eejg"], ["Where I Come From", "Alan Jackson", "0G15BcMWQYY"], ["I'm Movin' On", "Rascal Flatts", "eKIGOHhiDuY"], ["One More Day", "Diamond Rio", "Xi8O7JdA4Sg"], ["I'm a Survivor", "Reba McEntire", "_HbTASYNVps"], ["Where the Stars and Stripes and the Eagle Fly", "Aaron Tippin", "TTKmjhJ1__o"], ["Grown Men Don't Cry", "Tim McGraw", "TQjp5s6DJlw"], ["There You'll Be", "Faith Hill", "pJSjXZdKj8s"], ["I Wanna Talk About Me", "Toby Keith", "HxUuDPNbkJk"], ["The Middle", "Jimmy Eat World", "oKsxPW6i3pM"], ["Bleed American", "Jimmy Eat World", "Yud6TmNJWhY"], ["Jude Law and a Semester Abroad", "Brand New", "ZvzHyHgc4lA"], ["Seventy Times 7", "Brand New", "siCdIojMhok"], ["At Your Funeral", "Saves the Day", "NwW0q65VIas"], ["Understanding in a Car Crash", "Thursday", "Lrxk7wBSG_g"], ["Stan", "Eminem feat. Dido", "gOMhN-hfMtY"], ["Seven Nation Army", "The White Stripes", "0J2QdDbelmY"], ["Numb", "Linkin Park", "kXYiU_JCYtU"], ["Hey Ya!", "Outkast", "PWgvGjAhvIw"], ["I Believe in a Thing Called Love", "The Darkness", "tKjZuykKY1I"], ["Are You Gonna Be My Girl", "Jet", "tuK6n2Lkza0"], ["Bring Me to Life", "Evanescence", "3YxaaGgTQYM"], ["Crazy in Love", "Beyonc\u00e9 feat. Jay-Z", "ViwtNLUqkMY"], ["Reptilia", "The Strokes", "b8-tXG8KrWs"], ["Maps", "Yeah Yeah Yeahs", "oIIxlgcuQRU"], ["Mr. Brightside", "The Killers", "gGdGFtwCNBE"], ["St. Anger", "Metallica", "3rFoGVkZ29w"], ["Feeling This", "blink-182", "4kMZ23T9VHE"], ["We Used to Be Friends", "The Dandy Warhols", "Bm1g5Yg0hUw"], ["Molly's Chambers", "Kings of Leon", "uLaJkbkG5NI"], ["Girl's Not Grey", "AFI", "1Yzu-4kJg6g"], ["Like a Stone", "Audioslave", "7QU1nvuxaMA"], ["Sing for the Moment", "Eminem", "D4hAVemuQXY"], ["In da Club", "50 Cent", "5qm8PH4xAss"], ["Send the Pain Below", "Chevelle", "gpyRI1j9t6c"], ["Feel Good Inc.", "Gorillaz", "HyHNuVaZJ-k"], ["Best of You", "Foo Fighters", "h_L4Rixya64"], ["Sugar, We're Goin Down", "Fall Out Boy", "uhG-vLZrb-g"], ["I Bet You Look Good on the Dancefloor", "Arctic Monkeys", "pK7egZaT3hs"], ["We Belong Together", "Mariah Carey", "0habxsuXW4g"], ["Do You Want To", "Franz Ferdinand", "YZzbB4ta-YY"], ["Blue Orchid", "The White Stripes", "jW8UlrtcEac"], ["Bless the Broken Road", "Rascal Flatts", "8-vZlrBYLSU"], ["Wake Me Up When September Ends", "Green Day", "NU9JoFKlaZ0"], ["Helena", "My Chemical Romance", "UCCyoocDxBA"], ["Lyla", "Oasis", "oQZQ5MHehes"], ["Juicebox", "The Strokes", "GoltwBHXCx8"], ["Soul Meets Body", "Death Cab for Cutie", "uizQVriWp8M"], ["Banquet", "Bloc Party", "vdkmhquF60o"], ["The Hand That Feeds", "Nine Inch Nails", "zL-U2DPyv68"], ["Little Sister", "Queens of the Stone Age", "hGRqnNEOpe0"], ["Mockingbird", "Eminem", "S9bCLPwzSC0"], ["Candy Shop", "50 Cent feat. Olivia", "SRcnnId15BA"], ["Sooner or Later", "Breaking Benjamin", "WxzpvSvMdhk"], ["Umbrella", "Rihanna ft. Jay-Z", "CvBfHwUxHIk"], ["Girlfriend", "Avril Lavigne", "Bg59q4puhmg"], ["Beautiful Girls", "Sean Kingston", "MrTz5xjmso4"], ["No One", "Alicia Keys", "rywUS-ohqeE"], ["Apologize", "Timbaland ft. OneRepublic", "ZSM3w1v-A_Y"], ["Love Song", "Sara Bareilles", "qi7Yh16dA0w"], ["Stronger", "Kanye West", "PsO6ZnUZI0g"], ["Crank That (Soulja Boy)", "Soulja Boy Tell'em", "8UFIYGkROII"], ["Big Girls Don't Cry", "Fergie", "agrXgrAgQ0U"], ["Untouched", "The Veronicas", "ykW4rtW2eu0"], ["The Pretender", "Foo Fighters", "SBjQ9tuuTJQ"], ["Icky Thump", "The White Stripes", "1OjTspCqvk8"], ["Paralyzer", "Finger Eleven", "BJk6gZuPKRE"], ["Misery Business", "Paramore", "aCyGvGEtOwc"], ["Thnks fr th Mmrs", "Fall Out Boy", "onzL0EM1pKY"], ["What I've Done", "Linkin Park", "DRlwSBY5oe8"], ["Fake It", "Seether", "gy8HPSIFXEM"], ["Never Wanted Nothing More", "Kenny Chesney", "5VnOSO1J22M"], ["Teardrops on My Guitar", "Taylor Swift", "xKCek6_dB0M"], ["Tim McGraw", "Taylor Swift", "GkD20ajVxnY"], ["Wasted", "Carrie Underwood", "paMzF1lnwGg"], ["I Gotta Feeling", "Black Eyed Peas", "uSD4vsh1zDA"], ["Bad Romance", "Lady Gaga", "qrO4YZeyl0I"], ["Party in the U.S.A.", "Miley Cyrus", "M11SvDtPBhA"], ["Empire State of Mind", "Jay-Z feat. Alicia Keys", "vk6014HuxcE"], ["Fireflies", "Owl City", "psuRGfAaju4"], ["Battlefield", "Jordin Sparks", "suPlYwJ3YvM"], ["Down", "Jay Sean feat. Lil Wayne", "M_8V_RyijlI"], ["We Made You", "Eminem", "RSdKmX2BH7o"], ["Crack a Bottle", "Eminem, Dr. Dre & 50 Cent", "_wN3wl473M0"], ["Letter from a Thief", "Chevelle", "7Ooyiccq3Fg"], ["21 Guns", "Green Day", "r00ikilDxW4"], ["Second Chance", "Shinedown", "H25ORRgLxdA"], ["My Life Would Suck Without You", "Kelly Clarkson", "cRM70Jw7F4M"], ["Blame It", "Jamie Foxx feat. T-Pain", "rfjtpp90lu8"], ["Tik Tok", "Kesha", "iP6XpLQM2Cs"], ["Good Girls Go Bad", "Cobra Starship feat. Leighton Meester", "Ix5z1bRz4Sc"], ["Use Somebody", "Kings of Leon", "gnhXHvRoUd0"]];
+var SOTD_YEARS = {
+    "Thriller|Michael Jackson": 1982,
+    "Monster Mash|Bobby \u201cBoris\u201d Pickett": 1962,
+    "Ghostbusters|Ray Parker Jr.": 1984,
+    "Time Warp|The Rocky Horror Picture Show": 1975,
+    "Season of the Witch|Donovan": 1966,
+    "I Put a Spell on You|Screamin' Jay Hawkins": 1956,
+    "Werewolves of London|Warren Zevon": 1978,
+    "Superstition|Stevie Wonder": 1972,
+    "Sympathy for the Devil|The Rolling Stones": 1968,
+    "Black Magic Woman|Santana": 1970,
+    "This Is Halloween|Danny Elfman": 1993,
+    "Zombie|The Cranberries": 1994,
+    "Bad Moon Rising|Creedence Clearwater Revival": 1969,
+    "People Are Strange|The Doors": 1967,
+    "Highway to Hell|AC/DC": 1979,
+    "Sweet Dreams (Are Made of This)|Eurythmics": 1983,
+    "Vogue|Madonna": 1990,
+    "Vision of Love|Mariah Carey": 1990,
+    "Ice Ice Baby|Vanilla Ice": 1990,
+    "U Can't Touch This|MC Hammer": 1990,
+    "Nothing Compares 2 U|Sin\u00e9ad O'Connor": 1990,
+    "Hold On|Wilson Phillips": 1990,
+    "It Must Have Been Love|Roxette": 1990,
+    "Gonna Make You Sweat|C+C Music Factory": 1990,
+    "Unskinny Bop|Poison": 1990,
+    "Thunderstruck|AC/DC": 1990,
+    "Freedom '90|George Michael": 1990,
+    "Blaze of Glory|Jon Bon Jovi": 1990,
+    "Enjoy the Silence|Depeche Mode": 1990,
+    "Groove Is in the Heart|Deee-Lite": 1990,
+    "Been Caught Stealing|Jane's Addiction": 1990,
+    "Joey|Concrete Blonde": 1990,
+    "Friends in Low Places|Garth Brooks": 1990,
+    "The Dance|Garth Brooks": 1989,
+    "Rumor Has It|Reba McEntire": 1990,
+    "Love Without End, Amen|George Strait": 1990,
+    "When I Call Your Name|Vince Gill": 1989,
+    "Wonderwall|Oasis": 1995,
+    "Fake Plastic Trees|Radiohead": 1995,
+    "This Is a Call|Foo Fighters": 1995,
+    "Bullet with Butterfly Wings|Smashing Pumpkins": 1995,
+    "Geek Stink Breath|Green Day": 1995,
+    "This Ain't a Love Song|Bon Jovi": 1995,
+    "Hold Me, Thrill Me, Kiss Me, Kill Me|U2": 1995,
+    "Name|Goo Goo Dolls": 1995,
+    "Glycerine|Bush": 1995,
+    "December|Collective Soul": 1995,
+    "Only Wanna Be with You|Hootie & the Blowfish": 1994,
+    "Country House|Blur": 1995,
+    "Common People|Pulp": 1995,
+    "Just a Girl|No Doubt": 1995,
+    "Strange Currencies|R.E.M.": 1994,
+    "Say It Ain't So|Weezer": 1994,
+    "Everlong|Foo Fighters": 1997,
+    "Karma Police|Radiohead": 1997,
+    "Song 2|Blur": 1997,
+    "Bitter Sweet Symphony|The Verve": 1997,
+    "Tubthumping|Chumbawamba": 1997,
+    "Semi-Charmed Life|Third Eye Blind": 1997,
+    "Good Riddance (Time of Your Life)|Green Day": 1997,
+    "The Impression That I Get|The Mighty Mighty Bosstones": 1997,
+    "Brick|Ben Folds Five": 1997,
+    "Push|Matchbox Twenty": 1996,
+    "If You Could Only See|Tonic": 1996,
+    "The Freshmen|The Verve Pipe": 1996,
+    "Walkin' on the Sun|Smash Mouth": 1997,
+    "My Own Prison|Creed": 1997,
+    "Fly|Sugar Ray": 1997,
+    "One Headlight|The Wallflowers": 1996,
+    "Fallin'|Alicia Keys": 2001,
+    "Lady Marmalade|Christina Aguilera, Lil' Kim, Mya, Pink": 2001,
+    "Survivor|Destiny's Child": 2001,
+    "Bootylicious|Destiny's Child": 2001,
+    "Can't Get You Out of My Head|Kylie Minogue": 2001,
+    "All for You|Janet Jackson": 2001,
+    "Hero|Enrique Iglesias": 2001,
+    "Family Affair|Mary J. Blige": 2001,
+    "U Remind Me|Usher": 2001,
+    "Let Me Blow Ya Mind|Eve feat. Gwen Stefani": 2001,
+    "Drops of Jupiter|Train": 2001,
+    "I'm Real|Jennifer Lopez": 2001,
+    "I'm a Slave 4 U|Britney Spears": 2001,
+    "Pop|NSYNC": 2001,
+    "The Call|Backstreet Boys": 2000,
+    "How You Remind Me|Nickelback": 2001,
+    "My Sacrifice|Creed": 2001,
+    "Blurry|Puddle of Mudd": 2001,
+    "It's Been Awhile|Staind": 2001,
+    "Wish You Were Here|Incubus": 2001,
+    "Hash Pipe|Weezer": 2001,
+    "Thank You|Dido": 1999,
+    "In the End|Linkin Park": 2000,
+    "The Rock Show|Blink-182": 2001,
+    "My Way|Limp Bizkit": 2000,
+    "Loser|3 Doors Down": 2000,
+    "Fat Lip|Sum 41": 2001,
+    "Elevation|U2": 2000,
+    "Clint Eastwood|Gorillaz": 2001,
+    "Last Nite|The Strokes": 2001,
+    "Fell in Love with a Girl|The White Stripes": 2001,
+    "Crystal|New Order": 2001,
+    "Hit 'Em Up Style (Oops!)|Blu Cantrell": 2001,
+    "Pyramid Song|Radiohead": 2001,
+    "Imitation of Life|R.E.M.": 2001,
+    "Plug In Baby|Muse": 2001,
+    "New Slang|The Shins": 2001,
+    "Ain't Nothing 'bout You|Brooks & Dunn": 2001,
+    "Only in America|Brooks & Dunn": 2001,
+    "Where Were You (When the World Stopped Turning)|Alan Jackson": 2001,
+    "Where I Come From|Alan Jackson": 2000,
+    "I'm Movin' On|Rascal Flatts": 2000,
+    "One More Day|Diamond Rio": 2001,
+    "I'm a Survivor|Reba McEntire": 2001,
+    "Where the Stars and Stripes and the Eagle Fly|Aaron Tippin": 2001,
+    "Grown Men Don't Cry|Tim McGraw": 2001,
+    "There You'll Be|Faith Hill": 2001,
+    "I Wanna Talk About Me|Toby Keith": 2001,
+    "The Middle|Jimmy Eat World": 2001,
+    "Bleed American|Jimmy Eat World": 2001,
+    "Jude Law and a Semester Abroad|Brand New": 2001,
+    "Seventy Times 7|Brand New": 2001,
+    "At Your Funeral|Saves the Day": 2001,
+    "Understanding in a Car Crash|Thursday": 2001,
+    "Stan|Eminem feat. Dido": 2000,
+    "Seven Nation Army|The White Stripes": 2003,
+    "Numb|Linkin Park": 2003,
+    "Hey Ya!|Outkast": 2003,
+    "I Believe in a Thing Called Love|The Darkness": 2003,
+    "Are You Gonna Be My Girl|Jet": 2003,
+    "Bring Me to Life|Evanescence": 2003,
+    "Crazy in Love|Beyonc\u00e9 feat. Jay-Z": 2003,
+    "Reptilia|The Strokes": 2003,
+    "Maps|Yeah Yeah Yeahs": 2003,
+    "Mr. Brightside|The Killers": 2003,
+    "St. Anger|Metallica": 2003,
+    "Feeling This|blink-182": 2003,
+    "We Used to Be Friends|The Dandy Warhols": 2003,
+    "Molly's Chambers|Kings of Leon": 2003,
+    "Girl's Not Grey|AFI": 2003,
+    "Like a Stone|Audioslave": 2002,
+    "Sing for the Moment|Eminem": 2002,
+    "In da Club|50 Cent": 2003,
+    "Send the Pain Below|Chevelle": 2002,
+    "Feel Good Inc.|Gorillaz": 2005,
+    "Best of You|Foo Fighters": 2005,
+    "Sugar, We're Goin Down|Fall Out Boy": 2005,
+    "I Bet You Look Good on the Dancefloor|Arctic Monkeys": 2005,
+    "We Belong Together|Mariah Carey": 2005,
+    "Do You Want To|Franz Ferdinand": 2005,
+    "Blue Orchid|The White Stripes": 2005,
+    "Bless the Broken Road|Rascal Flatts": 2004,
+    "Wake Me Up When September Ends|Green Day": 2004,
+    "Helena|My Chemical Romance": 2004,
+    "Lyla|Oasis": 2005,
+    "Juicebox|The Strokes": 2005,
+    "Soul Meets Body|Death Cab for Cutie": 2005,
+    "Banquet|Bloc Party": 2004,
+    "The Hand That Feeds|Nine Inch Nails": 2005,
+    "Little Sister|Queens of the Stone Age": 2005,
+    "Mockingbird|Eminem": 2004,
+    "Candy Shop|50 Cent feat. Olivia": 2005,
+    "Sooner or Later|Breaking Benjamin": 2004,
+    "Umbrella|Rihanna ft. Jay-Z": 2007,
+    "Girlfriend|Avril Lavigne": 2007,
+    "Beautiful Girls|Sean Kingston": 2007,
+    "No One|Alicia Keys": 2007,
+    "Apologize|Timbaland ft. OneRepublic": 2007,
+    "Love Song|Sara Bareilles": 2007,
+    "Stronger|Kanye West": 2007,
+    "Crank That (Soulja Boy)|Soulja Boy Tell'em": 2007,
+    "Big Girls Don't Cry|Fergie": 2006,
+    "Untouched|The Veronicas": 2007,
+    "The Pretender|Foo Fighters": 2007,
+    "Icky Thump|The White Stripes": 2007,
+    "Paralyzer|Finger Eleven": 2007,
+    "Misery Business|Paramore": 2007,
+    "Thnks fr th Mmrs|Fall Out Boy": 2007,
+    "What I've Done|Linkin Park": 2007,
+    "Fake It|Seether": 2007,
+    "Never Wanted Nothing More|Kenny Chesney": 2007,
+    "Teardrops on My Guitar|Taylor Swift": 2006,
+    "Tim McGraw|Taylor Swift": 2006,
+    "Wasted|Carrie Underwood": 2005,
+    "I Gotta Feeling|Black Eyed Peas": 2009,
+    "Bad Romance|Lady Gaga": 2009,
+    "Party in the U.S.A.|Miley Cyrus": 2009,
+    "Empire State of Mind|Jay-Z feat. Alicia Keys": 2009,
+    "Fireflies|Owl City": 2009,
+    "Battlefield|Jordin Sparks": 2009,
+    "Down|Jay Sean feat. Lil Wayne": 2009,
+    "We Made You|Eminem": 2009,
+    "Crack a Bottle|Eminem, Dr. Dre & 50 Cent": 2009,
+    "Letter from a Thief|Chevelle": 2009,
+    "21 Guns|Green Day": 2009,
+    "Second Chance|Shinedown": 2008,
+    "My Life Would Suck Without You|Kelly Clarkson": 2009,
+    "Blame It|Jamie Foxx feat. T-Pain": 2008,
+    "Tik Tok|Kesha": 2009,
+    "Good Girls Go Bad|Cobra Starship feat. Leighton Meester": 2009,
+    "Use Somebody|Kings of Leon": 2008,
+    "The Red|Chevelle": 2002 };
 (function () {
   var now = new Date();
   var start = new Date(now.getFullYear(), 0, 0);
@@ -300,7 +486,7 @@ var SOTD = [["Thriller", "Michael Jackson", "sOnqjkJTMaA"], ["Monster Mash", "Bo
   var playBtn = document.getElementById('sotdPlayBtn');
   var rewBtn = document.getElementById('sotdRewBtn');
   var ffBtn = document.getElementById('sotdFfBtn');
-  function showSong() { trackEl.textContent = song[0] + ' - ' + song[1]; }
+  function showSong() { trackEl.textContent = song[0] + ' - ' + song[1]; var y = SOTD_YEARS[song[0] + '|' + song[1]]; document.getElementById('sotdYear').textContent = y ? 'Released ' + y : ''; }
   showSong();
   var player = null;
   var playerReady = false;
