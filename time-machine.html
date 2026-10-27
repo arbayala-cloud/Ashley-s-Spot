@@ -103,9 +103,6 @@
   h1 { color: #33242a; text-shadow: 0 2px 0 #fdeef3; }
   .script-note { font-family: 'Dancing Script', cursive; font-size: 30px; font-weight: 700; line-height: 1.15; color: #d4628a; margin: 2px 0 8px; }
   .sub { color: #7a6670; max-width: 620px; margin-left: auto; margin-right: auto; }
-  .bow-divider { display: flex; align-items: center; gap: 12px; max-width: 340px; margin: 14px auto 22px; color: #d4628a; font-size: 22px; }
-  .bow-divider::before, .bow-divider::after { content: ""; height: 2px; flex: 1; background: linear-gradient(90deg, transparent, #e9a9bf, #b9975b); }
-  .bow-divider::after { background: linear-gradient(90deg, #b9975b, #e9a9bf, transparent); }
   .menu-row button { border-color: #c05a80; color: #8a3d5c; background: #fff; box-shadow: 0 4px 12px rgba(212,98,138,.16); }
   .menu-panel { border-color: #f0c4d2; border-radius: 20px; box-shadow: 0 16px 36px rgba(212,98,138,.18); overflow: hidden; }
   .year-select { border-color: #e9a9bf; box-shadow: 0 6px 16px rgba(212,98,138,.14); }
@@ -159,7 +156,6 @@
   .group-head::before { content: "\2661  "; color: #ffe3ee; }
   .card { position: relative; border: 2px solid #f7cfdd; border-top: 2px solid #f7cfdd; border-radius: 28px; overflow: hidden; box-shadow: 0 12px 28px rgba(212,98,138,.13); padding-top: 26px; }
   .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 12px; background: repeating-linear-gradient(45deg, #fbd9e4 0 12px, #fff 12px 24px); }
-  .card::after { content: "\1F380"; position: absolute; top: 16px; right: 14px; font-size: 14px; opacity: .9; }
   .card h2 { font-family: 'Dancing Script', cursive; font-size: 29px; font-weight: 700; color: #a83a64; padding-right: 22px; }
   .card h2 .hicon { background: #fdeef3; border-radius: 50%; padding: 5px; width: 32px; height: 32px; }
   .capsule { border: 2px solid #f19ec0; outline-color: rgba(212,98,138,.6); background: linear-gradient(180deg, #fff8fa 0%, #ffeef5 60%, #fff3d9 100%); }
@@ -187,7 +183,6 @@
   .wrap { border-color: #d9b98a; box-shadow: 0 26px 64px rgba(160,110,60,.20), 0 0 0 6px #fdf3e3, 0 0 0 7.5px #e4c491; }
   .eyebrow { background: #fdf3e3; border-color: #d9b98a; color: #9a6a2f; }
   .script-note { color: #a97a45; }
-  .bow-divider { color: #c99327; }
   .year-select { border-color: #89a0bb; color: #42597a; background: #f4f7fb; }
   .year-title { font-family: 'Sancreek', Fraunces, Georgia, serif; font-weight: 400; letter-spacing: 2px; color: #b3543f; font-size: 44px; }
   .year-title::before, .year-title::after { content: "\2605"; color: #d9a441; font-size: 22px; vertical-align: 10px; }
@@ -206,85 +201,12 @@
   body.dark .group-head { background: linear-gradient(90deg, #42597a, #31435e); }
   body.dark .year-title { color: #eda58c; }
 
-  /* --- Mood switch --- */
-  .mood-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin: 0 auto 20px; }
-  .mood-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; color: #9a6a2f; width: 100%; margin: 0; }
-  .mood-btn { font-family: Inter, Arial, sans-serif; font-size: 14px; font-weight: 700; border-radius: 999px; padding: 9px 20px; cursor: pointer; background: #fff; color: #6b4456; border: 1.5px solid #d9b98a; }
-  body.girlie .mood-btn.active { background: linear-gradient(135deg, #e383a0, #d4628a); border-color: #d4628a; color: #fff; box-shadow: 0 8px 18px rgba(212,98,138,.30); }
-  body.cowgirl .mood-btn.active { background: linear-gradient(90deg, #5d748f, #42597a); border-color: #42597a; color: #fff; box-shadow: 0 8px 18px rgba(66,89,122,.30); }
-  /* Girlie mood: bring back the all-pink look */
-  body.girlie .wrap { border-color: #f6c6d6; box-shadow: 0 26px 64px rgba(212,98,138,.22); }
-  body.girlie .eyebrow { background: #fde3ec; border-color: #f6c6d6; color: #c05a80; }
-  body.girlie .script-note { color: #d4628a; }
-  body.girlie .bow-divider { color: #d4628a; }
-  body.girlie .year-select { border-color: #f19ec0; color: #a83a64; background: #fff8fa; }
-  body.girlie .year-title { font-family: 'Dancing Script', cursive; font-weight: 700; letter-spacing: 0; color: #c24d7c; font-size: 48px; }
-  body.girlie .year-title::before, body.girlie .year-title::after { content: "\2661"; color: #f19ec0; font-size: 26px; }
-  body.girlie .timeline input[type="range"] { accent-color: #d4628a; }
-  body.girlie .timeline-labels { color: #c05a80; font-family: Inter, Arial, sans-serif; letter-spacing: 2px; }
-  body.girlie .group-head { background: linear-gradient(90deg, #e88ca9, #dd6f9c); outline: none; box-shadow: 0 8px 18px rgba(212,98,138,.28); }
-  body.girlie .group-head::before { content: "\2661  "; color: #ffe3ee; }
-  body.girlie .card::before { background: repeating-linear-gradient(45deg, #fbd9e4 0 12px, #fff 12px 24px); }
-  body.girlie .card::after { content: "\1F380"; color: inherit; font-size: 14px; }
-  body.girlie .nav-btn { border-color: #c05a80; color: #8a3d5c; }
-  body.girlie .surprise-btn { background: linear-gradient(135deg, #e383a0 0%, #d4628a 55%, #c99327 130%); border-color: #d4628a; }
-  body.girlie .capsule { border-color: #e9a9bf; outline: 1.5px dashed rgba(192,90,128,.55); outline-offset: -9px; background: linear-gradient(180deg, #fff8fa 0%, #fdeef3 58%, #fbf0da 100%); }
-  body.girlie .capsule .cap-eyebrow { color: #c05a80; }
-  body.girlie .mood-label { color: #c05a80; }
-  body.dark.girlie .group-head { background: linear-gradient(90deg, #a34e72, #8a3d5f); }
-  body.dark.girlie .year-title { color: #f6aec6; }
-  body.dark.girlie .wrap { box-shadow: 0 26px 64px rgba(0,0,0,.4); }
-
-  /* --- Polished mood: professional, put together, mature --- */
-  body.polished .mood-btn.active { background: #22314a; border-color: #22314a; color: #fff; box-shadow: 0 8px 18px rgba(34,49,74,.28); }
-  body.polished { background: #eceae6; color: #23272e; }
-  body.polished .wrap { background: #ffffff; border: 1px solid #cfd3d9; border-radius: 18px; box-shadow: 0 18px 44px rgba(35,39,46,.12); }
-  body.polished .eyebrow { background: none; border: none; padding: 0; color: #7a6a45; letter-spacing: 4px; }
-  body.polished h1 { font-family: Fraunces, Georgia, serif; font-size: 44px; font-weight: 600; color: #1d2430; text-shadow: none; }
-  body.polished .script-note { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: 17px; color: #6d7280; }
-  body.polished .bow-divider { color: #b08a4f; font-size: 15px; }
-  body.polished .sub { color: #5c6270; }
-  body.polished .menu-row button { border-color: #22314a; color: #22314a; box-shadow: none; }
-  body.polished .menu-panel { border-color: #cfd3d9; border-radius: 12px; box-shadow: 0 12px 28px rgba(35,39,46,.12); }
-  body.polished .menu-panel a, body.polished .menu-panel button.install-btn { font-family: Fraunces, Georgia, serif; font-size: 19px; color: #1d2430; }
-  body.polished .year-select { border: 1.5px solid #9aa3af; color: #1d2430; background: #fff; box-shadow: none; }
-  body.polished .year-title { font-family: Fraunces, Georgia, serif; font-weight: 600; letter-spacing: .5px; color: #1d2430; font-size: 40px; }
-  body.polished .year-title::before, body.polished .year-title::after { content: "\2014"; color: #b08a4f; font-size: 22px; vertical-align: 6px; }
-  body.polished .timeline input[type="range"] { accent-color: #22314a; }
-  body.polished .timeline-labels { color: #7a6a45; font-family: Inter, Arial, sans-serif; letter-spacing: 2px; }
-  body.polished .mood-label { color: #7a6a45; }
-  body.polished .nav-btn { border-color: #22314a; color: #22314a; background: #fff; box-shadow: none; }
-  body.polished .surprise-btn { background: #22314a; border-color: #22314a; box-shadow: none; }
-  body.polished .group-head { font-family: Inter, Arial, sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; background: #22314a; outline: none; color: #fff !important; padding: 8px 16px; box-shadow: none; }
-  body.polished .group-head::before { content: ""; }
-  body.polished .card { border: 1px solid #dde0e4; border-top: 3px solid #b08a4f; border-radius: 14px; box-shadow: 0 6px 18px rgba(35,39,46,.06); padding-top: 22px; }
-  body.polished .card::before { display: none; }
-  body.polished .card::after { content: ""; }
-  body.polished .card h2 { font-family: Fraunces, Georgia, serif; font-size: 22px; font-weight: 600; color: #1d2430; }
-  body.polished .card h2 .hicon { background: #eef0f3; }
-  body.polished .item-list li { border-bottom: 1px solid #e7e9ec; }
-  body.polished .item-list .t, body.polished .capsule .t { color: #39445a; }
-  body.polished .capsule { background: #fbfaf7; border: 1px solid #b08a4f; outline: none; border-radius: 14px; box-shadow: 0 10px 24px rgba(35,39,46,.08); }
-  body.polished .capsule .cap-eyebrow { color: #7a6a45; }
-  body.polished .capsule h2 { font-family: Fraunces, Georgia, serif; font-size: 26px; color: #1d2430; }
-  body.polished .capsule li { border-bottom: 1px solid #e7e0cf; }
-  body.polished .toon { border-color: #cfd3d9; border-radius: 12px; box-shadow: none; }
-  body.polished .footer { font-family: Inter, Arial, sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8a8f98; }
-  body.dark.polished { background: #17181c; }
-  body.dark.polished .wrap { background: #1f2126; border-color: #3a3f47; box-shadow: 0 18px 44px rgba(0,0,0,.4); }
-  body.dark.polished h1, body.dark.polished .year-title, body.dark.polished .capsule h2, body.dark.polished .card h2 { color: #eceef1; }
-  body.dark.polished .card { background: #24262c; border-color: #3a3f47; border-top-color: #b08a4f; }
-  body.dark.polished .capsule { background: #22241f; border-color: #b08a4f; }
-  body.dark.polished .group-head { background: #2c3a55; }
-
   /* --- Masculine mood: mature, strong, no frills --- */
-  body.masculine .mood-btn.active { background: #26221e; border-color: #26221e; color: #e8ddcb; box-shadow: 0 8px 18px rgba(38,34,30,.30); }
   body.masculine { background: #d8d2c7; color: #26221e; }
   body.masculine .wrap { background: #f4f1ea; border: 2px solid #4a4238; border-radius: 10px; box-shadow: 0 18px 40px rgba(38,34,30,.22); }
   body.masculine .eyebrow { background: #26221e; border-color: #26221e; color: #d9c9a8; letter-spacing: 4px; }
   body.masculine h1 { font-family: Oswald, Inter, sans-serif; font-size: 40px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #26221e; text-shadow: none; }
   body.masculine .script-note { font-family: Inter, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #6e6252; }
-  body.masculine .bow-divider { display: none; }
   body.masculine h1 span { color: #8a5a33 !important; }
   body.masculine .sub { color: #575046; }
   body.masculine .menu-row button { border-color: #26221e; color: #26221e; box-shadow: none; border-radius: 8px; }
@@ -295,7 +217,6 @@
   body.masculine .year-title::before, body.masculine .year-title::after { content: ""; }
   body.masculine .timeline input[type="range"] { accent-color: #26221e; }
   body.masculine .timeline-labels { color: #6e6252; font-family: Oswald, Inter, sans-serif; letter-spacing: 2px; }
-  body.masculine .mood-label { color: #6e6252; }
   body.masculine .nav-btn { border-color: #26221e; color: #26221e; background: #fff; box-shadow: none; border-radius: 8px; font-family: Oswald, Inter, sans-serif; text-transform: uppercase; letter-spacing: 1px; }
   body.masculine .surprise-btn { background: #26221e; border-color: #26221e; color: #e8ddcb; box-shadow: none; border-radius: 8px; font-family: Oswald, Inter, sans-serif; text-transform: uppercase; letter-spacing: 1px; }
   body.masculine .group-head { font-family: Oswald, Inter, sans-serif; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; background: #26221e; outline: none; color: #e8ddcb !important; padding: 9px 18px; box-shadow: none; border-radius: 6px; }
@@ -322,7 +243,7 @@
   body.dark.masculine .sub, body.dark.masculine .footer { color: #a89e88; }
 </style>
 </head>
-<body class="cowgirl">
+<body class="masculine">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <linearGradient id="gDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#374151"/><stop offset="100%" stop-color="#111827"/></linearGradient>
 <linearGradient id="gWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c98d54"/><stop offset="100%" stop-color="#7c4f26"/></linearGradient>
@@ -337,9 +258,8 @@
 <div class="wrap">
   <p class="eyebrow">&#9733; Ashley's Spot &#9733;</p>
   <h1>The Time Machine</h1>
-  <p class="script-note" id="scriptNote">a little trip back in time, darlin&#8217;</p>
+  <p class="script-note">1990&#8211;2009. The way it was.</p>
   <p class="sub">Pick a year, 1990 through 2009, and see what was popular: the movies, songs, cartoons, toys, prices, clothes, hairstyles, beauty, words, big moments, TV shows, video games, gadgets, books, snacks, sports moments, and heartthrobs.</p>
-  <div class="bow-divider" aria-hidden="true"><span>&#127872;</span></div>
   <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
   <nav id="menuPanel" class="menu-panel">
     <a href="index.html">Home</a>
@@ -354,13 +274,6 @@
     </div>
   </nav>
 
-  <div class="mood-row">
-    <p class="mood-label">Pick your mood</p>
-    <button class="mood-btn" id="moodGirlie" type="button" aria-pressed="false">&#127872; Girlie</button>
-    <button class="mood-btn" id="moodCowgirl" type="button" aria-pressed="true">&#129312; Cowgirl</button>
-    <button class="mood-btn" id="moodPolished" type="button" aria-pressed="false">&#128188; Polished</button>
-    <button class="mood-btn" id="moodMasculine" type="button" aria-pressed="false">&#127913; Masculine</button>
-  </div>
   <select class="year-select" id="yearSelect" aria-label="Choose a year"></select>
   <div class="timeline">
     <input type="range" id="yearSlider" min="1990" max="2009" step="1" value="1990" aria-label="Slide through the years">
@@ -374,7 +287,7 @@
   <p class="year-title" id="yearTitle">1990</p>
 
   <section class="capsule" aria-label="My Time Capsule">
-    <p class="cap-eyebrow">&#127872; My Time Capsule</p>
+    <p class="cap-eyebrow">My Time Capsule</p>
     <h2 id="capsuleTitle">If I lived in 1990&hellip;</h2>
     <ul id="capsuleList"></ul>
     <div class="shuffle-row"><button class="surprise-btn" id="shuffleCapsuleBtn" type="button">Shuffle My Picks</button></div>
@@ -643,25 +556,6 @@ themeToggle.addEventListener("change", function () {
   try { localStorage.setItem("ashleys-theme", this.checked ? "dark" : "light"); } catch (e) {}
 });
 
-var moodBtns = { girlie: document.getElementById("moodGirlie"), cowgirl: document.getElementById("moodCowgirl"), polished: document.getElementById("moodPolished"), masculine: document.getElementById("moodMasculine") };
-var moodLines = { girlie: "a little trip back in time, with love", cowgirl: "a little trip back in time, darlin\u2019", polished: "A look back at 1990\u20132009, beautifully put together.", masculine: "1990\u20132009. The way it was." };
-function applyMood(mood) {
-  if (!moodBtns[mood]) mood = "cowgirl";
-  ["girlie", "cowgirl", "polished", "masculine"].forEach(function (m) {
-    document.body.classList.toggle(m, m === mood);
-    moodBtns[m].classList.toggle("active", m === mood);
-    moodBtns[m].setAttribute("aria-pressed", m === mood ? "true" : "false");
-  });
-  document.getElementById("scriptNote").textContent = moodLines[mood];
-  try { localStorage.setItem("ashleys-tm-mood", mood); } catch (e) {}
-}
-var savedMood = "cowgirl";
-try { var sm = localStorage.getItem("ashleys-tm-mood"); if (sm === "girlie" || sm === "polished" || sm === "masculine") savedMood = sm; } catch (e) {}
-applyMood(savedMood);
-moodBtns.girlie.addEventListener("click", function () { applyMood("girlie"); });
-moodBtns.cowgirl.addEventListener("click", function () { applyMood("cowgirl"); });
-moodBtns.polished.addEventListener("click", function () { applyMood("polished"); });
-moodBtns.masculine.addEventListener("click", function () { applyMood("masculine"); });
 
 var deferredPrompt = null;
 window.addEventListener("beforeinstallprompt", function (e) { deferredPrompt = e; });
