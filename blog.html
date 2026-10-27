@@ -407,7 +407,7 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
   function setPref(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
   function inSeason() { var n = new Date(), m = n.getMonth(), d = n.getDate(); return (m === 9 && d >= 24) || (m === 10 && d <= 1); }
   function isOn() { var p = pref(); return p === 'on' || (p === 'auto' && inSeason()); }
-  var GLYPHS = [['\u{1F383}','6%','12%',34,7],['\u{1F47B}','88%','16%',30,8],['\u{1F987}','14%','68%',26,6],['\u{1F315}','92%','64%',30,9],['\u{1F578}\u{FE0F}','3%','38%',28,10],['\u{1F987}','78%','84%',22,7],['\u{1F383}','94%','40%',24,8],['\u{1F47B}','10%','88%',24,9]];
+  var GLYPHS = [['1f383','\u{1F383}','6%','12%',34,7],['1f47b','\u{1F47B}','88%','16%',30,8],['1f987','\u{1F987}','14%','68%',26,6],['1f315','\u{1F315}','92%','64%',30,9],['1f578','\u{1F578}\u{FE0F}','3%','38%',28,10],['1f987','\u{1F987}','78%','84%',22,7],['1f383','\u{1F383}','94%','40%',24,8],['1f47b','\u{1F47B}','10%','88%',24,9]];
   function apply() {
     var on = isOn();
     document.body.classList.toggle('halloween', on);
@@ -419,12 +419,12 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
     var wrap = document.querySelector('.wrap');
     if (wrap && !document.getElementById('hwBanner')) {
       var b = document.createElement('div'); b.id = 'hwBanner'; b.className = 'hw-banner';
-      b.innerHTML = '\u{1F383} Halloween at Ashley\u2019s Spot \u{1F47B}<span class="hw-sub">Spooky season: now through Nov 1 \u2014 or whenever you say so, queen \u{1F987}</span>';
+      b.innerHTML = '\u{1F383} Halloween at Ashley\u2019s Spot \u{1F47B}<span class="hw-sub">Spooky season: now through Nov 1 \u2014 or whenever you say so, queen \u{1F987} \u00B7 Emoji art: Twemoji (CC BY 4.0)</span>';
       wrap.insertBefore(b, wrap.firstChild);
     }
     if (!document.getElementById('hwLayer')) {
       var l = document.createElement('div'); l.id = 'hwLayer'; l.className = 'hw-layer'; l.setAttribute('aria-hidden', 'true');
-      GLYPHS.forEach(function (g) { var s = document.createElement('span'); s.textContent = g[0]; s.style.left = g[1]; s.style.top = g[2]; s.style.fontSize = g[3] + 'px'; s.style.animationDuration = g[4] + 's'; l.appendChild(s); });
+      GLYPHS.forEach(function (g) { var s = document.createElement('span'); var img = document.createElement('img'); img.src = 'hw-emoji/' + g[0] + '.svg'; img.alt = ''; img.draggable = false; img.style.width = g[4] + 'px'; img.style.height = g[4] + 'px'; img.style.display = 'block'; img.onerror = function () { s.textContent = g[1]; s.style.fontSize = g[4] + 'px'; }; s.appendChild(img); s.style.left = g[2]; s.style.top = g[3]; s.style.animationDuration = g[5] + 's'; l.appendChild(s); });
       document.body.appendChild(l);
     }
     if (!document.getElementById('hwToggle')) {
