@@ -5,49 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Blog — Ashley's Spot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; background: #f4f1ea; color: #22211e; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 32px 16px 48px; }
-  .wrap { max-width: 720px; margin: 0 auto; }
-  .backlink { font-size: 13px; margin: 0 0 18px; }
-  .backlink a { color: #8a7443; text-decoration: none; font-weight: 600; }
-  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a7443; font-weight: 600; margin: 0 0 10px; text-align: center; }
-  h1 { font-family: Fraunces, Georgia, serif; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.5px; margin: 0 0 8px; text-align: center; }
+  body { margin: 0; background: #d8d2c7; color: #26221e; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 32px 16px 48px; }
+  .wrap { max-width: 760px; margin: 0 auto; background: #f4f1ea; border: 2px solid #4a4238; border-radius: 12px; box-shadow: 0 18px 40px rgba(38,34,30,.22); padding: 30px 26px 26px; }
+  .backlink { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 18px; text-align: center; }
+  .backlink a { color: #8a5a33; text-decoration: none; font-weight: 600; }
+  .eyebrow { display: inline-block; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #d9c9a8; background: #26221e; border-radius: 6px; padding: 6px 14px; font-weight: 600; margin: 0 auto 12px; text-align: center; }
+  .wrap { text-align: center; }
+  .card, .blog-form, .post, .tools { text-align: left; }
+  h1 { font-family: Oswald, Inter, sans-serif; font-size: 42px; line-height: 1.1; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin: 0 0 8px; text-align: center; color: #26221e; }
   .sub { color: #6f6a62; font-size: 15px; margin: 0 0 14px; text-align: center; }
-  .divider { width: 48px; height: 2px; background: #b9975b; margin: 0 auto 24px; border: none; }
-  .card { background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 24px 20px; box-shadow: 0 2px 12px rgba(0,0,0,.05); }
-  h2 { font-family: Fraunces, Georgia, serif; font-size: 22px; font-weight: 600; margin: 28px 0 12px; }
+  .divider { width: 64px; height: 3px; background: #8a5a33; margin: 0 auto 24px; border: none; border-radius: 2px; }
+  .card { background: transparent; border: none; border-radius: 0; padding: 4px 2px 0; box-shadow: none; }
+  h2 { font-family: Oswald, Inter, sans-serif; font-size: 19px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #26221e; margin: 30px 0 14px; padding-bottom: 9px; border-bottom: 2px solid #e3d9c3; }
   h2:first-child { margin-top: 0; }
   .blog-form { display: flex; flex-direction: column; gap: 10px; }
-  .blog-form input[type="text"], .blog-form textarea { font-family: Inter, Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.6; color: #22211e; border: 1px solid #c9c2b6; border-radius: 12px; padding: 11px 12px; background: #fff; width: 100%; min-width: 0; }
+  .blog-form input[type="text"], .blog-form textarea { font-family: Inter, Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.6; color: #26221e; border: 1.5px solid #c9c2b6; border-radius: 10px; padding: 12px 13px; background: #fbf9f4; width: 100%; min-width: 0; }
   .blog-form textarea { min-height: 160px; resize: vertical; }
   .form-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .btn { font-size: 14px; font-weight: 600; background: #22211e; color: #fff; border: none; border-radius: 999px; padding: 11px 22px; cursor: pointer; }
-  .btn.secondary { background: #fff; color: #22211e; border: 1.5px solid #c9c2b6; }
-  .btn:focus-visible, .blog-form input:focus-visible, .blog-form textarea:focus-visible { outline: 2px solid #b9975b; outline-offset: 2px; }
+  .btn { font-family: Oswald, Inter, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: #26221e; color: #f5f2ec; border: 1.5px solid #26221e; border-radius: 8px; padding: 12px 24px; cursor: pointer; transition: background .15s, border-color .15s; }
+  .btn:hover { background: #8a5a33; border-color: #8a5a33; }
+  .btn.secondary { background: #fff; color: #26221e; border: 1.5px solid #26221e; }
+  .btn.secondary:hover { background: #26221e; color: #f5f2ec; }
+  .btn:focus-visible, .blog-form input:focus-visible, .blog-form textarea:focus-visible { outline: 2px solid #8a5a33; outline-offset: 2px; }
   .privacy-note { font-size: 12.5px; color: #8a857e; margin: 0; }
-  .post { border-top: 1px solid #eee9df; padding: 20px 0 22px; cursor: pointer; }
+  .post { border-top: 1px solid #e3d9c3; border-left: 3px solid transparent; padding: 20px 10px 22px 14px; cursor: pointer; border-radius: 0 8px 8px 0; transition: background .15s, border-left-color .15s; }
   .post:first-of-type { border-top: none; padding-top: 4px; }
   .post-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-  .post-title { margin: 0; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 22px; line-height: 1.3; }
-  .post-date { margin: 4px 0 10px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #8a857e; }
-  .post-body { margin: 0; font-size: 15.5px; line-height: 1.65; color: #3a3835; white-space: pre-wrap; }
-  .read-more { margin: 10px 0 0; font-size: 13px; font-weight: 600; color: #8a7443; }
+  .post-title { margin: 0; font-family: Oswald, Inter, sans-serif; font-weight: 600; font-size: 21px; letter-spacing: .5px; line-height: 1.3; color: #26221e; }
+  .post-date { margin: 4px 0 10px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #8a5a33; font-weight: 600; }
+  .post-body { margin: 0; font-size: 15.5px; line-height: 1.65; color: #3c3830; white-space: pre-wrap; }
+  .read-more { margin: 10px 0 0; font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; color: #8a5a33; }
   .post-actions { flex: 0 0 auto; display: flex; gap: 4px; }
-  .icon-btn { background: none; border: none; color: #bbb; font-size: 13px; font-weight: 600; cursor: pointer; padding: 2px 6px; }
-  .icon-btn:hover { color: #8a7443; }
+  .icon-btn { background: none; border: none; color: #a89e88; font-size: 13px; font-weight: 600; cursor: pointer; padding: 2px 6px; }
+  .icon-btn:hover { color: #8a5a33; }
   .icon-btn.del:hover { color: #c62828; }
-  @media (hover: hover) { .post:hover .post-title { text-decoration: underline; text-underline-offset: 3px; } }
+  @media (hover: hover) { .post:hover { background: #fbf9f4; border-left-color: #c8a165; } .post:hover .post-title { color: #8a5a33; } }
   .empty { font-style: italic; color: #8a857e; font-size: 15.5px; line-height: 1.6; margin: 0; }
   .tools { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
   .hint { font-size: 12.5px; color: #8a857e; margin-top: 16px; text-align: center; }
   .menu-row { text-align: center; margin: 0 0 18px; }
-  .menu-row button { font-family: Inter, Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #22211e; border: 1.5px solid #22211e; border-radius: 999px; padding: 8px 18px; cursor: pointer; }
-  .menu-panel { display: none; background: #fff; border: 1px solid #ddd7cc; border-radius: 16px; padding: 8px 16px; margin: 0 auto 18px; max-width: 720px; text-align: center; }
+  .menu-row button { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #26221e; border: 1.5px solid #26221e; border-radius: 8px; padding: 9px 22px; cursor: pointer; }
+  .menu-panel { display: none; background: #fff; border: 1px solid #cfc8b8; border-radius: 10px; padding: 6px 0; margin: 10px auto 18px; max-width: 420px; text-align: center; box-shadow: 0 14px 30px rgba(38,34,30,.12); }
   .menu-panel.open { display: block; }
-  .menu-panel a { display: block; font-size: 15px; font-weight: 600; color: #22211e; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #eee9df; }
-  .menu-panel button.install-btn { display: block; width: 100%; font-family: inherit; font-size: 15px; font-weight: 600; color: #22211e; background: none; border: none; border-bottom: 1px solid #eee9df; padding: 10px 0; cursor: pointer; }
+  .menu-panel a { display: block; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; text-decoration: none; padding: 11px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; background: none; border: none; border-bottom: 1px solid #eee9df; padding: 11px 0; cursor: pointer; }
   .menu-panel button.install-btn:last-child { border-bottom: none; }
   body.dark .menu-panel button.install-btn { color: #f4f1ea; border-bottom-color: #3a3631; }
   .menu-panel a:last-of-type { border-bottom: none; }
@@ -61,20 +65,28 @@
   .theme-switch input:checked + .slider::before { transform: translateX(22px); }
   .theme-switch input:focus-visible + .slider { outline: 2px solid #b9975b; outline-offset: 2px; }
 
-  body.dark { background: #1c1a17; color: #f4f1ea; }
-  body.dark .eyebrow { color: #d4b978; }
+  body.dark { background: #141210; color: #f4f1ea; }
+  body.dark .wrap { background: #1e1b17; border-color: #57503f; box-shadow: 0 18px 40px rgba(0,0,0,.5); }
+  body.dark h1 { color: #f2ead6; }
+  body.dark h2 { color: #f2ead6; border-bottom-color: #3a3631; }
+  body.dark .post-title { color: #f4f1ea; }
+  body.dark .post:hover { background: #26221d; }
+  body.dark .modal { background: #26221d; border-color: #57503f; }
+  body.dark .modal-title { color: #f2ead6; }
+  body.dark .eyebrow { color: #d9c9a8; }
   body.dark .sub, body.dark .privacy-note, body.dark .hint, body.dark .post-date, body.dark .empty { color: #b8b0a3; }
   body.dark .backlink a { color: #d4b978; }
   body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
   body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
   body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
   body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
-  body.dark .card { background: #2a2723; border-color: #44403a; }
-  body.dark .blog-form input[type="text"], body.dark .blog-form textarea { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .card { background: transparent; border-color: transparent; }
+  body.dark .blog-form input[type="text"], body.dark .blog-form textarea { background: #26221d; color: #f4f1ea; border-color: #55504a; }
   body.dark .post { border-top-color: #3a3631; }
   body.dark .post-body { color: #d8d2c8; }
   body.dark .read-more { color: #d4b978; }
-  body.dark .btn.secondary { background: #2a2723; color: #f4f1ea; border-color: #55504a; }
+  body.dark .btn { background: #c8a165; border-color: #c8a165; color: #171410; }
+  body.dark .btn.secondary { background: #26221d; color: #f4f1ea; border-color: #8a857e; }
   body.dark .modal { background: #2a2723; }
   body.dark .modal-body { color: #d8d2c8; }
   body.dark .modal-date { border-bottom-color: #3a3631; }
@@ -82,13 +94,13 @@
 
   .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 100; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
   .modal-backdrop.open { display: flex; }
-  .modal { background: #fff; border-radius: 16px; width: 100%; max-width: 600px; padding: 24px 22px 28px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+  .modal { background: #fbf9f4; border: 2px solid #4a4238; border-radius: 12px; width: 100%; max-width: 600px; padding: 24px 22px 28px; box-shadow: 0 24px 50px rgba(0,0,0,0.4); }
   .modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-  .modal-title { margin: 0; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.3; }
-  .modal-date { margin: 6px 0 14px; padding-bottom: 12px; border-bottom: 1px solid #eee9df; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #8a857e; }
+  .modal-title { margin: 0; font-family: Oswald, Inter, sans-serif; font-weight: 600; font-size: 23px; letter-spacing: .5px; line-height: 1.3; color: #26221e; }
+  .modal-date { margin: 6px 0 14px; padding-bottom: 12px; border-bottom: 2px solid #e3d9c3; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #8a5a33; font-weight: 600; }
   .modal-body { margin: 0; font-size: 16px; line-height: 1.7; color: #3a3835; white-space: pre-wrap; }
   .modal-close { flex: 0 0 auto; background: none; border: none; color: #bbb; font-size: 28px; line-height: 1; cursor: pointer; padding: 0; }
-  .modal-close:hover { color: #22211e; }
+  .modal-close:hover { color: #8a5a33; }
   @media (max-width: 520px) {
     body { padding: 24px 10px 40px; }
     h1 { font-size: 32px; }
@@ -115,6 +127,7 @@
     <a href="blog.html">Blog</a>
     <a href="jukebox.html">Jukebox</a>
     <a href="time-machine.html">Time Machine</a>
+    <a href="lite-brite.html">Lite-Brite</a>
       <button class="install-btn" id="installBtn" type="button">Install App</button>
       <div class="theme-toggle">
         <span>Light</span>
