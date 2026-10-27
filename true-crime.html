@@ -8,131 +8,108 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; background: #d8d2c7; color: #26221e; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 32px 16px 48px; }
-  .wrap { max-width: 820px; margin: 0 auto; background: #f4f1ea; border: 2px solid #4a4238; border-radius: 12px; box-shadow: 0 18px 40px rgba(38,34,30,.22); padding: 30px 30px 26px; text-align: center; }
+  body { margin: 0; background: #060607; background-image: radial-gradient(1200px 700px at 50% -10%, #17171b 0%, #060607 55%); color: #e9e2d0; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 32px 16px 48px; }
+  .wrap { max-width: 820px; margin: 0 auto; background: #0c0c0e; border: 2px solid #2a2a2f; border-radius: 12px; box-shadow: 0 18px 50px rgba(0,0,0,.85); padding: 30px 30px 26px; text-align: center; }
   .backlink { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 18px; }
-  .backlink a { color: #8a5a33; text-decoration: none; font-weight: 600; }
-  .eyebrow { display: inline-block; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #d9c9a8; background: #26221e; border-radius: 6px; padding: 6px 14px; font-weight: 600; margin: 0 auto 14px; }
-  h1.masthead { font-family: Oswald, Inter, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; font-size: 42px; margin: 0; }
-  .tagline { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: 17px; color: #6f6a62; margin: 8px auto 0; max-width: 520px; line-height: 1.5; }
-  .btn { font-family: Oswald, Inter, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: #26221e; color: #f5f2ec; border: 1.5px solid #26221e; border-radius: 8px; padding: 12px 24px; cursor: pointer; transition: background .15s, border-color .15s; }
-  .btn:hover { background: #8a5a33; border-color: #8a5a33; }
+  .backlink a { color: #c8a165; text-decoration: none; font-weight: 600; }
+  .eyebrow { display: inline-block; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #f0c9c2; background: #20060a; border: 1px solid #8e2f24; border-radius: 6px; padding: 6px 14px; font-weight: 600; margin: 0 auto 14px; }
+  h1.masthead { font-family: Oswald, Inter, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; font-size: 42px; margin: 0; color: #ece5d3; text-shadow: 0 3px 22px rgba(142,47,36,.35); }
+  .tagline { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: 17px; color: #a49c8b; margin: 8px auto 0; max-width: 520px; line-height: 1.5; }
+  .btn { font-family: Oswald, Inter, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: #1b1b1f; color: #ece5d3; border: 1.5px solid #3d3d44; border-radius: 8px; padding: 12px 24px; cursor: pointer; transition: background .15s, border-color .15s; }
+  .btn:hover { background: #8e2f24; border-color: #8e2f24; }
   .btn.red { background: #8e2f24; border-color: #8e2f24; }
   .btn.red:hover { background: #6f231b; border-color: #6f231b; }
-  .btn.ghost { background: transparent; color: #f2ead6; border-color: #8a8172; }
-  .btn.ghost:hover { background: #3a352d; border-color: #8a8172; }
+  .btn.ghost { background: transparent; color: #f2ead6; border-color: #55555e; }
+  .btn.ghost:hover { background: #1b1b1f; border-color: #55555e; }
   .menu-row { text-align: center; margin: 0 0 18px; }
-  .menu-row button { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #26221e; border: 1.5px solid #26221e; border-radius: 8px; padding: 9px 22px; cursor: pointer; }
-  .menu-panel { display: none; background: #fff; border: 1px solid #cfc8b8; border-radius: 10px; padding: 6px 0; margin: 10px auto 18px; max-width: 420px; text-align: center; box-shadow: 0 14px 30px rgba(38,34,30,.12); position: relative; z-index: 5; }
+  .menu-row button { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #ece5d3; border: 1.5px solid #55555e; border-radius: 8px; padding: 9px 22px; cursor: pointer; }
+  .menu-panel { display: none; background: #101013; border: 1px solid #2c2c31; border-radius: 10px; padding: 6px 0; margin: 10px auto 18px; max-width: 420px; text-align: center; box-shadow: 0 14px 30px rgba(0,0,0,.6); position: relative; z-index: 5; }
   .menu-panel.open { display: block; }
-  .menu-panel a { display: block; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; text-decoration: none; padding: 11px 0; border-bottom: 1px solid #eee9df; }
+  .menu-panel a { display: block; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #ece5d3; text-decoration: none; padding: 11px 0; border-bottom: 1px solid #232327; }
   .menu-panel a:last-of-type { border-bottom: none; }
-  .menu-panel button.install-btn { display: block; width: 100%; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; background: none; border: none; border-bottom: 1px solid #eee9df; padding: 11px 0; cursor: pointer; }
-  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #ece5d3; background: none; border: none; border-bottom: 1px solid #232327; padding: 11px 0; cursor: pointer; }
+  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #232327; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #9d9687; }
   .theme-switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
   .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
-  .theme-switch .slider { position: absolute; inset: 0; background: #c9c2b6; border-radius: 999px; transition: .25s; }
-  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: .25s; }
-  .theme-switch input:checked + .slider { background: #b9975b; }
+  .theme-switch .slider { position: absolute; inset: 0; background: #3a3a40; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #e8e2d0; border-radius: 50%; transition: .25s; }
+  .theme-switch input:checked + .slider { background: #8e2f24; }
   .theme-switch input:checked + .slider::before { transform: translateX(22px); }
   .tape-strip { height: 15px; border-radius: 3px; margin: 18px auto 20px; max-width: 560px; background: repeating-linear-gradient(45deg, #e3c33c 0 20px, #201c17 20px 40px); box-shadow: inset 0 -2px 3px rgba(0,0,0,.25); }
 
   /* ---------- The Board ---------- */
-  .board { background: #2a251f; background-image: radial-gradient(#3b332a 1.2px, transparent 1.4px); background-size: 22px 22px; border: 2px solid #17140f; border-radius: 12px; padding: 22px 20px 24px; margin-top: 22px; box-shadow: inset 0 0 40px rgba(0,0,0,.55); text-align: left; }
+  .board { background: #0a0a0c; background-image: radial-gradient(#1e1e23 1.2px, transparent 1.4px); background-size: 22px 22px; border: 2px solid #000; border-radius: 12px; padding: 22px 20px 24px; margin-top: 22px; box-shadow: inset 0 0 40px rgba(0,0,0,.55); text-align: left; }
   .board-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-  .board-head h2 { font-family: "Special Elite", "Courier New", monospace; color: #efe6cc; font-size: 19px; margin: 0; letter-spacing: 1px; }
-  .board-progress { font-family: Oswald, Inter, sans-serif; font-size: 11.5px; letter-spacing: 1.6px; text-transform: uppercase; color: #c8b98d; font-weight: 600; }
-  .pin-card { background: #f7efdb; color: #2a251d; border-radius: 6px; padding: 18px 18px 16px; margin-top: 16px; box-shadow: 0 10px 22px rgba(0,0,0,.45); position: relative; transform: rotate(-.5deg); }
+  .board-head h2 { font-family: "Special Elite", "Courier New", monospace; color: #e8dfc8; font-size: 19px; margin: 0; letter-spacing: 1px; }
+  .board-progress { font-family: Oswald, Inter, sans-serif; font-size: 11.5px; letter-spacing: 1.6px; text-transform: uppercase; color: #9d9687; font-weight: 600; }
+  .pin-card { background: #141416; color: #e6dfca; border: 1px solid #2e2e33; border-radius: 6px; padding: 18px 18px 16px; margin-top: 16px; box-shadow: 0 10px 22px rgba(0,0,0,.45); position: relative; transform: rotate(-.5deg); }
   .pin-card::before { content: ""; position: absolute; top: -9px; left: 50%; margin-left: -9px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #e0665c, #8e2f24 70%); box-shadow: 0 3px 5px rgba(0,0,0,.5); }
   .pin-flex { display: flex; gap: 18px; }
   .pin-photo { flex: 0 0 128px; }
   .pin-photo img { width: 128px; height: 150px; object-fit: cover; border: 5px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.3); transform: rotate(-2deg); background: #ddd; }
   .pin-body h3 { font-family: "Special Elite", "Courier New", monospace; font-size: 22px; margin: 2px 0 4px; line-height: 1.25; }
-  .pin-meta { font-family: Oswald, Inter, sans-serif; font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; color: #8a5a33; font-weight: 600; margin-bottom: 8px; }
-  .pin-body p { font-size: 14.5px; line-height: 1.6; margin: 0 0 12px; color: #453e31; }
+  .pin-meta { font-family: Oswald, Inter, sans-serif; font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; color: #c8a165; font-weight: 600; margin-bottom: 8px; }
+  .pin-body p { font-size: 14.5px; line-height: 1.6; margin: 0 0 12px; color: #c9c2ae; }
   .stamp { display: inline-block; font-family: "Special Elite", "Courier New", monospace; font-size: 13px; letter-spacing: 2px; padding: 3px 10px 2px; border: 2.5px solid currentColor; border-radius: 4px; transform: rotate(-5deg); opacity: .85; text-transform: uppercase; }
-  .stamp.unsolved { color: #a33327; }
-  .stamp.solved { color: #4e7a3a; }
-  .stamp.acquitted { color: #7a6a2f; }
-  .stamp.identified { color: #3a6a8a; }
-  .stamp.missing { color: #3a6a8a; }
-  .stamp.deathrow { color: #7b2d8b; }
+  .stamp.unsolved { color: #e0685c; }
+  .stamp.solved { color: #8fbf6f; }
+  .stamp.acquitted { color: #cbb26a; }
+  .stamp.identified { color: #7fb0d4; }
+  .stamp.missing { color: #7fb0d4; }
+  .stamp.deathrow { color: #c88ae0; }
   .board-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
 
   /* ---------- Filters + folders ---------- */
   .filters { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 26px 0 4px; }
-  .filters button { font-family: Oswald, Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase; background: #fff; color: #26221e; border: 1.5px solid #26221e; border-radius: 999px; padding: 9px 18px; cursor: pointer; }
-  .filters button.on { background: #26221e; color: #f5f2ec; }
+  .filters button { font-family: Oswald, Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase; background: #121214; color: #e6dfca; border: 1.5px solid #4a4a52; border-radius: 999px; padding: 9px 18px; cursor: pointer; }
+  .filters button.on { background: #8e2f24; border-color: #8e2f24; color: #fff; }
   .folder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; text-align: left; }
-  .folder { background: linear-gradient(180deg, #efdfae, #e4d096); border: 1px solid #c3ac72; border-radius: 4px 12px 10px 10px; padding: 16px 16px 14px; cursor: pointer; position: relative; box-shadow: 0 6px 14px rgba(38,34,30,.16); transition: transform .15s, box-shadow .15s; color: #2a251d; }
-  .folder:hover { transform: translateY(-3px) rotate(-.3deg); box-shadow: 0 12px 22px rgba(38,34,30,.22); }
-  .folder::before { content: ""; position: absolute; top: -9px; left: 14px; width: 88px; height: 10px; background: #efdfae; border: 1px solid #c3ac72; border-bottom: none; border-radius: 6px 10px 0 0; }
+  .folder { background: linear-gradient(180deg, #17171b, #101013); border: 1px solid #2c2c31; border-radius: 4px 12px 10px 10px; padding: 16px 16px 14px; cursor: pointer; position: relative; box-shadow: 0 6px 14px rgba(0,0,0,.55); transition: transform .15s, box-shadow .15s; color: #e6dfca; }
+  .folder:hover { transform: translateY(-3px) rotate(-.3deg); box-shadow: 0 12px 22px rgba(0,0,0,.7); border-color: #8e2f24; }
+  .folder::before { content: ""; position: absolute; top: -9px; left: 14px; width: 88px; height: 10px; background: #17171b; border: 1px solid #2c2c31; border-bottom: none; border-radius: 6px 10px 0 0; }
   .folder .f-top { display: flex; gap: 12px; }
   .folder img { width: 64px; height: 76px; object-fit: cover; border: 3.5px solid #fff; box-shadow: 0 3px 7px rgba(0,0,0,.28); transform: rotate(-2.5deg); background: #ddd; flex: 0 0 auto; }
   .folder h3 { font-family: "Special Elite", "Courier New", monospace; font-size: 17.5px; margin: 1px 0 3px; line-height: 1.3; }
-  .folder .f-meta { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: #7a5a20; font-weight: 600; }
-  .folder .f-blurb { font-size: 13.5px; line-height: 1.55; color: #4a4231; margin: 9px 0 10px; }
+  .folder .f-meta { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: #c8a165; font-weight: 600; }
+  .folder .f-blurb { font-size: 13.5px; line-height: 1.55; color: #bdb5a0; margin: 9px 0 10px; }
   .folder .f-foot { display: flex; justify-content: space-between; align-items: center; }
   .folder .stamp { font-size: 11px; padding: 2px 8px 1px; }
-  .folder .opened-mark { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: #8a8172; font-weight: 600; }
-  .folder.has-note .opened-mark { color: #8e2f24; }
-  .grid-empty { grid-column: 1 / -1; text-align: center; color: #6f6a62; font-family: Fraunces, Georgia, serif; font-style: italic; padding: 18px 0; }
+  .folder .opened-mark { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: #8f897c; font-weight: 600; }
+  .grid-empty { grid-column: 1 / -1; text-align: center; color: #8f897c; font-family: Fraunces, Georgia, serif; font-style: italic; padding: 18px 0; }
 
   /* ---------- Daily blotter (paper) ---------- */
-  .paper-sec { text-align: left; margin-top: 34px; border-top: 3.5px solid #26221e; padding-top: 6px; }
+  .paper-sec { text-align: left; margin-top: 34px; border-top: 3.5px solid #8e2f24; padding-top: 6px; }
   .paper-sec h2 { font-family: Oswald, Inter, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; margin: 10px 0 4px; }
-  .paper-sec .sec-note { font-size: 13.5px; color: #6f6a62; margin: 0 0 6px; line-height: 1.55; }
+  .paper-sec .sec-note { font-size: 13.5px; color: #9d9687; margin: 0 0 6px; line-height: 1.55; }
   .crime-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px; }
-  .crime-item { padding: 10px 0 9px; border-bottom: 1px solid #ddd3ba; }
+  .crime-item { padding: 10px 0 9px; border-bottom: 1px solid #26262b; }
   .crime-item a { text-decoration: none; color: inherit; display: block; }
   .crime-item h4 { font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: 16.5px; line-height: 1.32; margin: 0 0 4px; }
-  .crime-item a:hover h4 { color: #8e2f24; }
-  .crime-meta { font-size: 11px; letter-spacing: 1.1px; text-transform: uppercase; color: #7a7260; font-weight: 600; }
-  .crime-meta .src { color: #8a5a33; }
+  .crime-item a:hover h4 { color: #e0685c; }
+  .crime-meta { font-size: 11px; letter-spacing: 1.1px; text-transform: uppercase; color: #8f897c; font-weight: 600; }
+  .crime-meta .src { color: #c8a165; }
   .paper-two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 34px; }
-  .credits { font-size: 12.5px; color: #7a7260; line-height: 1.6; max-width: 600px; margin: 26px auto 0; text-align: center; }
+  .credits { font-size: 12.5px; color: #8f897c; line-height: 1.6; max-width: 600px; margin: 26px auto 0; text-align: center; }
 
   /* ---------- Modal ---------- */
-  .modal-bk { display: none; position: fixed; inset: 0; background: rgba(18,15,11,.72); z-index: 60; padding: 20px 12px; overflow-y: auto; }
+  .modal-bk { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 60; padding: 20px 12px; overflow-y: auto; }
   .modal-bk.open { display: block; }
-  .file-sheet { max-width: 640px; margin: 26px auto; background: #f7efdb; color: #2a251d; border-radius: 8px; padding: 26px 26px 22px; box-shadow: 0 24px 60px rgba(0,0,0,.5); position: relative; text-align: left; }
-  .file-sheet::before { content: ""; position: absolute; top: 0; bottom: 0; left: 34px; width: 1.5px; background: rgba(163,51,39,.35); }
+  .file-sheet { max-width: 640px; margin: 26px auto; background: #101013; color: #e6dfca; border: 1px solid #2e2e33; border-radius: 8px; padding: 26px 26px 22px; box-shadow: 0 24px 60px rgba(0,0,0,.5); position: relative; text-align: left; }
+  .file-sheet::before { content: ""; position: absolute; top: 0; bottom: 0; left: 34px; width: 1.5px; background: rgba(224,104,92,.35); }
   .file-inner { padding-left: 26px; }
   .file-head { display: flex; gap: 18px; }
   .file-head img { width: 118px; height: 140px; object-fit: cover; border: 5px solid #fff; box-shadow: 0 5px 12px rgba(0,0,0,.3); transform: rotate(-2deg); background: #ddd; flex: 0 0 auto; }
   .file-head h3 { font-family: "Special Elite", "Courier New", monospace; font-size: 25px; margin: 2px 0 5px; line-height: 1.25; }
-  .file-head .f-meta { font-family: Oswald, Inter, sans-serif; font-size: 11.5px; letter-spacing: 1.8px; text-transform: uppercase; color: #8a5a33; font-weight: 600; margin-bottom: 10px; }
-  .file-story { font-size: 15px; line-height: 1.7; color: #3d362a; margin: 16px 0 6px; }
-  .file-h { font-family: Oswald, Inter, sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: #8e2f24; margin: 20px 0 8px; }
-  .file-facts { margin: 0; padding-left: 20px; font-size: 14.5px; line-height: 1.65; color: #3d362a; }
+  .file-head .f-meta { font-family: Oswald, Inter, sans-serif; font-size: 11.5px; letter-spacing: 1.8px; text-transform: uppercase; color: #c8a165; font-weight: 600; margin-bottom: 10px; }
+  .file-story { font-size: 15px; line-height: 1.7; color: #ddd6c0; margin: 16px 0 6px; }
+  .file-h { font-family: Oswald, Inter, sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: #e0685c; margin: 20px 0 8px; }
+  .file-facts { margin: 0; padding-left: 20px; font-size: 14.5px; line-height: 1.65; color: #ddd6c0; }
   .file-facts li { margin-bottom: 6px; }
-  .juicy { background: #fdf6da; border: 1.5px dashed #b98a2f; border-radius: 8px; padding: 12px 14px; font-size: 14.5px; line-height: 1.6; color: #55451c; margin-top: 6px; }
-  .juicy b { font-family: Oswald, Inter, sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #8e2f24; display: block; margin-bottom: 4px; }
-  .notes-area { width: 100%; min-height: 92px; border: 1.5px solid #c3ac72; border-radius: 8px; background: #fffdf4; font-family: "Special Elite", "Courier New", monospace; font-size: 14.5px; line-height: 1.6; padding: 10px 12px; color: #2a251d; resize: vertical; }
-  .notes-row { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
-  .notes-saved { font-size: 12px; color: #7a7260; font-style: italic; }
-  .file-close { position: absolute; top: 12px; right: 14px; background: #26221e; color: #f5f2ec; border: none; border-radius: 50%; width: 34px; height: 34px; font-size: 16px; cursor: pointer; line-height: 1; }
+  .juicy { background: #17090c; border: 1.5px dashed #8e2f24; border-radius: 8px; padding: 12px 14px; font-size: 14.5px; line-height: 1.6; color: #e3cfae; margin-top: 6px; }
+  .juicy b { font-family: Oswald, Inter, sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #e0685c; display: block; margin-bottom: 4px; }
+  .file-close { position: absolute; top: 12px; right: 14px; background: #8e2f24; color: #f5f2ec; border: none; border-radius: 50%; width: 34px; height: 34px; font-size: 16px; cursor: pointer; line-height: 1; }
 
-  body.dark { background: #141210; color: #f4f1ea; }
-  body.dark .wrap { background: #1e1b17; border-color: #57503f; box-shadow: 0 18px 40px rgba(0,0,0,.5); }
-  body.dark .backlink a { color: #d4b978; }
-  body.dark .tagline { color: #b8b0a3; }
-  body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
-  body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
-  body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
-  body.dark .menu-panel button.install-btn { color: #f4f1ea; border-bottom-color: #3a3631; }
-  body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
-  body.dark .filters button { background: #2a2723; color: #f4f1ea; border-color: #8a857e; }
-  body.dark .filters button.on { background: #f4f1ea; color: #26221e; }
-  body.dark .folder { background: linear-gradient(180deg, #5c4e2e, #4c4023); border-color: #77683f; color: #f2e8cd; }
-  body.dark .folder::before { background: #5c4e2e; border-color: #77683f; }
-  body.dark .folder .f-meta { color: #d4b978; }
-  body.dark .folder .f-blurb { color: #e0d5b3; }
-  body.dark .paper-sec { border-top-color: #ece5d3; }
-  body.dark .paper-sec .sec-note { color: #b8ae97; }
-  body.dark .crime-item { border-bottom-color: #3e382f; }
-  body.dark .crime-meta { color: #a3987f; }
-  body.dark .credits { color: #a3987f; }
+  /* This page is permanently after-dark — the Light/Dark switch still sets your preference for the rest of the Spot. */
   @media (max-width: 620px) {
     body { padding: 24px 10px 40px; }
     .wrap { padding: 22px 16px 20px; }
@@ -232,13 +209,13 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
   </nav>
 
   <h1 class="masthead">True Crime</h1>
-  <p class="tagline">The case files — famous mysteries, solved and unsolved, pinned up for one detective: you. Mind the red string.</p>
+  <p class="tagline">Fourteen case files — every detail true, every juicy bit included. The lights are low and the string is red. Pick a file, detective, and read.</p>
   <div class="tape-strip" aria-hidden="true"></div>
 
   <section class="board" aria-label="Case board">
     <div class="board-head">
       <h2>&#128204; CASE OF THE DAY</h2>
-      <span class="board-progress" id="progressLine">Files opened: 0 of 14</span>
+      <span class="board-progress">14 files on the board · every detail true</span>
     </div>
     <div id="pinCard"></div>
     <div class="board-actions">
@@ -417,7 +394,7 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
         "During his first escape he was free for six days, recaptured after stealing cars and sleeping rough in the Colorado mountains.",
         "His second escape lasted 46 days and took him all the way to Tallahassee, Florida.",
         "Bite-mark evidence and eyewitness testimony helped secure his Florida convictions.",
-        "Even decades later, investigators continue closing his cases — DNA testing this year has linked him to yet another Utah case from 1974."
+        "Even decades later, his cases keep closing — in April 2026, preserved evidence produced a DNA match to Bundy in the 1974 Utah murder of 17-year-old Laura Ann Aime."
       ],
       juicy: "The law-library leap is pure movie scene, except it happened: a judge let Bundy — acting as his own lawyer — visit the courthouse library unsupervised. He opened a window, jumped two stories, and strolled away in the middle of his own case." },
     { id: "btk", name: "BTK — Dennis Rader", years: "1974 – 1991 · Caught 2005", place: "Wichita, Kansas",
@@ -494,21 +471,10 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
       juicy: "Scotland Yard was so flooded with hoax letters and copycat claims that they printed posters of the 'Dear Boss' handwriting and plastered them around London, hoping a neighbor, a coworker — anyone — would recognize the hand. Nobody ever did." }
   ];
 
-  var STORE_KEY = "ashleys-casefiles-v1";
-  var store = { opened: [], notes: {} };
-  try {
-    var raw = localStorage.getItem(STORE_KEY);
-    if (raw) { var p = JSON.parse(raw); if (p && p.opened) store = p; }
-  } catch (e) {}
-  function saveStore() { try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) {} }
   function byId(id) { for (var i = 0; i < CASES.length; i++) if (CASES[i].id === id) return CASES[i]; return null; }
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
   function stampHTML(c) { return "<span class='stamp " + c.stampClass + "'>" + esc(c.stamp) + "</span>"; }
 
-  function renderProgress() {
-    document.getElementById("progressLine").textContent =
-      "Files opened: " + store.opened.length + " of " + CASES.length;
-  }
   function renderPin() {
     var now = new Date();
     var start = new Date(now.getFullYear(), 0, 0);
@@ -538,15 +504,13 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
     CASES.forEach(function (c) {
       if (!matches(c)) return;
       shown++;
-      var opened = store.opened.indexOf(c.id) >= 0;
-      var hasNote = !!(store.notes[c.id] && store.notes[c.id].trim());
-      html += "<article class='folder" + (hasNote ? " has-note" : "") + "' data-open='" + c.id + "' tabindex='0' role='button' aria-label='Open case file: " + esc(c.name) + "'>" +
+      html += "<article class='folder' data-open='" + c.id + "' tabindex='0' role='button' aria-label='Open case file: " + esc(c.name) + "'>" +
         "<div class='f-top'>" +
         (c.photo ? "<img src='" + c.photo + "' alt='" + esc(c.photoCredit) + "'>" : "") +
         "<div><h3>" + esc(c.name) + "</h3><div class='f-meta'>" + esc(c.years) + "<br>" + esc(c.place) + "</div></div></div>" +
         "<p class='f-blurb'>" + esc(c.blurb) + "</p>" +
         "<div class='f-foot'>" + stampHTML(c) +
-        "<span class='opened-mark'>" + (hasNote ? "✎ Notes filed" : (opened ? "File opened ✓" : "Sealed file")) + "</span></div></article>";
+        "<span class='opened-mark'>Open file &#9656;</span></div></article>";
     });
     if (!shown) html = "<p class='grid-empty'>No files in this drawer yet, detective.</p>";
     grid.innerHTML = html;
@@ -555,7 +519,6 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
   function openFile(id) {
     var c = byId(id); if (!c) return;
     modalCase = c;
-    if (store.opened.indexOf(id) < 0) { store.opened.push(id); saveStore(); }
     var html = "<div class='file-head'>" +
       (c.photo ? "<img src='" + c.photo + "' alt='" + esc(c.photoCredit) + "'>" : "") +
       "<div><h3 id='fileName'>" + esc(c.name) + "</h3>" +
@@ -566,20 +529,12 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
       "<div class='file-h'>Case Notes</div><ul class='file-facts'>" +
       c.facts.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
       "<div class='file-h'>The Juicy Detail</div><div class='juicy'><b>' + esc(c.juicyLabel || 'Handle with care — highly satisfying') + '</b>" + esc(c.juicy) + "</div>" +
-      "<div class='file-h'>Detective's Notes — Yours</div>" +
-      "<textarea class='notes-area' id='notesArea' placeholder='Theories, suspects, 2 a.m. thoughts...'>" + esc(store.notes[id] || "") + "</textarea>" +
-      "<div class='notes-row'><span class='notes-saved' id='notesSaved'>Notes save to this device as you type.</span>" +
-      "<button class='btn' type='button' id='fileDone'>Back to the Board</button></div>";
+      "<div style='margin-top:24px;text-align:right'><button class='btn red' type='button' id='fileDone'>Back to the Board</button></div>";
     document.getElementById("fileInner").innerHTML = html;
     document.getElementById("fileModal").classList.add("open");
     document.body.style.overflow = "hidden";
-    var ta = document.getElementById("notesArea");
-    ta.addEventListener("input", function () {
-      store.notes[c.id] = ta.value; saveStore();
-      document.getElementById("notesSaved").textContent = "Saved ✓ " + new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-    });
     document.getElementById("fileDone").addEventListener("click", closeFile);
-    renderProgress(); renderGrid();
+    renderGrid();
   }
   function closeFile() {
     document.getElementById("fileModal").classList.remove("open");
@@ -613,7 +568,7 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
   document.getElementById("boardAllBtn").addEventListener("click", function () {
     document.getElementById("filters").scrollIntoView({ behavior: "smooth", block: "start" });
   });
-  renderPin(); renderGrid(); renderProgress();
+  renderPin(); renderGrid();
 
   /* ---------- Daily crime wire (snapshot + live relay chain, same as the newspaper) ---------- */
   var CRIME_FEEDS = {
