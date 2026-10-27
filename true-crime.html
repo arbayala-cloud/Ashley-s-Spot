@@ -55,6 +55,8 @@
   .stamp.solved { color: #4e7a3a; }
   .stamp.acquitted { color: #7a6a2f; }
   .stamp.identified { color: #3a6a8a; }
+  .stamp.missing { color: #3a6a8a; }
+  .stamp.deathrow { color: #7b2d8b; }
   .board-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
 
   /* ---------- Filters + folders ---------- */
@@ -238,7 +240,7 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
   <section class="board" aria-label="Case board">
     <div class="board-head">
       <h2>&#128204; CASE OF THE DAY</h2>
-      <span class="board-progress" id="progressLine">Files opened: 0 of 12</span>
+      <span class="board-progress" id="progressLine">Files opened: 0 of 14</span>
     </div>
     <div id="pinCard"></div>
     <div class="board-actions">
@@ -274,7 +276,7 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
     </section>
   </div>
 
-  <p class="credits">These are real cases and real people — every file here is written with respect for the victims and their families, and the juicy details are the detective-work kind, never the gory kind. Blotter headlines belong to their publishers and link to the original stories, gathered via Google News. Case photos: FBI, San Francisco Police Department, Australian Police and period photographers, via Wikimedia Commons — all public domain, shown from Wikimedia’s own servers.</p>
+  <p class="credits">These are real cases and real people — every file here is written with respect for the victims and their families, and the juicy details are the detective-work kind, never the gory kind. Blotter headlines belong to their publishers and link to the original stories, gathered via Google News. Case photos: FBI, San Francisco Police Department, Australian Police, Tennessee Department of Correction and period photographers, via Wikimedia Commons — all public domain.</p>
 </main>
 
 <div class="modal-bk" id="fileModal">
@@ -386,6 +388,18 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
         "The family finally sold the house in 2019 at a loss of roughly half a million dollars."
       ],
       juicy: "One neighbor was investigated so thoroughly that the case became a local war — lawsuits, dueling theories, and a town split down the middle. The letters' author has never been caught, which means the most unsettling theory remains on the table: someone close enough to wave at." },
+    { id: "maitland", name: "Brianna Maitland", years: "March 19, 2004", place: "Montgomery, Vermont",
+      stamp: "Missing", stampClass: "missing", solved: false, vintage: false,
+      blurb: "A Vermont girl, a car backed into an abandoned house, two paychecks left on the seat — and twenty-two years of silence. This one is close to home.",
+      story: "Brianna Maitland was 17 — a dishwasher at the Black Lantern Inn in Montgomery, in Vermont's Northeast Kingdom, saving her paychecks and figuring out her future. On Friday, March 19, 2004, she clocked out at 11:20 p.m. and drove into the night. The next day, a state trooper found her green 1985 Oldsmobile backed into the side of the old Dutchburn house, about a mile from the inn, with two of her uncashed paychecks still lying on the seat. Brianna was gone. Because she had been staying with a friend, days passed before anyone reported her missing — and by the time her parents were shown a photograph of that car, the trail was already cold. She has never been found.",
+      facts: [
+        "Hours before she vanished, Brianna was shopping with her mother Kellie, who watched her daughter suddenly go pale and agitated while staring across a parking lot. Brianna never explained what — or who — she had seen.",
+        "Passing drivers that night saw the Oldsmobile at the Dutchburn house with its lights on and doors open, but no one saw Brianna.",
+        "The FBI examined a possible connection to serial killer Israel Keyes, who had ties to Vermont, and ruled him out as a suspect.",
+        "Vermont State Police partnered with the forensic lab Othram: DNA from an item found near the car has been matched to a donor, though police stress it is a lead, not an answer. The case is still open — tips go to Vermont State Police at 802-524-5993."
+      ],
+      juicyLabel: "The detail that haunts Vermont",
+      juicy: "The paychecks. She worked her shift, clocked out at 11:20, and left two uncashed paychecks sitting in that car — the detail her father Bruce has pointed to for over twenty years as proof she never planned to run away. Whatever happened at the Dutchburn house happened fast, and her whole life was still sitting in the front seat." },
     { id: "gsk", name: "The Golden State Killer", years: "1974 – 1986 · Caught 2018", place: "California",
       stamp: "Solved", stampClass: "solved", solved: true, vintage: false,
       blurb: "He had three nicknames in three regions and nobody knew they were one man — until detectives family-treed him with DNA in 2018.",
@@ -419,6 +433,19 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
         "He confessed in extraordinary, matter-of-fact detail and received ten consecutive life sentences."
       ],
       juicy: "Before sending the floppy, Rader actually asked police — through a message to a TV station — whether a disk could be traced, and whether he could trust them. Police answered through a newspaper classified ad that it was safe. He believed them. It was not safe." },
+    { id: "pike", name: "Christa Pike", years: "1995 · Tennessee's Death Row", place: "Knoxville, Tennessee",
+      stamp: "Death Row", stampClass: "deathrow", solved: true, vintage: false,
+      photo: "https://upload.wikimedia.org/wikipedia/commons/1/16/Christa_Pike_Mugshot.jpg", photoCredit: "Mugshot · Tennessee Dept. of Correction (CC0)",
+      blurb: "She was 18 when she murdered her Job Corps classmate Colleen Slemmer — and became the youngest woman on death row in America. She is still there.",
+      story: "Colleen Slemmer was a 19-year-old from Florida studying at the Job Corps center in Knoxville, working toward a better life. On January 12, 1995, fellow student Christa Pike, 18 — who had told a friend the day before that she intended to kill Colleen because she 'just felt mean that day' — lured her to a wooded area on the University of Tennessee agriculture campus with her boyfriend Tadaryl Shipp and a friend, Shadolla Peterson, and murdered her in an attack of extraordinary cruelty. Pike kept a fragment of Colleen's skull as a souvenir; police found it in her jacket pocket when she was arrested. In 1996 a jury convicted Pike of first-degree murder and sentenced her to death.",
+      facts: [
+        "At sentencing, Pike was the youngest woman on death row in the United States. She remains the only woman on Tennessee's death row.",
+        "Her co-defendants fared very differently: Shipp received a life sentence, and Peterson, who cooperated with prosecutors, received probation.",
+        "In 2012, Pike was convicted of attempting to murder a fellow inmate — an attack prosecutors cited as proof the violence of 1995 was not behind her.",
+        "On September 30, 2025, the Tennessee Supreme Court set Pike's execution for September 30, 2026. She would have been the first woman executed in Tennessee in more than 200 years."
+      ],
+      juicyLabel: "The latest chapter — still unfolding",
+      juicy: "On September 30, 2026, Tennessee tried to carry out the sentence — and the execution failed. Media witnesses reported that Pike remained alive and breathing after two doses of pentobarbital; she survived and was taken to a hospital. Governor Bill Lee halted the state's remaining executions for 2026 and ordered an independent review of what went wrong. As of this writing, no new execution date has been set, and a case that began on a January night in 1995 has lurched into a chapter absolutely nobody predicted." },
     { id: "somerton", name: "The Somerton Man", years: "December 1, 1948 · Identified 2022", place: "Adelaide, Australia",
       stamp: "Identified", stampClass: "identified", solved: true, vintage: true,
       photo: "https://upload.wikimedia.org/wikipedia/commons/5/5c/SomertonMan2.jpg", photoCredit: "Police photo, 1948 · South Australia Police",
@@ -540,7 +567,7 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
       "<p class='file-story'>" + esc(c.story) + "</p>" +
       "<div class='file-h'>Case Notes</div><ul class='file-facts'>" +
       c.facts.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
-      "<div class='file-h'>The Juicy Detail</div><div class='juicy'><b>Handle with care — highly satisfying</b>" + esc(c.juicy) + "</div>" +
+      "<div class='file-h'>The Juicy Detail</div><div class='juicy'><b>' + esc(c.juicyLabel || 'Handle with care — highly satisfying') + '</b>" + esc(c.juicy) + "</div>" +
       "<div class='file-h'>Detective's Notes — Yours</div>" +
       "<textarea class='notes-area' id='notesArea' placeholder='Theories, suspects, 2 a.m. thoughts...'>" + esc(store.notes[id] || "") + "</textarea>" +
       "<div class='notes-row'><span class='notes-saved' id='notesSaved'>Notes save to this device as you type.</span>" +
