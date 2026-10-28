@@ -5,33 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Daily Ashley — Newspaper</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; background: #d8d2c7; color: #26221e; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 32px 16px 48px; }
-  .wrap { max-width: 820px; margin: 0 auto; background: #faf5e9; border: 2px solid #4a4238; border-radius: 12px; box-shadow: 0 18px 40px rgba(38,34,30,.22); padding: 30px 30px 26px; text-align: center; }
-  .backlink { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 18px; }
-  .backlink a { color: #8a5a33; text-decoration: none; font-weight: 600; }
-  .eyebrow { display: inline-block; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #d9c9a8; background: #26221e; border-radius: 6px; padding: 6px 14px; font-weight: 600; margin: 0 auto 12px; }
-  .btn { font-family: Oswald, Inter, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: #26221e; color: #f5f2ec; border: 1.5px solid #26221e; border-radius: 8px; padding: 12px 24px; cursor: pointer; transition: background .15s, border-color .15s; }
-  .btn:hover { background: #8a5a33; border-color: #8a5a33; }
-  .menu-row { text-align: center; margin: 0 0 18px; }
-  .menu-row button { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; background: none; color: #26221e; border: 1.5px solid #26221e; border-radius: 8px; padding: 9px 22px; cursor: pointer; }
-  .menu-panel { display: none; background: #fff; border: 1px solid #cfc8b8; border-radius: 10px; padding: 6px 0; margin: 10px auto 18px; max-width: 420px; text-align: center; box-shadow: 0 14px 30px rgba(38,34,30,.12); }
-  .menu-panel.open { display: block; }
-  .menu-panel a { display: block; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; text-decoration: none; padding: 11px 0; border-bottom: 1px solid #eee9df; }
-  .menu-panel a:last-of-type { border-bottom: none; }
-  .menu-panel button.install-btn { display: block; width: 100%; font-family: Oswald, Inter, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #26221e; background: none; border: none; border-bottom: 1px solid #eee9df; padding: 11px 0; cursor: pointer; }
-  .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 0 10px; border-top: 1px solid #eee9df; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6f6a62; }
-  .theme-switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
+  ::selection { background: #efd9dc; }
+  body { margin: 0; background: #ece5d5; color: #2b2320; font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.6; padding: 40px 16px 56px; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 820px; margin: 0 auto; background: #fdfaf3; border: 1px solid #d9c9a8; border-radius: 10px; box-shadow: 0 20px 44px rgba(43,35,32,.16); padding: 28px 40px 32px; }
+
+  /* ---------- Site header ---------- */
+  .site-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid #e3d5b8; padding-bottom: 18px; }
+  .wordmark { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 28px; letter-spacing: .3px; line-height: 1.1; color: #2b2320; margin: 0; white-space: nowrap; }
+  .header-right { display: flex; align-items: center; gap: 16px; }
+  .menu-btn { display: inline-block; font-family: Oswald, Inter, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; background: none; border: 1px solid #2b2320; color: #2b2320; border-radius: 999px; padding: 8px 22px; cursor: pointer; transition: background .15s, color .15s; }
+  .menu-btn:hover { background: #2b2320; color: #fdfaf3; }
+  .theme-switch { position: relative; width: 48px; height: 27px; flex: 0 0 auto; }
   .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
-  .theme-switch .slider { position: absolute; inset: 0; background: #c9c2b6; border-radius: 999px; transition: .25s; }
-  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: .25s; }
-  .theme-switch input:checked + .slider { background: #b9975b; }
-  .theme-switch input:checked + .slider::before { transform: translateX(22px); }
+  .theme-switch .slider { position: absolute; inset: 0; background: #d9cbb2; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 21px; height: 21px; background: #fffdf8; border-radius: 50%; transition: .25s; box-shadow: 0 1px 3px rgba(43,35,32,.25); }
+  .theme-switch input:checked + .slider { background: #a15c68; }
+  .theme-switch input:checked + .slider::before { transform: translateX(21px); }
+  .theme-switch input:focus-visible + .slider { outline: 2px solid #a15c68; outline-offset: 2px; }
+
+  .menu-panel { display: none; background: #fffdf8; border: 1px solid #e3d5b8; border-radius: 10px; padding: 8px 0; margin: 16px auto 4px; max-width: 420px; text-align: center; box-shadow: 0 14px 30px rgba(43,35,32,.10); position: relative; z-index: 5; }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 500; color: #2b2320; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #f0e7d3; transition: color .15s, background .15s; }
+  .menu-panel a:hover { color: #a15c68; background: #fbf3e4; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 500; color: #2b2320; background: none; border: none; padding: 10px 0; cursor: pointer; transition: color .15s, background .15s; }
+  .menu-panel button.install-btn:hover { color: #a15c68; background: #fbf3e4; }
+  .menu-panel .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 0 11px; border-top: 1px solid #f0e7d3; font-family: Oswald, Inter, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #8a7a68; }
 
   /* ---------- The Paper ---------- */
-  .paper { text-align: left; color: #211d18; }
+  .paper { text-align: left; color: #211d18; margin-top: 26px; }
   .paper-head { text-align: center; border-top: 5px solid #211d18; border-bottom: 1.5px solid #211d18; padding: 14px 0 10px; position: relative; }
   .paper-head::before { content: ""; position: absolute; top: 2.5px; left: 0; right: 0; border-top: 1.5px solid #211d18; }
   .masthead { font-family: "UnifrakturMaguntia", "Playfair Display", serif; font-size: 62px; line-height: 1.05; margin: 2px 0 4px; color: #171410; }
@@ -59,19 +63,31 @@
   .chip-row a { font-family: Oswald, Inter, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: #26221e; background: #fff; border: 1.5px solid #26221e; border-radius: 999px; padding: 7px 14px; text-decoration: none; }
   .chip-row a:hover { background: #26221e; color: #f5f2ec; }
   .paper-foot { border-top: 3.5px solid #211d18; margin-top: 34px; padding-top: 14px; text-align: center; }
+  .btn { font-family: Oswald, Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; background: #2b2320; color: #f7f1e6; border: 1.5px solid #2b2320; border-radius: 999px; padding: 11px 24px; cursor: pointer; transition: background .15s, border-color .15s; }
+  .btn:hover { background: #8a5a33; border-color: #8a5a33; }
   .credits { font-size: 12.5px; color: #7a7260; line-height: 1.6; max-width: 560px; margin: 12px auto 0; }
   .skeleton { padding: 12px 0; }
   .skel-line { height: 13px; border-radius: 6px; background: linear-gradient(90deg, #e7dfca 25%, #f4eedd 50%, #e7dfca 75%); background-size: 200% 100%; animation: skel 1.3s infinite; margin-bottom: 10px; }
   @keyframes skel { from { background-position: 200% 0; } to { background-position: -200% 0; } }
   .feed-error { font-size: 14px; color: #7a7260; padding: 10px 0; }
-  body.dark { background: #141210; color: #f4f1ea; }
-  body.dark .wrap { background: #201d18; border-color: #57503f; box-shadow: 0 18px 40px rgba(0,0,0,.5); }
-  body.dark .backlink a { color: #d4b978; }
-  body.dark .menu-row button { color: #f4f1ea; border-color: #f4f1ea; }
-  body.dark .menu-panel { background: #2a2723; border-color: #44403a; }
-  body.dark .menu-panel a { color: #f4f1ea; border-bottom-color: #3a3631; }
-  body.dark .menu-panel button.install-btn { color: #f4f1ea; border-bottom-color: #3a3631; }
-  body.dark .theme-toggle { color: #b8b0a3; border-top-color: #3a3631; }
+
+  /* ---------- Footer ---------- */
+  .site-footer { border-top: 1px solid #e3d5b8; margin: 36px 0 0; padding-top: 18px; text-align: center; }
+  .foot-copy { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: #8a7a68; margin: 0; }
+
+  /* ---------- Dark ---------- */
+  body.dark { background: #14100d; color: #f4ead9; }
+  body.dark .wrap { background: #211a15; border-color: #55462f; box-shadow: 0 20px 44px rgba(0,0,0,.5); }
+  body.dark .site-header { border-bottom-color: #55462f; }
+  body.dark .wordmark { color: #f4ead9; }
+  body.dark .menu-btn { color: #f4ead9; border-color: #f4ead9; }
+  body.dark .menu-btn:hover { background: #f4ead9; color: #211a15; }
+  body.dark .menu-panel { background: #2a231c; border-color: #55462f; }
+  body.dark .menu-panel a { color: #f4ead9; border-bottom-color: #3d332a; }
+  body.dark .menu-panel a:hover { color: #d9a7b0; background: #33291f; }
+  body.dark .menu-panel button.install-btn { color: #f4ead9; }
+  body.dark .menu-panel button.install-btn:hover { color: #d9a7b0; background: #33291f; }
+  body.dark .menu-panel .theme-toggle { color: #cbb9a6; border-top-color: #3d332a; }
   body.dark .paper { color: #ece5d3; }
   body.dark .masthead { color: #f2ead6; }
   body.dark .paper-head { border-top-color: #ece5d3; border-bottom-color: #ece5d3; }
@@ -79,96 +95,48 @@
   body.dark .dateline { border-top-color: #4a443a; color: #b8ae97; }
   body.dark .sec-head { border-top-color: #ece5d3; border-bottom-color: #4a443a; }
   body.dark .sec-head h2 { color: #f2ead6; }
+  body.dark .sec-head .sec-note { color: #d9b98a; }
   body.dark .lead { border-bottom-color: #3e382f; }
+  body.dark .lead a:hover h3, body.dark .story a:hover h4 { color: #d9b98a; }
   body.dark .story { border-bottom-color: #3e382f; }
   body.dark .meta { color: #a3987f; }
+  body.dark .meta .src { color: #d9b98a; }
+  body.dark .story .tag { background: #ece5d3; color: #211d18; }
   body.dark .sunshine { background: #2e2a1c; border-color: #8a6d2f; }
   body.dark .sunshine .story { border-bottom-color: #4a4430; }
   body.dark .social-note { color: #b8ae97; }
   body.dark .chip-row a { background: #26221d; color: #f4f1ea; border-color: #8a857e; }
   body.dark .paper-foot { border-top-color: #ece5d3; }
+  body.dark .btn { background: #c9a35f; border-color: #c9a35f; color: #241c10; }
+  body.dark .btn:hover { background: #a15c68; border-color: #a15c68; color: #fff; }
   body.dark .credits { color: #a3987f; }
+  body.dark .feed-error { color: #a3987f; }
   body.dark .skel-line { background: linear-gradient(90deg, #33302a 25%, #403b32 50%, #33302a 75%); background-size: 200% 100%; }
+  body.dark .site-footer { border-top-color: #55462f; }
+  body.dark .foot-copy { color: #cbb9a6; }
+
   @media (max-width: 620px) {
-    body { padding: 24px 10px 40px; }
-    .wrap { padding: 22px 16px 20px; }
+    body { padding: 22px 10px 40px; }
+    .wrap { padding: 20px 16px 24px; }
+    .wordmark { font-size: 23px; }
     .masthead { font-size: 44px; }
     .lead h3 { font-size: 24px; }
     .story-grid { grid-template-columns: 1fr; }
     .dateline { justify-content: center; text-align: center; }
   }
 </style>
+
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#111111">
-<style id="hw-style">
-/* === Halloween mode (seasonal, auto Oct 24-Nov 1, toggle in Menu) === */
-body.halloween{background-color:#14101f;background-image:radial-gradient(1.5px 1.5px at 22px 34px,rgba(255,255,255,.8) 50%,transparent 51%),radial-gradient(1px 1px at 130px 90px,rgba(255,255,255,.6) 50%,transparent 51%),radial-gradient(1.2px 1.2px at 240px 30px,rgba(255,255,255,.7) 50%,transparent 51%),linear-gradient(180deg,#1b1430,#120e20 60%,#0f0b1a);background-size:280px 180px,280px 180px,280px 180px,100% 100%;}
-body.dark.halloween{background-color:#0c0916;}
-body.halloween .wrap{box-shadow:0 0 0 2px rgba(232,118,44,.28),0 26px 70px rgba(0,0,0,.55);}
-body.halloween h1{color:#cf6516;text-shadow:0 2px 14px rgba(232,118,44,.25);}
-body.dark.halloween h1{color:#ff9a3c;}
-body.halloween .eyebrow{background:#e8762c;color:#1d130a;}
-body.halloween #menuPanel{border-color:#e8762c;}
-body.halloween #menuPanel a:hover{color:#e8762c;}
-body.halloween .receiver{box-shadow:0 0 0 2px rgba(232,118,44,.65),0 0 55px rgba(232,118,44,.32);}
-body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232,118,44,.25);}
-.hw-banner{display:block;text-align:center;margin:0 auto 16px;background:#211a2e;color:#f6e8d8;border:1.5px solid #e8762c;border-radius:10px;padding:10px 14px;font-family:Oswald,Inter,sans-serif;font-size:19px;letter-spacing:.08em;text-transform:uppercase;}
-.hw-banner .hw-sub{display:block;margin-top:3px;font-family:Inter,sans-serif;font-size:12px;letter-spacing:.02em;text-transform:none;color:#d9c6ac;}
-.hw-layer{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden;}
-.hw-layer span{position:absolute;animation-name:hwFloat;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));}
-@keyframes hwFloat{from{transform:translateY(-10px) rotate(-6deg);}to{transform:translateY(14px) rotate(7deg);}}
-@media (prefers-reduced-motion: reduce){.hw-layer span{animation:none;}}
-.hw-toggle-btn{display:block;width:100%;margin-top:10px;padding:10px 12px;background:#26221e;color:#f4f1ea;border:1.5px solid #4a4238;border-radius:8px;font-family:Oswald,Inter,sans-serif;font-size:15px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
-.hw-toggle-btn:hover{border-color:#e8762c;color:#ffb066;}
-</style>
-<style id="cat-style">
-/* The Cat: a fluffy little resident who floats around Ashley's Spot with her.
-   Original hand-coded SVG art. Coat colors live in the data-coat rules below. */
-#catPal { position: fixed; left: -200px; top: 110vh; width: 104px; z-index: 99990; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: left 4.4s ease-in-out, top 4.4s ease-in-out; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
-#catPal .cat-bob { animation: catBob 3.6s ease-in-out infinite; }
-#catPal svg { display: block; width: 100%; height: auto; overflow: visible; }
-#catPal .cat-flip { transition: transform .45s ease; }
-#catPal .cat-flip.flip { transform: scaleX(-1); }
-#catPal .cf { fill: var(--fur); } #catPal .cfd { fill: var(--furd); } #catPal .cb { fill: var(--bib); }
-#catPal .ce { fill: var(--eye); } #catPal .cer { fill: var(--ear); } #catPal .sf { stroke: var(--furd); }
-#catPal[data-coat="midnight"] { --fur: #2e2a36; --furd: #1d1a24; --bib: #47405a; --eye: #ffb347; --ear: #c97b8a; }
-#catPal[data-coat="pumpkin"] { --fur: #df8433; --furd: #b9661f; --bib: #f7c873; --eye: #4f9e57; --ear: #e59a8f; }
-#catPal[data-coat="storm"] { --fur: #8d99ae; --furd: #68738a; --bib: #ccd6e4; --eye: #ffcf5c; --ear: #d99aa6; }
-#catPal[data-coat="snowball"] { --fur: #f3ecdc; --furd: #d9cbae; --bib: #fffaf0; --eye: #5b9bd5; --ear: #e59aab; }
-#catPal[data-coat="calico"] { --fur: #f3ecdc; --furd: #d9cbae; --bib: #fffaf0; --eye: #4f9e57; --ear: #e59aab; }
-#catPal .cat-stripes, #catPal .cat-patches, #catPal .cat-hat { display: none; }
-#catPal[data-coat="pumpkin"] .cat-stripes { display: block; }
-#catPal[data-coat="calico"] .cat-patches { display: block; }
-#catPal.hat-on .cat-hat { display: block; }
-#catPal .cat-tail { transform-box: fill-box; transform-origin: 15% 85%; animation: catTail 2.9s ease-in-out infinite alternate; }
-#catPal .cat-eyes { transform-box: fill-box; transform-origin: center; animation: catBlink 5.4s infinite; }
-#catPal.sleeping .cat-eyes { animation: none; transform: scaleY(.12); }
-#catPal .cat-shadow { transform-box: fill-box; transform-origin: center; animation: catShadow 3.6s ease-in-out infinite; }
-#catPal.petted svg { animation: catSquish .38s ease; }
-#catPal .cat-bubble { position: absolute; left: 50%; bottom: 96%; transform: translate(-50%, 6px) scale(.92); min-width: 128px; max-width: 190px; background: #fffdf6; color: #33302a; border: 2px solid #4a4238; border-radius: 12px; padding: 7px 9px 6px; font: 600 12px/1.35 Inter, system-ui, sans-serif; text-align: center; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; box-shadow: 0 6px 18px rgba(20, 15, 5, .22); }
-#catPal .cat-bubble:after { content: ""; position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%); border: 4px solid transparent; border-top: 6px solid #4a4238; }
-#catPal .cat-bubble.show { opacity: 1; transform: translate(-50%, 0) scale(1); pointer-events: auto; }
-#catPal .cat-name { font: 800 9.5px Oswald, Inter, system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a5a33; margin-bottom: 2px; }
-#catPal .cat-btns { display: flex; gap: 5px; justify-content: center; margin-top: 6px; }
-#catPal .cat-btns button { font: 700 10.5px Inter, system-ui, sans-serif; letter-spacing: .02em; border: 1.5px solid #4a4238; background: #f4ead2; color: #4a3625; border-radius: 999px; padding: 3px 8px; cursor: pointer; }
-#catPal .cat-btns button:active { transform: scale(.94); }
-#catPal .cat-heart, #catPal .cat-zzz { position: absolute; left: 50%; top: 6px; font-size: 15px; pointer-events: none; animation: catRise 1.15s ease-out forwards; }
-#catPal .cat-zzz { font: italic 700 13px Georgia, serif; color: #6b6390; }
-@keyframes catBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-@keyframes catShadow { 0%, 100% { transform: scaleX(1); opacity: .16; } 50% { transform: scaleX(.88); opacity: .11; } }
-@keyframes catTail { from { transform: rotate(-3.5deg); } to { transform: rotate(5deg); } }
-@keyframes catBlink { 0%, 91%, 100% { transform: scaleY(1); } 94.5% { transform: scaleY(.08); } 97.5% { transform: scaleY(1); } }
-@keyframes catSquish { 0% { transform: scale(1, 1); } 35% { transform: scale(1.07, .93); } 70% { transform: scale(.97, 1.04); } 100% { transform: scale(1, 1); } }
-@keyframes catRise { 0% { transform: translate(-50%, 0) scale(.7); opacity: 0; } 18% { opacity: 1; } 100% { transform: translate(calc(-50% + var(--drift, 0px)), -52px) scale(1.15); opacity: 0; } }
-@media (max-width: 560px) { #catPal { width: 88px; } #catPal .cat-bubble { max-width: 168px; } }
-@media (prefers-reduced-motion: reduce) { #catPal { transition: none; } #catPal .cat-bob, #catPal .cat-tail, #catPal .cat-shadow { animation: none; } #catPal .cat-eyes { animation-duration: 9s; } }
-</style>
 </head>
 <body>
 <main class="wrap">
-  <p class="backlink"><a href="index.html">&larr; Ashley's Spot</a></p>
-  <p class="eyebrow">Ashley's Spot</p>
-  <div class="menu-row"><button id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button></div>
+  <header class="site-header">
+    <p class="wordmark">Ashley Ayala</p>
+    <div class="header-right">
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button>
+    </div>
+  </header>
   <nav id="menuPanel" class="menu-panel">
     <a href="index.html">Home</a>
     <a href="blog.html">Blog</a>
@@ -176,12 +144,16 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
     <a href="time-machine.html">Time Machine</a>
     <a href="newspaper.html">Newspaper</a>
     <a href="true-crime.html">True Crime</a>
-      <button class="install-btn" id="installBtn" type="button">Install App</button>
-      <div class="theme-toggle">
-        <span>Light</span>
-        <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
-        <span>Dark</span>
-      </div>
+    <button class="install-btn" id="installBtn" type="button">Install App</button>
+    <button class="install-btn" id="backupBtn" type="button">Back Up My Data</button>
+    <button class="install-btn" id="restoreBtn" type="button">Restore a Backup</button>
+    <button class="install-btn" id="updateBtn" type="button">Update App</button>
+    <input type="file" id="restoreFile" accept="application/json,.json" hidden>
+    <div class="theme-toggle">
+      <span>Light</span>
+      <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+      <span>Dark</span>
+    </div>
   </nav>
 
   <div class="paper">
@@ -239,6 +211,9 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
       <p class="credits">Every headline belongs to its publisher and links straight to the original story — The Daily Ashley just gathers the front porch delivery. Headlines collected via Google News. Support your local papers, y'all.</p>
     </div>
   </div>
+  <footer class="site-footer">
+    <p class="foot-copy">&copy; 2026 Ashley Ayala</p>
+  </footer>
 </main>
 
 <script>
@@ -449,209 +424,84 @@ body.halloween .phone{box-shadow:0 0 0 2px rgba(232,118,44,.4),0 0 48px rgba(232
   })();
 </script>
 
-<script id="hw-script">
-(function () {
-  var KEY = 'ashleys-halloween';
-  function pref() { try { return localStorage.getItem(KEY) || 'auto'; } catch (e) { return 'auto'; } }
-  function setPref(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
-  function inSeason() { var n = new Date(), m = n.getMonth(), d = n.getDate(); return (m === 9 && d >= 24) || (m === 10 && d <= 1); }
-  function isOn() { var p = pref(); return p === 'on' || (p === 'auto' && inSeason()); }
-  var GLYPHS = [['1f383','\u{1F383}','6%','12%',34,7],['1f47b','\u{1F47B}','88%','16%',30,8],['1f987','\u{1F987}','14%','68%',26,6],['1f315','\u{1F315}','92%','64%',30,9],['1f578','\u{1F578}\u{FE0F}','3%','38%',28,10],['1f987','\u{1F987}','78%','84%',22,7],['1f383','\u{1F383}','94%','40%',24,8],['1f47b','\u{1F47B}','10%','88%',24,9]];
-  function apply() {
-    var on = isOn();
-    document.body.classList.toggle('halloween', on);
-    var b = document.getElementById('hwBanner'); if (b) b.style.display = on ? 'block' : 'none';
-    var l = document.getElementById('hwLayer'); if (l) l.style.display = on ? 'block' : 'none';
-    var t = document.getElementById('hwToggle'); if (t) t.textContent = '\u{1F383} Halloween: ' + (pref() === 'auto' ? 'Auto' : (pref() === 'on' ? 'On' : 'Off'));
-  }
-  function build() {
-    var wrap = document.querySelector('.wrap');
-    if (wrap && !document.getElementById('hwBanner')) {
-      var b = document.createElement('div'); b.id = 'hwBanner'; b.className = 'hw-banner';
-      b.innerHTML = '\u{1F383} Halloween at Ashley\u2019s Spot \u{1F47B}<span class="hw-sub">Spooky season: now through Nov 1 \u2014 or whenever you say so, queen \u{1F987} \u00B7 Emoji art: Twemoji (CC BY 4.0)</span>';
-      wrap.insertBefore(b, wrap.firstChild);
+
+<script>
+  (function () {
+    // Back up everything this site has saved on this device (blog posts,
+    // keepsakes, settings) into one JSON file she keeps.
+    var backupBtn = document.getElementById('backupBtn');
+    if (backupBtn) backupBtn.addEventListener('click', function () {
+      var data = {};
+      try {
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          data[k] = localStorage.getItem(k);
+        }
+      } catch (e) {}
+      var payload = { app: "Ashley's Spot", backedUp: new Date().toISOString(), data: data };
+      var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ashleys-spot-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    });
+
+    // Restore a backup file made by the button above.
+    var restoreBtn = document.getElementById('restoreBtn');
+    var restoreFile = document.getElementById('restoreFile');
+    if (restoreBtn && restoreFile) {
+      restoreBtn.addEventListener('click', function () { restoreFile.click(); });
+      restoreFile.addEventListener('change', function () {
+        var f = restoreFile.files && restoreFile.files[0];
+        if (!f) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var parsed = JSON.parse(String(reader.result));
+            var data = parsed && parsed.data ? parsed.data : parsed;
+            if (!data || typeof data !== 'object') throw new Error('bad file');
+            if (!window.confirm('Restore this backup? It replaces the data saved on this device.')) return;
+            Object.keys(data).forEach(function (k) {
+              try { localStorage.setItem(k, data[k]); } catch (e) {}
+            });
+            window.alert('Backup restored. The page will reload.');
+            location.reload();
+          } catch (e) {
+            window.alert('That file does not look like an Ashley\'s Spot backup.');
+          }
+        };
+        reader.readAsText(f);
+      });
     }
-    if (!document.getElementById('hwLayer')) {
-      var l = document.createElement('div'); l.id = 'hwLayer'; l.className = 'hw-layer'; l.setAttribute('aria-hidden', 'true');
-      GLYPHS.forEach(function (g) { var s = document.createElement('span'); var img = document.createElement('img'); img.src = 'hw-emoji/' + g[0] + '.svg'; img.alt = ''; img.draggable = false; img.style.width = g[4] + 'px'; img.style.height = g[4] + 'px'; img.style.display = 'block'; img.onerror = function () { s.textContent = g[1]; s.style.fontSize = g[4] + 'px'; }; s.appendChild(img); s.style.left = g[2]; s.style.top = g[3]; s.style.animationDuration = g[5] + 's'; l.appendChild(s); });
-      document.body.appendChild(l);
-    }
-    if (!document.getElementById('hwToggle')) {
-      var btn = document.createElement('button'); btn.id = 'hwToggle'; btn.type = 'button';
-      btn.addEventListener('click', function () { var order = ['auto', 'on', 'off']; setPref(order[(order.indexOf(pref()) + 1) % 3]); apply(); });
-      btn.className = 'hw-toggle-btn';
-      var panel = document.getElementById('menuPanel'), theme = document.getElementById('themeToggle');
-      if (panel) {
-        var anchor = theme;
-        while (anchor && anchor.parentNode !== panel) anchor = anchor.parentNode;
-        if (anchor) panel.insertBefore(btn, anchor.nextSibling); else panel.appendChild(btn);
-      } else { btn.setAttribute('style', 'position:fixed;right:14px;bottom:14px;z-index:80;width:auto;margin-top:0;border-radius:999px;'); document.body.appendChild(btn); }
-    }
-    apply();
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
-})();
-</script>
-<script id="cat-script">
-(function () {
-  var KEY = "ashleys-cat-v1";
-  var COATS = ["midnight", "pumpkin", "storm", "snowball", "calico"];
-  var COAT_NAMES = { midnight: "Midnight", pumpkin: "Pumpkin", storm: "Storm Cloud", snowball: "Snowball", calico: "Calico" };
-  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
-  function todayStr() { var n = new Date(); return n.getFullYear() + "-" + (n.getMonth() + 1) + "-" + n.getDate(); }
-  function ydayStr() { var n = new Date(Date.now() - 864e5); return n.getFullYear() + "-" + (n.getMonth() + 1) + "-" + n.getDate(); }
-  var S = load();
-  if (COATS.indexOf(S.coat) < 0) S.coat = "midnight";
-  if (typeof S.pets !== "number") S.pets = 0;
-  var T = todayStr();
-  if (S.lastDay !== T) { S.streak = (S.lastDay === ydayStr()) ? (S.streak || 0) + 1 : 1; S.lastDay = T; }
-  if (typeof S.visits !== "number") S.visits = 0;
-  S.visits++; save();
 
-  var SVG =
-  "<svg viewBox=\"0 0 220 200\" aria-hidden=\"true\">" +
-  "<ellipse class=\"cat-shadow\" cx=\"110\" cy=\"189\" rx=\"56\" ry=\"8\" fill=\"#140f08\" opacity=\".16\"/>" +
-  "<g class=\"cat-tail\"><path class=\"cf\" d=\"M158,148 C190,138 208,156 202,176 C197,191 178,196 158,191 C175,183 181,168 171,157 C167,152 162,148 158,148 Z\"/><circle class=\"cf\" cx=\"196\" cy=\"156\" r=\"10\"/><circle class=\"cf\" cx=\"201\" cy=\"171\" r=\"9\"/><circle class=\"cb\" cx=\"197\" cy=\"182\" r=\"8\"/></g>" +
-  "<path class=\"cf\" d=\"M110,84 C146,84 166,114 166,144 C166,172 142,188 110,188 C78,188 54,172 54,144 C54,114 74,84 110,84 Z\"/>" +
-  "<circle class=\"cf\" cx=\"58\" cy=\"126\" r=\"9\"/><circle class=\"cf\" cx=\"56\" cy=\"148\" r=\"10\"/><circle class=\"cf\" cx=\"64\" cy=\"168\" r=\"9\"/><circle class=\"cf\" cx=\"162\" cy=\"126\" r=\"9\"/><circle class=\"cf\" cx=\"164\" cy=\"148\" r=\"10\"/><circle class=\"cf\" cx=\"156\" cy=\"168\" r=\"9\"/><circle class=\"cf\" cx=\"84\" cy=\"185\" r=\"8\"/><circle class=\"cf\" cx=\"136\" cy=\"185\" r=\"8\"/>" +
-  "<circle class=\"cb\" cx=\"110\" cy=\"114\" r=\"12\"/><circle class=\"cb\" cx=\"98\" cy=\"127\" r=\"10\"/><circle class=\"cb\" cx=\"122\" cy=\"127\" r=\"10\"/><circle class=\"cb\" cx=\"110\" cy=\"140\" r=\"11\"/>" +
-  "<g class=\"cat-stripes\"><path class=\"sf\" d=\"M60,120 q-5,10 -2,20 M166,120 q5,10 2,20\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".4\"/></g>" +
-  "<g class=\"cat-patches\"><path d=\"M148,116 Q170,124 167,150 Q149,149 143,136 Q143,123 148,116 Z\" fill=\"#2e2a36\" opacity=\".92\"/></g>" +
-  "<ellipse class=\"cf\" cx=\"84\" cy=\"183\" rx=\"15\" ry=\"8\"/><ellipse class=\"cf\" cx=\"136\" cy=\"183\" rx=\"15\" ry=\"8\"/>" +
-  "<path class=\"sf\" d=\"M79,178 v7 M89,178 v7 M131,178 v7 M141,178 v7\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".45\"/>" +
-  "<path class=\"cf\" d=\"M76,32 L64,3 Q62,-3 69,-1 L103,17 Q88,28 76,32 Z\"/><path class=\"cf\" d=\"M144,32 L156,3 Q158,-3 151,-1 L117,17 Q132,28 144,32 Z\"/>" +
-  "<path class=\"cer\" d=\"M78,25 L71,8 L95,17 Q86,23 78,25 Z\"/><path class=\"cer\" d=\"M142,25 L149,8 L125,17 Q134,23 142,25 Z\"/>" +
-  "<circle class=\"cf\" cx=\"110\" cy=\"58\" r=\"42\"/>" +
-  "<circle class=\"cf\" cx=\"71\" cy=\"65\" r=\"10\"/><circle class=\"cf\" cx=\"69\" cy=\"79\" r=\"9\"/><circle class=\"cf\" cx=\"149\" cy=\"65\" r=\"10\"/><circle class=\"cf\" cx=\"151\" cy=\"79\" r=\"9\"/><circle class=\"cf\" cx=\"110\" cy=\"95\" r=\"10\"/>" +
-  "<g class=\"cat-stripes\"><path class=\"sf\" d=\"M96,21 q3,7 0,13 M110,17 q2,8 0,15 M124,21 q-3,7 0,13\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".45\"/></g>" +
-  "<g class=\"cat-patches\"><path d=\"M63,36 Q58,8 84,3 Q97,1 101,14 Q84,15 75,26 Q67,34 63,36 Z\" fill=\"#df8433\" opacity=\".95\"/></g>" +
-  "<g class=\"cat-eyes\"><ellipse class=\"ce\" cx=\"93\" cy=\"58\" rx=\"7\" ry=\"9\"/><ellipse cx=\"93\" cy=\"59\" rx=\"3.2\" ry=\"5.5\" fill=\"#191521\"/><circle cx=\"95.5\" cy=\"54\" r=\"1.8\" fill=\"#fff\" opacity=\".9\"/><ellipse class=\"ce\" cx=\"127\" cy=\"58\" rx=\"7\" ry=\"9\"/><ellipse cx=\"127\" cy=\"59\" rx=\"3.2\" ry=\"5.5\" fill=\"#191521\"/><circle cx=\"129.5\" cy=\"54\" r=\"1.8\" fill=\"#fff\" opacity=\".9\"/></g>" +
-  "<path d=\"M104,72 Q110,69 116,72 Q115,79 110,80 Q105,79 104,72 Z\" fill=\"#e58aa0\"/>" +
-  "<path class=\"sf\" d=\"M110,80 Q110,86 103,85 M110,80 Q110,86 117,85\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\"/>" +
-  "<path class=\"sf\" d=\"M61,73 L35,68 M61,81 L36,83 M63,89 L41,98 M159,73 L185,68 M159,81 L184,83 M157,89 L179,98\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".4\"/>" +
-  "<g class=\"cat-hat\"><g transform=\"rotate(-8 118 20)\"><path d=\"M92,20 Q104,-28 120,-34 Q138,-30 146,17 Q118,8 92,20 Z\" fill=\"#3a2b52\"/><path d=\"M95,13 Q118,4 143,11 L144,18 Q118,10 94,20 Z\" fill=\"#e8762c\"/><rect x=\"112\" y=\"3\" width=\"11\" height=\"9\" rx=\"2\" fill=\"none\" stroke=\"#f4c542\" stroke-width=\"2.5\"/><ellipse cx=\"118\" cy=\"22\" rx=\"34\" ry=\"8.5\" fill=\"#2e2140\"/></g></g>" +
-  "</svg>";
-
-  var GREET = ["mrrrow! there you are \u{1F43E}", "I followed you here. obviously.", "you came back. good human.", "*happy slow blink* hi."];
-  var PET = ["purr purr purr\u2026", "that\u2019s the spot. THE spot.", "five more minutes of this.", "mrrp! \u{1F495}", "*max purr achieved*", "yes. continue.", "I allow this. \u{1F451}"];
-  var PET_HW = ["fear me. also pet me.", "I am the night. \u{1F987}", "trick or treat? (treat. give treat.)", "spooky AND soft. that\u2019s me."];
-  var IDLE = ["*stares at nothing*", "*judges the room, silently*", "nap first. questions later.", "*sits on the important thing*", "I knocked nothing over today. yet."];
-  var IDLE_HW = ["I saw a ghost. or a dust bunny.", "*counts the pumpkins*", "the veil is thin. so is my patience."];
-
-  var reduced = false;
-  try { reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
-  function isHW() { return document.body && document.body.classList.contains("halloween"); }
-  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
-
-  var el = document.createElement("div");
-  el.id = "catPal"; el.setAttribute("data-coat", S.coat);
-  el.setAttribute("role", "img"); el.setAttribute("aria-label", "Sammie, a fluffy cat who lives on this website. Tap to pet her.");
-  el.innerHTML = "<div class=\"cat-bubble\"><div class=\"cat-name\">\u{1F43E} Sammie</div><span class=\"cat-say\"></span><div class=\"cat-btns\"><button type=\"button\" class=\"cat-coat-btn\">\u{1F9E5} coat</button><button type=\"button\" class=\"cat-nap-btn\">\u{1F4A4} nap</button></div></div>" +
-    "<div class=\"cat-bob\"><div class=\"cat-flip\">" + SVG + "</div></div>";
-  document.body.appendChild(el);
-  var say = el.querySelector(".cat-say"), bubble = el.querySelector(".cat-bubble"), flip = el.querySelector(".cat-flip");
-  var bubbleTimer = null, wanderTimer = null, idleTimer = null, sleeping = false;
-  var pos = { x: Math.max(8, window.innerWidth - 140), y: window.innerHeight + 40 };
-  el.style.left = pos.x + "px"; el.style.top = pos.y + "px";
-
-  function applyHat() { el.classList.toggle("hat-on", isHW()); }
-  applyHat();
-  if (typeof MutationObserver !== "undefined" && document.body) {
-    new MutationObserver(applyHat).observe(document.body, { attributes: true, attributeFilter: ["class"] });
-  }
-
-  function showBubble(text, ms) {
-    say.textContent = text; bubble.classList.add("show");
-    if (bubbleTimer) clearTimeout(bubbleTimer);
-    bubbleTimer = setTimeout(function () { bubble.classList.remove("show"); }, ms || 3600);
-  }
-  function spawnFloat(txt, cls) {
-    var s = document.createElement("span"); s.className = cls; s.textContent = txt;
-    s.style.setProperty("--drift", (Math.floor(Math.random() * 36) - 18) + "px");
-    s.style.marginLeft = (Math.floor(Math.random() * 30) - 15) + "px";
-    el.appendChild(s); setTimeout(function () { s.remove(); }, 1250);
-  }
-  var AC = null;
-  function chirp() {
-    try {
-      var Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
-      if (!AC) AC = new Ctx();
-      var o = AC.createOscillator(), g = AC.createGain(), t = AC.currentTime;
-      o.type = "sine"; o.frequency.setValueAtTime(620, t); o.frequency.exponentialRampToValueAtTime(940, t + .09);
-      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.045, t + .03); g.gain.exponentialRampToValueAtTime(.0001, t + .16);
-      o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + .18);
-    } catch (e) {}
-  }
-  function place(nx, ny) {
-    if (nx < pos.x - 4) flip.classList.add("flip"); else if (nx > pos.x + 4) flip.classList.remove("flip");
-    pos = { x: nx, y: ny }; el.style.left = nx + "px"; el.style.top = ny + "px";
-  }
-  function homePos() {
-    var w = window.innerWidth, h = window.innerHeight;
-    return { x: Math.max(8, w - 132 - Math.floor(Math.random() * w * .18)), y: Math.max(60, h - 210 - Math.floor(Math.random() * h * .14)) };
-  }
-  function wander() {
-    if (sleeping || reduced) return;
-    var w = window.innerWidth, h = window.innerHeight;
-    var nx = Math.floor(w * .42 + Math.random() * (w * .58 - 118));
-    var ny = Math.floor(h * .34 + Math.random() * (h * .66 - 190));
-    place(Math.max(6, nx), Math.max(48, ny));
-    wanderTimer = setTimeout(wander, 5600 + Math.random() * 5200);
-  }
-  function idleLoop() {
-    idleTimer = setTimeout(function () {
-      if (!sleeping && !bubble.classList.contains("show") && Math.random() < .5) showBubble(pick(isHW() ? IDLE.concat(IDLE_HW) : IDLE), 3200);
-      idleLoop();
-    }, 46000 + Math.random() * 30000);
-  }
-  function pet() {
-    if (sleeping) { wake(); return; }
-    S.pets++; save();
-    el.classList.remove("petted"); void el.offsetWidth; el.classList.add("petted");
-    spawnFloat("\u{1F495}", "cat-heart"); spawnFloat("\u{1F495}", "cat-heart");
-    chirp();
-    showBubble(pick(isHW() ? PET.concat(PET_HW) : PET) + (S.pets === 1 ? " (tap me anytime \u2014 I live here now)" : ""), 3400);
-  }
-  function nap() {
-    if (sleeping) { wake(); return; }
-    sleeping = true; el.classList.add("sleeping");
-    if (wanderTimer) clearTimeout(wanderTimer);
-    showBubble("z z z\u2026 (tap me to wake)", 4200);
-    var i = 0, zt = setInterval(function () { spawnFloat("z", "cat-zzz"); if (++i > 5 || !sleeping) clearInterval(zt); }, 700);
-    setTimeout(function () { if (sleeping) wake(true); }, 20000);
-  }
-  function wake(auto) {
-    sleeping = false; el.classList.remove("sleeping");
-    showBubble(auto ? "*streeetch* \u2026I\u2019m up, I\u2019m up." : "hm? oh. hi. \u{1F43E}", 3000);
-    if (!reduced) { if (wanderTimer) clearTimeout(wanderTimer); wanderTimer = setTimeout(wander, 4200); }
-  }
-  el.addEventListener("click", pet);
-  el.querySelector(".cat-coat-btn").addEventListener("click", function (ev) {
-    ev.stopPropagation();
-    S.coat = COATS[(COATS.indexOf(S.coat) + 1) % COATS.length]; save();
-    el.setAttribute("data-coat", S.coat);
-    spawnFloat("\u2728", "cat-heart");
-    showBubble("new coat: " + COAT_NAMES[S.coat] + ". stunning, obviously.", 3200);
-  });
-  el.querySelector(".cat-nap-btn").addEventListener("click", function (ev) { ev.stopPropagation(); nap(); });
-  window.addEventListener("resize", function () {
-    var w = window.innerWidth, h = window.innerHeight;
-    place(Math.min(pos.x, Math.max(6, w - 118)), Math.min(pos.y, Math.max(48, h - 170)));
-  });
-
-  setTimeout(function () { var hp = homePos(); place(hp.x, hp.y); }, 450);
-  var greeted = false;
-  try { greeted = !!sessionStorage.getItem("ashleys-cat-greeted"); } catch (e) {}
-  setTimeout(function () {
-    if (!greeted) {
-      showBubble((S.streak > 1 ? "day " + S.streak + " of following you around. " : "") + pick(GREET), 4400);
-      try { sessionStorage.setItem("ashleys-cat-greeted", "1"); } catch (e) {}
-    } else if (Math.random() < .4) { showBubble("still here \u{1F43E}", 2200); }
-  }, 1500);
-  if (!reduced) wanderTimer = setTimeout(wander, 6000);
-  idleLoop();
-})();
+    // Update App: check for the newest service worker, clear stored caches,
+    // then reload from the server so she is always on the latest version.
+    var updateBtn = document.getElementById('updateBtn');
+    if (updateBtn) updateBtn.addEventListener('click', function () {
+      updateBtn.textContent = 'Updating\u2026';
+      var done = function () {
+        location.replace(location.pathname + '?updated=' + Date.now());
+      };
+      var jobs = [];
+      try {
+        if ('serviceWorker' in navigator) {
+          jobs.push(navigator.serviceWorker.getRegistrations().then(function (regs) {
+            return Promise.all(regs.map(function (r) { return r.update(); }));
+          }));
+        }
+        if (window.caches && caches.keys) {
+          jobs.push(caches.keys().then(function (keys) {
+            return Promise.all(keys.map(function (k) { return caches.delete(k); }));
+          }));
+        }
+      } catch (e) {}
+      Promise.all(jobs).then(done, done);
+      setTimeout(done, 3500); // never leave her hanging
+    });
+  })();
 </script>
 </body>
 </html>
