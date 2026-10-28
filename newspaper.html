@@ -53,6 +53,7 @@
   .story { padding: 11px 0 10px; border-bottom: 1px solid #e2d9c3; }
   .story a { text-decoration: none; color: inherit; display: block; }
   .story h4 { font-family: "Playfair Display", Georgia, serif; font-weight: 700; font-size: 17.5px; line-height: 1.3; margin: 0 0 5px; }
+  .story h4, .lead h3, .story .meta { overflow-wrap: break-word; }
   .story .tag { display: inline-block; font-family: Oswald, Inter, sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 1.4px; background: #26221e; color: #f2ead6; border-radius: 4px; padding: 2px 6px; margin-right: 6px; vertical-align: 2px; }
   .sunshine { background: #fdf3d3; border: 1.5px solid #d9b64a; border-radius: 12px; padding: 6px 18px 12px; margin-top: 30px; }
   .sunshine .sec-head { border-top: none; margin-top: 4px; }
@@ -298,7 +299,7 @@
     sunshine: "https://news.google.com/rss/search?q=%22good+news%22+uplifting&hl=en-US&gl=US&ceid=US:en",
     socialTX: "https://news.google.com/rss/search?q=site%3Ax.com+Texas&hl=en-US&gl=US&ceid=US:en",
     socialVT: "https://news.google.com/rss/search?q=site%3Ax.com+Vermont&hl=en-US&gl=US&ceid=US:en",
-    facebook: "https://news.google.com/rss/search?q=site%3Afacebook.com+Texas+OR+Vermont+news&hl=en-US&gl=US&ceid=US:en"
+    facebook: "https://news.google.com/rss/search?q=site%3Afacebook.com+Texas+OR+Vermont+news+when%3A14d&hl=en-US&gl=US&ceid=US:en"
   };
   var CAPS = { us: 9, texas: 9, vermont: 9, sunshine: 5, social: 9, facebook: 5 };
   var PROXIES = [
@@ -314,14 +315,31 @@
     if (!m) return "";
     return decodeEntities(m[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1").replace(/<[^>]+>/g, "")).trim();
   }
-  function parseRSS(text, cap) {
+  function fbTidy(t) {
+    t = t.replace(/\s+/g, " ").trim();
+    if (t.length > 150) { var cut = t.slice(0, 150).replace(/\s\S*$/, ""); t = (cut.length >= 60 ? cut : t.slice(0, 150)) + "\u2026"; }
+    return t;
+  }
+  function fbOK(title, surl, date) {
+    // Same gates as the morning generator: real Facebook pages only, no raw
+    // URLs as headlines, headline-shaped length, at most two weeks old.
+    if (/http|www\./.test(title)) return false;
+    if (title.length < 25 || title.length > 160) return false;
+    var host = (surl || "").replace(/^https?:\/\//, "").split("/")[0];
+    if (host !== "www.facebook.com" && host !== "facebook.com") return false;
+    var t = Date.parse(date); if (!t) return false;
+    return (Date.now() - t) <= 14 * 864e5;
+  }
+  function parseRSS(text, cap, key) {
     var out = [], items = text.match(/<item>[\s\S]*?<\/item>/g) || [];
     for (var i = 0; i < items.length && out.length < cap; i++) {
       var b = items[i];
       var title = cleanTag(b, "title"), link = cleanTag(b, "link"), date = cleanTag(b, "pubDate");
-      var sm = b.match(/<source[^>]*>([\s\S]*?)<\/source>/);
-      var source = sm ? decodeEntities(sm[1].replace(/<[^>]+>/g, "")).trim() : "";
+      var sm = b.match(/<source([^>]*)>([\s\S]*?)<\/source>/);
+      var source = sm ? decodeEntities(sm[2].replace(/<[^>]+>/g, "")).trim() : "";
+      var surl = ""; if (sm) { var um = sm[1].match(/url="([^"]*)"/); if (um) surl = um[1]; }
       if (source && title.slice(-(source.length + 3)) === " - " + source) title = title.slice(0, -(source.length + 3));
+      if (key === "facebook") { title = fbTidy(title); if (!fbOK(title, surl, date)) continue; }
       if (title && link) out.push({ t: title, l: link, s: source, d: date });
     }
     return out;
@@ -352,6 +370,7 @@
   function renderSection(key, items) {
     var list = document.getElementById("list-" + key);
     if (!list) return;
+    if (key === "facebook" && items.length) { var secF = document.getElementById("sec-facebook"); if (secF) secF.style.display = ""; }
     list.innerHTML = "";
     var start = 0;
     if (key === "us" && items.length) {
@@ -371,6 +390,7 @@
       start = 1;
     }
     if (!items.length) {
+      if (key === "facebook") { var sec = document.getElementById("sec-facebook"); if (sec) sec.style.display = "none"; return; }
       var p = document.createElement("p"); p.className = "feed-error";
       p.textContent = "This section's wire is quiet right now — check back after the next edition.";
       list.appendChild(p); return;
@@ -401,7 +421,7 @@
     var jobs = [];
     ["us", "texas", "vermont", "sunshine", "facebook"].forEach(function (key) {
       jobs.push(fetchViaProxy(FEEDS[key]).then(function (txt) {
-        var items = parseRSS(txt, CAPS[key]);
+        var items = parseRSS(txt, CAPS[key], key);
         if (items.length >= 3) { renderSection(key, items); liveCount++; markLive(); }
       }).catch(function () {}));
     });
@@ -430,6 +450,7 @@
       ["us", "texas", "vermont", "sunshine", "social", "facebook"].forEach(function (key) {
         if (snap.sections[key]) renderSection(key, snap.sections[key]);
       });
+      if (!snap.sections.facebook) { var sec0 = document.getElementById("sec-facebook"); if (sec0) sec0.style.display = "none"; }
       var gen = new Date(snap.generated);
       document.getElementById("editionStatus").textContent =
         "Edition of " + gen.toLocaleDateString([], { month: "long", day: "numeric" }) + " · Fetching the latest...";
