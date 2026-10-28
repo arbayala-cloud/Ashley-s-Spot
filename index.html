@@ -160,7 +160,7 @@
 #catPal .cat-bubble.show { opacity: 1; transform: translate(-50%, 0) scale(1); pointer-events: auto; }
 #catPal .cat-chiprow { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 5px; }
 #catPal .cat-chip { font: 600 9px Oswald, Inter, sans-serif; letter-spacing: 2px; text-transform: uppercase; background: #a15c68; color: #fff; border-radius: 999px; padding: 2.5px 9px; }
-#catPal .cat-x { background: none; border: none; color: #8a7a68; font-size: 14px; line-height: 1; cursor: pointer; padding: 2px 4px; }
+#catPal .cat-x { background: none; border: none; color: #8a7a68; font-size: 16px; line-height: 1; cursor: pointer; padding: 8px 9px; margin: -6px -5px -6px 0; min-width: 32px; min-height: 32px; }
 #catPal .cat-say { font: 500 13.5px/1.5 Fraunces, Georgia, serif; display: block; }
 #catPal .cat-by { font: 600 9.5px Oswald, Inter, sans-serif; letter-spacing: 1.6px; text-transform: uppercase; color: #8a7a68; margin-top: 6px; }
 #catPal .cat-by:empty { display: none; }
@@ -781,7 +781,7 @@ var CARTOONS = [{"name": "Hey Arnold", "year": 1996, "img": "https://artworks.th
     }, 55000 + Math.random() * 35000);
   }
   el.addEventListener("click", function (e) {
-    if (e.target === xBtn) return;
+    if (e.target.closest && e.target.closest(".cat-x")) return;
     el.classList.remove("petted"); void el.offsetWidth; el.classList.add("petted");
     spawnHeart(); spawnHeart(); chirp(); speak();
   });
