@@ -290,7 +290,7 @@
   })();
 </script>
 
-<script src="news-data.js"></script>
+<script>document.write('<script src="news-data.js?v=' + new Date().toISOString().slice(0, 10) + '"><\/script>');</script>
 <script>
   var FEEDS = {
     us: "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en",
@@ -448,9 +448,23 @@
     var snap = window.NEWS_SNAPSHOT;
     if (snap && snap.sections) {
       ["us", "texas", "vermont", "sunshine", "social", "facebook"].forEach(function (key) {
-        if (snap.sections[key]) renderSection(key, snap.sections[key]);
+        var items = snap.sections[key];
+        if (key === "facebook" && items) {
+          // Never let a stale printed snapshot put junk on the page: re-check
+          // its Facebook items against the same headline rules before printing.
+          items = items.filter(function (it) {
+            it.t = fbTidy(it.t || "");
+            if (/http|www\./.test(it.t)) return false;
+            if (it.t.length < 25 || it.t.length > 160) return false;
+            if ((it.s || "") === "Facebook Accounts Center") return false;
+            var t = Date.parse(it.d); if (!t) return false;
+            return (Date.now() - t) <= 14 * 864e5;
+          });
+          if (!items.length) items = null;
+        }
+        if (items) renderSection(key, items);
+        else if (key === "facebook") { var sec0 = document.getElementById("sec-facebook"); if (sec0) sec0.style.display = "none"; }
       });
-      if (!snap.sections.facebook) { var sec0 = document.getElementById("sec-facebook"); if (sec0) sec0.style.display = "none"; }
       var gen = new Date(snap.generated);
       document.getElementById("editionStatus").textContent =
         "Edition of " + gen.toLocaleDateString([], { month: "long", day: "numeric" }) + " · Fetching the latest...";
