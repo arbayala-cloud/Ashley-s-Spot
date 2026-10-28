@@ -75,44 +75,6 @@
   .foot-copy { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: #8a7a68; margin: 0; white-space: nowrap; }
 
   /* ---------- Dark mode ---------- */
-
-  /* ---------- The House Cat ---------- */
-  .cat-flex { display: flex; gap: 24px; align-items: flex-start; }
-  .cat-fig { margin: 0; flex: 0 0 auto; width: 198px; cursor: pointer; }
-  .cat-photo-frame { background: #fff; border: 1px solid rgba(0,0,0,.07); padding: 8px 8px 6px; box-shadow: 0 10px 22px rgba(43,35,32,.14); transform: rotate(-1.2deg); }
-  .cat-photo-frame img { width: 100%; height: 236px; object-fit: cover; object-position: 50% 22%; display: block; }
-  .cat-fig.purring .cat-photo-frame { animation: purr .5s ease; }
-  @keyframes purr { 0%, 100% { transform: rotate(-1.2deg); } 25% { transform: rotate(-.5deg) translateY(-1px); } 75% { transform: rotate(-1.9deg); } }
-  @media (prefers-reduced-motion: reduce) { .cat-fig.purring .cat-photo-frame { animation: none; } }
-  .cat-credit { text-align: center; font-size: 10px; color: #8a7a68; margin: 10px 0 0; line-height: 1.5; }
-  .cat-side { flex: 1 1 auto; min-width: 0; }
-  .cat-bubble { position: relative; background: #f7f1e6; border: 1px solid #e3d5b8; border-radius: 14px; padding: 16px 18px 14px; min-height: 118px; }
-  .cat-bubble::before { content: ""; position: absolute; left: -9px; top: 34px; width: 16px; height: 16px; background: #f7f1e6; border-left: 1px solid #e3d5b8; border-bottom: 1px solid #e3d5b8; transform: rotate(45deg); }
-  .cat-chip { display: inline-block; font-family: Oswald, Inter, sans-serif; font-size: 9.5px; font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase; background: #a15c68; color: #fff; border-radius: 999px; padding: 3px 11px; margin-bottom: 9px; }
-  .cat-text { font-family: Fraunces, Georgia, serif; font-weight: 500; font-size: 17.5px; line-height: 1.55; color: #2b2320; margin: 0; }
-  .cat-by { font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; color: #8a7a68; font-weight: 600; margin: 9px 0 0; }
-  .cat-by:empty { display: none; }
-  .cat-btn { margin-top: 14px; font-family: Oswald, Inter, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; background: #2b2320; color: #f7f1e6; border: 1.5px solid #2b2320; border-radius: 999px; padding: 10px 22px; cursor: pointer; transition: background .15s, border-color .15s; }
-  .cat-btn:hover { background: #a15c68; border-color: #a15c68; }
-  .cat-note { font-size: 12.5px; font-style: italic; color: #8a7a68; margin: 10px 0 0; }
-  body.dark .cat-bubble { background: #33291f; border-color: #55462f; }
-  body.dark .cat-bubble::before { background: #33291f; border-left-color: #55462f; border-bottom-color: #55462f; }
-  body.dark .cat-text { color: #f4ead9; }
-  body.dark .cat-by, body.dark .cat-note, body.dark .cat-credit { color: #cbb9a6; }
-  body.dark .cat-btn { background: #c9a35f; border-color: #c9a35f; color: #241c10; }
-  body.dark .cat-btn:hover { background: #a15c68; border-color: #a15c68; color: #fff; }
-  body.view-desktop .cat-flex { flex-direction: row; }
-  @media (max-width: 620px) {
-    .cat-flex { flex-direction: column; align-items: center; }
-    .cat-fig { width: 176px; }
-    .cat-photo-frame img { height: 210px; }
-    .cat-side { width: 100%; text-align: center; }
-    .cat-bubble::before { left: 50%; top: -9px; margin-left: -8px; transform: rotate(135deg); }
-    .cat-text { font-size: 16.5px; }
-  }
-  body.view-mobile .cat-flex { flex-direction: column; align-items: center; }
-  body.view-mobile .cat-side { width: 100%; text-align: center; }
-
   body.dark { background: #14100d; color: #f4ead9; }
   body.dark .wrap { background: #211a15; border-color: #55462f; box-shadow: 0 20px 44px rgba(0,0,0,.5); }
   body.dark .site-header { border-bottom-color: #55462f; }
@@ -179,6 +141,42 @@
   body.view-mobile .menu-panel button.install-btn { font-size: 18px; }
   body.view-desktop .menu-panel button.install-btn { font-size: 19px; }
 </style>
+<style id="housecat-style">
+/* The House Cat: a tabby companion who lives on the homepage and always has something to say.
+   Hand-coded SVG in the Sammie tradition, re-skinned as a tabby with a bigger vocabulary. */
+#catPal { position: fixed; left: -200px; top: 110vh; width: 104px; z-index: 99990; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: left 4.4s ease-in-out, top 4.4s ease-in-out; touch-action: manipulation; user-select: none; -webkit-user-select: none; --fur: #9a7b58; --furd: #6e5638; --bib: #ece1cb; --eye: #5f7d3a; --ear: #c98a7d; }
+#catPal .cat-bob { animation: hcatBob 3.6s ease-in-out infinite; }
+#catPal svg { display: block; width: 100%; height: auto; overflow: visible; }
+#catPal .cat-flip { transition: transform .45s ease; }
+#catPal .cat-flip.flip { transform: scaleX(-1); }
+#catPal .cf { fill: var(--fur); } #catPal .cfd { fill: var(--furd); } #catPal .cb { fill: var(--bib); }
+#catPal .ce { fill: var(--eye); } #catPal .cer { fill: var(--ear); } #catPal .sf { stroke: var(--furd); }
+#catPal .cat-tail { transform-box: fill-box; transform-origin: 15% 85%; animation: hcatTail 2.9s ease-in-out infinite alternate; }
+#catPal .cat-eyes { transform-box: fill-box; transform-origin: center; animation: hcatBlink 5.4s infinite; }
+#catPal .cat-shadow { transform-box: fill-box; transform-origin: center; animation: hcatShadow 3.6s ease-in-out infinite; }
+#catPal.petted svg { animation: hcatSquish .38s ease; }
+#catPal .cat-bubble { position: absolute; left: 50%; bottom: 97%; transform: translate(-50%, 6px) scale(.94); width: 232px; max-width: 72vw; background: #fffdf8; color: #2b2320; border: 1px solid #d9c9a8; border-radius: 14px; padding: 10px 12px 9px; text-align: left; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; box-shadow: 0 10px 26px rgba(43,35,32,.18); }
+#catPal .cat-bubble:after { content: ""; position: absolute; left: 50%; bottom: -7px; width: 12px; height: 12px; transform: translateX(-50%) rotate(45deg); background: #fffdf8; border-right: 1px solid #d9c9a8; border-bottom: 1px solid #d9c9a8; }
+#catPal .cat-bubble.show { opacity: 1; transform: translate(-50%, 0) scale(1); pointer-events: auto; }
+#catPal .cat-chiprow { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 5px; }
+#catPal .cat-chip { font: 600 9px Oswald, Inter, sans-serif; letter-spacing: 2px; text-transform: uppercase; background: #a15c68; color: #fff; border-radius: 999px; padding: 2.5px 9px; }
+#catPal .cat-x { background: none; border: none; color: #8a7a68; font-size: 14px; line-height: 1; cursor: pointer; padding: 2px 4px; }
+#catPal .cat-say { font: 500 13.5px/1.5 Fraunces, Georgia, serif; display: block; }
+#catPal .cat-by { font: 600 9.5px Oswald, Inter, sans-serif; letter-spacing: 1.6px; text-transform: uppercase; color: #8a7a68; margin-top: 6px; }
+#catPal .cat-by:empty { display: none; }
+body.dark #catPal .cat-bubble { background: #2a231c; color: #f4ead9; border-color: #55462f; box-shadow: 0 10px 26px rgba(0,0,0,.5); }
+body.dark #catPal .cat-bubble:after { background: #2a231c; border-right-color: #55462f; border-bottom-color: #55462f; }
+body.dark #catPal .cat-by, body.dark #catPal .cat-x { color: #cbb9a6; }
+#catPal .cat-heart { position: absolute; left: 50%; top: 6px; font-size: 15px; pointer-events: none; animation: hcatRise 1.15s ease-out forwards; }
+@keyframes hcatBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes hcatShadow { 0%, 100% { transform: scaleX(1); opacity: .16; } 50% { transform: scaleX(.88); opacity: .11; } }
+@keyframes hcatTail { from { transform: rotate(-3.5deg); } to { transform: rotate(5deg); } }
+@keyframes hcatBlink { 0%, 91%, 100% { transform: scaleY(1); } 94.5% { transform: scaleY(.08); } 97.5% { transform: scaleY(1); } }
+@keyframes hcatSquish { 0% { transform: scale(1, 1); } 35% { transform: scale(1.07, .93); } 70% { transform: scale(.97, 1.04); } 100% { transform: scale(1, 1); } }
+@keyframes hcatRise { 0% { transform: translate(-50%, 0) scale(.7); opacity: 0; } 18% { opacity: 1; } 100% { transform: translate(calc(-50% + var(--drift, 0px)), -52px) scale(1.15); opacity: 0; } }
+@media (max-width: 560px) { #catPal { width: 88px; } #catPal .cat-bubble { width: 208px; } }
+@media (prefers-reduced-motion: reduce) { #catPal { transition: none; } #catPal .cat-bob, #catPal .cat-tail, #catPal .cat-shadow { animation: none; } #catPal .cat-eyes { animation-duration: 9s; } }
+</style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#ece5d5">
 </head>
@@ -241,25 +239,6 @@
     </div>
     <div id="sotdPlayer"></div>
   </div>
-
-  <section class="feature-card cat-card">
-    <h2 class="sec-label">The House Cat</h2>
-    <div class="cat-flex">
-      <figure class="cat-fig" id="catFig" tabindex="0" role="button" aria-label="Ask the house cat for another message">
-        <div class="cat-photo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/960px-Cat_November_2010-1a.jpg" alt="A tabby cat sitting tall, looking right at you"></div>
-        <figcaption class="cat-credit">Photo: Alvesgaspar · CC BY-SA 3.0 · Wikimedia Commons</figcaption>
-      </figure>
-      <div class="cat-side">
-        <div class="cat-bubble">
-          <span class="cat-chip" id="catChip">Scripture</span>
-          <p class="cat-text" id="catText"></p>
-          <p class="cat-by" id="catBy"></p>
-        </div>
-        <button class="cat-btn" id="catBtn" type="button">Ask Her Again</button>
-        <p class="cat-note">Tap her picture — she always has something to say.</p>
-      </div>
-    </div>
-  </section>
 
   <footer class="site-footer">
     <p class="foot-copy">&copy; 2026 Ashley Ayala</p>
@@ -734,32 +713,84 @@ var CARTOONS = [{"name": "Hey Arnold", "year": 1996, "img": "https://artworks.th
   })();
 </script>
 
-<script>
-  (function () {
-    var MSGS = [{"k": "Scripture", "t": "This is the day which the LORD hath made; we will rejoice and be glad in it.", "b": "Psalm 118:24"},{"k": "Scripture", "t": "I can do all things through Christ which strengtheneth me.", "b": "Philippians 4:13"},{"k": "Scripture", "t": "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint.", "b": "Isaiah 40:31"},{"k": "Scripture", "t": "Trust in the LORD with all thine heart; and lean not unto thine own understanding.", "b": "Proverbs 3:5"},{"k": "Scripture", "t": "Be still, and know that I am God.", "b": "Psalm 46:10"},{"k": "Scripture", "t": "And we know that all things work together for good to them that love God, to them who are the called according to his purpose.", "b": "Romans 8:28"},{"k": "Scripture", "t": "Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.", "b": "Joshua 1:9"},{"k": "Scripture", "t": "It is of the LORD'S mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.", "b": "Lamentations 3:22-23"},{"k": "Scripture", "t": "Come unto me, all ye that labour and are heavy laden, and I will give you rest.", "b": "Matthew 11:28"},{"k": "Scripture", "t": "The LORD is my shepherd; I shall not want.", "b": "Psalm 23:1"},{"k": "Scripture", "t": "For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.", "b": "2 Timothy 1:7"},{"k": "Scripture", "t": "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", "b": "Jeremiah 29:11"},{"k": "Scripture", "t": "And whatsoever ye do, do it heartily, as to the LORD, and not unto men.", "b": "Colossians 3:23"},{"k": "Scripture", "t": "He hath shewed thee, O man, what is good; and what doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?", "b": "Micah 6:8"},{"k": "Scripture", "t": "Rejoice evermore. Pray without ceasing.", "b": "1 Thessalonians 5:16-17"},{"k": "Scripture", "t": "Let the words of my mouth, and the meditation of my heart, be acceptable in thy sight, O LORD, my strength, and my redeemer.", "b": "Psalm 19:14"},{"k": "Quote", "t": "Hope is the thing with feathers that perches in the soul.", "b": "Emily Dickinson"},{"k": "Quote", "t": "Kindness is the language which the deaf can hear and the blind can see.", "b": "Mark Twain"},{"k": "Quote", "t": "There is no charm equal to tenderness of heart.", "b": "Jane Austen"},{"k": "Quote", "t": "An early-morning walk is a blessing for the whole day.", "b": "Henry David Thoreau"},{"k": "Quote", "t": "Where we love is home \u2014 home that our feet may leave, but not our hearts.", "b": "Oliver Wendell Holmes Sr."},{"k": "Quote", "t": "What do we live for, if it is not to make life less difficult for each other?", "b": "George Eliot"},{"k": "Quote", "t": "A room without books is like a body without a soul.", "b": "Cicero"},{"k": "Quote", "t": "Nothing is particularly hard if you divide it into small jobs.", "b": "Henry Ford"},{"k": "Quote", "t": "It is never too late to be what you might have been.", "b": "George Eliot"},{"k": "Quote", "t": "Well done is better than well said.", "b": "Benjamin Franklin"},{"k": "Quote", "t": "Simplify, simplify.", "b": "Henry David Thoreau"},{"k": "Quote", "t": "Gratitude is the fairest blossom which springs from the soul.", "b": "Henry Ward Beecher"},{"k": "Inspiration", "t": "A house run with love is never behind. It is just mid-blessing.", "b": null},{"k": "Inspiration", "t": "Small faithfulness, repeated daily, builds a whole life.", "b": null},{"k": "Inspiration", "t": "You do not have to do everything today. You have to do the next right thing.", "b": null},{"k": "Inspiration", "t": "Quiet homes grow loud joy.", "b": null},{"k": "Inspiration", "t": "The day does not need to be perfect to be counted a good one.", "b": null},{"k": "Inspiration", "t": "Tidy one small corner, and the whole room believes in you again.", "b": null},{"k": "Inspiration", "t": "Rest is not quitting. Rest is part of the work.", "b": null},{"k": "Inspiration", "t": "Somebody in this house is glad you exist. Several somebodies have whiskers.", "b": null},{"k": "Inspiration", "t": "Slow mornings are not wasted mornings.", "b": null},{"k": "Inspiration", "t": "A warm meal and a made bed have fixed more days than worry ever has.", "b": null},{"k": "Inspiration", "t": "You were not made to keep up. You were made to keep house, keep faith, and keep going.", "b": null},{"k": "Inspiration", "t": "Grace covers the undone list too.", "b": null},{"k": "Tip", "t": "Put the phone on the charger outside the bedroom tonight \u2014 morning-you says thanks.", "b": null},{"k": "Tip", "t": "Before bed, write tomorrow's top three on a sticky note. Sleep comes easier with the plan parked.", "b": null},{"k": "Tip", "t": "A laundry basket in every room things pile up in. Future you sends her love.", "b": null},{"k": "Tip", "t": "Run the dishwasher at night and unload it with morning coffee \u2014 a two-minute head start on the whole day.", "b": null},{"k": "Tip", "t": "Photos of important papers \u2014 licenses, cards, tags \u2014 in one phone album: a glove box you cannot lose.", "b": null},{"k": "Tip", "t": "Set a repeating Sunday reminder to tap Back Up My Data in the menu. Your whole Spot, saved in one tap.", "b": null},{"k": "Tip", "t": "Keep a donation box by the door. When it is full, it goes. No second decisions.", "b": null},{"k": "Tip", "t": "A 15-minute timer and one room is a reset that actually finishes.", "b": null},{"k": "Tip", "t": "Check the cats' water fountain filter when you change the calendar page \u2014 monthly, no guessing.", "b": null},{"k": "Tip", "t": "Cold water in a bottle on the counter gets drank. The fridge bottle gets forgotten.", "b": null},{"k": "Tip", "t": "Screenshot the Song of the Day when it's a good one \u2014 your archive builds itself.", "b": null},{"k": "Tip", "t": "If a task takes under two minutes, it does not go on the list. It just gets done.", "b": null},{"k": "Suggestion", "t": "Step out on the porch with something warm and just listen for one whole minute.", "b": null},{"k": "Suggestion", "t": "Put on a 2003 playlist and clean one drawer. Both will feel amazing.", "b": null},{"k": "Suggestion", "t": "Text Derek one thing you appreciate about him today. Out of nowhere counts double.", "b": null},{"k": "Suggestion", "t": "Pick one case file tonight and read it all the way through, detective.", "b": null},{"k": "Suggestion", "t": "Bake the easy thing. The one you know by heart.", "b": null},{"k": "Suggestion", "t": "Brush a cat until she fires you. It's her schedule, after all.", "b": null},{"k": "Suggestion", "t": "Open the windows for ten minutes, even in the heat. Fresh air resets a house.", "b": null},{"k": "Suggestion", "t": "Write one sentence in your blog today. One. The rest can wait.", "b": null},{"k": "Suggestion", "t": "Check the Vermont wire in your newspaper \u2014 a little postcard from home.", "b": null},{"k": "Suggestion", "t": "Light a candle at supper tonight. Instant occasion.", "b": null},{"k": "Suggestion", "t": "Take the long way to the mailbox and back. That is the whole assignment.", "b": null},{"k": "Suggestion", "t": "Grandma first, list second. The list will keep; she gets the best of you.", "b": null}];
-    var chip = document.getElementById('catChip');
-    var text = document.getElementById('catText');
-    var by = document.getElementById('catBy');
-    var fig = document.getElementById('catFig');
-    var last = -1;
-    function show() {
-      var i;
-      do { i = Math.floor(Math.random() * MSGS.length); } while (i === last && MSGS.length > 1);
-      last = i;
-      var m = MSGS[i];
-      chip.textContent = m.k;
-      text.textContent = m.t;
-      by.textContent = m.b || '';
-      if (fig) { fig.classList.remove('purring'); void fig.offsetWidth; fig.classList.add('purring'); }
-    }
-    var btn = document.getElementById('catBtn');
-    if (btn) btn.addEventListener('click', show);
-    if (fig) {
-      fig.addEventListener('click', show);
-      fig.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(); } });
-    }
-    show();
-  })();
+<script id="housecat-script">
+(function () {
+  var MSGS = [{"k": "Scripture", "t": "This is the day which the LORD hath made; we will rejoice and be glad in it.", "b": "Psalm 118:24"},{"k": "Scripture", "t": "I can do all things through Christ which strengtheneth me.", "b": "Philippians 4:13"},{"k": "Scripture", "t": "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint.", "b": "Isaiah 40:31"},{"k": "Scripture", "t": "Trust in the LORD with all thine heart; and lean not unto thine own understanding.", "b": "Proverbs 3:5"},{"k": "Scripture", "t": "Be still, and know that I am God.", "b": "Psalm 46:10"},{"k": "Scripture", "t": "And we know that all things work together for good to them that love God, to them who are the called according to his purpose.", "b": "Romans 8:28"},{"k": "Scripture", "t": "Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.", "b": "Joshua 1:9"},{"k": "Scripture", "t": "It is of the LORD'S mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.", "b": "Lamentations 3:22-23"},{"k": "Scripture", "t": "Come unto me, all ye that labour and are heavy laden, and I will give you rest.", "b": "Matthew 11:28"},{"k": "Scripture", "t": "The LORD is my shepherd; I shall not want.", "b": "Psalm 23:1"},{"k": "Scripture", "t": "For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.", "b": "2 Timothy 1:7"},{"k": "Scripture", "t": "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", "b": "Jeremiah 29:11"},{"k": "Scripture", "t": "And whatsoever ye do, do it heartily, as to the LORD, and not unto men.", "b": "Colossians 3:23"},{"k": "Scripture", "t": "He hath shewed thee, O man, what is good; and what doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?", "b": "Micah 6:8"},{"k": "Scripture", "t": "Rejoice evermore. Pray without ceasing.", "b": "1 Thessalonians 5:16-17"},{"k": "Scripture", "t": "Let the words of my mouth, and the meditation of my heart, be acceptable in thy sight, O LORD, my strength, and my redeemer.", "b": "Psalm 19:14"},{"k": "Quote", "t": "Hope is the thing with feathers that perches in the soul.", "b": "Emily Dickinson"},{"k": "Quote", "t": "Kindness is the language which the deaf can hear and the blind can see.", "b": "Mark Twain"},{"k": "Quote", "t": "There is no charm equal to tenderness of heart.", "b": "Jane Austen"},{"k": "Quote", "t": "An early-morning walk is a blessing for the whole day.", "b": "Henry David Thoreau"},{"k": "Quote", "t": "Where we love is home \u2014 home that our feet may leave, but not our hearts.", "b": "Oliver Wendell Holmes Sr."},{"k": "Quote", "t": "What do we live for, if it is not to make life less difficult for each other?", "b": "George Eliot"},{"k": "Quote", "t": "A room without books is like a body without a soul.", "b": "Cicero"},{"k": "Quote", "t": "Nothing is particularly hard if you divide it into small jobs.", "b": "Henry Ford"},{"k": "Quote", "t": "It is never too late to be what you might have been.", "b": "George Eliot"},{"k": "Quote", "t": "Well done is better than well said.", "b": "Benjamin Franklin"},{"k": "Quote", "t": "Simplify, simplify.", "b": "Henry David Thoreau"},{"k": "Quote", "t": "Gratitude is the fairest blossom which springs from the soul.", "b": "Henry Ward Beecher"},{"k": "Inspiration", "t": "A house run with love is never behind. It is just mid-blessing.", "b": null},{"k": "Inspiration", "t": "Small faithfulness, repeated daily, builds a whole life.", "b": null},{"k": "Inspiration", "t": "You do not have to do everything today. You have to do the next right thing.", "b": null},{"k": "Inspiration", "t": "Quiet homes grow loud joy.", "b": null},{"k": "Inspiration", "t": "The day does not need to be perfect to be counted a good one.", "b": null},{"k": "Inspiration", "t": "Tidy one small corner, and the whole room believes in you again.", "b": null},{"k": "Inspiration", "t": "Rest is not quitting. Rest is part of the work.", "b": null},{"k": "Inspiration", "t": "Somebody in this house is glad you exist. Several somebodies have whiskers.", "b": null},{"k": "Inspiration", "t": "Slow mornings are not wasted mornings.", "b": null},{"k": "Inspiration", "t": "A warm meal and a made bed have fixed more days than worry ever has.", "b": null},{"k": "Inspiration", "t": "You were not made to keep up. You were made to keep house, keep faith, and keep going.", "b": null},{"k": "Inspiration", "t": "Grace covers the undone list too.", "b": null},{"k": "Tip", "t": "Put the phone on the charger outside the bedroom tonight \u2014 morning-you says thanks.", "b": null},{"k": "Tip", "t": "Before bed, write tomorrow's top three on a sticky note. Sleep comes easier with the plan parked.", "b": null},{"k": "Tip", "t": "A laundry basket in every room things pile up in. Future you sends her love.", "b": null},{"k": "Tip", "t": "Run the dishwasher at night and unload it with morning coffee \u2014 a two-minute head start on the whole day.", "b": null},{"k": "Tip", "t": "Photos of important papers \u2014 licenses, cards, tags \u2014 in one phone album: a glove box you cannot lose.", "b": null},{"k": "Tip", "t": "Set a repeating Sunday reminder to tap Back Up My Data in the menu. Your whole Spot, saved in one tap.", "b": null},{"k": "Tip", "t": "Keep a donation box by the door. When it is full, it goes. No second decisions.", "b": null},{"k": "Tip", "t": "A 15-minute timer and one room is a reset that actually finishes.", "b": null},{"k": "Tip", "t": "Check the cats' water fountain filter when you change the calendar page \u2014 monthly, no guessing.", "b": null},{"k": "Tip", "t": "Cold water in a bottle on the counter gets drank. The fridge bottle gets forgotten.", "b": null},{"k": "Tip", "t": "Screenshot the Song of the Day when it's a good one \u2014 your archive builds itself.", "b": null},{"k": "Tip", "t": "If a task takes under two minutes, it does not go on the list. It just gets done.", "b": null},{"k": "Suggestion", "t": "Step out on the porch with something warm and just listen for one whole minute.", "b": null},{"k": "Suggestion", "t": "Put on a 2003 playlist and clean one drawer. Both will feel amazing.", "b": null},{"k": "Suggestion", "t": "Text Derek one thing you appreciate about him today. Out of nowhere counts double.", "b": null},{"k": "Suggestion", "t": "Pick one case file tonight and read it all the way through, detective.", "b": null},{"k": "Suggestion", "t": "Bake the easy thing. The one you know by heart.", "b": null},{"k": "Suggestion", "t": "Brush a cat until she fires you. It's her schedule, after all.", "b": null},{"k": "Suggestion", "t": "Open the windows for ten minutes, even in the heat. Fresh air resets a house.", "b": null},{"k": "Suggestion", "t": "Write one sentence in your blog today. One. The rest can wait.", "b": null},{"k": "Suggestion", "t": "Check the Vermont wire in your newspaper \u2014 a little postcard from home.", "b": null},{"k": "Suggestion", "t": "Light a candle at supper tonight. Instant occasion.", "b": null},{"k": "Suggestion", "t": "Take the long way to the mailbox and back. That is the whole assignment.", "b": null},{"k": "Suggestion", "t": "Grandma first, list second. The list will keep; she gets the best of you.", "b": null}];
+  var SVG = "<svg viewBox=\"0 0 220 200\" aria-hidden=\"true\"><ellipse class=\"cat-shadow\" cx=\"110\" cy=\"189\" rx=\"56\" ry=\"8\" fill=\"#140f08\" opacity=\".16\"/><g class=\"cat-tail\"><path class=\"cf\" d=\"M158,148 C190,138 208,156 202,176 C197,191 178,196 158,191 C175,183 181,168 171,157 C167,152 162,148 158,148 Z\"/><path class=\"sf\" d=\"M186,146 q8,4 11,12 M192,164 q5,6 3,13\" fill=\"none\" stroke-width=\"4\" stroke-linecap=\"round\" opacity=\".45\"/><circle class=\"cf\" cx=\"196\" cy=\"156\" r=\"10\"/><circle class=\"cf\" cx=\"201\" cy=\"171\" r=\"9\"/><circle class=\"cb\" cx=\"197\" cy=\"182\" r=\"8\"/></g><path class=\"cf\" d=\"M110,84 C146,84 166,114 166,144 C166,172 142,188 110,188 C78,188 54,172 54,144 C54,114 74,84 110,84 Z\"/><circle class=\"cf\" cx=\"58\" cy=\"126\" r=\"9\"/><circle class=\"cf\" cx=\"56\" cy=\"148\" r=\"10\"/><circle class=\"cf\" cx=\"64\" cy=\"168\" r=\"9\"/><circle class=\"cf\" cx=\"162\" cy=\"126\" r=\"9\"/><circle class=\"cf\" cx=\"164\" cy=\"148\" r=\"10\"/><circle class=\"cf\" cx=\"156\" cy=\"168\" r=\"9\"/><circle class=\"cf\" cx=\"84\" cy=\"185\" r=\"8\"/><circle class=\"cf\" cx=\"136\" cy=\"185\" r=\"8\"/><circle class=\"cb\" cx=\"110\" cy=\"114\" r=\"12\"/><circle class=\"cb\" cx=\"98\" cy=\"127\" r=\"10\"/><circle class=\"cb\" cx=\"122\" cy=\"127\" r=\"10\"/><circle class=\"cb\" cx=\"110\" cy=\"140\" r=\"11\"/><g><path class=\"sf\" d=\"M60,118 q-6,12 -3,24 M64,158 q-3,8 1,14 M160,118 q6,12 3,24 M156,158 q3,8 -1,14\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".4\"/></g><ellipse class=\"cf\" cx=\"84\" cy=\"183\" rx=\"15\" ry=\"8\"/><ellipse class=\"cf\" cx=\"136\" cy=\"183\" rx=\"15\" ry=\"8\"/><path class=\"sf\" d=\"M79,178 v7 M89,178 v7 M131,178 v7 M141,178 v7\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".45\"/><path class=\"cf\" d=\"M76,32 L64,3 Q62,-3 69,-1 L103,17 Q88,28 76,32 Z\"/><path class=\"cf\" d=\"M144,32 L156,3 Q158,-3 151,-1 L117,17 Q132,28 144,32 Z\"/><path class=\"cer\" d=\"M78,25 L71,8 L95,17 Q86,23 78,25 Z\"/><path class=\"cer\" d=\"M142,25 L149,8 L125,17 Q134,23 142,25 Z\"/><circle class=\"cf\" cx=\"110\" cy=\"58\" r=\"42\"/><circle class=\"cf\" cx=\"71\" cy=\"65\" r=\"10\"/><circle class=\"cf\" cx=\"69\" cy=\"79\" r=\"9\"/><circle class=\"cf\" cx=\"149\" cy=\"65\" r=\"10\"/><circle class=\"cf\" cx=\"151\" cy=\"79\" r=\"9\"/><ellipse class=\"cb\" cx=\"110\" cy=\"86\" rx=\"17\" ry=\"13\"/><g><path class=\"sf\" d=\"M94,20 q3,8 0,14 M110,16 q2,9 0,16 M126,20 q-3,8 0,14 M84,30 q6,5 12,5 M136,30 q-6,5 -12,5\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".45\"/></g><g class=\"cat-eyes\"><ellipse class=\"ce\" cx=\"93\" cy=\"58\" rx=\"7\" ry=\"9\"/><ellipse cx=\"93\" cy=\"59\" rx=\"3.2\" ry=\"5.5\" fill=\"#191521\"/><circle cx=\"95.5\" cy=\"54\" r=\"1.8\" fill=\"#fff\" opacity=\".9\"/><ellipse class=\"ce\" cx=\"127\" cy=\"58\" rx=\"7\" ry=\"9\"/><ellipse cx=\"127\" cy=\"59\" rx=\"3.2\" ry=\"5.5\" fill=\"#191521\"/><circle cx=\"129.5\" cy=\"54\" r=\"1.8\" fill=\"#fff\" opacity=\".9\"/></g><path d=\"M104,72 Q110,69 116,72 Q115,79 110,80 Q105,79 104,72 Z\" fill=\"#c47a72\"/><path class=\"sf\" d=\"M110,80 Q110,86 103,85 M110,80 Q110,86 117,85\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\"/><path class=\"sf\" d=\"M61,73 L35,68 M61,81 L36,83 M63,89 L41,98 M159,73 L185,68 M159,81 L184,83 M157,89 L179,98\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".4\"/></svg>";
+  var reduced = false;
+  try { reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+  var el = document.createElement("div");
+  el.id = "catPal";
+  el.setAttribute("role", "img");
+  el.setAttribute("aria-label", "The house cat, a tabby who lives on this page. Tap to pet her and hear what she has to say.");
+  el.innerHTML = "<div class=\"cat-bubble\"><div class=\"cat-chiprow\"><span class=\"cat-chip\"></span><button type=\"button\" class=\"cat-x\" aria-label=\"Close\">&times;</button></div><span class=\"cat-say\"></span><div class=\"cat-by\"></div></div>" +
+    "<div class=\"cat-bob\"><div class=\"cat-flip\">" + SVG + "</div></div>";
+  document.body.appendChild(el);
+  var bubble = el.querySelector(".cat-bubble"), chip = el.querySelector(".cat-chip"),
+      say = el.querySelector(".cat-say"), by = el.querySelector(".cat-by"),
+      flip = el.querySelector(".cat-flip"), xBtn = el.querySelector(".cat-x");
+  var pos = { x: Math.max(8, window.innerWidth - 140), y: window.innerHeight + 40 };
+  el.style.left = pos.x + "px"; el.style.top = pos.y + "px";
+  var last = -1, wanderTimer = null, idleTimer = null;
+  function nextMsg() {
+    var i; do { i = Math.floor(Math.random() * MSGS.length); } while (i === last && MSGS.length > 1);
+    last = i; return MSGS[i];
+  }
+  function speak() {
+    var m = nextMsg();
+    chip.textContent = m.k; say.textContent = m.t; by.textContent = m.b || "";
+    bubble.classList.add("show");
+  }
+  function spawnHeart() {
+    var s = document.createElement("span"); s.className = "cat-heart"; s.textContent = "\u{1F495}";
+    s.style.setProperty("--drift", (Math.floor(Math.random() * 36) - 18) + "px");
+    s.style.marginLeft = (Math.floor(Math.random() * 30) - 15) + "px";
+    el.appendChild(s); setTimeout(function () { s.remove(); }, 1250);
+  }
+  var AC = null;
+  function chirp() {
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+      if (!AC) AC = new Ctx();
+      var o = AC.createOscillator(), g = AC.createGain(), t = AC.currentTime;
+      o.type = "sine"; o.frequency.setValueAtTime(620, t); o.frequency.exponentialRampToValueAtTime(940, t + .09);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.045, t + .03); g.gain.exponentialRampToValueAtTime(.0001, t + .16);
+      o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + .18);
+    } catch (e) {}
+  }
+  function place(nx, ny) {
+    if (nx < pos.x - 4) flip.classList.add("flip"); else if (nx > pos.x + 4) flip.classList.remove("flip");
+    pos = { x: nx, y: ny }; el.style.left = nx + "px"; el.style.top = ny + "px";
+  }
+  function homePos() {
+    var w = window.innerWidth, h = window.innerHeight;
+    return { x: Math.max(8, w - 132 - Math.floor(Math.random() * w * .18)), y: Math.max(60, h - 215 - Math.floor(Math.random() * h * .14)) };
+  }
+  function wander() {
+    if (reduced) return;
+    var w = window.innerWidth, h = window.innerHeight;
+    var nx = Math.floor(w * .42 + Math.random() * (w * .58 - 118));
+    var ny = Math.floor(h * .34 + Math.random() * (h * .66 - 195));
+    place(Math.max(6, nx), Math.max(48, ny));
+    wanderTimer = setTimeout(wander, 5600 + Math.random() * 5200);
+  }
+  function idleLoop() {
+    idleTimer = setTimeout(function () {
+      if (!bubble.classList.contains("show") && Math.random() < .6) speak();
+      idleLoop();
+    }, 55000 + Math.random() * 35000);
+  }
+  el.addEventListener("click", function (e) {
+    if (e.target === xBtn) return;
+    el.classList.remove("petted"); void el.offsetWidth; el.classList.add("petted");
+    spawnHeart(); spawnHeart(); chirp(); speak();
+  });
+  xBtn.addEventListener("click", function (e) { e.stopPropagation(); bubble.classList.remove("show"); });
+  var hp = homePos(); place(hp.x, hp.y);
+  setTimeout(speak, 1400);
+  wanderTimer = setTimeout(wander, 6000);
+  idleLoop();
+})();
 </script>
 </body>
 </html>
