@@ -124,6 +124,32 @@
     .story-grid { grid-template-columns: 1fr; }
     .dateline { justify-content: center; text-align: center; }
   }
+
+  /* ---------- View modes (Mobile / Desktop switch under the footer) ---------- */
+  .view-switch { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; }
+  .view-label { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #8a7a68; margin-right: 2px; }
+  .view-btn { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; background: none; color: inherit; border: 1px solid #2b2320; border-radius: 999px; padding: 6px 16px; cursor: pointer; }
+  .view-btn.on { background: #2b2320; border-color: #2b2320; color: #fdfaf3; }
+  body.dark .view-label { color: #cbb9a6; }
+  body.dark .view-btn { border-color: #f4ead9; }
+  body.view-mobile .wrap { max-width: 430px; }
+  body.view-desktop { overflow-x: auto; }
+  body.view-desktop .wrap { width: 820px; max-width: none; }
+  body.view-mobile { padding: 22px 10px 40px; }
+  body.view-desktop { padding: 40px 16px 56px; }
+  body.view-mobile .wrap { padding: 20px 16px 24px; }
+  body.view-desktop .wrap { padding: 28px 40px 32px; }
+  body.view-mobile .wordmark { font-size: 23px; }
+  body.view-desktop .wordmark { font-size: 28px; }
+  body.view-mobile .masthead { font-size: 44px; }
+  body.view-desktop .masthead { font-size: 62px; }
+  body.view-mobile .lead h3 { font-size: 24px; }
+  body.view-desktop .lead h3 { font-size: 31px; }
+  body.view-mobile .story-grid { grid-template-columns: 1fr; }
+  body.view-desktop .story-grid { grid-template-columns: 1fr 1fr; }
+  body.view-mobile .dateline { justify-content: center; text-align: center; }
+  body.view-desktop .dateline { justify-content: space-between; }
+  body.view-desktop .dateline { text-align: left; }
 </style>
 
   <link rel="manifest" href="manifest.json">
@@ -214,6 +240,11 @@
   <footer class="site-footer">
     <p class="foot-copy">&copy; 2026 Ashley Ayala</p>
   </footer>
+  <div class="view-switch" role="group" aria-label="View mode">
+    <span class="view-label">View</span>
+    <button type="button" class="view-btn" data-view="mobile" aria-pressed="false">Mobile</button>
+    <button type="button" class="view-btn" data-view="desktop" aria-pressed="false">Desktop</button>
+  </div>
 </main>
 
 <script>
@@ -500,6 +531,34 @@
       } catch (e) {}
       Promise.all(jobs).then(done, done);
       setTimeout(done, 3500); // never leave her hanging
+    });
+  })();
+</script>
+
+<script>
+  (function () {
+    var KEY = 'ashleys-view';
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.view-btn'));
+    function apply(mode) {
+      document.body.classList.toggle('view-mobile', mode === 'mobile');
+      document.body.classList.toggle('view-desktop', mode === 'desktop');
+      btns.forEach(function (b) {
+        var on = b.getAttribute('data-view') === mode;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    if (saved === 'mobile' || saved === 'desktop') apply(saved);
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var mode = b.getAttribute('data-view');
+        var cur = null;
+        try { cur = localStorage.getItem(KEY); } catch (e) {}
+        if (cur === mode) { try { localStorage.removeItem(KEY); } catch ( e) {} apply(null); }
+        else { try { localStorage.setItem(KEY, mode); } catch (e) {} apply(mode); }
+      });
     });
   })();
 </script>
