@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Showtime — Ashley Ayala</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  ::selection { background: #efd9dc; }
+  body { margin: 0; background: #ece5d5; color: #2b2320; font-family: Inter, Arial, Helvetica, sans-serif; padding: 40px 16px 56px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 780px; margin: 0 auto; background: #fdfaf3; border: 1px solid #d9c9a8; border-radius: 10px; box-shadow: 0 20px 44px rgba(43,35,32,.16); padding: 28px 40px 32px; }
+
+  /* ---------- Site header ---------- */
+  .site-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid #e3d5b8; padding-bottom: 18px; }
+  .wordmark { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 28px; letter-spacing: .3px; line-height: 1.1; color: #2b2320; margin: 0; white-space: nowrap; }
+  .header-right { display: flex; align-items: center; gap: 16px; }
+  .menu-btn { display: inline-block; font-family: Oswald, Inter, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; background: none; border: 1px solid #2b2320; color: #2b2320; border-radius: 999px; padding: 8px 22px; cursor: pointer; transition: background .15s, color .15s; }
+  .menu-btn:hover { background: #2b2320; color: #fdfaf3; }
+  .menu-panel .theme-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 0 11px; border-top: 1px solid #f0e7d3; font-family: Oswald, Inter, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #8a7a68; }
+  .theme-switch { position: relative; width: 48px; height: 27px; flex: 0 0 auto; }
+  .theme-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .theme-switch .slider { position: absolute; inset: 0; background: #d9cbb2; border-radius: 999px; transition: .25s; }
+  .theme-switch .slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 21px; height: 21px; background: #fffdf8; border-radius: 50%; transition: .25s; box-shadow: 0 1px 3px rgba(43,35,32,.25); }
+  .theme-switch input:checked + .slider { background: #a15c68; }
+  .theme-switch input:checked + .slider::before { transform: translateX(21px); }
+  .theme-switch input:focus-visible + .slider { outline: 2px solid #a15c68; outline-offset: 2px; }
+
+  .menu-panel { display: none; background: #fffdf8; border: 1px solid #e3d5b8; border-radius: 10px; padding: 8px 0; margin: 16px auto 4px; max-width: 420px; text-align: center; box-shadow: 0 14px 30px rgba(43,35,32,.10); position: relative; z-index: 5; }
+  .menu-panel.open { display: block; }
+  .menu-panel a { display: block; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 500; color: #2b2320; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #f0e7d3; transition: color .15s, background .15s; }
+  .menu-panel a:hover { color: #a15c68; background: #fbf3e4; }
+  .menu-panel button.install-btn { display: block; width: 100%; font-family: Fraunces, Georgia, serif; font-size: 19px; font-weight: 500; color: #2b2320; background: none; border: none; padding: 10px 0; cursor: pointer; transition: color .15s, background .15s; }
+  .menu-panel button.install-btn:hover { color: #a15c68; background: #fbf3e4; }
+
+  /* ---------- Page title ---------- */
+  h1 { font-family: Fraunces, Georgia, serif; font-size: 40px; font-weight: 600; line-height: 1.15; margin: 28px 0 6px; color: #2b2320; }
+  .sub { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: 16.5px; color: #6d5f57; margin: 0; line-height: 1.55; }
+  .divider { border: none; border-top: 1px solid #e3d5b8; margin: 20px 0 26px; }
+
+  /* --- The Receiver (kept dark in both modes — it is a device) --- */
+  .receiver { position: relative; background: linear-gradient(180deg, #2c232b, #1e1620); border: 1px solid #4a3a45; border-radius: 14px; padding: 18px; color: #f5f2ec; box-shadow: 0 22px 44px rgba(43,35,32,.28); text-align: left; overflow: hidden; }
+  .rx-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 2px 4px 14px; }
+  .rx-brand { font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 3px; font-weight: 600; color: #d9b98a; text-transform: uppercase; }
+  .status { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #ddd3ba; font-weight: 600; }
+  .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #6b6455; flex: 0 0 auto; }
+  .status.playing { color: #ffd98a; }
+  .status.playing::before { background: #ffb347; box-shadow: 0 0 8px 2px rgba(255,179,71,.65); }
+  .rx-main { display: grid; grid-template-columns: 1fr; gap: 18px; align-items: center; }
+  .vinyl { position: relative; width: 178px; height: 178px; border-radius: 50%; margin: 0 auto; background: repeating-radial-gradient(circle at center, #16130f 0 2px, #221e18 2px 4px); border: 1px solid #000; box-shadow: 0 14px 28px rgba(0,0,0,.5), inset 0 0 0 6px #100e0b, inset 0 0 24px rgba(0,0,0,.8); animation: spin 5s linear infinite; animation-play-state: paused; }
+  .vinyl::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(125deg, rgba(255,255,255,.14) 0%, transparent 32%, transparent 68%, rgba(255,255,255,.07) 100%); }
+  .vinyl-label { position: absolute; left: 50%; top: 50%; width: 62px; height: 62px; margin: -31px 0 0 -31px; border-radius: 50%; background: radial-gradient(circle, #e8ddcb 0 4px, #c8a165 5px, #8a6d3b 100%); box-shadow: inset 0 0 0 2px rgba(38,34,30,.35); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .tv-wrap:has(.notes.playing) .vinyl { animation-play-state: running; }
+  .tv-video { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 10px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(200,161,101,.4), 0 10px 24px rgba(0,0,0,.45); line-height: 1.4; }
+  .tv-video iframe, .tv-video #ytplayer { width: 100% !important; height: 100% !important; display: block; border: 0; }
+  .tv-video .channel-banner { position: absolute; left: 10px; bottom: 10px; right: 10px; background: rgba(0,0,0,.72); color: #fff; padding: 6px 10px; border-radius: 8px; font-size: 13px; font-weight: 600; text-align: left; opacity: 0; transition: opacity .4s; pointer-events: none; z-index: 2; }
+  .tv-video .channel-banner.show { opacity: 1; }
+  .tv-video .off-screen { position: absolute; inset: 0; background: #0a0908; color: #57503f; display: none; align-items: center; justify-content: center; font-family: Oswald, Inter, sans-serif; font-size: 14px; letter-spacing: 5px; z-index: 3; }
+  .tv-wrap.off .tv-video .off-screen { display: flex; }
+  .tv-wrap.off .tv-video iframe { visibility: hidden; }
+  .tv-wrap.off .vinyl { animation-play-state: paused; }
+  .eq { display: flex; align-items: stretch; justify-content: center; gap: 4px; margin: 16px auto 2px; padding: 8px 10px; background: rgba(0,0,0,.28); border: 1px solid rgba(200,161,101,.28); border-radius: 10px; }
+  .eq .col { flex: 1; max-width: 16px; display: flex; flex-direction: column-reverse; gap: 2px; }
+  .eq .seg { display: block; height: 3px; border-radius: 1px; background: rgba(236,229,211,.10); transition: background .12s, box-shadow .12s; }
+  .eq .col .seg:nth-child(-n+3) { --c: #8a6d3b; }
+  .eq .col .seg:nth-child(n+4):nth-child(-n+6) { --c: #b08d57; }
+  .eq .col .seg:nth-child(n+7):nth-child(-n+8) { --c: #c8a165; }
+  .eq .col .seg:nth-child(n+9) { --c: #e8ddcb; }
+  .eq .seg.on { background: var(--c); box-shadow: 0 0 6px var(--c); }
+  .notes { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+  .notes .note { position: absolute; font-size: 26px; color: #f7ecd7; text-shadow: 0 0 8px rgba(200,161,101,.85), 0 0 2px #000; opacity: 0; }
+  .notes.playing .note { animation: floatNote 3s ease-in infinite; }
+  @keyframes floatNote { 0% { transform: translateY(8px) rotate(-8deg); opacity: 0; } 18% { opacity: 1; } 100% { transform: translateY(-72px) rotate(14deg); opacity: 0; } }
+  .tv-controls-under { display: flex; justify-content: center; gap: 10px; margin-top: 16px; flex-wrap: nowrap; }
+  .tv-controls-under .tv-btn { flex: 1 1 0; max-width: 170px; height: 56px; }
+  .tv-btn { background: #332a33; color: #f5f2ec; border: 1px solid #5c4a55; border-radius: 8px; font-family: Oswald, Inter, sans-serif; letter-spacing: 1px; text-transform: uppercase; padding: 8px 6px; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; line-height: 1.2; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .tv-btn small { display: block; font-size: 10px; letter-spacing: 1px; color: #cbb9c4; font-weight: 500; }
+  .tv-btn.power { background: #722635; border-color: #96404f; }
+  .tv-btn:disabled { opacity: .45; cursor: default; }
+
+  /* --- Playlists --- */
+  .playlist-label { font-family: Oswald, Inter, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #a15c68; margin: 32px 0 16px; }
+  .playlist-label::after { content: ""; display: block; width: 34px; height: 2px; background: #b08d57; margin-top: 9px; }
+  .playlist-menus { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 14px; background: #fff; border: 1px solid #e3d5b8; border-radius: 12px; padding: 20px; box-shadow: 0 10px 24px rgba(43,35,32,.05); }
+  .playlist-menu { text-align: center; min-width: 0; }
+  .playlist-menu label { display: block; font-family: Oswald, Inter, sans-serif; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; color: #6d5f57; font-weight: 600; margin: 0 0 7px 0; }
+  .song-select { width: 100%; height: 48px; padding: 0 12px; font-family: Inter, Arial, sans-serif; text-align: center; text-align-last: center; font-size: 15px; font-weight: 600; border-radius: 8px; border: 1px solid #d9c9a8; background: #fdfaf3; color: #2b2320; box-sizing: border-box; cursor: pointer; }
+  .song-select:focus-visible { outline: 2px solid #a15c68; outline-offset: 2px; }
+  .song-select option { font-size: 16px; font-weight: 400; }
+  .playlist-menu.active label { color: #a15c68; }
+  .playlist-menu.active .song-select { border-color: #a15c68; box-shadow: 0 0 0 1px #a15c68; background: #fdf6f2; }
+  .help-note { margin: 20px auto 0; color: #8a7a68; font-size: 13px; max-width: 620px; text-align: center; }
+
+  /* ---------- Footer ---------- */
+  .site-footer { border-top: 1px solid #e3d5b8; margin: 36px 0 0; padding-top: 18px; text-align: center; }
+  .foot-copy { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: #8a7a68; margin: 0; }
+
+  /* --- Dark --- */
+  body.dark { background: #14100d; color: #f4ead9; }
+  body.dark .wrap { background: #211a15; border-color: #55462f; box-shadow: 0 20px 44px rgba(0,0,0,.5); }
+  body.dark .site-header { border-bottom-color: #55462f; }
+  body.dark .wordmark { color: #f4ead9; }
+  body.dark .menu-btn { color: #f4ead9; border-color: #f4ead9; }
+  body.dark .menu-btn:hover { background: #f4ead9; color: #211a15; }
+  body.dark .menu-panel .theme-toggle { color: #cbb9a6; border-top-color: #3d332a; }
+  body.dark .menu-panel { background: #2a231c; border-color: #55462f; }
+  body.dark .menu-panel a { color: #f4ead9; border-bottom-color: #3d332a; }
+  body.dark .menu-panel a:hover { color: #d9a7b0; background: #33291f; }
+  body.dark .menu-panel button.install-btn { color: #f4ead9; }
+  body.dark .menu-panel button.install-btn:hover { color: #d9a7b0; background: #33291f; }
+  body.dark h1 { color: #f4ead9; }
+  body.dark .sub { color: #cbb9a6; }
+  body.dark .divider { border-top-color: #55462f; }
+  body.dark .playlist-label { color: #d9a7b0; }
+  body.dark .playlist-menus { background: #2a231c; border-color: #55462f; box-shadow: none; }
+  body.dark .playlist-menu label { color: #cbb9a6; }
+  body.dark .playlist-menu.active label { color: #d9a7b0; }
+  body.dark .song-select { background: #211a15; color: #f4ead9; border-color: #55462f; }
+  body.dark .playlist-menu.active .song-select { border-color: #a15c68; box-shadow: 0 0 0 1px #a15c68; background: #2c2226; }
+  body.dark .help-note { color: #cbb9a6; }
+  body.dark .site-footer { border-top-color: #55462f; }
+  body.dark .foot-copy { color: #cbb9a6; }
+
+  @media (max-width: 620px) {
+    body { padding: 22px 10px 40px; }
+    .wrap { padding: 20px 16px 24px; }
+    .wordmark { font-size: 23px; }
+    h1 { font-size: 32px; }
+    .rx-main { grid-template-columns: 1fr; }
+    .vinyl { width: 132px; height: 132px; }
+    .tv-controls-under .tv-btn { font-size: 12px; }
+    .playlist-menus { padding: 12px; }
+  }
+
+  /* ---------- View modes (Mobile / Desktop switch under the footer) ---------- */
+  .view-switch { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; }
+  .view-label { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #8a7a68; margin-right: 2px; }
+  .view-btn { font-family: Oswald, Inter, sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; background: none; color: inherit; border: 1px solid #2b2320; border-radius: 999px; padding: 6px 16px; cursor: pointer; }
+  .view-btn.on { background: #2b2320; border-color: #2b2320; color: #fdfaf3; }
+  body.dark .view-label { color: #cbb9a6; }
+  body.dark .view-btn { border-color: #f4ead9; }
+  body.view-mobile .wrap { max-width: 430px; }
+  body.view-desktop { overflow-x: auto; }
+  body.view-desktop .wrap { width: 780px; max-width: none; }
+  body.view-mobile { padding: 22px 10px 40px; }
+  body.view-desktop { padding: 40px 16px 56px; }
+  body.view-mobile .wrap { padding: 20px 16px 24px; }
+  body.view-desktop .wrap { padding: 28px 40px 32px; }
+  body.view-mobile .wordmark { font-size: 23px; }
+  body.view-desktop .wordmark { font-size: 28px; }
+  body.view-mobile h1 { font-size: 32px; }
+  body.view-desktop h1 { font-size: 40px; }
+  body.view-mobile .rx-main { grid-template-columns: 1fr; }
+  body.view-desktop .rx-main { grid-template-columns: 1fr; }
+  body.view-mobile .vinyl { width: 132px; height: 132px; }
+  body.view-desktop .vinyl { width: 178px; height: 178px; }
+  body.view-mobile .tv-controls-under .tv-btn { font-size: 12px; }
+  body.view-desktop .tv-controls-under .tv-btn { font-size: 13px; }
+  body.view-mobile .playlist-menus { padding: 12px; }
+  body.view-desktop .playlist-menus { padding: 20px; }
+</style>
+
+
+
+<style id="showtime-style">
+  .antenna { position: relative; width: 120px; height: 46px; margin: 4px auto -8px; }
+  .antenna .ant { position: absolute; bottom: 8px; left: 50%; width: 3px; height: 54px; background: linear-gradient(#8a6d3b, #57452c); border-radius: 2px; transform-origin: bottom center; }
+  .antenna .ant-l { transform: translateX(-50%) rotate(-33deg); }
+  .antenna .ant-r { transform: translateX(-50%) rotate(33deg); }
+  .antenna .ant::after { content: ""; position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 7px; height: 7px; border-radius: 50%; background: #b08d57; }
+  .antenna .ant-base { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 36px; height: 10px; background: #2c232b; border: 1px solid #4a3a45; border-bottom: 0; border-radius: 7px 7px 0 0; }
+  .idle-screen { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; background: radial-gradient(ellipse at center, #251e26 0%, #0c0a0c 78%); color: #e8ddcb; z-index: 1; text-align: center; padding: 14px; }
+  .idle-screen.hide { display: none; }
+  .idle-brand { font-family: Oswald, Inter, sans-serif; letter-spacing: 6px; font-size: 21px; color: #d9b98a; text-transform: uppercase; }
+  .idle-sub { font-size: 13px; color: #b7a98f; letter-spacing: 1px; }
+  .year-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 8px; margin-bottom: 16px; }
+  .year-btn { font-family: Oswald, Inter, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 1px; padding: 9px 4px; border-radius: 8px; border: 1px solid #e3d5b8; background: #fdfaf3; color: #57452c; cursor: pointer; }
+  .year-btn.active { border-color: #a15c68; box-shadow: 0 0 0 1px #a15c68; background: #fdf6f2; color: #a15c68; }
+  .movie-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 8px; }
+  .movie-btn { display: flex; align-items: center; justify-content: space-between; gap: 10px; text-align: left; font-size: 14px; font-weight: 600; color: #3c3630; padding: 10px 12px; border-radius: 8px; border: 1px solid #e3d5b8; background: #fff; cursor: pointer; }
+  .movie-btn .kind { font-family: Oswald, Inter, sans-serif; font-size: 9.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #a15c68; border: 1px solid #e5c8cd; border-radius: 20px; padding: 2px 7px; flex: 0 0 auto; }
+  .movie-btn.active { border-color: #a15c68; box-shadow: 0 0 0 1px #a15c68; background: #fdf6f2; }
+  body.dark .year-btn { background: #2a231c; border-color: #55462f; color: #e8ddcb; }
+  body.dark .year-btn.active { border-color: #a15c68; background: #2c2226; color: #d9a7b0; }
+  body.dark .movie-btn { background: #241e18; border-color: #55462f; color: #f0e7d5; }
+  body.dark .movie-btn.active { background: #2c2226; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <p class="wordmark">Ashley Ayala</p>
+    <div class="header-right">
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">&#9776; Menu</button>
+    </div>
+  </header>
+  <nav id="menuPanel" class="menu-panel">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="jukebox.html">Jukebox</a>
+    <a href="showtime.html">Showtime</a>
+    <a href="time-machine.html">Time Machine</a>
+    <a href="newspaper.html">Newspaper</a>
+    <a href="true-crime.html">True Crime</a>
+    <button class="install-btn" id="installBtn" type="button">Install App</button>
+    <button class="install-btn" id="backupBtn" type="button">Back Up My Data</button>
+    <button class="install-btn" id="restoreBtn" type="button">Restore a Backup</button>
+    <button class="install-btn" id="updateBtn" type="button">Update App</button>
+    <input type="file" id="restoreFile" accept="application/json,.json" hidden>
+    <div class="theme-toggle">
+      <span>Light</span>
+      <label class="theme-switch" for="themeToggle"><input type="checkbox" id="themeToggle" aria-label="Toggle dark mode"><span class="slider"></span></label>
+      <span>Dark</span>
+    </div>
+  </nav>
+
+  <h1>Showtime</h1>
+  <p class="sub">Twenty years of movie nights — 1990 through 2009. Pick a year, pick a picture.</p>
+  <hr class="divider">
+
+  <div class="antenna" aria-hidden="true"><i class="ant ant-l"></i><i class="ant ant-r"></i><i class="ant-base"></i></div>
+  <div class="tv-wrap receiver" id="tvWrap">
+    <div class="rx-top"><span class="rx-brand">Ashley TV &middot; Movie Nights</span><span class="status" id="status">Ready</span></div>
+    <div class="rx-main">
+      <div class="tv-video">
+        <iframe id="tvFrame" title="Showtime TV screen" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        <div class="idle-screen" id="idleScreen"><span class="idle-brand">Ashley TV</span><span class="idle-sub">Pick a year below, then a movie</span></div>
+        <div class="channel-banner" id="channelBanner"></div>
+        <div class="off-screen">OFF</div>
+      </div>
+    </div>
+    <div class="tv-controls-under">
+    <button class="tv-btn power" id="powerBtn" type="button">Power<small>Off / On</small></button>
+    <button class="tv-btn" id="chUpBtn" type="button">CH &#9650;<small>Up</small></button>
+    <button class="tv-btn" id="chDownBtn" type="button">CH &#9660;<small>Down</small></button>
+  </div>
+
+  </div>
+
+  <div class="playlist-label">Pick a movie</div>
+  <div class="playlist-menus">
+    <div class="year-grid" id="yearGrid" role="group" aria-label="Pick a year"></div>
+    <div class="movie-list" id="movieList"></div>
+  </div>
+  <p class="help-note">Pick a year, then tap a movie and its trailer plays right on the TV. CH up / down flips through the year&rsquo;s pictures, and Power turns the set off and on. Every trailer comes from the studios&rsquo; own YouTube channels.</p>
+  <footer class="site-footer">
+    <p class="foot-copy">&copy; 2026 Ashley Ayala</p>
+  </footer>
+  <div class="view-switch" role="group" aria-label="View mode">
+    <span class="view-label">View</span>
+    <button type="button" class="view-btn" data-view="mobile" aria-pressed="false">Mobile</button>
+    <button type="button" class="view-btn" data-view="desktop" aria-pressed="false">Desktop</button>
+  </div>
+</div>
+
+<script>
+document.getElementById('menuBtn').addEventListener('click', function () {
+  var panel = document.getElementById('menuPanel');
+  var open = panel.classList.toggle('open');
+  this.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+
+var themeToggle = document.getElementById('themeToggle');
+try {
+  if (localStorage.getItem('ashleys-theme') === 'dark') {
+    document.body.classList.add('dark');
+    themeToggle.checked = true;
+  }
+} catch (e) {}
+themeToggle.addEventListener('change', function () {
+  document.body.classList.toggle('dark', this.checked);
+  try { localStorage.setItem('ashleys-theme', this.checked ? 'dark' : 'light'); } catch (e) {}
+});
+
+var MOVIES = {
+ "1990": [
+  [
+   "Home Alone",
+   "jEDaVHmw7r4",
+   "Trailer"
+  ],
+  [
+   "Ghost",
+   "8uubih798tg",
+   "Trailer"
+  ],
+  [
+   "Dances with Wolves",
+   "q6jBTxE4GsM",
+   "Trailer"
+  ],
+  [
+   "Pretty Woman",
+   "2EBAVoN8L_U",
+   "Trailer"
+  ],
+  [
+   "Teenage Mutant Ninja Turtles",
+   "Dh2u6Cw2clE",
+   "Trailer"
+  ],
+  [
+   "Total Recall",
+   "Mw1V8wxtnA0",
+   "Trailer"
+  ],
+  [
+   "Edward Scissorhands",
+   "TBHIO60whNw",
+   "Trailer"
+  ],
+  [
+   "Misery",
+   "9HU-RfV7QA0",
+   "Trailer"
+  ],
+  [
+   "Goodfellas",
+   "2ilzidi_J8Q",
+   "Trailer"
+  ],
+  [
+   "Die Hard 2",
+   "CvHp7xJZ4_U",
+   "Trailer"
+  ],
+  [
+   "The Hunt for Red October",
+   "tdjinT1xpgU",
+   "Trailer"
+  ],
+  [
+   "Dick Tracy",
+   "-4rzqSsqaqA",
+   "Trailer"
+  ]
+ ],
+ "1991": [
+  [
+   "Beauty and the Beast",
+   "iurbZwxKFUE",
+   "Trailer"
+  ],
+  [
+   "Terminator 2: Judgment Day",
+   "CRRlbK5w8AE",
+   "Trailer"
+  ],
+  [
+   "The Silence of the Lambs",
+   "6iB21hsprAQ",
+   "Trailer"
+  ],
+  [
+   "Robin Hood: Prince of Thieves",
+   "fhz5aB-u77Q",
+   "Trailer"
+  ],
+  [
+   "Hook",
+   "c-vwgt8cwEM",
+   "Trailer"
+  ],
+  [
+   "The Addams Family",
+   "A6X4VAHdDVg",
+   "Trailer"
+  ],
+  [
+   "Father of the Bride",
+   "tr1WegSPRPc",
+   "Trailer"
+  ],
+  [
+   "City Slickers",
+   "rpxVp1g8xMQ",
+   "Trailer"
+  ],
+  [
+   "Thelma & Louise",
+   "2iBFmKlO4BY",
+   "Trailer"
+  ],
+  [
+   "Sleeping with the Enemy",
+   "FcQqsrf2gik",
+   "Trailer"
+  ],
+  [
+   "JFK",
+   "w16bYZ-4nmE",
+   "Trailer"
+  ],
+  [
+   "Boyz n the Hood",
+   "ZI-qlj-4cpk",
+   "Trailer"
+  ]
+ ],
+ "1992": [
+  [
+   "Aladdin",
+   "eTjHiQKJUDY",
+   "Trailer"
+  ],
+  [
+   "Home Alone 2: Lost in New York",
+   "5h9VDUNtoto",
+   "Trailer"
+  ],
+  [
+   "Batman Returns",
+   "TlbtLfWvFbo",
+   "Trailer"
+  ],
+  [
+   "A Few Good Men",
+   "iIaAL7JTEgE",
+   "Trailer"
+  ],
+  [
+   "Sister Act",
+   "lCBjHkCK1Vw",
+   "Trailer"
+  ],
+  [
+   "Wayne's World",
+   "AFDmxX3V8Bc",
+   "Trailer"
+  ],
+  [
+   "The Bodyguard",
+   "4JFRdJTszRM",
+   "Trailer"
+  ],
+  [
+   "Lethal Weapon 3",
+   "PlJknryKpZs",
+   "Trailer"
+  ],
+  [
+   "A League of Their Own",
+   "kZihpHXsGLE",
+   "Trailer"
+  ],
+  [
+   "Unforgiven",
+   "ftTX4FoBWlE",
+   "Trailer"
+  ],
+  [
+   "Bram Stoker's Dracula",
+   "CjgwUB1CXek",
+   "Trailer"
+  ],
+  [
+   "Basic Instinct",
+   "Jh6JwQ8XPK0",
+   "Trailer"
+  ]
+ ],
+ "1993": [
+  [
+   "Jurassic Park",
+   "QWBKEmWWL38",
+   "Trailer"
+  ],
+  [
+   "Mrs. Doubtfire",
+   "3euGQ7-brs4",
+   "Trailer"
+  ],
+  [
+   "The Fugitive",
+   "ETPVU0acnrE",
+   "Trailer"
+  ],
+  [
+   "Sleepless in Seattle",
+   "ahI9LaOGYcE",
+   "Trailer"
+  ],
+  [
+   "Groundhog Day",
+   "86jI-u2zp7s",
+   "Trailer"
+  ],
+  [
+   "Free Willy",
+   "xk0XY83eEuM",
+   "Trailer"
+  ],
+  [
+   "Hocus Pocus",
+   "F4e6YQFrt1s",
+   "Trailer"
+  ],
+  [
+   "The Nightmare Before Christmas",
+   "wr6N_hZyBCk",
+   "Trailer"
+  ],
+  [
+   "Schindler's List",
+   "v0RB-3sWbBA",
+   "Trailer"
+  ],
+  [
+   "The Firm",
+   "FX3AXA3icR0",
+   "Trailer"
+  ],
+  [
+   "In the Line of Fire",
+   "FuZdS9da4S4",
+   "Trailer"
+  ],
+  [
+   "Philadelphia",
+   "CKDz2LVHz0Y",
+   "Trailer"
+  ]
+ ],
+ "1994": [
+  [
+   "Forrest Gump",
+   "bLvqoHBptjg",
+   "Trailer"
+  ],
+  [
+   "The Lion King",
+   "lFzVJEksoDY",
+   "Trailer"
+  ],
+  [
+   "The Shawshank Redemption",
+   "PLl99DlL6b4",
+   "Trailer"
+  ],
+  [
+   "Pulp Fiction",
+   "tGpTpVyI_OQ",
+   "Trailer"
+  ],
+  [
+   "Speed",
+   "8piqd2BWeGI",
+   "Trailer"
+  ],
+  [
+   "Dumb and Dumber",
+   "l13yPhimE3o",
+   "Trailer"
+  ],
+  [
+   "The Mask",
+   "LZl69yk5lEY",
+   "Trailer"
+  ],
+  [
+   "True Lies",
+   "BNO0caCjSNk",
+   "Trailer"
+  ],
+  [
+   "Four Weddings and a Funeral",
+   "g-HeV8Z6iXc",
+   "Trailer"
+  ],
+  [
+   "Interview with the Vampire",
+   "sCmYN6TLd8A",
+   "Trailer"
+  ],
+  [
+   "Stargate",
+   "c3sgzrgpn8s",
+   "Trailer"
+  ],
+  [
+   "Clear and Present Danger",
+   "TuYb6ZNQaZo",
+   "Trailer"
+  ]
+ ],
+ "1995": [
+  [
+   "Toy Story",
+   "v-PjgYDrg70",
+   "Trailer"
+  ],
+  [
+   "Braveheart",
+   "1NJO0jxBtMo",
+   "Trailer"
+  ],
+  [
+   "Apollo 13",
+   "KtEIMC58sZo",
+   "Trailer"
+  ],
+  [
+   "GoldenEye",
+   "8Zw8ylP4buA",
+   "Trailer"
+  ],
+  [
+   "Batman Forever",
+   "suOgRZflPtk",
+   "Trailer"
+  ],
+  [
+   "Pocahontas",
+   "5iB82S8rHyg",
+   "Trailer"
+  ],
+  [
+   "Jumanji",
+   "eTjDsENDZ6s",
+   "Trailer"
+  ],
+  [
+   "Casper",
+   "e8RATQJIngU",
+   "Trailer"
+  ],
+  [
+   "Clueless",
+   "Mgjwq1ZzdPQ",
+   "Trailer"
+  ],
+  [
+   "Seven",
+   "KPOuJGkpblk",
+   "Trailer"
+  ],
+  [
+   "Babe",
+   "yuzXPzgBDvo",
+   "Trailer"
+  ],
+  [
+   "While You Were Sleeping",
+   "nsJxyUvkB_E",
+   "Trailer"
+  ]
+ ],
+ "1996": [
+  [
+   "Independence Day",
+   "B1E7h3SeMDk",
+   "Trailer"
+  ],
+  [
+   "Twister",
+   "beHzfQPaTaw",
+   "Trailer"
+  ],
+  [
+   "Mission: Impossible",
+   "L8Pbjh4EZRk",
+   "Trailer"
+  ],
+  [
+   "The Rock",
+   "a3qcNyjj9ZQ",
+   "Trailer"
+  ],
+  [
+   "Jerry Maguire",
+   "KUd3gwaf0KQ",
+   "Trailer"
+  ],
+  [
+   "Space Jam",
+   "oKNy-MWjkcU",
+   "Trailer"
+  ],
+  [
+   "101 Dalmatians",
+   "VApVpvcGW1A",
+   "Trailer"
+  ],
+  [
+   "The Hunchback of Notre Dame",
+   "O6i3lyx1I_g",
+   "Trailer"
+  ],
+  [
+   "Scream",
+   "i3J6ACKQ7K0",
+   "Trailer"
+  ],
+  [
+   "Fargo",
+   "ju75Sd4yAZw",
+   "Trailer"
+  ],
+  [
+   "Ransom",
+   "KcAzjSTzSwY",
+   "Trailer"
+  ],
+  [
+   "Phenomenon",
+   "OOdwwFBRyQ8",
+   "Trailer"
+  ]
+ ],
+ "1997": [
+  [
+   "Titanic",
+   "CHekzSiZjrY",
+   "Trailer"
+  ],
+  [
+   "Men in Black",
+   "UxUTTrU6PA4",
+   "Trailer"
+  ],
+  [
+   "The Lost World: Jurassic Park",
+   "E6Xf65X0JB8",
+   "Trailer"
+  ],
+  [
+   "Liar Liar",
+   "C1no75lpOiw",
+   "Trailer"
+  ],
+  [
+   "Air Force One",
+   "FItgZOuaPVY",
+   "Trailer"
+  ],
+  [
+   "Hercules",
+   "vlblxDGoGwo",
+   "Trailer"
+  ],
+  [
+   "Tomorrow Never Dies",
+   "eqrk7-mx2D0",
+   "Trailer"
+  ],
+  [
+   "Good Will Hunting",
+   "ReIJ1lbL-Q8",
+   "Trailer"
+  ],
+  [
+   "My Best Friend's Wedding",
+   "7gRQFgdtAXs",
+   "Trailer"
+  ],
+  [
+   "Face/Off",
+   "S-nDX0BeFoQ",
+   "Trailer"
+  ],
+  [
+   "As Good as It Gets",
+   "t2d89afgtqg",
+   "Trailer"
+  ],
+  [
+   "George of the Jungle",
+   "ITlM041DW1U",
+   "Trailer"
+  ]
+ ],
+ "1998": [
+  [
+   "Saving Private Ryan",
+   "9CiW_DgxCnQ",
+   "Trailer"
+  ],
+  [
+   "Armageddon",
+   "8-8eEniEfgU",
+   "Trailer"
+  ],
+  [
+   "There's Something About Mary",
+   "503D8hOfE_8",
+   "Trailer"
+  ],
+  [
+   "Rush Hour",
+   "JMiFsFQcFLE",
+   "Trailer"
+  ],
+  [
+   "The Mask of Zorro",
+   "abwtRFZx8Rs",
+   "Trailer"
+  ],
+  [
+   "Mulan",
+   "HKH7_n425Ss",
+   "Trailer"
+  ],
+  [
+   "A Bug's Life",
+   "mE35XQFxbeo",
+   "Trailer"
+  ],
+  [
+   "The Prince of Egypt",
+   "N0Vh65UrBK4",
+   "Trailer"
+  ],
+  [
+   "You've Got Mail",
+   "bjP4s7UUnK8",
+   "Trailer"
+  ],
+  [
+   "The Wedding Singer",
+   "Yy-TwYB1UQw",
+   "Trailer"
+  ],
+  [
+   "Patch Adams",
+   "lZqGA1ldvYE",
+   "Trailer"
+  ],
+  [
+   "Lethal Weapon 4",
+   "D5Vx9ljPbKw",
+   "Clip"
+  ]
+ ],
+ "1999": [
+  [
+   "The Sixth Sense",
+   "3-ZP95NF_Wk",
+   "Trailer"
+  ],
+  [
+   "The Matrix",
+   "nUEQNVV3Gfs",
+   "Trailer"
+  ],
+  [
+   "Toy Story 2",
+   "xNWSGRD5CzU",
+   "Trailer"
+  ],
+  [
+   "Star Wars: Episode I — The Phantom Menace",
+   "bD7bpG-zDJQ",
+   "Trailer"
+  ],
+  [
+   "Tarzan",
+   "ie53R2HEZ6g",
+   "Trailer"
+  ],
+  [
+   "The Mummy",
+   "f7oKxlaUBac",
+   "Trailer"
+  ],
+  [
+   "Notting Hill",
+   "4RI0QvaGoiI",
+   "Trailer"
+  ],
+  [
+   "The Green Mile",
+   "Bg7epsq0OIQ",
+   "Trailer"
+  ],
+  [
+   "Runaway Bride",
+   "pOmwh43Kr34",
+   "Trailer"
+  ],
+  [
+   "Austin Powers: The Spy Who Shagged Me",
+   "LGVjoLlgHbM",
+   "Trailer"
+  ],
+  [
+   "Stuart Little",
+   "Wlo-sYrADlw",
+   "Trailer"
+  ],
+  [
+   "The Blair Witch Project",
+   "MBZ-POVsrlI",
+   "Trailer"
+  ]
+ ],
+ "2000": [
+  [
+   "Gladiator",
+   "P5ieIbInFpg",
+   "Trailer"
+  ],
+  [
+   "Cast Away",
+   "qGuOZPwLayY",
+   "Trailer"
+  ],
+  [
+   "Mission: Impossible 2",
+   "hSPtsCQq52k",
+   "Trailer"
+  ],
+  [
+   "How the Grinch Stole Christmas",
+   "DD0m9t4WHEQ",
+   "Trailer"
+  ],
+  [
+   "Meet the Parents",
+   "jXfG_ei2m6E",
+   "Trailer"
+  ],
+  [
+   "X-Men",
+   "VNxwlx6etXI",
+   "Trailer"
+  ],
+  [
+   "Charlie's Angels",
+   "RFuZhw5b1KA",
+   "Trailer"
+  ],
+  [
+   "Remember the Titans",
+   "35MvdHBWjwU",
+   "Trailer"
+  ],
+  [
+   "The Patriot",
+   "R_C_dPHEWN0",
+   "Trailer"
+  ],
+  [
+   "What Women Want",
+   "zZKAA5DRF4A",
+   "Trailer"
+  ],
+  [
+   "Chicken Run",
+   "AEOfT7hUcDs",
+   "Trailer"
+  ],
+  [
+   "Dinosaur",
+   "HlNRVZ871os",
+   "Trailer"
+  ]
+ ],
+ "2001": [
+  [
+   "Harry Potter and the Sorcerer's Stone",
+   "VyHV0BRtdxo",
+   "Trailer"
+  ],
+  [
+   "The Lord of the Rings: The Fellowship of the Ring",
+   "V75dMMIW2B4",
+   "Trailer"
+  ],
+  [
+   "Shrek",
+   "CwXOrWvPBPk",
+   "Trailer"
+  ],
+  [
+   "Monsters, Inc.",
+   "CGbgaHoapFM",
+   "Trailer"
+  ],
+  [
+   "Pearl Harbor",
+   "oGYcxjywx0o",
+   "Trailer"
+  ],
+  [
+   "The Mummy Returns",
+   "3yXjs7BUKYc",
+   "Trailer"
+  ],
+  [
+   "Jurassic Park III",
+   "FBRWNdXpG1g",
+   "Trailer"
+  ],
+  [
+   "A Beautiful Mind",
+   "YWwAOutgWBQ",
+   "Trailer"
+  ],
+  [
+   "Ocean's Eleven",
+   "mG0Xr7wcO8g",
+   "Trailer"
+  ],
+  [
+   "The Princess Diaries",
+   "CzcGwB7qat8",
+   "Trailer"
+  ],
+  [
+   "Legally Blonde",
+   "vWOHwI_FgAo",
+   "Trailer"
+  ],
+  [
+   "Planet of the Apes",
+   "N9_EwsMhn2Y",
+   "Trailer"
+  ]
+ ],
+ "2002": [
+  [
+   "Spider-Man",
+   "t06RUxPbp_c",
+   "Trailer"
+  ],
+  [
+   "The Lord of the Rings: The Two Towers",
+   "LbfMDwc4azU",
+   "Trailer"
+  ],
+  [
+   "Harry Potter and the Chamber of Secrets",
+   "1bq0qff4iF8",
+   "Trailer"
+  ],
+  [
+   "Star Wars: Episode II — Attack of the Clones",
+   "gYbW1F_c9eM",
+   "Trailer"
+  ],
+  [
+   "Men in Black II",
+   "DMHlNR6x2Sw",
+   "Trailer"
+  ],
+  [
+   "Signs",
+   "dUw26F0WfLg",
+   "Trailer"
+  ],
+  [
+   "Ice Age",
+   "i4noiCRJRoE",
+   "Trailer"
+  ],
+  [
+   "Lilo & Stitch",
+   "9OAC55UWAQs",
+   "Trailer"
+  ],
+  [
+   "Minority Report",
+   "lG7DGMgfOb8",
+   "Trailer"
+  ],
+  [
+   "Catch Me If You Can",
+   "s-7pyIxz8Qg",
+   "Trailer"
+  ],
+  [
+   "Chicago",
+   "9EpaMmF9WVU",
+   "Trailer"
+  ],
+  [
+   "My Big Fat Greek Wedding",
+   "O2mecmDFE-Q",
+   "Trailer"
+  ]
+ ],
+ "2003": [
+  [
+   "Finding Nemo",
+   "9oQ628Seb9w",
+   "Trailer"
+  ],
+  [
+   "The Lord of the Rings: The Return of the King",
+   "r5X-hFf6Bwo",
+   "Trailer"
+  ],
+  [
+   "Pirates of the Caribbean: The Curse of the Black Pearl",
+   "naQr0uTrH_s",
+   "Trailer"
+  ],
+  [
+   "Bruce Almighty",
+   "a3oJIbFvYAI",
+   "Trailer"
+  ],
+  [
+   "Elf",
+   "gW9wRNqQ_P8",
+   "Trailer"
+  ],
+  [
+   "School of Rock",
+   "TExoc0MG4I4",
+   "Trailer"
+  ],
+  [
+   "Terminator 3: Rise of the Machines",
+   "5UgPJhyJmlM",
+   "Trailer"
+  ],
+  [
+   "The Matrix Reloaded",
+   "kYzz0FSgpSU",
+   "Trailer"
+  ],
+  [
+   "Seabiscuit",
+   "_DjeJ37my3g",
+   "Trailer"
+  ],
+  [
+   "Master and Commander: The Far Side of the World",
+   "tHTHCNYiiHk",
+   "Trailer"
+  ],
+  [
+   "Bad Boys II",
+   "UTNcOwQ2lRw",
+   "Trailer"
+  ],
+  [
+   "Cold Mountain",
+   "4Fi8j_1An1I",
+   "Trailer"
+  ]
+ ],
+ "2004": [
+  [
+   "Shrek 2",
+   "xBgSfhp5Fxo",
+   "Trailer"
+  ],
+  [
+   "Harry Potter and the Prisoner of Azkaban",
+   "1ZdlAg3j8nI",
+   "Trailer"
+  ],
+  [
+   "Spider-Man 2",
+   "b7Ym14wNp78",
+   "Trailer"
+  ],
+  [
+   "The Incredibles",
+   "-UaGUdNJdRQ",
+   "Trailer"
+  ],
+  [
+   "Meet the Fockers",
+   "F66AcFhmGso",
+   "Trailer"
+  ],
+  [
+   "The Day After Tomorrow",
+   "HUBDFoMNXzA",
+   "Trailer"
+  ],
+  [
+   "National Treasure",
+   "vqUPxNT8io4",
+   "Trailer"
+  ],
+  [
+   "The Notebook",
+   "BjJcYdEOI0k",
+   "Trailer"
+  ],
+  [
+   "Million Dollar Baby",
+   "5_RsHRmIRBY",
+   "Trailer"
+  ],
+  [
+   "Troy",
+   "znTLzRJimeY",
+   "Trailer"
+  ],
+  [
+   "I, Robot",
+   "7Dlo-VB0-HI",
+   "Trailer"
+  ],
+  [
+   "The Passion of the Christ",
+   "QvLw-XQY3wI",
+   "Trailer"
+  ]
+ ],
+ "2005": [
+  [
+   "Star Wars: Episode III — Revenge of the Sith",
+   "5UnjrG_N8hU",
+   "Trailer"
+  ],
+  [
+   "Harry Potter and the Goblet of Fire",
+   "80kuiBq95So",
+   "Trailer"
+  ],
+  [
+   "The Chronicles of Narnia: The Lion, the Witch and the Wardrobe",
+   "usEkWtuNn-w",
+   "Trailer"
+  ],
+  [
+   "War of the Worlds",
+   "TLnQXsKn5-E",
+   "Trailer"
+  ],
+  [
+   "Batman Begins",
+   "QhPqez3CwiM",
+   "Trailer"
+  ],
+  [
+   "Charlie and the Chocolate Factory",
+   "p6JAQ2aoXm0",
+   "Trailer"
+  ],
+  [
+   "Madagascar",
+   "fq5zU9T_Hl4",
+   "Trailer"
+  ],
+  [
+   "Mr. & Mrs. Smith",
+   "CZ0B22z22pI",
+   "Trailer"
+  ],
+  [
+   "Hitch",
+   "dMaq_pfxs-0",
+   "Trailer"
+  ],
+  [
+   "Walk the Line",
+   "pbQ22zWPYbw",
+   "Trailer"
+  ],
+  [
+   "King Kong",
+   "V00s34PFHVo",
+   "Trailer"
+  ],
+  [
+   "The 40-Year-Old Virgin",
+   "YnDeJn-BX5Q",
+   "Trailer"
+  ]
+ ],
+ "2006": [
+  [
+   "Pirates of the Caribbean: Dead Man's Chest",
+   "SNA-Ezahmok",
+   "Trailer"
+  ],
+  [
+   "Night at the Museum",
+   "Ltba1_-tRT4",
+   "Trailer"
+  ],
+  [
+   "Cars",
+   "XszNWHhpaTc",
+   "Trailer"
+  ],
+  [
+   "The Da Vinci Code",
+   "5sU9MT8829k",
+   "Trailer"
+  ],
+  [
+   "Superman Returns",
+   "gKrGjD7ItsQ",
+   "Trailer"
+  ],
+  [
+   "Casino Royale",
+   "GV_18deeAXk",
+   "Trailer"
+  ],
+  [
+   "Happy Feet",
+   "ThMZMdH3gVA",
+   "Trailer"
+  ],
+  [
+   "The Devil Wears Prada",
+   "6ZOZwUQKu3E",
+   "Trailer"
+  ],
+  [
+   "Talladega Nights: The Ballad of Ricky Bobby",
+   "A0fgugC7ZCo",
+   "Trailer"
+  ],
+  [
+   "Click",
+   "zZNC5emNyEQ",
+   "Trailer"
+  ],
+  [
+   "The Pursuit of Happyness",
+   "DMOBlEcRuw8",
+   "Trailer"
+  ],
+  [
+   "Over the Hedge",
+   "kkrGBlvGK4I",
+   "Trailer"
+  ]
+ ],
+ "2007": [
+  [
+   "Spider-Man 3",
+   "e5wUilOeOmg",
+   "Trailer"
+  ],
+  [
+   "Shrek the Third",
+   "_MoIr7811Bs",
+   "Trailer"
+  ],
+  [
+   "Transformers",
+   "CbX_SIz_9fk",
+   "Trailer"
+  ],
+  [
+   "Harry Potter and the Order of the Phoenix",
+   "LLAaW1EgyY8",
+   "Trailer"
+  ],
+  [
+   "I Am Legend",
+   "sFNPNT_4Qww",
+   "Trailer"
+  ],
+  [
+   "National Treasure: Book of Secrets",
+   "lq6MlrkFHG0",
+   "Trailer"
+  ],
+  [
+   "Ratatouille",
+   "NgsQ8mVkN8w",
+   "Trailer"
+  ],
+  [
+   "The Simpsons Movie",
+   "XPG0MqIcby8",
+   "Trailer"
+  ],
+  [
+   "Enchanted",
+   "IJwUFq8uOr0",
+   "Trailer"
+  ],
+  [
+   "Juno",
+   "K0SKf0K3bxg",
+   "Trailer"
+  ],
+  [
+   "300",
+   "UrIbxk7idYA",
+   "Trailer"
+  ],
+  [
+   "Live Free or Die Hard",
+   "vOwS1yzIU4k",
+   "Trailer"
+  ]
+ ],
+ "2008": [
+  [
+   "The Dark Knight",
+   "TQfATDZY5Y4",
+   "Trailer"
+  ],
+  [
+   "Iron Man",
+   "8ugaeA-nMTc",
+   "Trailer"
+  ],
+  [
+   "Indiana Jones and the Kingdom of the Crystal Skull",
+   "kTJy1rFBtVw",
+   "Trailer"
+  ],
+  [
+   "Hancock",
+   "6iFcGNOWnA8",
+   "Trailer"
+  ],
+  [
+   "Mamma Mia!",
+   "iCVpJ8x1Tnc",
+   "Trailer"
+  ],
+  [
+   "Madagascar: Escape 2 Africa",
+   "hLVjIhPYq7s",
+   "Trailer"
+  ],
+  [
+   "Quantum of Solace",
+   "BBqYaFEWBxI",
+   "Trailer"
+  ],
+  [
+   "WALL-E",
+   "alIq_wG9FNk",
+   "Trailer"
+  ],
+  [
+   "Kung Fu Panda",
+   "NRc-ze7Wrxw",
+   "Trailer"
+  ],
+  [
+   "Twilight",
+   "uxjNDE2fMjI",
+   "Trailer"
+  ],
+  [
+   "Slumdog Millionaire",
+   "AIzbwV7on6Q",
+   "Trailer"
+  ],
+  [
+   "The Chronicles of Narnia: Prince Caspian",
+   "oZRZ-2et2uY",
+   "Trailer"
+  ]
+ ],
+ "2009": [
+  [
+   "Avatar",
+   "5PSNL1qE6VY",
+   "Trailer"
+  ],
+  [
+   "Harry Potter and the Half-Blood Prince",
+   "tAiy66Xrsz4",
+   "Trailer"
+  ],
+  [
+   "Transformers: Revenge of the Fallen",
+   "fnXzKwUgDhg",
+   "Trailer"
+  ],
+  [
+   "Up",
+   "HWEW_qTLSEE",
+   "Trailer"
+  ],
+  [
+   "The Hangover",
+   "TZc39afdeXU",
+   "Trailer"
+  ],
+  [
+   "Star Trek",
+   "iGAHnZ555nI",
+   "Trailer"
+  ],
+  [
+   "Ice Age: Dawn of the Dinosaurs",
+   "MnAi5u-k9NY",
+   "Trailer"
+  ],
+  [
+   "Sherlock Holmes",
+   "iKUzhzustok",
+   "Trailer"
+  ],
+  [
+   "The Blind Side",
+   "QUzYIHoCobc",
+   "Trailer"
+  ],
+  [
+   "The Twilight Saga: New Moon",
+   "q58iQSHhZGg",
+   "Trailer"
+  ],
+  [
+   "2012",
+   "sFXGrTng0gQ",
+   "Trailer"
+  ],
+  [
+   "Angels & Demons",
+   "ffkBwkEJ7yA",
+   "Trailer"
+  ]
+ ]
+};
+
+var YEARS = [1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009];
+var curYear = null, curIdx = -1, powerOn = true;
+var tvWrap = document.getElementById("tvWrap");
+var frame = document.getElementById("tvFrame");
+var idle = document.getElementById("idleScreen");
+var banner = document.getElementById("channelBanner");
+var statusEl = document.getElementById("status");
+var yearGrid = document.getElementById("yearGrid");
+var movieList = document.getElementById("movieList");
+
+function setStatus(t, playing) {
+  statusEl.textContent = t;
+  statusEl.classList.toggle("playing", !!playing);
+}
+function renderMovies() {
+  movieList.innerHTML = "";
+  MOVIES[curYear].forEach(function (m, i) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "movie-btn" + (i === curIdx ? " active" : "");
+    b.appendChild(document.createTextNode(m[0]));
+    var tag = document.createElement("span");
+    tag.className = "kind";
+    tag.textContent = m[2];
+    b.appendChild(tag);
+    b.addEventListener("click", function () { play(i); });
+    movieList.appendChild(b);
+  });
+}
+function pickYear(y) {
+  curYear = y; curIdx = -1;
+  var btns = yearGrid.children;
+  for (var i = 0; i < btns.length; i++) btns[i].classList.toggle("active", YEARS[i] === y);
+  renderMovies();
+  setStatus(y + " \u00b7 Pick a movie", false);
+}
+function play(i) {
+  if (!powerOn) { powerOn = true; tvWrap.classList.remove("off"); }
+  curIdx = i;
+  var m = MOVIES[curYear][i];
+  frame.src = "https://www.youtube.com/embed/" + m[1] + "?autoplay=1&rel=0";
+  idle.classList.add("hide");
+  banner.textContent = m[0] + "  \u2022  " + curYear + "  \u2022  " + m[2];
+  banner.classList.add("show");
+  clearTimeout(banner._t);
+  banner._t = setTimeout(function () { banner.classList.remove("show"); }, 3600);
+  setStatus("Now Playing", true);
+  var btns = movieList.children;
+  for (var k = 0; k < btns.length; k++) btns[k].classList.toggle("active", k === i);
+}
+function step(d) {
+  if (curYear === null) { pickYear(1990); return; }
+  var n = MOVIES[curYear].length;
+  var i = curIdx < 0 ? (d > 0 ? 0 : n - 1) : (curIdx + d + n) % n;
+  play(i);
+}
+function setPower(on) {
+  powerOn = on;
+  tvWrap.classList.toggle("off", !on);
+  if (!on) {
+    frame.removeAttribute("src");
+    setStatus("Off", false);
+  } else if (curIdx >= 0 && curYear) {
+    play(curIdx);
+  } else {
+    setStatus(curYear ? curYear + " \u00b7 Pick a movie" : "Ready", false);
+  }
+}
+document.getElementById("powerBtn").addEventListener("click", function () { setPower(!powerOn); });
+document.getElementById("chUpBtn").addEventListener("click", function () { step(1); });
+document.getElementById("chDownBtn").addEventListener("click", function () { step(-1); });
+YEARS.forEach(function (y) {
+  var b = document.createElement("button");
+  b.type = "button";
+  b.className = "year-btn";
+  b.textContent = y;
+  b.addEventListener("click", function () { pickYear(y); });
+  yearGrid.appendChild(b);
+});
+pickYear(1990);
+</script>
+
+<script>
+  (function() {
+    var installBtn = document.getElementById('installBtn');
+    var deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+    if (installBtn) {
+      installBtn.addEventListener('click', function() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then(function() { deferredPrompt = null; });
+        } else {
+          alert("To install Ashley's Spot on your phone: open this page in Chrome, tap the three dots menu, then tap Add to Home Screen.");
+        }
+      });
+    }
+  })();
+</script>
+
+
+
+
+<script>
+  (function () {
+    // Back up everything this site has saved on this device (blog posts,
+    // keepsakes, settings) into one JSON file she keeps.
+    var backupBtn = document.getElementById('backupBtn');
+    if (backupBtn) backupBtn.addEventListener('click', function () {
+      var data = {};
+      try {
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          data[k] = localStorage.getItem(k);
+        }
+      } catch (e) {}
+      var payload = { app: "Ashley's Spot", backedUp: new Date().toISOString(), data: data };
+      var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ashleys-spot-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    });
+
+    // Restore a backup file made by the button above.
+    var restoreBtn = document.getElementById('restoreBtn');
+    var restoreFile = document.getElementById('restoreFile');
+    if (restoreBtn && restoreFile) {
+      restoreBtn.addEventListener('click', function () { restoreFile.click(); });
+      restoreFile.addEventListener('change', function () {
+        var f = restoreFile.files && restoreFile.files[0];
+        if (!f) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var parsed = JSON.parse(String(reader.result));
+            var data = parsed && parsed.data ? parsed.data : parsed;
+            if (!data || typeof data !== 'object') throw new Error('bad file');
+            if (!window.confirm('Restore this backup? It replaces the data saved on this device.')) return;
+            Object.keys(data).forEach(function (k) {
+              try { localStorage.setItem(k, data[k]); } catch (e) {}
+            });
+            window.alert('Backup restored. The page will reload.');
+            location.reload();
+          } catch (e) {
+            window.alert('That file does not look like an Ashley\'s Spot backup.');
+          }
+        };
+        reader.readAsText(f);
+      });
+    }
+
+    // Update App: check for the newest service worker, clear stored caches,
+    // then reload from the server so she is always on the latest version.
+    var updateBtn = document.getElementById('updateBtn');
+    if (updateBtn) updateBtn.addEventListener('click', function () {
+      updateBtn.textContent = 'Updating\u2026';
+      var done = function () {
+        location.replace(location.pathname + '?updated=' + Date.now());
+      };
+      var jobs = [];
+      try {
+        if ('serviceWorker' in navigator) {
+          jobs.push(navigator.serviceWorker.getRegistrations().then(function (regs) {
+            return Promise.all(regs.map(function (r) { return r.update(); }));
+          }));
+        }
+        if (window.caches && caches.keys) {
+          jobs.push(caches.keys().then(function (keys) {
+            return Promise.all(keys.map(function (k) { return caches.delete(k); }));
+          }));
+        }
+      } catch (e) {}
+      Promise.all(jobs).then(done, done);
+      setTimeout(done, 3500); // never leave her hanging
+    });
+  })();
+</script>
+
+<script>
+  (function () {
+    var KEY = 'ashleys-view';
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.view-btn'));
+    function apply(mode) {
+      document.body.classList.toggle('view-mobile', mode === 'mobile');
+      document.body.classList.toggle('view-desktop', mode === 'desktop');
+      btns.forEach(function (b) {
+        var on = b.getAttribute('data-view') === mode;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    if (saved === 'mobile' || saved === 'desktop') apply(saved);
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var mode = b.getAttribute('data-view');
+        var cur = null;
+        try { cur = localStorage.getItem(KEY); } catch (e) {}
+        if (cur === mode) { try { localStorage.removeItem(KEY); } catch ( e) {} apply(null); }
+        else { try { localStorage.setItem(KEY, mode); } catch (e) {} apply(mode); }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
