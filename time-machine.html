@@ -81,6 +81,9 @@
   .toon-name { font-size: 15px; font-weight: 600; margin: 7px 0 0; }
   .toon-credit { font-size: 11px; color: #8a857e; margin: 0; }
   .toy { font-size: 15px; font-weight: 600; margin: 0; }
+  .look-img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid #d9c9a8; border-radius: 6px; background: #ece5d3; margin: 2px 0 8px; }
+  .look-cred { font-size: 11px; letter-spacing: .03em; opacity: .72; margin: 5px 0 0; }
+  .look-cred a { color: inherit; }
   .note { color: #8a857e; font-size: 15px; margin: 0; }
 
   /* ---------- Price chart ---------- */
@@ -298,6 +301,12 @@
         <p class="toy" id="clothesText"></p>
       </section>
     <section class="card">
+        <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="7" width="19" height="13" rx="2" fill="#93a7bd" stroke="#57452c" stroke-width="1.1"/><circle cx="12" cy="13.5" r="3.4" fill="#ece5d3" stroke="#57452c" stroke-width="1.1"/><path d="M8.5 7l1.3-2.6h4.4L15.5 7" fill="#d9c9a8" stroke="#57452c" stroke-width="1.1" stroke-linejoin="round"/></svg> The look that year</h2>
+        <img class="look-img" id="lookImg" src="" alt="">
+        <p class="toy" id="lookCap"></p>
+        <p class="look-cred">Photo: <a id="lookCred" href="#" target="_blank" rel="noopener"></a> · Wikimedia Commons</p>
+      </section>
+    <section class="card">
         <h2><svg class="hicon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="7" r="2.6" fill="none" stroke="#f28bb4" stroke-width="1.6"/><circle cx="17" cy="7" r="2.6" fill="none" stroke="#f28bb4" stroke-width="1.6"/><path d="M9 9.5L19 20M15 9.5L5 20" stroke="#93d8cb" stroke-width="1.6" stroke-linecap="round"/></svg> Hairstyle everyone had</h2>
         <p class="toy" id="hairText"></p>
       </section>
@@ -411,6 +420,28 @@ var TRUCKS = {
   2008: { n: "Ford Super Duty", note: "The redesigned heavy-duty line, up to the F-450 \u2014 a truck that could tow a house, and looked it." },
   2009: { n: "Dodge Ram 1500", note: "The fourth-generation Ram swaps leaf springs for coils out back and rides like a car \u2014 a gamble that paid off." }
 };
+var LOOKS = {
+  1990: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/JacquesGauthe1990FQFDance.jpg/960px-JacquesGauthe1990FQFDance.jpg", cap: "French Quarter Fest, New Orleans \u2014 tropical prints, polos and shades.", alt: "A New Orleans festival crowd dancing in 1990, in bold tropical prints and polos", cred: "CC BY 2.5", page: "https://commons.wikimedia.org/wiki/File:JacquesGauthe1990FQFDance.jpg" },
+  1991: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Vattenfestivalen_1991.jpg/960px-Vattenfestivalen_1991.jpg", cap: "Stockholm\u2019s Water Festival \u2014 jeans, tees and summer dresses as far as the eye can see.", alt: "Crowds at the Stockholm Water Festival in 1991, in jeans, tees and summer dresses", cred: "CC BY-SA 3.0", page: "https://commons.wikimedia.org/wiki/File:Vattenfestivalen_1991.jpg" },
+  1992: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f1/Crowd_at_Westlake_Center_Seattle%2C_1992_Clinton_campaign_rally.jpg/960px-Crowd_at_Westlake_Center_Seattle%2C_1992_Clinton_campaign_rally.jpg", cap: "A rally crowd in Seattle \u2014 shorts, tees and ball caps.", alt: "A Seattle rally crowd in 1992, in shorts, tees and caps", cred: "CC BY-SA 4.0", page: "https://commons.wikimedia.org/wiki/File:Crowd_at_Westlake_Center_Seattle,_1992_Clinton_campaign_rally.jpg" },
+  1993: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Didgeridoo_-_U._Dist_Street_Fair_1993_-_3.jpg/960px-Didgeridoo_-_U._Dist_Street_Fair_1993_-_3.jpg", cap: "U-District Street Fair, Seattle \u2014 tank tops, long hair and didgeridoos.", alt: "Long-haired street-fair musicians in tank tops playing didgeridoos, Seattle, 1993", cred: "CC BY-SA 3.0", page: "https://commons.wikimedia.org/wiki/File:Didgeridoo_-_U._Dist_Street_Fair_1993_-_3.jpg" },
+  1994: { img: "https://upload.wikimedia.org/wikipedia/commons/3/37/People_walking_in_the_street_%28Lisbon_1994%29.jpg", cap: "A Lisbon boulevard \u2014 polos, jeans and slacks, everybody pressed and tidy.", alt: "Pedestrians on a Lisbon street in 1994, in polo shirts, jeans and slacks", cred: "CC BY 2.0", page: "https://commons.wikimedia.org/wiki/File:People_walking_in_the_street_(Lisbon_1994).jpg" },
+  1995: { img: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Roskilde_Festival%2C_1995_%287805244248%29.jpg", cap: "Roskilde Festival, Denmark \u2014 tees, jeans and shorts, camped out on the grass.", alt: "The Roskilde Festival crowd in 1995, lounging on the grass in tees, jeans and shorts", cred: "CC BY 2.0", page: "https://commons.wikimedia.org/wiki/File:Roskilde_Festival,_1995_(7805244248).jpg" },
+  1996: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/1996_Global_Olympic_Park_crowd_views_main_stage_by_Don_Ramey_Logan.jpg/960px-1996_Global_Olympic_Park_crowd_views_main_stage_by_Don_Ramey_Logan.jpg", cap: "Olympic Park, Atlanta \u2014 shorts, caps and sunglasses behind the barricades.", alt: "The Atlanta Olympics crowd in 1996, in shorts, caps and sunglasses", cred: "CC BY-SA 4.0", page: "https://commons.wikimedia.org/wiki/File:1996_Global_Olympic_Park_crowd_views_main_stage_by_Don_Ramey_Logan.jpg" },
+  1997: { img: "https://upload.wikimedia.org/wikipedia/commons/4/48/Crowd_Surfer_at_Music_Midtown_-_1997.jpg", cap: "Music Midtown, Atlanta \u2014 one crowd-surfer in baggy jeans, riding the year.", alt: "A crowd-surfer in baggy jeans over an Atlanta festival crowd, 1997", cred: "CC BY-SA 2.0", page: "https://commons.wikimedia.org/wiki/File:Crowd_Surfer_at_Music_Midtown_-_1997.jpg" },
+  1998: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/Mardi_Gras_Photographers%2C_New_Orleans%2C_1998.jpg/960px-Mardi_Gras_Photographers%2C_New_Orleans%2C_1998.jpg", cap: "Mardi Gras, New Orleans \u2014 beads, bandanas, denim and a track jacket.", alt: "Mardi Gras photographers in New Orleans, 1998, in beads, a bandana, denim and a track jacket", cred: "CC BY-SA 4.0", page: "https://commons.wikimedia.org/wiki/File:Mardi_Gras_Photographers,_New_Orleans,_1998.jpg" },
+  1999: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Alki_Beach%2C_1999.jpg/960px-Alki_Beach%2C_1999.jpg", cap: "Alki Beach, Seattle \u2014 tees, shorts and sweatshirts by the water.", alt: "Families at Alki Beach, Seattle, in 1999, in tees, shorts and sweatshirts", cred: "CC BY 4.0", page: "https://commons.wikimedia.org/wiki/File:Alki_Beach,_1999.jpg" },
+  2000: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Beach_volleyball_stadium%2C_Melbourne%2C_AUS.jpg/960px-Beach_volleyball_stadium%2C_Melbourne%2C_AUS.jpg", cap: "Sydney Olympics beach volleyball \u2014 sun hats, caps and tees in the stands.", alt: "Spectators at the Sydney 2000 Olympics beach volleyball, in sun hats, caps and tees", cred: "CC BY 2.0", page: "https://commons.wikimedia.org/wiki/File:Beach_volleyball_stadium,_Melbourne,_AUS.jpg" },
+  2001: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Jessica_Simpson_54th_Presidential_Inaugural_Opening_Celebration.jpeg/960px-Jessica_Simpson_54th_Presidential_Inaugural_Opening_Celebration.jpeg", cap: "Jessica Simpson opens the inaugural celebration \u2014 flared pants and a long denim coat.", alt: "Jessica Simpson performing in 2001 in a long denim coat and flared pants", cred: "Public domain", page: "https://commons.wikimedia.org/wiki/File:Jessica_Simpson_54th_Presidential_Inaugural_Opening_Celebration.jpeg" },
+  2002: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Lake_Alma_Beach_Party_2002_%2825817503984%29.jpg/960px-Lake_Alma_Beach_Party_2002_%2825817503984%29.jpg", cap: "A lake picnic in Ohio \u2014 logo tanks, cargo shorts and flip-flops.", alt: "Families at an Ohio park picnic in 2002, in logo tanks, cargo shorts and flip-flops", cred: "CC0", page: "https://commons.wikimedia.org/wiki/File:Lake_Alma_Beach_Party_2002_(25817503984).jpg" },
+  2003: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Iraq_War_protest_0005_%2851066373743%29.jpg/960px-Iraq_War_protest_0005_%2851066373743%29.jpg", cap: "February marchers \u2014 parkas, knit hats and scarves over jeans.", alt: "Marchers in February 2003 bundled in parkas, knit hats, scarves and jeans", cred: "CC BY 2.0", page: "https://commons.wikimedia.org/wiki/File:Iraq_War_protest_0005_(51066373743).jpg" },
+  2004: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Jazz_Fest_Crowds_2004.jpg/960px-Jazz_Fest_Crowds_2004.jpg", cap: "Jazz Fest, New Orleans \u2014 caps, sunglasses, tanks and shorts.", alt: "The New Orleans Jazz Fest crowd in 2004, in caps, sunglasses, tanks and shorts", cred: "CC BY 2.0", page: "https://commons.wikimedia.org/wiki/File:Jazz_Fest_Crowds_2004.jpg" },
+  2005: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Crowds_for_Brian_Wilson_at_the_Pyramid_%28323798990%29.jpg/960px-Crowds_for_Brian_Wilson_at_the_Pyramid_%28323798990%29.jpg", cap: "Glastonbury \u2014 trucker caps, bucket hats and graphic tees.", alt: "A Glastonbury crowd in 2005, in trucker caps, bucket hats and graphic tees", cred: "CC BY-SA 2.0", page: "https://commons.wikimedia.org/wiki/File:Crowds_for_Brian_Wilson_at_the_Pyramid_(323798990).jpg" },
+  2006: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Fan_Fest_Berlin.jpg/960px-Fan_Fest_Berlin.jpg", cap: "World Cup fan fest, Berlin \u2014 jerseys, caps and summer tees.", alt: "A Berlin World Cup fan-fest crowd in 2006, in jerseys, caps and summer tees", cred: "CC BY 2.0", page: "https://commons.wikimedia.org/wiki/File:Fan_Fest_Berlin.jpg" },
+  2007: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/The_Line_%28664448146%29.jpg/960px-The_Line_%28664448146%29.jpg", cap: "The first iPhone line \u2014 graphic tees, cargo shorts and a Bluetooth earpiece.", alt: "People waiting in line for the first iPhone in 2007, in graphic tees and cargo shorts", cred: "CC BY-SA 2.0", page: "https://commons.wikimedia.org/wiki/File:The_Line_(664448146).jpg" },
+  2008: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Crowd_at_Obama%27s_election_night_party_listens_to_broadcast_of_McCain_conceding_defeat_%283008009465%29.jpg/960px-Crowd_at_Obama%27s_election_night_party_listens_to_broadcast_of_McCain_conceding_defeat_%283008009465%29.jpg", cap: "Election night, Grant Park \u2014 hoodies, campaign tees and caps.", alt: "The Grant Park election-night crowd in 2008, in hoodies, tees and caps", cred: "CC BY-SA 2.0", page: "https://commons.wikimedia.org/wiki/File:Crowd_at_Obama%27s_election_night_party_listens_to_broadcast_of_McCain_conceding_defeat_(3008009465).jpg" },
+  2009: { img: "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/2009_Presidential_Inauguration_-_crowds_on_18th_Street_NW.JPG/960px-2009_Presidential_Inauguration_-_crowds_on_18th_Street_NW.JPG", cap: "Inauguration Day, Washington \u2014 puffy coats, scarves, knit hats and boots.", alt: "An Inauguration Day street crowd in Washington, 2009, in puffy coats, scarves and knit hats", cred: "CC BY-SA 3.0", page: "https://commons.wikimedia.org/wiki/File:2009_Presidential_Inauguration_-_crowds_on_18th_Street_NW.JPG" }
+};
 
 
 function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
@@ -508,6 +539,12 @@ function showYear(y) {
   var trk = TRUCKS[y];
   document.getElementById("truckName").textContent = trk.n;
   document.getElementById("truckNote").textContent = trk.note;
+  var lk = LOOKS[y];
+  var limg = document.getElementById("lookImg");
+  limg.src = lk.img; limg.alt = lk.alt;
+  document.getElementById("lookCap").textContent = lk.cap;
+  var lcred = document.getElementById("lookCred");
+  lcred.textContent = lk.cred; lcred.href = lk.page;
   document.getElementById("bookText").textContent = d.book;
   document.getElementById("snackText").textContent = d.snack;
   document.getElementById("sportText").textContent = d.sport;
